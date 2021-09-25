@@ -1,0 +1,39 @@
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    padding: 10px;
+    width: 200px;
+    margin: 0 auto;
+    max-height: 250px;
+    font-family: system-ui;
+    text-align: center;
+}
+
+img {
+    border: 2px solid #1D1D1F;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #fff;
+    width: 170.66px;
+    height: 170.66px;
+}
+
+p {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #1D1D1F;
+}
+
+@media (prefers-color-scheme: dark) {
+    img {
+        border: 2px solid #fff;
+        background-color: #1D1D1F;
+    }
+
+    p {
+        color: #fff;
+    }
+}
