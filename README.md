@@ -10,6 +10,8 @@ Safari extensions require user permission to access website data, and for good r
 
 The code is posted here in the interest of total transparency. All QR code processing happens on-device, so information like those URLs never leave the extension.
 
+[**Privacy Policy**](https://qr-pop.glitch.me/#privacy)
+
 ## How it Works ⚙️
 
 QR Pop is a Safari extension that creates a popup view of a QR code linking to the webpage in focus. In Safari the "All Websites" permission is preferred to allow the extension to see the URL and hostname of every website so that it can quickly create a QR code.
