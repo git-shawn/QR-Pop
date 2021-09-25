@@ -6,7 +6,7 @@ body {
     padding: 10px;
     width: 200px;
     margin: 0 auto;
-    max-height: 250px;
+    max-height: 350px;
     font-family: system-ui;
     text-align: center;
 }
@@ -18,10 +18,12 @@ img {
     background-color: #fff;
     width: 170.66px;
     height: 170.66px;
+    margin: 0 auto;
 }
 
 p {
     margin: 0;
+    overflow-wrap: break-word;
     font-size: 1.2em;
     font-weight: 500;
     color: #1D1D1F;
