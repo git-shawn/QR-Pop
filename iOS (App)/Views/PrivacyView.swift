@@ -20,7 +20,7 @@ struct PrivacyView: View {
                   .foregroundColor(.blue)
             }.padding(.bottom)
             HStack(spacing: 20) {
-                Text("QR Pop does not contain any trackers, and does not collect any user information. \n\nAdditionally, QR Pop will never add tracking via an update. QR Pop utilizes qrcodejs library to create all QR codes on-device. That means the app never shares your browsing information with a server. In fact, QR Pop contains no trackers whatsoever.")
+                Text("QR Pop does not contain any trackers, and does not collect any user information. \n\nAdditionally, QR Pop will never add tracking via an update. QR Pop utilizes the qrcodejs library (via the MIT license) to create all QR codes on-device. That means QR Pop never shares your browsing information with a server. Because of this, QR Pop doesn't use any data connection at all to make QR codes.")
             }
             Spacer()
         }.padding(20)
