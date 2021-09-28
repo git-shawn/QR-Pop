@@ -11,6 +11,7 @@ struct PrivacyView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
+        ScrollView {
         VStack() {
             HStack() {
                 Image(systemName: "hand.raised")
@@ -22,8 +23,9 @@ struct PrivacyView: View {
             HStack(spacing: 20) {
                 Text("QR Pop does not contain any trackers, and does not collect any user information. \n\nAdditionally, QR Pop will never add tracking via an update. QR Pop utilizes the qrcodejs library (via the MIT license) to create all QR codes on-device. That means QR Pop never shares your browsing information with a server. Because of this, QR Pop doesn't use any data connection at all to make QR codes.")
             }
-            Spacer()
-        }.padding(20)
+        }
+        }
+        .padding(.horizontal, 20)
         .navigationBarTitle(Text("Privacy Policy"), displayMode: .large)
     }
 }

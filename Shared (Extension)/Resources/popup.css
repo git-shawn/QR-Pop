@@ -21,6 +21,11 @@ img {
     margin: 0 auto;
 }
 
+qr-render {
+    width: 170.66px;
+    height: 170.66px;
+}
+
 p {
     margin: 0;
     overflow-wrap: break-word;

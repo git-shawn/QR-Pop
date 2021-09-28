@@ -10,6 +10,7 @@ import SwiftUI
 struct GettingStartedView: View {
     
     var body: some View {
+        ScrollView {
         HStack() {
             VStack(alignment: .leading, spacing: 20) {
                 Label {
@@ -22,34 +23,34 @@ struct GettingStartedView: View {
                     Text("Select Safari")
                 } icon: {
                     Image(systemName: "safari")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.blue)
                 }
                 Label {
                     Text("Select Extensions")
                 } icon: {
-                    Image(systemName: "plus.viewfinder")
-                        .foregroundColor(.gray)
+                    Image(systemName: "puzzlepiece.extension")
+                        .foregroundColor(.brown)
                 }
                 Label {
                     Text("Turn QR Pop On")
                 } icon: {
                     Image(systemName: "qrcode")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.orange)
                 }
                 Label {
                     Text("Allow All Websites")
                 } icon: {
                     Image(systemName: "switch.2")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.green)
                 }
                 Divider()
                 Text("Why should I allow all websites?")
                     .font(.headline)
                 Text("QR Pop needs to know a webpage's URL in order to generate QR codes. Without website access, the URL is hidden by Safari. Those codes are generated on your device, and your browsing habits are not shared with anyone (ever). You can see more in our privacy policy, or by browsing the source code.")
-                Spacer()
             }
-        Spacer()
-        }.padding(20)
+        }
+        }
+        .padding(.horizontal, 20)
         .navigationBarTitle(Text("Getting Started"), displayMode: .large)
     }
 }
