@@ -9,6 +9,7 @@ body {
     max-height: 350px;
     font-family: system-ui;
     text-align: center;
+    overflow: hidden;
 }
 
 img {
@@ -36,8 +37,8 @@ p {
 
 @media (prefers-color-scheme: dark) {
     img {
-        border: 2px solid #fff;
-        background-color: #1D1D1F;
+        -webkit-filter: invert(1);
+        filter: invert(1);
     }
 
     p {

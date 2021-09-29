@@ -1,27 +1,16 @@
 // Update the relevant fields with the new data.
 const setWebInfo = info => {
-    let matched = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if(matched) {
+
+    if(info.hostname && info.url){
+        document.getElementById('website-title').textContent = info.hostname;
         new QRCode(document.getElementById("qr-render"), {
             text: info.url,
-            width: 512,
-            height: 512,
-            colorDark : "#ffffff",
-            colorLight : "#1D1D1F",
-            correctLevel : QRCode.CorrectLevel.L
-        });
-    } else {
-        new QRCode(document.getElementById("qr-render"), {
-            text: info.url,
-            width: 512,
-            height: 512,
-            colorDark : "#1D1D1F",
+            width: 170.66,
+            height: 170.66,
+            colorDark : "#000000",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L
         });
-    }
-    if(info.hostname){
-        document.getElementById('website-title').textContent = info.hostname;
     }
 };
 

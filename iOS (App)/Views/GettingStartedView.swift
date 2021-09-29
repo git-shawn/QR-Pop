@@ -51,7 +51,7 @@ struct GettingStartedView: View {
         }
         }
         .padding(.horizontal, 20)
-        .navigationBarTitle(Text("Getting Started"), displayMode: .large)
+        .navigationBarTitle(Text("Getting Started in Safari"), displayMode: .large)
     }
 }
 

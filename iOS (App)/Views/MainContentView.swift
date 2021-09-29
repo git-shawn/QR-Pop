@@ -34,7 +34,7 @@ struct MainContentView: View {
                 Section(){
                 NavigationLink(destination: GettingStartedView()) {
                     Label {
-                        Text("Getting Started")
+                        Text("Getting Started in Safari")
                     } icon: {
                         Image(systemName: "flag.2.crossed")
                             .foregroundColor(.red)

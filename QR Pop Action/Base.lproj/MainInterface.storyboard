@@ -25,6 +25,11 @@
                                                 <action selector="done" destination="ObA-dk-sSI" id="Qdu-qn-U6V"/>
                                             </connections>
                                         </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Save QR Code" image="square.and.arrow.down" catalog="system" id="ht5-y8-6mF">
+                                            <connections>
+                                                <action selector="savePressed" destination="ObA-dk-sSI" id="Eyp-52-r5j"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -32,24 +37,15 @@
                                 <rect key="frame" x="25" y="130" width="270" height="270"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iQA-sa-Qou">
-                                <rect key="frame" x="78" y="456" width="160" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="tinted" title="Save Code to Photos"/>
-                                <connections>
-                                    <action selector="savePressedWithSender:" destination="ObA-dk-sSI" eventType="touchUpInside" id="z3k-nJ-biL"/>
-                                </connections>
-                            </button>
                             <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" scrollEnabled="NO" editable="NO" text="QR code generation is not supported by this app" textAlignment="center" selectable="NO" id="3sO-fS-EVF">
-                                <rect key="frame" x="0.0" y="214" width="320" height="100"/>
+                                <rect key="frame" x="-1" y="216" width="320" height="100"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                 </accessibility>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
+                                <color key="textColor" systemColor="placeholderTextColor"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -66,7 +62,7 @@
                     <connections>
                         <outlet property="badUrlText" destination="3sO-fS-EVF" id="B2f-r3-Aa3"/>
                         <outlet property="imageView" destination="9ga-4F-77Z" id="5y6-5w-9QO"/>
-                        <outlet property="savePhotoButton" destination="iQA-sa-Qou" id="xdR-IN-jiR"/>
+                        <outlet property="savePhotoButton" destination="ht5-y8-6mF" id="KXk-4H-9C9"/>
                         <outlet property="view" destination="zMn-AG-sqS" id="Qma-de-2ek"/>
                     </connections>
                 </viewController>
@@ -77,11 +73,12 @@
     </scenes>
     <color key="tintColor" name="AccentColor"/>
     <resources>
+        <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.99599999189376831" green="0.52999997138977051" blue="0.10199999809265137" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="placeholderTextColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
