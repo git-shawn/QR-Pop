@@ -5,8 +5,8 @@ const setWebInfo = info => {
         document.getElementById('website-title').textContent = info.hostname;
         new QRCode(document.getElementById("qr-render"), {
             text: info.url,
-            width: 170.66,
-            height: 170.66,
+            width: 190,
+            height: 190,
             colorDark : "#000000",
             colorLight : "#ffffff",
             correctLevel : QRCode.CorrectLevel.L

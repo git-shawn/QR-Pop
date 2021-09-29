@@ -1,59 +1,62 @@
 //
 //  GettingStartedView.swift
-//  QR Pop (iOS)
+//  QR Pop (macOS)
 //
-//  Created by Shawn Davis on 9/25/21.
+//  Created by Shawn Davis on 9/29/21.
 //
 
 import SwiftUI
+import SafariServices
 
 struct GettingStartedView: View {
     
     var body: some View {
+        let extensionBundleIdentifier = "shwndvs.QR-Pop.Extension"
+        
         ScrollView {
         HStack() {
             VStack(alignment: .leading, spacing: 20) {
-                Group {
+                Spacer()
+                Text("Enable the Safari Extension")
+                    .font(.headline)
                 Label {
-                    Text("Open the Settings App")
-                } icon: {
-                    Image(systemName: "gear")
-                        .foregroundColor(.gray)
-                }
-                Label {
-                    Text("Select Safari")
+                    Text("Open Safari")
                 } icon: {
                     Image(systemName: "safari")
                         .foregroundColor(.blue)
                 }
                 Label {
-                    Text("Select Extensions")
+                    Text("Choose Safari > Preferences from the Menu Bar")
                 } icon: {
-                    Image(systemName: "puzzlepiece.extension")
-                        .foregroundColor(.brown)
+                    Image(systemName: "gear")
+                        .foregroundColor(.gray)
                 }
                 Label {
-                    Text("Turn QR Pop On")
+                    Text("Click Extensions")
+                } icon: {
+                    Image(systemName: "cursorarrow.rays")
+                        .foregroundColor(.red)
+                }
+                Label {
+                    Text("Select the checkbox next to QR Pop")
                 } icon: {
                     Image(systemName: "qrcode")
                         .foregroundColor(.orange)
                 }
-                Label {
-                    Text("Allow All Websites")
-                } icon: {
-                    Image(systemName: "switch.2")
-                        .foregroundColor(.green)
-                }
+                Button(action: {
+                    SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier)
+                }) {
+                    Text("Open Safari Preferences")
                 }
                 Divider()
-                Text("Why should I allow all websites?")
+                Text("Why should I allow access to all websites?")
                     .font(.headline)
                 Text("QR Pop needs to know a webpage's URL in order to generate QR codes. Without website access, the URL is hidden by Safari. Those codes are generated on your device, and your browsing habits are not shared with anyone (ever). You can see more in our privacy policy, or by browsing the source code.")
             }
         }
         }
         .padding(.horizontal, 20)
-        .navigationBarTitle(Text("Getting Started in Safari"), displayMode: .large)
+        .navigationTitle("Getting Started")
     }
 }
 

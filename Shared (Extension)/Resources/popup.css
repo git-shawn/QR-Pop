@@ -4,7 +4,7 @@
 
 body {
     padding: 10px;
-    width: 200px;
+    width: 220px;
     margin: 0 auto;
     max-height: 350px;
     font-family: system-ui;
@@ -17,8 +17,8 @@ img {
     padding: 10px;
     border-radius: 6px;
     background-color: #fff;
-    width: 170.66px;
-    height: 170.66px;
+    width: 190px;
+    height: 190px;
     margin: 0 auto;
 }
 
@@ -30,7 +30,7 @@ qr-render {
 p {
     margin: 0;
     overflow-wrap: break-word;
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: 500;
     color: #1D1D1F;
 }
