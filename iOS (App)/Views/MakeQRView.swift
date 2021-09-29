@@ -31,9 +31,17 @@ struct MakeQRView: View {
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .padding()
-            Text("Long press the QR code to save it")
-                .font(.footnote)
-                .foregroundColor(.gray)
+            Button(
+                action: {
+                    let imageSaver = ImageSaver()
+                    imageSaver.writeToPhotoAlbum(image: UIImage(data: getQRCode(text: text)!)!)
+                }){
+                    Label {
+                        Text("Save Code")
+                    } icon: {
+                        Image(systemName: "square.and.arrow.down")
+                    }
+                }.buttonStyle(.bordered)
         }.navigationBarTitle(Text("QR Generator"), displayMode: .inline)
     }
     

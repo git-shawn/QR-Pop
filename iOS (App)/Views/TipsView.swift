@@ -42,10 +42,9 @@ struct TipsView: View {
                         .cornerRadius(20)
                     Spacer()
                 }
-            }
+            }.padding(.horizontal, 20)
         }
         }
-        .padding(.horizontal, 20)
         .navigationBarTitle(Text("Tips & Tricks"), displayMode: .large)
     }
 }
