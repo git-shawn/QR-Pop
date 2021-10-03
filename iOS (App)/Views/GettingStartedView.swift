@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct GettingStartedView: View {
+    @State private var showPopover: Bool = false
     
     var body: some View {
         ScrollView {
-        HStack() {
+            HStack() {
             VStack(alignment: .leading, spacing: 20) {
                 Group {
                 Label {
@@ -21,39 +22,59 @@ struct GettingStartedView: View {
                         .foregroundColor(.gray)
                 }
                 Label {
-                    Text("Select Safari")
+                    Text("Tap Safari")
                 } icon: {
                     Image(systemName: "safari")
                         .foregroundColor(.blue)
                 }
                 Label {
-                    Text("Select Extensions")
+                    Text("Tap Extensions")
                 } icon: {
                     Image(systemName: "puzzlepiece.extension")
-                        .foregroundColor(.brown)
+                        .foregroundColor(.red)
                 }
                 Label {
-                    Text("Turn QR Pop On")
+                    Text("Tap QR Pop")
                 } icon: {
                     Image(systemName: "qrcode")
                         .foregroundColor(.orange)
                 }
                 Label {
-                    Text("Allow All Websites")
+                    Text("Turn QR Pop On")
                 } icon: {
-                    Image(systemName: "switch.2")
+                    Image(systemName: "checkmark.circle")
                         .foregroundColor(.green)
                 }
+                HStack() {
+                    Label {
+                        Text("Allow \"All Websites\"")
+                    } icon: {
+                        Image(systemName: "checkmark.circle")
+                            .foregroundColor(.green)
+                    }
+                    Button(action: {
+                        self.showPopover = true
+                    }) {
+                        Image(systemName: "questionmark.circle.fill")
+                            .foregroundColor(.blue)
+                    }.popover(
+                        isPresented: self.$showPopover,
+                        arrowEdge: .bottom
+                    ) { ScrollView{
+                        VStack(alignment: .leading, spacing: 20) {
+                        Text("Why should I allow all websites?")
+                            .font(.system(size: 32, weight: .bold))
+                        Text("QR Pop works by extracting the URL from a webpage and converting it into a QR code. Allowing \"All Websites\" makes this process convenient and automatic.\n\nGiving an extension the ability to see every URL you visit can be risky business, so Safari checks to make sure you're serious before sharing that information.\n\nYou can be confident knowing no funny business is going on. QR Pop's privacy policy explicitly states that all codes are created on-device and that this app conotains no loggers, trackers, etc.\n\nHowever, for those more technical, you don't need to take my word for it. Feel free to browse the source code and see for yourself.")
+                    }.padding(.horizontal, 20)
+                    }.padding(.top, 20)
+                    }
                 }
-                Divider()
-                Text("Why should I allow all websites?")
-                    .font(.headline)
-                Text("QR Pop needs to know a webpage's URL in order to generate QR codes. Without website access, the URL is hidden by Safari. Those codes are generated on your device, and your browsing habits are not shared with anyone (ever). You can see more in our privacy policy, or by browsing the source code.")
+                }.padding(.horizontal, 20)
+            }
+                Spacer()
             }
         }
-        }
-        .padding(.horizontal, 20)
-        .navigationBarTitle(Text("Getting Started"), displayMode: .large)
+        .navigationBarTitle(Text("Safari Extension"), displayMode: .large)
     }
 }
 

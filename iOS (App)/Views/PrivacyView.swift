@@ -16,12 +16,13 @@ struct PrivacyView: View {
             HStack() {
                 Image(systemName: "hand.raised")
                   .resizable()
+                  .accessibilityHidden(true)
                   .scaledToFit()
                   .frame(width: 90, height: 90)
                   .foregroundColor(.blue)
             }.padding(.bottom)
             HStack(spacing: 20) {
-                Text("QR Pop does not contain any trackers, and does not collect any user information. \n\nAdditionally, QR Pop will never add tracking via an update. QR Pop creates all QR codes on-device. That means QR Pop never shares your browsing information with a person, company, or server.")
+                Text("QR Pop does not contain any trackers or loggers, and does not collect any user information. \n\nAdditionally, QR Pop will never add tracking via an update. QR Pop creates all QR codes on-device. That means QR Pop never shares your browsing information with a person, company, or server.")
             }
         }
         }

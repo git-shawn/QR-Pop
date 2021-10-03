@@ -8,43 +8,34 @@
 import SwiftUI
 
 struct MainContentView: View {
-    @State var showQRsheet: Bool = false
     var body: some View {
         NavigationView {
             List {
-                Section() {
-                    HStack() {
-                        Button(action: {
-                            showQRsheet = true
-                        }, label: {
-                            Label {
-                                Text("Make a QR Code")
-                                    .foregroundColor(.primary)
-                            } icon: {
-                                Image(systemName: "qrcode")
-                                    .foregroundColor(.primary)
-                            }
-                        })
-                        Spacer();
-                        Image(systemName: "chevron.right")
-                            .font(Font.system(size: 13, weight: .bold, design: .default))
-                            .foregroundColor(Color(UIColor.tertiaryLabel))
+                Section(){
+                    NavigationLink(destination: MakeQRView()){
+                        Label {
+                            Text("Make a QR Code")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "qrcode")
+                                .foregroundColor(.primary)
+                        }
                     }
                 }
                 Section(){
                 NavigationLink(destination: GettingStartedView()) {
                     Label {
-                        Text("Getting Started in Safari")
+                        Text("Enable Safari Extension")
                     } icon: {
-                        Image(systemName: "flag.2.crossed")
+                        Image(systemName: "safari")
                             .foregroundColor(.red)
                     }
                 }
-                NavigationLink(destination: TipsView()) {
+                NavigationLink(destination: ShareExtensionView()) {
                     Label {
-                        Text("Tips")
+                        Text("Enable Share Sheet Action")
                     } icon: {
-                        Image(systemName: "lightbulb")
+                        Image(systemName: "square.and.arrow.up.on.square")
                             .foregroundColor(.orange)
                     }
                 }
@@ -88,10 +79,7 @@ struct MainContentView: View {
                         .font(Font.system(size: 13, weight: .bold, design: .default))
                         .foregroundColor(Color(UIColor.tertiaryLabel))
                 }
-                }
             }.navigationTitle("QR Pop")
-                .sheet(isPresented: $showQRsheet) {
-                  MakeQRView()
             }
         }.navigationViewStyle(.stack)
     }
