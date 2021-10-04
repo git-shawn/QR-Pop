@@ -10,7 +10,8 @@ import SwiftUI
 struct MainContentView: View {
     var body: some View {
         NavigationView {
-            List {
+            List() {
+                //Tools
                 Section(){
                     NavigationLink(destination: MakeQRView()){
                         Label {
@@ -22,65 +23,69 @@ struct MainContentView: View {
                         }
                     }
                 }
+                //Informataion
                 Section(){
-                NavigationLink(destination: GettingStartedView()) {
-                    Label {
-                        Text("Enable Safari Extension")
-                    } icon: {
-                        Image(systemName: "safari")
-                            .foregroundColor(.red)
-                    }
-                }
-                NavigationLink(destination: ShareExtensionView()) {
-                    Label {
-                        Text("Enable Share Sheet Action")
-                    } icon: {
-                        Image(systemName: "square.and.arrow.up.on.square")
-                            .foregroundColor(.orange)
-                    }
-                }
-                NavigationLink(destination: PrivacyView()) {
-                    Label {
-                        Text("Privacy")
-                    } icon: {
-                        Image(systemName: "hand.raised")
-                            .foregroundColor(.blue)
-                    }
-                }
-                }
-                Section(){
-                HStack() {
-                    Link(destination: URL(string: "https://github.com/git-shawn/QR-Pop")!) {
+                    NavigationLink(destination: GettingStartedView()) {
                         Label {
-                            Text("Source Code")
-                                .foregroundColor(.primary)
-                        } icon: {
-                            Image(systemName: "chevron.left.slash.chevron.right")
-                                .foregroundColor(.green)
-                        }
-                    }
-                    Spacer();
-                    Image(systemName: "chevron.right")
-                        .font(Font.system(size: 13, weight: .bold, design: .default))
-                        .foregroundColor(Color(UIColor.tertiaryLabel))
-                }
-                HStack() {
-                    Link(destination: URL(string: "https://qr-pop.glitch.me")!) {
-                        Label {
-                            Text("Website")
-                                .foregroundColor(.primary)
+                            Text("Enable Safari Extension")
                         } icon: {
                             Image(systemName: "safari")
-                                .foregroundColor(.purple)
+                                .foregroundColor(.red)
                         }
                     }
-                    Spacer();
-                    Image(systemName: "chevron.right")
-                        .font(Font.system(size: 13, weight: .bold, design: .default))
-                        .foregroundColor(Color(UIColor.tertiaryLabel))
+                    NavigationLink(destination: ShareExtensionView()) {
+                        Label {
+                            Text("Enable Share Sheet Action")
+                        } icon: {
+                            Image(systemName: "square.and.arrow.up.on.square")
+                                .foregroundColor(.orange)
+                        }
+                    }
+                    NavigationLink(destination: PrivacyView()) {
+                        Label {
+                            Text("Privacy")
+                        } icon: {
+                            Image(systemName: "hand.raised")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                }
+                //Outbound links
+                Section(){
+                    HStack() {
+                        Link(destination: URL(string: "https://github.com/git-shawn/QR-Pop")!) {
+                            Label {
+                                Text("Source Code")
+                                    .foregroundColor(.primary)
+                            } icon: {
+                                Image(systemName: "chevron.left.slash.chevron.right")
+                                    .foregroundColor(.green)
+                            }
+                        }
+                        Spacer();
+                        //Mimic the right chevron that appaers from NavigationLink
+                        Image(systemName: "chevron.right")
+                            .font(Font.system(size: 13, weight: .bold, design: .default))
+                            .foregroundColor(Color(UIColor.tertiaryLabel))
+                    }
+                    HStack() {
+                        Link(destination: URL(string: "https://qr-pop.glitch.me")!) {
+                            Label {
+                                Text("Website")
+                                    .foregroundColor(.primary)
+                            } icon: {
+                                Image(systemName: "safari")
+                                    .foregroundColor(.purple)
+                            }
+                        }
+                        Spacer();
+                        //Mimic the right chevron that appaers from NavigationLink
+                        Image(systemName: "chevron.right")
+                            .font(Font.system(size: 13, weight: .bold, design: .default))
+                            .foregroundColor(Color(UIColor.tertiaryLabel))
+                    }
                 }
             }.navigationTitle("QR Pop")
-            }
         }.navigationViewStyle(.stack)
     }
 }
