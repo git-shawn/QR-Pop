@@ -8,50 +8,51 @@
 import SwiftUI
 
 struct MainContentView: View {
+    @State private var selectedRow: String?
+    
     var body: some View {
         NavigationView {
             List() {
                 //Tools
-                Section(){
-                    NavigationLink(destination: MakeQRView()){
+                Section("Tools"){
+                    NavigationLink(destination: MakeQRView(), tag: "makeQR", selection: self.$selectedRow){
                         Label {
                             Text("Make a QR Code")
-                                .foregroundColor(.primary)
                         } icon: {
                             Image(systemName: "qrcode")
-                                .foregroundColor(.primary)
+                                .foregroundColor((self.selectedRow == "makeQR" && UIDevice.current.userInterfaceIdiom == .pad) ? .white : .primary)
                         }
                     }
                 }
                 //Informataion
-                Section(){
-                    NavigationLink(destination: GettingStartedView()) {
+                Section("Guides"){
+                    NavigationLink(destination: GettingStartedView(), tag: "enableSafari", selection: self.$selectedRow) {
                         Label {
                             Text("Enable Safari Extension")
                         } icon: {
                             Image(systemName: "safari")
-                                .foregroundColor(.red)
+                                .foregroundColor((self.selectedRow == "enableSafari" && UIDevice.current.userInterfaceIdiom == .pad) ? .white : .red)
                         }
                     }
-                    NavigationLink(destination: ShareExtensionView()) {
+                    NavigationLink(destination: ShareExtensionView(), tag: "enableShare", selection: self.$selectedRow) {
                         Label {
                             Text("Enable Share Sheet Action")
                         } icon: {
                             Image(systemName: "square.and.arrow.up.on.square")
-                                .foregroundColor(.orange)
+                                .foregroundColor((self.selectedRow == "enableShare" && UIDevice.current.userInterfaceIdiom == .pad) ? .white : .orange)
                         }
                     }
-                    NavigationLink(destination: PrivacyView()) {
+                    NavigationLink(destination: PrivacyView(), tag: "privacyPolicy", selection: self.$selectedRow) {
                         Label {
                             Text("Privacy")
                         } icon: {
                             Image(systemName: "hand.raised")
-                                .foregroundColor(.blue)
+                                .foregroundColor((self.selectedRow == "privacyPolicy" && UIDevice.current.userInterfaceIdiom == .pad) ? .white : .blue)
                         }
                     }
                 }
                 //Outbound links
-                Section(){
+                Section("Links"){
                     HStack() {
                         Link(destination: URL(string: "https://github.com/git-shawn/QR-Pop")!) {
                             Label {
@@ -62,11 +63,13 @@ struct MainContentView: View {
                                     .foregroundColor(.green)
                             }
                         }
-                        Spacer();
-                        //Mimic the right chevron that appaers from NavigationLink
-                        Image(systemName: "chevron.right")
-                            .font(Font.system(size: 13, weight: .bold, design: .default))
-                            .foregroundColor(Color(UIColor.tertiaryLabel))
+                        Spacer()
+                        //Mimic the right chevron that appaers from NavigationLink if iPhone
+                        if UIDevice.current.userInterfaceIdiom == .phone {
+                            Image(systemName: "chevron.right")
+                                .font(Font.system(size: 13, weight: .bold, design: .default))
+                                .foregroundColor(Color(UIColor.tertiaryLabel))
+                        }
                     }
                     HStack() {
                         Link(destination: URL(string: "https://qr-pop.glitch.me")!) {
@@ -78,15 +81,20 @@ struct MainContentView: View {
                                     .foregroundColor(.purple)
                             }
                         }
-                        Spacer();
-                        //Mimic the right chevron that appaers from NavigationLink
-                        Image(systemName: "chevron.right")
-                            .font(Font.system(size: 13, weight: .bold, design: .default))
-                            .foregroundColor(Color(UIColor.tertiaryLabel))
+                        Spacer()
+                        //Mimic the right chevron that appaers from NavigationLink if iPhone
+                        if UIDevice.current.userInterfaceIdiom == .phone {
+                            Image(systemName: "chevron.right")
+                                .font(Font.system(size: 13, weight: .bold, design: .default))
+                                .foregroundColor(Color(UIColor.tertiaryLabel))
+                        }
                     }
                 }
             }.navigationTitle("QR Pop")
-        }.navigationViewStyle(.stack)
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                MakeQRView()
+            }
+        }.navigationViewStyle(.columns)
     }
 }
 
