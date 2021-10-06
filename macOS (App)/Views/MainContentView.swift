@@ -11,7 +11,7 @@ struct MainContentView: View {
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Designer")) {
+                Section(header: Text("Tools")) {
                     NavigationLink(destination: MakeQRView()) {
                     Label {
                         Text("Make a QR code")
@@ -21,12 +21,12 @@ struct MainContentView: View {
                     }
                     }
                 }
-                Section(header: Text("About")) {
+                Section(header: Text("Guides")) {
                     NavigationLink(destination: GettingStartedView()) {
                         Label {
-                            Text("Getting Started")
+                            Text("Enable Extension")
                         } icon: {
-                            Image(systemName: "flag")
+                            Image(systemName: "safari")
                         }
                     }
                     NavigationLink(destination: TipsView()) {
@@ -82,7 +82,7 @@ struct MainContentView: View {
                     .foregroundColor(.secondary)
             }
         }.navigationTitle("QR Pop")
-        .frame(minWidth: 600, idealWidth: 750, minHeight: 400, idealHeight: 500)
+        .frame(minWidth: 700, idealWidth: 750, minHeight: 400, idealHeight: 500)
     }
 }
 

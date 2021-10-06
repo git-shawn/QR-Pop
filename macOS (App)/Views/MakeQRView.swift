@@ -6,35 +6,51 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 import Cocoa
 
 struct MakeQRView: View {
     @State private var text = ""
+    @State private var bgColor = Color.white //QR code background color
+    @State private var fgColor = Color.black //QR code foreground color
         
     var body: some View {
-        VStack(alignment: .center){
-            Image(nsImage: MakeQRView.generateQrImage(from: text)!)
-                .resizable()
-                .frame(width: 300, height: 300)
-            HStack() {
-            TextField("Enter URL", text: $text)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .disableAutocorrection(true)
-                Button(action: {
-                    showSavePanelThenSave(from: text)
-                }) {
-                    Label {
-                        Text("Save")
-                    } icon: {
-                        Image(systemName: "square.and.arrow.down")
+        HStack() {
+            Spacer()
+            VStack(alignment: .center){
+                Image(nsImage: MakeQRView.generateQrImage(from: text, bg: bgColor, fg: fgColor)!)
+                    .resizable()
+                    .frame(width: 300, height: 300)
+//                    .onDrag({
+//                        let qrImage = MakeQRView.generateQrImage(from: text, bg: bgColor, fg: fgColor)!
+//                        let tiff = qrImage.tiffRepresentation
+//                        return NSItemProvider(item: tiff as NSSecureCoding, typeIdentifier: UTType.tiff.identifier)
+//                    })
+                HStack() {
+                TextField("Enter URL", text: $text)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .disableAutocorrection(true)
+                    Button(action: {
+                        showSavePanelThenSave(from: text, bg: bgColor, fg: fgColor)
+                    }) {
+                        Label {
+                            Text("Save")
+                        } icon: {
+                            Image(systemName: "square.and.arrow.down")
+                        }
                     }
-                }
-            }.frame(width: 300)
-                .padding()
+                }.frame(width: 300)
+                    .padding()
+            }
+            VStack() {
+                ColorPicker("Background color", selection: $bgColor, supportsOpacity: true)
+                ColorPicker("Foreground color", selection: $fgColor, supportsOpacity: false)
+            }
+            Spacer()
         }.navigationTitle("QR Generator")
     }
     
-    static func generateQrImage(from string: String) -> NSImage? {
+    static func generateQrImage(from string: String, bg: Color, fg: Color) -> NSImage? {
         // create the CIFilter
         guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else {
             return nil
@@ -55,8 +71,8 @@ struct MakeQRView: View {
         // set the color values to the qr color filter
         colorFilter.setDefaults()
         colorFilter.setValue(qrFilter.outputImage, forKey: "inputImage")
-        colorFilter.setValue(CIColor(color: .black), forKey: "inputColor0")
-        colorFilter.setValue(CIColor(color: .white), forKey: "inputColor1")
+        colorFilter.setValue(CIColor(color: NSColor(fg)), forKey: "inputColor0")
+        colorFilter.setValue(CIColor(color: NSColor(bg)), forKey: "inputColor1")
         
         let ciImage = colorFilter.outputImage!
         
@@ -70,7 +86,7 @@ struct MakeQRView: View {
         return nsImage
     }
     
-    func showSavePanelThenSave(from codeGen: String) {
+    func showSavePanelThenSave(from codeGen: String, bg: Color, fg: Color) {
         let savePanel = NSSavePanel()
         savePanel.allowedFileTypes = ["png"]
         savePanel.canCreateDirectories = true
@@ -82,7 +98,7 @@ struct MakeQRView: View {
         
         let response = savePanel.runModal()
         if response == NSApplication.ModalResponse.OK {
-            let qrNSImage = MakeQRView.generateQrImage(from: codeGen)
+            let qrNSImage = MakeQRView.generateQrImage(from: codeGen, bg: bg, fg: fg)
             MakeQRView.saveImage(qrNSImage!, atUrl: savePanel.url!)
         }
     }
