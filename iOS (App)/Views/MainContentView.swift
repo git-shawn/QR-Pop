@@ -72,7 +72,25 @@ struct MainContentView: View {
                         }
                     }
                     HStack() {
-                        Link(destination: URL(string: "https://qr-pop.glitch.me")!) {
+                        Link(destination: URL(string: "mailto:shawnios@outlook.com")!) {
+                            Label {
+                                Text("Contact")
+                                    .foregroundColor(.primary)
+                            } icon: {
+                                Image(systemName: "envelope")
+                                    .foregroundColor(.yellow)
+                            }
+                        }
+                        Spacer()
+                        //Mimic the right chevron that appaers from NavigationLink if iPhone
+                        if UIDevice.current.userInterfaceIdiom == .phone {
+                            Image(systemName: "chevron.right")
+                                .font(Font.system(size: 13, weight: .bold, design: .default))
+                                .foregroundColor(Color(UIColor.tertiaryLabel))
+                        }
+                    }
+                    HStack() {
+                        Link(destination: URL(string: "https://fromshawn.dev/qrpop.html")!) {
                             Label {
                                 Text("Website")
                                     .foregroundColor(.primary)

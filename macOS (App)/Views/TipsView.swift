@@ -27,7 +27,7 @@ struct TipsView: View {
                 Text("Have a question?")
                     .font(.headline)
                 Text("If you were wondering something that wasn't mentioned here, feel free to contact me using the button below.")
-                Button(action: {openURL(URL(string: "mailto:trusty.09klutzy@icloud.com")!)}) {
+                Button(action: {openURL(URL(string: "mailto:shawnios@outlook.com")!)}) {
                     Text("Contact")
                 }
                 }

@@ -61,7 +61,7 @@ struct MainContentView: View {
                             Image(systemName: "iphone")
                         }
                     }
-                    Link(destination: URL(string: "https://qr-pop.glitch.me")!) {
+                    Link(destination: URL(string: "https://fromshawn.dev/qrpop.html")!) {
                         Label {
                             Text("Website")
                                 .foregroundColor(.primary)

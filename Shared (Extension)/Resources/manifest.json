@@ -37,6 +37,6 @@
     },
 
     "permissions": [
-        "activeTab"
+        "tabs"
     ]
 }
