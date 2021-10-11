@@ -1,10 +1,10 @@
 {
     "extension_name": {
         "message": "QR Pop",
-        "description": "Quickly display a QR code for the website you are viewing."
+        "description": "The display name for the extension."
     },
     "extension_description": {
         "message": "Quickly display a QR code for the website you are viewing.",
-        "description": "Generates a QR code for the webpage you're viewing."
+        "description": "Description of what the extension does."
     }
 }

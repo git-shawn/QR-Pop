@@ -1,28 +1,38 @@
-// Update the relevant fields with the new data.
-const setWebInfo = info => {
-
-    if(info.hostname && info.url){
-        document.getElementById('website-title').textContent = info.hostname;
-        new QRCode(document.getElementById("qr-render"), {
-            text: info.url,
-            width: 190,
-            height: 190,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.L
-        });
+window.addEventListener("DOMContentLoaded", (event) => {
+    
+    function handleResponse(message) {
+        let info = message.response;
+        
+        if(info.hostname && info.url){
+            
+            // If the user allows, show the website's hostname in the popup.
+            if (info.showHostname) {
+                document.getElementById('website-title').textContent = info.hostname;
+            } else {
+                document.getElementById('website-title').style.display = "none";
+            }
+            
+            // Set the QR Code to be the user's desired with.
+            // The body should be 40px larger than the code, 20 on each side.
+            document.body.style.width = ((info.codeSize+40) + "px")
+            new QRCode(document.getElementById("qr-render"), {
+                text: info.url,
+                width: info.codeSize,
+                height: info.codeSize,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.L
+            });
+        }
     }
-};
 
-window.addEventListener('DOMContentLoaded', () => {
-    console.log("begin");
-    browser.tabs.query({
-        active: true,
-        currentWindow: true
-    }, tabs => {
-    browser.tabs.sendMessage(
-        tabs[0].id,
-        {from: 'popup', subject: 'getWebInfo'},
-        setWebInfo);
+    function handleError(error) {
+        console.log(`Error: ${error}`);
+    }
+
+    // Request website information and user preferences from content.js
+    browser.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        var sending = browser.tabs.sendMessage(tabs[0].id, { type: "getWebInfo" });
+        sending.then(handleResponse, handleError);
     });
 });

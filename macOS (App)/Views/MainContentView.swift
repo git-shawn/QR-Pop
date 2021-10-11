@@ -69,6 +69,14 @@ struct MainContentView: View {
                             Image(systemName: "safari")
                         }
                     }
+                    Link(destination: URL(string: "mailto:shawnios@outlook.com")!) {
+                        Label {
+                            Text("Contact Me")
+                                .foregroundColor(.primary)
+                        } icon: {
+                            Image(systemName: "envelope")
+                        }
+                    }
                 }
             }.listStyle(SidebarListStyle())
             VStack() {

@@ -4,12 +4,11 @@
 
 body {
     padding: 10px;
-    width: 220px;
-    margin: 0 auto;
-    max-height: 350px;
+    margin: 10px auto;
     font-family: system-ui;
     text-align: center;
     overflow: hidden;
+    width: 240px;
 }
 
 img {
@@ -17,22 +16,19 @@ img {
     padding: 10px;
     border-radius: 6px;
     background-color: #fff;
-    width: 190px;
-    height: 190px;
     margin: 0 auto;
 }
 
-qr-render {
-    width: 170.66px;
-    height: 170.66px;
-}
-
 p {
-    margin: 0;
+    margin: 0 auto;
     overflow-wrap: break-word;
     font-size: 1.1em;
     font-weight: 500;
     color: #1D1D1F;
+}
+
+#website-title {
+    text-align: center;
 }
 
 @media (prefers-color-scheme: dark) {
