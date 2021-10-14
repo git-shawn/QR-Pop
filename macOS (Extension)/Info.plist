@@ -9,5 +9,7 @@
 		<key>NSExtensionPrincipalClass</key>
 		<string>$(PRODUCT_MODULE_NAME).SafariWebExtensionHandler</string>
 	</dict>
+	<key>TeamIdentifierPrefix</key>
+	<string>$(TeamIdentifierPrefix)shwndvs.QR-Pop</string>
 </dict>
 </plist>

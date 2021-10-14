@@ -10,9 +10,12 @@ import UniformTypeIdentifiers
 import Cocoa
 
 struct MakeQRView: View {
+    
     @State private var text = ""
-    @State private var bgColor = Color.white //QR code background color
-    @State private var fgColor = Color.black //QR code foreground color
+    //QR code background color
+    @State private var bgColor = Color.white
+    //QR code foreground color
+    @State private var fgColor = Color.black
         
     var body: some View {
         HStack() {
@@ -21,11 +24,7 @@ struct MakeQRView: View {
                 Image(nsImage: MakeQRView.generateQrImage(from: text, bg: bgColor, fg: fgColor)!)
                     .resizable()
                     .frame(width: 300, height: 300)
-//                    .onDrag({
-//                        let qrImage = MakeQRView.generateQrImage(from: text, bg: bgColor, fg: fgColor)!
-//                        let tiff = qrImage.tiffRepresentation
-//                        return NSItemProvider(item: tiff as NSSecureCoding, typeIdentifier: UTType.tiff.identifier)
-//                    })
+                    .cornerRadius(16)
                 HStack() {
                 TextField("Enter URL", text: $text)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -47,7 +46,8 @@ struct MakeQRView: View {
                 ColorPicker("Foreground color", selection: $fgColor, supportsOpacity: false)
             }
             Spacer()
-        }.navigationTitle("QR Generator")
+        }.scaledToFit()
+        .navigationTitle("QR Generator")
     }
     
     static func generateQrImage(from string: String, bg: Color, fg: Color) -> NSImage? {

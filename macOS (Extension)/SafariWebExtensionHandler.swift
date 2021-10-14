@@ -6,7 +6,6 @@
 //
 
 import SafariServices
-import os.log
 
 let SFExtensionMessageKey = "message"
 
@@ -16,16 +15,20 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         let item = context.inputItems[0] as! NSExtensionItem
         let message = item.userInfo?[SFExtensionMessageKey]
         
+        let TeamIdentifierPrefix =
+            Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String
+        
+        let defaults = UserDefaults(suiteName: TeamIdentifierPrefix)
+        
         let messageDictionary = message as? [String: String]
         if messageDictionary?["message"] == "getDefaults" {
             
-            // No preferences on Mac version yet. Default values instead.
-            let codeSize = 190
-            let showHostname = true
-            let makeBrighter = false
+            let codeSize = defaults?.integer(forKey: "codeSize") ?? 190
+            let showHostname = defaults?.bool(forKey: "urlToggle") ?? true
+            let referralToggle = defaults?.bool(forKey: "referralToggle") ?? false
             
             let response = NSExtensionItem()
-            response.userInfo = [ SFExtensionMessageKey: [ "codeSize": codeSize, "showHostname": showHostname, "makeBrighter": makeBrighter ] ]
+            response.userInfo = [ SFExtensionMessageKey: [ "codeSize": codeSize, "showHostname": showHostname, "referralToggle": referralToggle ] ]
             context.completeRequest(returningItems: [response], completionHandler: nil)
         }
     }

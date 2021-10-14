@@ -15,8 +15,8 @@ struct SettingsView: View {
     // Safari Extension hostname visible or not
     @AppStorage("urlToggle", store: UserDefaults(suiteName: "group.shwndvs.qr-pop")) var urlToggle: Bool = false
     
-    // Safari Extension auto-brightness on or off
-    @AppStorage("brightToggle", store: UserDefaults(suiteName: "group.shwndvs.qr-pop")) var brightToggle: Bool = false
+    // Safari Extension UTM removal on or off
+    @AppStorage("referralToggle", store: UserDefaults(suiteName: "group.shwndvs.qr-pop")) var referralToggle: Bool = false
     
     var body: some View {
         List {
@@ -44,9 +44,13 @@ struct SettingsView: View {
                 Toggle("Show Webpage URL", isOn: $urlToggle)
                     .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                 
-//                Toggle auto-brightness in Safari Extension. This may not be possible?
-//                Toggle("Increase Screen Brightness", isOn: $brightToggle)
-//                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                VStack(alignment:.leading) {
+                    Toggle("Remove tracking codes", isOn: $referralToggle)
+                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                    Text("Links may sometimes include UTM tracking parameters. These can make the link longer, and the QR codes QR Pop generates more complex.")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }
             }
             if UIApplication.shared.supportsAlternateIcons {
                 Section("Appearance") {

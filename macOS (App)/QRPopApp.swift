@@ -15,9 +15,18 @@ struct QRPopApp: App {
         WindowGroup {
             MainContentView()
         }.commands {
+            SidebarCommands()
             CommandGroup(replacing: .help) {
-                Button(action: {openURL(URL(string: "https://qr-pop.glitch.me/#support")!)}) {
-                    Text("QR Pop Help")
+                NavigationLink(destination: TipsView()) {
+                    Text("Help")
+                }
+                NavigationLink(destination: PrivacyView()) {
+                    Text("Privacy Policy")
+                }
+            }
+            CommandGroup(replacing: CommandGroupPlacement.appSettings) {
+                NavigationLink(destination: PreferencesView()) {
+                    Text("Preferences")
                 }
             }
         }

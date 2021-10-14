@@ -22,15 +22,10 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             
             let codeSize = defaults?.integer(forKey: "codeSize") ?? 190
             let showHostname = defaults?.bool(forKey: "urlToggle") ?? true
-            let makeBrighter = defaults?.bool(forKey: "brightToggle") ?? false
- 
-//            Non-functional concept idea. Needs work.
-//            if (makeBrighter) {
-//                UIScreen.main.brightness = 1
-//            }
+            let referralToggle = defaults?.bool(forKey: "referralToggle") ?? false
             
             let response = NSExtensionItem()
-            response.userInfo = [ SFExtensionMessageKey: [ "codeSize": codeSize, "showHostname": showHostname, "makeBrighter": makeBrighter ] ]
+            response.userInfo = [ SFExtensionMessageKey: [ "codeSize": codeSize, "showHostname": showHostname, "referralToggle": referralToggle ] ]
             context.completeRequest(returningItems: [response], completionHandler: nil)
         }
     }

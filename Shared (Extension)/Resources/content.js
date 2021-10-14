@@ -16,7 +16,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
             url: window.location.href,
             codeSize: codeSize,
             showHostname: message.response.showHostname,
-            makeBrighter: message.response.makeBrighter,
+            referralToggle: message.response.referralToggle,
         };
         
         sendResponse({ response: webInfo });
