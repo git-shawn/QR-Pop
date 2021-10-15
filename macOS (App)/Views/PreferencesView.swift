@@ -18,6 +18,9 @@ struct PreferencesView: View {
     // Safari Extension UTM removal on or off
     @AppStorage("referralToggle", store: UserDefaults(suiteName: (Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String))) var referralToggle: Bool = false
     
+    // QR Code Generator autopaste links or not
+    @AppStorage("autoPasteLinks", store: UserDefaults(suiteName: (Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String))) var autoPasteLinks: Bool = false
+    
     @State var showTrackingPopover: Bool = false
     
     var body: some View {
@@ -38,7 +41,7 @@ struct PreferencesView: View {
                     Button(action: {
                         showTrackingPopover = true
                     }) {
-                        Image(systemName: "info.circle")
+                        Image(systemName: "questionmark.circle")
                             .foregroundColor(.accentColor)
                     }.popover(
                         isPresented: self.$showTrackingPopover,
@@ -51,7 +54,16 @@ struct PreferencesView: View {
                     .buttonStyle(PlainButtonStyle())
                 }
             }
+            Section(header: Text("In-App QR Code Generator")) {
+                // Toggle showing hostname in Safari Extension
+                Toggle("Generate Codes from Clipboard", isOn: $autoPasteLinks)
+                    .toggleStyle(CheckboxToggleStyle())
+                    .help("Create a QR code from the last URL you copied automatically when you open the \"Make a QR Code\" page")
+            }
         }.navigationTitle("Preferences")
+        .toolbar() {
+            Spacer()
+        }
     }
 }
 

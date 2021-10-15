@@ -24,10 +24,10 @@ struct MainContentView: View {
                 Section(header: Text("Guides")) {
                     NavigationLink(destination: GettingStartedView()) {
                         Label {
-                            Text("Enable Extension")
+                            Text("Enable Extensions")
                                 .foregroundColor(.primary)
                         } icon: {
-                            Image(systemName: "safari")
+                            Image(systemName: "puzzlepiece")
                         }
                     }
                     NavigationLink(destination: TipsView()) {
@@ -92,12 +92,11 @@ struct MainContentView: View {
                     .multilineTextAlignment(.center)
                     .font(.title3)
                     .foregroundColor(.secondary)
+            }.toolbar() {
+                Spacer()
             }
         }.navigationTitle("QR Pop")
         .frame(minWidth: 800, minHeight: 400)
-        .toolbar() {
-            Spacer()
-        }
     }
 }
 

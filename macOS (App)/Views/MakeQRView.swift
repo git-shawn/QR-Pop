@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UniformTypeIdentifiers
 import Cocoa
 
 struct MakeQRView: View {
@@ -16,38 +15,73 @@ struct MakeQRView: View {
     @State private var bgColor = Color.white
     //QR code foreground color
     @State private var fgColor = Color.black
+    
+    //User preferences to allow autopasting links into the QR Generator or not
+    @AppStorage("autoPasteLinks", store: UserDefaults(suiteName: (Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String))) var autoPasteLinks: Bool = false
         
     var body: some View {
-        HStack() {
-            Spacer()
-            VStack(alignment: .center){
+        VStack() {
+            HStack(alignment: .center, spacing: 20){
                 Image(nsImage: MakeQRView.generateQrImage(from: text, bg: bgColor, fg: fgColor)!)
                     .resizable()
                     .frame(width: 300, height: 300)
-                    .cornerRadius(16)
-                HStack() {
-                TextField("Enter URL", text: $text)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .disableAutocorrection(true)
-                    Button(action: {
-                        showSavePanelThenSave(from: text, bg: bgColor, fg: fgColor)
-                    }) {
-                        Label {
-                            Text("Save")
-                        } icon: {
-                            Image(systemName: "square.and.arrow.down")
+                    .cornerRadius(10)
+                    .onDrag({
+                        // This works for most apps except Finder?
+                        // May be a SwiftUI bug, but worth looking into again later.
+                        
+                        // Generate the image
+                        let qrImage = MakeQRView.generateQrImage(from: text, bg: bgColor, fg: fgColor)!
+                        
+                        // Convert it to a TIFF, then a PNG
+                        let tiffData = qrImage.tiffRepresentation
+                        let imageRep = NSBitmapImageRep(data: tiffData!)
+                        let imageData = imageRep?.representation(using: .png, properties: [:])
+                        
+                        // Package it into an NSItemProvider, and return it
+                        let provider = NSItemProvider(item: imageData as NSSecureCoding?, typeIdentifier: kUTTypePNG as String)
+                        provider.previewImageHandler = { (handler, _, _) -> Void in
+                            handler?(imageRep as NSSecureCoding?, nil)
                         }
-                    }
-                }.frame(width: 300)
-                    .padding()
+                        return provider
+                    })
+                VStack(alignment: .leading) {
+                    ColorPicker("Background color", selection: $bgColor, supportsOpacity: true)
+                    ColorPicker("Foreground color ", selection: $fgColor, supportsOpacity: false)
+                }
             }
-            VStack() {
-                ColorPicker("Background color", selection: $bgColor, supportsOpacity: true)
-                ColorPicker("Foreground color", selection: $fgColor, supportsOpacity: false)
+            TextField("Enter URL", text: $text)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .disableAutocorrection(true)
+                .frame(maxWidth: 500)
+                .padding()
+        }.navigationTitle("QR Generator")
+        .toolbar {
+            Button(action: {
+                showSavePanelThenSave(from: text, bg: bgColor, fg: fgColor)
+            }) {
+                Image(systemName: "square.and.arrow.down")
+            }.accessibilityLabel("Save")
+            .accessibilityHint("Save QR Code")
+            .help("Save QR Code")
+        }.onAppear(perform: {
+            if autoPasteLinks {
+                checkPasteboardForLink()
             }
-            Spacer()
-        }.scaledToFit()
-        .navigationTitle("QR Generator")
+        })
+    }
+    
+    func checkPasteboardForLink() {
+        // Extract the first String from the Pasteboard, if there is one
+        let pbItem = NSPasteboard.general.pasteboardItems?.first?.string(forType: .string)
+        // Check to see if there was a String
+        if (pbItem != nil) {
+            // If so, check to see if the String is a URL
+            if pbItem!.isValidURL {
+                // If so, insert the String into the QR Code generator's text field
+                self.text = pbItem!
+            }
+        }
     }
     
     static func generateQrImage(from string: String, bg: Color, fg: Color) -> NSImage? {
@@ -117,6 +151,18 @@ struct MakeQRView: View {
         }
         catch {
             print("error saving: \(error)")
+        }
+    }
+}
+
+extension String {
+    var isValidURL: Bool {
+        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+        if let match = detector.firstMatch(in: self, options: [], range: NSRange(location: 0, length: self.utf16.count)) {
+            // it is a link, if the match covers the whole string
+            return match.range.length == self.utf16.count
+        } else {
+            return false
         }
     }
 }

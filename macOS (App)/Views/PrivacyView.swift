@@ -31,6 +31,9 @@ struct PrivacyView: View {
             }
         }
         .navigationTitle("Privacy")
+        .toolbar() {
+            Spacer()
+        }
     }
 }
 
