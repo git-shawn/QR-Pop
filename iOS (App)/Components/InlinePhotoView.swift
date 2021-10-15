@@ -19,11 +19,13 @@ struct InlinePhotoView: View {
                 Image(imageName)
                     .resizable()
                     .scaledToFill()
-                    .brightness(colorScheme == .dark ? 0.05 : -0.05)
+                    .brightness(colorScheme == .dark ? 0.02 : -0.02)
             }
         }
         .aspectRatio(4/3, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 15))
+        .overlay(RoundedRectangle(cornerRadius: 15)
+                            .stroke(.quaternary, lineWidth: 1))
     }
 }
 

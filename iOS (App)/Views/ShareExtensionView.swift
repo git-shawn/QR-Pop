@@ -10,6 +10,7 @@ import SwiftUI
 struct ShareExtensionView: View {
     @State var index = 0
     var images = ["actext1", "actext2", "actext3"]
+    @State private var showShare: Bool = false
     
     var body: some View {
         ScrollView {
@@ -32,12 +33,17 @@ struct ShareExtensionView: View {
                     HStack{
                         Spacer()
                         Button(action: {
-                            shareSheet()
+                            showShare = true
                         }) {
                             Text("Open Share Sheet")
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 5)
                         }.buttonStyle(.borderedProminent)
+                        .sheet(isPresented: $showShare, content: {
+                            ZStack {
+                            ActivityViewController(activityItems: [URL(string: "https://fromshawn.dev/qrpop.html")!])
+                            }.background(.ultraThickMaterial)
+                        })
                         Spacer()
                     }
                 }
@@ -45,19 +51,6 @@ struct ShareExtensionView: View {
             Spacer()
         }
         .navigationBarTitle(Text("Share Sheet Action"), displayMode: .large)
-    }
-    
-    func shareSheet() {
-        guard let data = URL(string: "https://apps.apple.com/us/app/qr-pop/id1587360435") else { return }
-        let av = UIActivityViewController(activityItems: [data], applicationActivities: nil)
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            av.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
-            av.popoverPresentationController?.sourceRect = CGRect(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY, width: 0, height: 0)
-            av.popoverPresentationController?.permittedArrowDirections = []
-        } else {
-            av.modalPresentationStyle = .pageSheet
-        }
-        UIApplication.shared.windows.first?.rootViewController?.present(av, animated: true, completion: nil)
     }
 }
 
