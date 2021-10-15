@@ -20,6 +20,9 @@ struct QRPopApp: App {
                 NavigationLink(destination: TipsView()) {
                     Text("Help")
                 }
+                Link(destination: URL(string: "mailto:contact@fromshawn.dev")!) {
+                    Text("Submit Feedback")
+                }
                 NavigationLink(destination: PrivacyView()) {
                     Text("Privacy Policy")
                 }

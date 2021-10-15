@@ -72,7 +72,7 @@ struct MainContentView: View {
                             Image(systemName: "safari")
                         }
                     }
-                    Link(destination: URL(string: "mailto:shawnios@outlook.com")!) {
+                    Link(destination: URL(string: "mailto:contact@fromshawn.dev")!) {
                         Label {
                             Text("Contact Me")
                                 .foregroundColor(.primary)

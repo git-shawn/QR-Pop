@@ -28,7 +28,7 @@ struct AboutView: View {
                 HStack {
                     
                     //Contact email
-                    Link(destination: URL(string: "mailto:shawnios@outlook.com")!, label: {
+                    Link(destination: URL(string: "mailto:contact@fromshawn.dev")!, label: {
                         Label("Contact", systemImage: "envelope")
                     }).tint(.primary)
                     Spacer()
