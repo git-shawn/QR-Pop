@@ -61,6 +61,7 @@ struct AboutView: View {
                 .font(.footnote)
                 .opacity(0.3)
         }.navigationTitle("About")
+        .listStyle(.insetGrouped)
     }
 }
 

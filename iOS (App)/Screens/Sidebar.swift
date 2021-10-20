@@ -1,0 +1,61 @@
+//
+//  Sidebar.swift
+//  QR Pop (iOS)
+//
+//  Created by Shawn Davis on 10/19/21.
+//
+
+import SwiftUI
+
+struct Sidebar: View {
+    @State private var selectedRow: String?
+    @State private var isDefaultItemActive = true
+
+    var body: some View {
+        List {
+            NavigationLink(destination: QRNavigationView()){
+                Label {
+                    Text("Make a QR Code")
+                } icon: {
+                    Image(systemName: "qrcode")
+                }
+            }
+            NavigationLink(destination: GettingStartedView()) {
+                Label {
+                    Text("Enable Safari Extension")
+                } icon: {
+                    Image(systemName: "safari")
+                }
+            }
+            NavigationLink(destination: ShareExtensionView()) {
+                Label {
+                    Text("Enable Share Sheet Action")
+                } icon: {
+                    Image(systemName: "square.and.arrow.up.on.square")
+                }
+            }
+            NavigationLink(destination: AboutView()) {
+                Label {
+                    Text("About")
+                } icon: {
+                    Image(systemName: "info.circle")
+                }
+            }
+        }.listStyle(SidebarListStyle())
+        .navigationTitle("QR Pop")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: SettingsView()) {
+                    Image(systemName: "gear")
+                        .accessibility(label: Text("Settings"))
+                }
+            }
+        }
+    }
+}
+
+struct Sidebar_Previews: PreviewProvider {
+    static var previews: some View {
+        Sidebar()
+    }
+}

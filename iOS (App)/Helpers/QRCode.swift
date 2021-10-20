@@ -11,7 +11,7 @@ import EventKit
 import SwiftUI
 
 /// A helper class to facilitate the generation of QR codes.
-final class QRCode {
+final class QRCode: NSObject {
     
     /// Correction levels for a QR Code
     enum correctionLevel {
@@ -33,6 +33,8 @@ final class QRCode {
         case WPA
     }
     
+    @AppStorage("errorCorrection") var errorLevel: Int = 0
+    
     /// This function generates a QR code from a String.
     /// - Parameters:
     ///   - content: The String to encode as a QR code.
@@ -40,7 +42,7 @@ final class QRCode {
     ///   - fg: The foreground color for the QR code.
     ///   - correction: Optional, the error correction level for the QR code.
     /// - Returns: PNG Data representing the QR code generated.
-    func generate(content: String, bg: Color, fg: Color, correction: correctionLevel? = correctionLevel.L) -> Data? {
+    func generate(content: String, bg: Color, fg: Color) -> Data? {
         //Create CoreImage filters for the qr code
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
         guard let colorFilter = CIFilter(name: "CIFalseColor") else { return nil }
@@ -49,16 +51,16 @@ final class QRCode {
         let data = content.data(using: .ascii, allowLossyConversion: false)
         
         filter.setValue(data, forKey: "inputMessage")
-        switch correction {
-            case .L:
+        switch errorLevel {
+            case 0:
                 filter.setValue("L", forKey: "inputCorrectionLevel")
-            case .M:
+            case 1:
                 filter.setValue("M", forKey: "inputCorrectionLevel")
-            case .Q:
+            case 2:
                 filter.setValue("Q", forKey: "inputCorrectionLevel")
-            case .H:
+            case 3:
                 filter.setValue("H", forKey: "inputCorrectionLevel")
-            case .none:
+            default:
                 filter.setValue("L", forKey: "inputCorrectionLevel")
         }
         colorFilter.setValue(filter.outputImage, forKey: "inputImage")
@@ -104,10 +106,10 @@ final class QRCode {
     ///   - fg: The foregroound color for the QR code.
     ///   - correction: Optional, the error correction level for the QR code.
     /// - Returns: PNG Data representing the QR code generated.
-    func generateContact(contact: CNContact, bg: Color, fg: Color, correction: correctionLevel? = .L) -> Data? {
+    func generateContact(contact: CNContact, bg: Color, fg: Color) -> Data? {
         let vcard: String? = self.vcard(contact: contact)
         guard vcard != nil else {return nil}
-        let code = self.generate(content: vcard!, bg: bg, fg: fg, correction: correction)
+        let code = self.generate(content: vcard!, bg: bg, fg: fg)
         return code
     }
     
@@ -120,7 +122,7 @@ final class QRCode {
     ///   - fg: The QR code's foreground color.
     ///   - correction: Optional, the error correction level for the QR code.
     /// - Returns: PNG Data representing the QR code generated.
-    func generateWifi(auth: wifiAuthType, ssid: String, password: String, bg: Color, fg: Color, correction: correctionLevel? = .L) -> Data? {
+    func generateWifi(auth: wifiAuthType, ssid: String, password: String, bg: Color, fg: Color) -> Data? {
         var authType: String
         
         switch auth {
@@ -131,7 +133,7 @@ final class QRCode {
         }
         
         let dataString = "WIFI:T:\(authType);S:\(ssid);P:\(password);;"
-        let code = self.generate(content: dataString, bg: bg, fg: fg, correction: correction)
+        let code = self.generate(content: dataString, bg: bg, fg: fg)
         return code
     }
     
@@ -147,7 +149,7 @@ final class QRCode {
     ///   - fg: The foreground color for the event.
     ///   - correction: Optional, the error correction level for the QR code.
     /// - Returns: PNG Data representing the QR code generated.
-    func generateEvent(title: String, start: Date, end: Date, description: String? = nil, location: String? = nil, bg: Color, fg: Color, correction: correctionLevel? = .L) -> Data? {
+    func generateEvent(title: String, start: Date, end: Date, description: String? = nil, location: String? = nil, bg: Color, fg: Color) -> Data? {
         var dataString: String
         
         // Format the date so that the calendar can read it
@@ -167,7 +169,7 @@ final class QRCode {
         } else {
             dataString = "BEGIN:VEVENT\nSUMMARY:\(title)\nDESCRIPTION:\(description!)\nLOCATION:\(location!)\nDTSTART:\(startStr)\nDTEND:\(endStr)\nEND:VEVENT"
         }
-        let code = self.generate(content: dataString, bg: bg, fg: fg, correction: correction)
+        let code = self.generate(content: dataString, bg: bg, fg: fg)
         return code
     }
     
@@ -178,14 +180,14 @@ final class QRCode {
     ///   - fg: The foreground color for the event.
     ///   - correction: Optional, the error correction level for the QR code.
     /// - Returns: PNG Data representing the QR code generated.
-    func generateEventFromCalendar(event: EKEvent, bg: Color, fg: Color, correction: correctionLevel? = .L) -> Data? {
+    func generateEventFromCalendar(event: EKEvent, bg: Color, fg: Color) -> Data? {
         let start: Date = event.startDate
         let end: Date = event.endDate
         let location: String = event.location ?? ""
         let title: String = event.title
         let description: String = event.description
         
-        let code = generateEvent(title: title, start: start, end: end, description: description, location: location, bg: bg, fg: fg, correction: correction)
+        let code = generateEvent(title: title, start: start, end: end, description: description, location: location, bg: bg, fg: fg)
         return code
     }
 }
