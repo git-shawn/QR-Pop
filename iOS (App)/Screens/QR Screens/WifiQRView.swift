@@ -92,14 +92,10 @@ struct WifiQRView: View {
                 })
                 Button(
                 action: {
-                    showShare = true
+                    showShareSheet(with: [UIImage(data: content!)!])
                 }){
                     Image(systemName: "square.and.arrow.up")
-                }.sheet(isPresented: $showShare, content: {
-                    ZStack {
-                    ActivityViewController(activityItems: [UIImage(data: qrCode.generateWifi(auth: auth, ssid: ssid, password: pass, bg: bgColor, fg: fgColor)!)!])
-                    }.background(.ultraThickMaterial)
-                })
+                }
             }
         })
     }

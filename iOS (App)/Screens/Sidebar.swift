@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct Sidebar: View {
-    @State private var selectedRow: String?
-    @State private var isDefaultItemActive = true
+    @State private var showSettings = false
 
     var body: some View {
         List {
@@ -45,11 +44,16 @@ struct Sidebar: View {
         .navigationTitle("QR Pop")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: SettingsView()) {
+                Button(action: {
+                    showSettings = true
+                    
+                }) {
                     Image(systemName: "gear")
                         .accessibility(label: Text("Settings"))
                 }
             }
+        }.sheet(isPresented: $showSettings) {
+            SettingsView(shown: $showSettings)
         }
     }
 }

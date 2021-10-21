@@ -33,17 +33,12 @@ struct ShareExtensionView: View {
                     HStack{
                         Spacer()
                         Button(action: {
-                            showShare = true
+                            showShareSheet(with: [URL(string: "https://fromshawn.dev/qrpop.html")!])
                         }) {
                             Text("Open Share Sheet")
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 5)
                         }.buttonStyle(.borderedProminent)
-                        .sheet(isPresented: $showShare, content: {
-                            ZStack {
-                            ActivityViewController(activityItems: [URL(string: "https://fromshawn.dev/qrpop.html")!])
-                            }.background(.ultraThickMaterial)
-                        })
                         Spacer()
                     }
                 }

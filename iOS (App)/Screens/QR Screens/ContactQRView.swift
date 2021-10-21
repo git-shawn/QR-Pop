@@ -36,34 +36,14 @@ struct ContactQRView: View {
                 
                 QRImageView(content: $content, share: $showShare, bg: $bgColor)
                 
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        showPicker = true
-                    }) {
-                        Label("Chose", systemImage: "person.crop.circle")
-                            .font(.headline)
-                            .frame(width: 130, height: 30)
-                    }.buttonStyle(.bordered)
-                    Spacer()
-                    Button(action: {
-                        showMaker = true
-                    }) {
-                        Label("Create", systemImage: "person.crop.circle.badge.plus")
-                            .font(.headline)
-                            .frame(width: 130, height: 30)
-                    }.buttonStyle(.bordered)
-                    Spacer()
-                }.padding(.vertical)
-                .sheet(isPresented: $showMaker) {
-                    NavigationView {
-                        //MARK: - This is whack. Should fix.
-                        ContactMaker(contact: $contact, presentingEditContact: $showMaker)
-                            .background(Color(UIColor.secondarySystemBackground))
-                    }.onChange(of: contact) { value in
-                        content = qrCode.generateContact(contact: contact!, bg: bgColor, fg: fgColor)
-                    }
-                }
+                Button(action: {
+                    showPicker = true
+                }) {
+                    Label("Chose a Contact", systemImage: "person.crop.circle")
+                        .font(.headline)
+                        .frame(width: 300, height: 40)
+                }.buttonStyle(.bordered)
+                .padding(.vertical)
                 
                 // This is a dummy view and won't appeaar in the UI.
                 ContactPicker(
@@ -90,14 +70,10 @@ struct ContactQRView: View {
             HStack{
                 Button(
                 action: {
-                    showShare = true
+                    showShareSheet(with: [UIImage(data: content!)!])
                 }){
                     Image(systemName: "square.and.arrow.up")
-                }.sheet(isPresented: $showShare, content: {
-                    ZStack {
-                    ActivityViewController(activityItems: [UIImage(data: content!)!])
-                    }.background(.ultraThickMaterial)
-                })
+                }
             }
         })
     }

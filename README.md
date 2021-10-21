@@ -24,4 +24,4 @@ Please [open an issue](https://github.com/git-shawn/qr-pop/issues/new) for suppo
 
 ## License
 
-Yeah go crazy with it. This code is distributed as-is under the MIT license.
+QR Pop is licensed under GPL-3.0. If you use any of the ideas in here, I'd love to see them!

@@ -59,14 +59,10 @@ struct LinkQRView: View {
             HStack{
                 Button(
                 action: {
-                    showShare = true
+                    showShareSheet(with: [UIImage(data: content!)!])
                 }){
                     Image(systemName: "square.and.arrow.up")
-                }.sheet(isPresented: $showShare, content: {
-                    ZStack {
-                    ActivityViewController(activityItems: [UIImage(data: content!)!])
-                    }.background(.ultraThickMaterial)
-                })
+                }
             }
         })
     }

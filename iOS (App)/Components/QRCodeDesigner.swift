@@ -13,7 +13,7 @@ struct QRCodeDesigner: View {
     @Binding var fgColor: Color
     
     var body: some View {
-        VStack() {
+        VStack(alignment: .center, spacing: 10) {
             ColorPicker("Background color", selection: $bgColor, supportsOpacity: false)
             ColorPicker("Foreground color", selection: $fgColor, supportsOpacity: false)
         }.padding(.horizontal, 20)

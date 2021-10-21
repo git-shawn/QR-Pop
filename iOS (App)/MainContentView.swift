@@ -32,7 +32,5 @@ struct MainContentView: View {
 struct MainContentView_Previews: PreviewProvider {
     static var previews: some View {
         MainContentView()
-            .preferredColorScheme(.light)
-            .previewInterfaceOrientation(.portrait)
     }
 }
