@@ -8,40 +8,37 @@
 import Foundation
 import StoreKit
 import SwiftUI
-import Combine
 
 class StoreManager: NSObject, ObservableObject, SKPaymentTransactionObserver, SKProductsRequestDelegate {
     
-    /// If 1, the purchase is processing. If 2, the purchase was successful. If 3, the purchase was deferred. If 0, the purchase failed.
-    let purchasePublisher = PassthroughSubject<Int, Never>()
+    /// Defines the progress of paymentQueue as a simple boolean. True if successful, false if not for any reason.
+    @Published var didCompletePurchase: Bool = false
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         transactions.forEach { transaction in
             switch transaction.transactionState {
             /// Payment in process.
             case .purchasing:
-                purchasePublisher.send((1))
+                print("Purchase in progress...")
+                self.didCompletePurchase = false
             /// Payment completed successfully.
             case .purchased:
                 SKPaymentQueue.default().finishTransaction(transaction)
-                purchasePublisher.send((2))
+                self.didCompletePurchase = true
             /// Payment encounted an error.
             case .failed:
                 if let error = transaction.error as? SKError {
-                    purchasePublisher.send((0))
+                    self.didCompletePurchase = false
                     print("Transaction failed \(error)")
                 }
                 SKPaymentQueue.default().finishTransaction(transaction)
-            /// Purchase restored? Not possible in this app, so also an error.
+            /// Purchase restored
             case .restored:
-                if let error = transaction.error as? SKError {
-                    purchasePublisher.send((0))
-                    print("Restoring purchases shouldn't be possible \(error)")
-                }
                 SKPaymentQueue.default().finishTransaction(transaction)
+                self.didCompletePurchase = true
             /// Needs permission from supervisor (think parental controls).
             case .deferred:
-                purchasePublisher.send((3))
+                self.didCompletePurchase = false
             @unknown default:
                 break
             }

@@ -8,6 +8,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+/// A QR code builder view to make codes for wifi networks
 struct WifiQRView: View {
     let qrCode = QRCode()
     let imageSaver = ImageSaver()
@@ -15,7 +16,6 @@ struct WifiQRView: View {
     //QR View standard variables
     @State private var bgColor = Color.white
     @State private var fgColor = Color.black
-    @State private var showShare = false
     @State private var content: Data?
     
     //Unique variables for wifi
@@ -33,7 +33,7 @@ struct WifiQRView: View {
         ScrollView {
             VStack() {
                 
-                QRImageView(content: $content, share: $showShare, bg: $bgColor)
+                QRImageView(content: $content, bg: $bgColor)
                 
                 Group {
                     Picker("Wifi Authentication Method", selection: $auth) {

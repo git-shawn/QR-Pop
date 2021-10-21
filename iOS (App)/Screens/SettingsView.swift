@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// App settings and preferences
 struct SettingsView: View {
     
     // Safari Extension QR Code width & height in pixels
@@ -80,6 +81,7 @@ struct SettingsView: View {
                     }
                 }
             }.navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {

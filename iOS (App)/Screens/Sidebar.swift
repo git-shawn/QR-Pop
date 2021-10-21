@@ -9,7 +9,8 @@ import SwiftUI
 
 struct Sidebar: View {
     @State private var showSettings = false
-
+    
+    /// The Navigation Sidebar for QR Pop
     var body: some View {
         List {
             NavigationLink(destination: QRNavigationView()){
@@ -18,7 +19,7 @@ struct Sidebar: View {
                 } icon: {
                     Image(systemName: "qrcode")
                 }
-            }
+            }.isDetailLink(false) //Makes QRNavigationView becomes the Sidebar
             NavigationLink(destination: GettingStartedView()) {
                 Label {
                     Text("Enable Safari Extension")

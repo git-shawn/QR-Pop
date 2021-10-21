@@ -8,6 +8,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
+/// A QR code builder view to make codes for links
 struct LinkQRView: View {
     let qrCode = QRCode()
     let imageSaver = ImageSaver()
@@ -15,7 +16,6 @@ struct LinkQRView: View {
     //QR View standard variables
     @State private var bgColor = Color.white
     @State private var fgColor = Color.black
-    @State private var showShare = false
     @State private var content: Data?
     
     //Unique variables for link
@@ -30,7 +30,7 @@ struct LinkQRView: View {
         ScrollView {
             VStack() {
                 
-                QRImageView(content: $content, share: $showShare, bg: $bgColor)
+                QRImageView(content: $content, bg: $bgColor)
                 
                 //Accept inputs to generate QR code
                 TextField("Enter URL", text: $text)

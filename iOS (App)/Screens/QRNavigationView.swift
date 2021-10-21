@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A navigational view allowing the user to pick a type of QR code to generate
 struct QRNavigationView: View {
     @Environment(\.presentationMode) var presentation
     

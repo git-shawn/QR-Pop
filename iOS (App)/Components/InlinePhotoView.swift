@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 
+/// A swipable, inline photo gallery built from an array of images
 struct InlinePhotoView: View {
     @Binding var index: Int
     var images: Array<String>

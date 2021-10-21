@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// This extension forces a permanent sidebar on iPad in Portrait and Landscape.
 extension UISplitViewController {
     override open func viewDidLoad(){
         if (UIDevice.current.userInterfaceIdiom == .pad) {
@@ -24,7 +25,7 @@ struct MainContentView: View {
     var body: some View {
         NavigationView {
             Sidebar()
-            QRNavigationView()
+            iPadWelcomeView()
         }
     }
 }

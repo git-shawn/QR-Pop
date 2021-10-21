@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view to select an alternative icon
 struct AltIconView: View {
     // The currently selected icon.
     @State private var activeIconName: String? = UIApplication.shared.alternateIconName

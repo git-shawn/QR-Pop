@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UniformTypeIdentifiers
+import AlertToast
 
 /// Dynamically generates an image of a QR code from a binding input.
 /// - Warning: Assure you are passing the correct inputs to the correct types of codes
@@ -20,8 +21,8 @@ import UniformTypeIdentifiers
 struct QRImageView: View {
     
     @Binding var content: Data?
-    @Binding var share: Bool
     @Binding var bg: Color
+    @State var showSavedAlert: Bool = false
     
     let qrCode = QRCode()
     
@@ -46,16 +47,22 @@ struct QRImageView: View {
             })
             .contextMenu {
                 Button {
-                    share = true
+                    showShareSheet(with: [UIImage(data: content!)!])
                 } label: {
                     Label("Share code", systemImage: "square.and.arrow.up")
                 }
                 Button {
                     let imageSaver = ImageSaver()
+                    imageSaver.successHandler = {
+                        showSavedAlert = true
+                    }
                     imageSaver.writeToPhotoAlbum(image: UIImage(data: content!)!)
                 } label: {
                     Label("Save code", systemImage: "square.and.arrow.down")
                 }
+            }
+            .toast(isPresenting: $showSavedAlert, duration: 2) {
+                AlertToast(displayMode: .hud, type: .complete(.accentColor), title: "Saved")
             }
     }
 }
@@ -65,8 +72,6 @@ struct QRImageView_Previews: PreviewProvider {
     @State static var bgColor: Color = .black
     @State static var showShare = false
     static var previews: some View {
-        QRImageView(content: $content, share: $showShare, bg: $bgColor)
-            
-            
+        QRImageView(content: $content, bg: $bgColor)
     }
 }

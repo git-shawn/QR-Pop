@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view explaining to the user how to use the Safari Extension
 struct GettingStartedView: View {
     @State private var showSheet: Bool = false
     @State var index = 0
@@ -39,7 +40,6 @@ struct GettingStartedView: View {
                                 self.showSheet = true
                             }) {
                                 Text("Why?")
-                                    .foregroundColor(.blue)
                             }.sheet(
                                 isPresented: self.$showSheet
                             ) { ScrollView{

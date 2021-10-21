@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// QR Pop's privacy policy
 struct PrivacyView: View {
 
     var body: some View {

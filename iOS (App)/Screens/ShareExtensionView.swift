@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view explaining to the user how to use the Share Sheet Action
 struct ShareExtensionView: View {
     @State var index = 0
     var images = ["actext1", "actext2", "actext3"]

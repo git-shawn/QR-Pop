@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A modal view to explain wifi terminology
 struct WifiQRHelpModal: View {
     var body: some View {
         ScrollView {

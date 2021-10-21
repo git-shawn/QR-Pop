@@ -22,6 +22,14 @@
             <key>Title</key>
             <string>ContactPicker</string>
         </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSChildPaneSpecifier</string>
+            <key>File</key>
+            <string>AlertToast</string>
+            <key>Title</key>
+            <string>AlertToast</string>
+        </dict>
     </array>
 </dict>
 </plist>
