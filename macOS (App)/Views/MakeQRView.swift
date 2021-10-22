@@ -64,6 +64,13 @@ struct MakeQRView: View {
             }.accessibilityLabel("Save")
             .accessibilityHint("Save QR Code")
             .help("Save QR Code")
+            Button(action: {
+                print("hello")
+            }) {
+                Image(systemName: "sidebar.right")
+                .accessibilityHint("Customize QR Code's Appearance")
+                .help("Customize QR Code Appearance")
+            }
         }.onAppear(perform: {
             if autoPasteLinks {
                 checkPasteboardForLink()

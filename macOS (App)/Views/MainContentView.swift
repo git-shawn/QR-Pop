@@ -12,7 +12,7 @@ struct MainContentView: View {
         NavigationView {
             List {
                 Section(header: Text("Tools")) {
-                    NavigationLink(destination: MakeQRView()) {
+                    NavigationLink(destination: QRNavigationView()) {
                         Label {
                             Text("Make a QR Code")
                                 .foregroundColor(.primary)
@@ -96,7 +96,7 @@ struct MainContentView: View {
                 Spacer()
             }
         }.navigationTitle("QR Pop")
-        .frame(minWidth: 800, minHeight: 400)
+        .frame(minWidth: 890, minHeight: 400)
     }
 }
 

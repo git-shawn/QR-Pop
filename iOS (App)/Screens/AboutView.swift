@@ -10,7 +10,7 @@ import AlertToast
 
 /// Miscelaneous information about the app
 struct AboutView: View {
-    @ObservedObject var storeManager: StoreManager = StoreManager()
+    @State var hasPurchased: Bool = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -63,7 +63,7 @@ struct AboutView: View {
                 Section {
                     HStack {
                         Button(action: {
-                            storeManager.leaveTip()
+                            StoreManager.shared.leaveTip()
                         }, label: {
                             Label(title: {
                                 Text("Buy Me a Coffee")
@@ -81,11 +81,10 @@ struct AboutView: View {
                             .accessibility(hidden: true)
                             .font(Font.system(size: 13, weight: .bold, design: .default))
                             .foregroundColor(Color(UIColor.tertiaryLabel))
-                        
                     }
                     HStack {
                         Button(action: {
-                            storeManager.requestReview()
+                            StoreManager.shared.requestReview()
                         }, label: {
                             Label("Leave a Review", systemImage: "star.bubble")
                         }).tint(.primary)
@@ -103,7 +102,25 @@ struct AboutView: View {
                 .opacity(0.3)
         }.navigationTitle("About")
         .listStyle(.insetGrouped)
-        .toast(isPresenting: $storeManager.didCompletePurchase, duration: 2, tapToDismiss: true) {
+        .onReceive(StoreManager.shared.purchasePublisher) { value in
+            switch value {
+            case .purchased:
+                hasPurchased = true
+            case .restored:
+                hasPurchased = true
+            case .failed:
+                hasPurchased = false
+            case .deferred:
+                hasPurchased = false
+            case .purchasing:
+                hasPurchased = false
+            case .restoreComplete:
+                hasPurchased = true
+            case .noneToRestore:
+                hasPurchased = false
+            }
+        }
+        .toast(isPresenting: $hasPurchased, duration: 2, tapToDismiss: true) {
             AlertToast(displayMode: .alert, type: .systemImage("heart.circle", .accentColor), title: "Thank You!")
         }
     }

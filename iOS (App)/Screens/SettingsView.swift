@@ -19,7 +19,7 @@ struct SettingsView: View {
     // Safari Extension UTM removal on or off
     @AppStorage("referralToggle", store: UserDefaults(suiteName: "group.shwndvs.qr-pop")) var referralToggle: Bool = false
     
-    // Safari Extension UTM removal on or off
+    // Error Correction level from lowest (0 = 7%) to highest (3 = 30%)
     @AppStorage("errorCorrection") var errorLevel: Int = 0
     
     @Binding var shown: Bool

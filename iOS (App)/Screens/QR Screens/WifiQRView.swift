@@ -88,7 +88,7 @@ struct WifiQRView: View {
                 }){
                     Image(systemName: "questionmark.circle")
                 }.sheet(isPresented: $showHelp, content: {
-                    WifiQRHelpModal()
+                    WifiQRHelpModal(isPresented: $showHelp)
                 })
                 Button(
                 action: {

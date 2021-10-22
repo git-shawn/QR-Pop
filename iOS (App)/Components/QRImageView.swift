@@ -23,11 +23,12 @@ struct QRImageView: View {
     @Binding var content: Data?
     @Binding var bg: Color
     @State var showSavedAlert: Bool = false
+    private let failureImg: Data = UIImage(imageLiteralResourceName: "codeFailure").pngData()!
     
     let qrCode = QRCode()
     
     var body: some View {
-        Image(uiImage: UIImage(data: content!)!)
+        Image(uiImage: UIImage(data: content ?? failureImg)!)
             .interpolation(.none)
             .resizable()
             .padding(10)
@@ -47,7 +48,7 @@ struct QRImageView: View {
             })
             .contextMenu {
                 Button {
-                    showShareSheet(with: [UIImage(data: content!)!])
+                    showShareSheet(with: [UIImage(data: content ?? failureImg)!])
                 } label: {
                     Label("Share code", systemImage: "square.and.arrow.up")
                 }
@@ -56,13 +57,13 @@ struct QRImageView: View {
                     imageSaver.successHandler = {
                         showSavedAlert = true
                     }
-                    imageSaver.writeToPhotoAlbum(image: UIImage(data: content!)!)
+                    imageSaver.writeToPhotoAlbum(image: UIImage(data: content ?? failureImg)!)
                 } label: {
                     Label("Save code", systemImage: "square.and.arrow.down")
                 }
             }
             .toast(isPresenting: $showSavedAlert, duration: 2) {
-                AlertToast(displayMode: .hud, type: .complete(.accentColor), title: "Saved")
+                AlertToast(displayMode: .alert, type: .complete(.accentColor), title: "Saved")
             }
     }
 }

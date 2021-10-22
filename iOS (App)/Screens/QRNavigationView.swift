@@ -16,6 +16,9 @@ struct QRNavigationView: View {
             NavigationLink(destination: LinkQRView()) {
                 Label("URL", systemImage: "link")
             }
+            NavigationLink(destination: TextQRView()) {
+                Label("Text", systemImage: "textformat")
+            }
             NavigationLink(destination: WifiQRView()) {
                 Label("Wifi Network", systemImage: "wifi")
             }

@@ -42,13 +42,19 @@ final class QRCode: NSObject {
     ///   - fg: The foreground color for the QR code.
     ///   - correction: Optional, the error correction level for the QR code.
     /// - Returns: PNG Data representing the QR code generated.
-    func generate(content: String, bg: Color, fg: Color) -> Data? {
+    func generate(content: String, bg: Color, fg: Color, dataEncode: String.Encoding? = .ascii) -> Data? {
         //Create CoreImage filters for the qr code
         guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
         guard let colorFilter = CIFilter(name: "CIFalseColor") else { return nil }
-    
+        
         //Convert text input to data
-        let data = content.data(using: .ascii, allowLossyConversion: false)
+        var data: Data?
+        if dataEncode == .utf8 {
+            data = content.data(using: .utf8, allowLossyConversion: false)
+        } else {
+            let sanitizedString = removeSpecialCharactersFromString(text: content)
+            data = sanitizedString.data(using: .ascii, allowLossyConversion: false)
+        }
         
         filter.setValue(data, forKey: "inputMessage")
         switch errorLevel {
@@ -81,6 +87,15 @@ final class QRCode: NSObject {
         //Convert CoreImage to UIImage
         let uiimage = UIImage(ciImage: scaledCIImage)
         return uiimage.pngData()!
+    }
+    
+    
+    /// Unexpected characters can lead to a crash. This function strips them out, if any exist.
+    /// - Parameter text: The string to remove special characters from.
+    /// - Returns: Sanitized String.
+    private func removeSpecialCharactersFromString(text: String) -> String {
+        let allowedCharacters: Set<Character> = Set("%^*+=#}{][_\\|~<>.,?!-/:;()$&@1234567890qazwsxedcrfvtgbyhnujmikolp QAZWSXEDCRFVTGBYHNUJMIKOLP")
+        return String(text.filter {allowedCharacters.contains($0)})
     }
    
     
