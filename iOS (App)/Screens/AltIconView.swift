@@ -21,12 +21,14 @@ struct AltIconView: View {
             }) {
                 HStack {
                     Image("LargeIcon")
+                        .resizable()
+                        .frame(width: 60, height: 60)
                         .cornerRadius(10)
                         .padding(5)
                     
                     VStack(alignment: .leading) {
                         Text("Default")
-                        Text("Can't beat the original.")
+                        Text("Can't beat the original. Wait... is this the original?")
                             .font(.footnote)
                             .foregroundColor(.gray)
                     }
@@ -177,7 +179,7 @@ struct AltIconView: View {
                     }
                 }
             }.tint(.primary)
-        }.navigationTitle("App Icon")
+        }.navigationTitle("Select an App Icon")
     }
     
     // Update the state with the current icon.

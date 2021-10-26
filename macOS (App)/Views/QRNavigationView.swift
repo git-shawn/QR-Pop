@@ -17,15 +17,20 @@ struct QRNavigationView: View {
     var body: some View {
         NavigationView {
             List {
-                NavigationLink(destination: MakeQRView(), isActive: $initialView) {
-                    Label("URL", systemImage: "link")
-                }
-                NavigationLink(destination: MakeQRView()) {
-                    Label("Wifi Network", systemImage: "wifi")
-                }
-                NavigationLink(destination: MakeQRView()) {
-                    Label("Contact", systemImage: "person.crop.circle")
-                }
+                Group {
+                    NavigationLink(destination: LinkQRView(), isActive: $initialView) {
+                        Label("URL", systemImage: "link")
+                    }
+                    NavigationLink(destination: TextQRView()) {
+                        Label("Text", systemImage: "textformat.alt")
+                    }
+                    NavigationLink(destination: WifiQRView()) {
+                        Label("Wifi Network", systemImage: "wifi")
+                    }
+                    NavigationLink(destination: ContactQRView()) {
+                        Label("Contact", systemImage: "person.crop.circle")
+                    }
+                }.padding(10)
             }.listStyle(SidebarListStyle())
         }
     }

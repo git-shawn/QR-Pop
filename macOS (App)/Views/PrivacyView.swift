@@ -26,10 +26,10 @@ struct PrivacyView: View {
                             Text("QR Pop does not contain any trackers, and does not collect any user information. \n\nAdditionally, QR Pop will never add tracking via an update. QR Pop creates all QR codes on-device. That means QR Pop never shares your browsing information with a server. Because of this, QR Pop doesn't use any data connection at all to make QR codes.").multilineTextAlignment(.center)
                         }
                     }.padding(20)
-                }.frame(maxWidth: 500)
+                }
                 Spacer()
             }
-        }
+        }.frame(maxWidth: 450)
         .navigationTitle("Privacy")
         .toolbar() {
             Spacer()

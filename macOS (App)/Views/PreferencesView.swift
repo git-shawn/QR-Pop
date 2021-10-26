@@ -21,6 +21,8 @@ struct PreferencesView: View {
     // QR Code Generator autopaste links or not
     @AppStorage("autoPasteLinks", store: UserDefaults(suiteName: (Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String))) var autoPasteLinks: Bool = false
     
+    @AppStorage("errorLevel") var errorLevel: Int = 0
+    
     @State var showTrackingPopover: Bool = false
     
     var body: some View {
@@ -56,11 +58,23 @@ struct PreferencesView: View {
             }
             Section(header: Text("In-App QR Code Generator")) {
                 // Toggle showing hostname in Safari Extension
-                Toggle("Generate Codes from Clipboard", isOn: $autoPasteLinks)
+                Toggle("Generate Codes for Links from Clipboard", isOn: $autoPasteLinks)
                     .toggleStyle(CheckboxToggleStyle())
                     .help("Create a QR code from the last URL you copied automatically when you open the \"Make a QR Code\" page")
+                VStack(alignment: .leading, spacing:5) {
+                    Picker("Error Correction Level", selection: $errorLevel) {
+                        Text("7%").tag(0)
+                        Text("15%").tag(1)
+                        Text("25%").tag(2)
+                        Text("30%").tag(3)
+                    }
+                    Text("A higher error correction level will make a QR code more durable, but also more complex. Some codes may even become too complex to scan.")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                }.frame(maxWidth: 290)
             }
         }.navigationTitle("Preferences")
+        .listStyle(PlainListStyle())
         .toolbar() {
             Spacer()
         }

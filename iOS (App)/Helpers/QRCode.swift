@@ -11,7 +11,7 @@ import EventKit
 import SwiftUI
 
 /// A helper class to facilitate the generation of QR codes.
-final class QRCode: NSObject {
+class QRCode: NSObject {
     
     /// Correction levels for a QR Code
     enum correctionLevel {
