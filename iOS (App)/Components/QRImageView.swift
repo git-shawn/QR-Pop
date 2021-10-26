@@ -39,9 +39,10 @@ struct QRImageView: View {
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .strokeBorder(Color(UIColor.systemGray4), lineWidth: 4)
+                    .strokeBorder(Color(UIColor.systemGray4), lineWidth: 2)
             )
             .accessibilityLabel("QR Code Image")
+            .padding(10)
             .onDrag({
                 let qrImage = content!
                 return NSItemProvider(item: qrImage as NSSecureCoding, typeIdentifier: UTType.png.identifier)

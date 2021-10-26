@@ -12,7 +12,7 @@ struct Sidebar: View {
     var body: some View {
         List {
             Section(header: Text("Tools")) {
-                NavigationLink(destination: QRNavigationView()) {
+                NavigationLink(destination: QRGeneratorView()) {
                     Label {
                         Text("Make a QR Code")
                             .foregroundColor(.primary)
@@ -20,7 +20,15 @@ struct Sidebar: View {
                         Image(systemName: "qrcode")
                     }
                 }
-                NavigationLink(destination: GettingStartedView()) {
+                NavigationLink(destination: QRScannerView()) {
+                    Label {
+                        Text("Scan a QR Code")
+                            .foregroundColor(.primary)
+                    } icon: {
+                        Image(systemName: "qrcode.viewfinder")
+                    }
+                }
+                NavigationLink(destination: EnableExtensionsView()) {
                     Label {
                         Text("Enable Extensions")
                             .foregroundColor(.primary)

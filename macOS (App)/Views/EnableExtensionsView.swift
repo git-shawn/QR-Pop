@@ -9,7 +9,7 @@ import SwiftUI
 import SafariServices
 import AppKit
 
-struct GettingStartedView: View {
+struct EnableExtensionsView: View {
     
     @State private var showWhyAllowPopover: Bool = false
     let safImgs = ["macsafext1", "macsafext2", "macsafext3", "macsafext4"]
@@ -95,8 +95,8 @@ struct GettingStartedView: View {
     }
 }
 
-struct GettingStartedView_Previews: PreviewProvider {
+struct EnableExtensionsView_Previews: PreviewProvider {
     static var previews: some View {
-        GettingStartedView()
+        EnableExtensionsView()
     }
 }

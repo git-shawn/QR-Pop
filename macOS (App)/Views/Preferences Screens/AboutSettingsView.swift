@@ -25,7 +25,7 @@ struct AboutSettingsView: View {
                     Text("© 2021 Shawn Davis")
                 }
             })
-            Preferences.Section(title: "Leave a Review:") {
+            Preferences.Section(title: "Leave a Review:", verticalAlignment: .top) {
                 Preferences.Section(title: "") {
                     Button(action: {
                         StoreManager.shared.requestReview()

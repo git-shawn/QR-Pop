@@ -10,7 +10,7 @@ import SwiftUI
 import SwiftUI
 
 /// A navigational view allowing the user to pick a type of QR code to generate
-struct QRNavigationView: View {
+struct QRGeneratorView: View {
     
     @State var initialView: Bool = true
     
@@ -36,8 +36,8 @@ struct QRNavigationView: View {
     }
 }
 
-struct QRNavigationView_Previews: PreviewProvider {
+struct QRGeneratorView_Previews: PreviewProvider {
     static var previews: some View {
-        QRNavigationView()
+        QRGeneratorView()
     }
 }

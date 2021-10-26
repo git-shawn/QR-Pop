@@ -24,6 +24,7 @@ struct ContactQRView: View {
     @State private var showMaker = false
     @State private var contact: CNContact?
     @State private var newContact = CNContact()
+    @State private var showContact = false
     
     init() {
         _content = State(initialValue: QRCode().generate(content: "", bg: .white, fg: .black))
@@ -52,12 +53,13 @@ struct ContactQRView: View {
                         self.contact = c
                     }
                 ).onChange(of: contact) { value in
+                    showContact = true
                     content = qrCode.generateContact(contact: contact!, bg: bgColor, fg: fgColor)
                 }
                 
                 QRCodeDesigner(bgColor: $bgColor, fgColor: $fgColor)
                     .onChange(of: [bgColor, fgColor]) { value in
-                        if (contact == nil) {
+                        if (!showContact) {
                             content = qrCode.generate(content: "", bg: bgColor, fg: fgColor)
                         } else {
                             content = qrCode.generateContact(contact: contact!, bg: bgColor, fg: fgColor)
@@ -68,6 +70,15 @@ struct ContactQRView: View {
         }.navigationBarTitle(Text("Contact QR Code"), displayMode: .large)
         .toolbar(content: {
             HStack{
+                Button(
+                action: {
+                    fgColor = .black
+                    bgColor = .white
+                    showContact = false
+                    content = QRCode().generate(content: "", bg: .white, fg: .black)
+                }){
+                    Image(systemName: "trash")
+                }
                 Button(
                 action: {
                     showShareSheet(with: [UIImage(data: content!)!])

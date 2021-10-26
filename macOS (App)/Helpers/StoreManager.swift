@@ -129,7 +129,9 @@ extension StoreManager: SKProductsRequestDelegate, SKRequestDelegate {
                 productsDB.shared.items = response.products
             }
         }
-        print("Invalid IDs found. Check StoreManager.swift: \(invalidIDs)")
+        if !invalidIDs.isEmpty {
+            print("Invalid IDs found. Check StoreManager.swift: \(invalidIDs)")
+        }
     }
     
     func request(_ request: SKRequest, didFailWithError error: Error) {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TipsView: View {
+struct HelpView: View {
     @Environment(\.openURL) var openURL
 
     var body: some View {
@@ -49,8 +49,8 @@ struct TipsView: View {
     }
 }
 
-struct TipsView_Previews: PreviewProvider {
+struct HelpView_Previews: PreviewProvider {
     static var previews: some View {
-        TipsView()
+        HelpView()
     }
 }

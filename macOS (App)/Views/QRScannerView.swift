@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct ScanCodeView: View {
+struct QRScannerView: View {
     var body: some View {
         VStack {
             TabView {
-                CameraCodeSubView()
-                    .tabItem({
-                        Label("Camera", systemImage: "camera.aperture")
-                    })
                 UploadCodeSubView()
                     .tabItem({
                         Label("Image", systemImage: "photo.on.rectangle")
+                    })
+                CameraCodeSubView()
+                    .tabItem({
+                        Label("Camera", systemImage: "camera.aperture")
                     })
             }.padding()
             .navigationTitle("Scan QR Code")
@@ -26,9 +26,13 @@ struct ScanCodeView: View {
 }
 
 struct CameraCodeSubView: View {
+    @State var qrCodeScanResult = ""
+    
     var body: some View {
-        VStack {
-            Text("Camera")
+        HStack(alignment: .center, spacing: 50) {
+            QRVisionViewControllerRepresentable(result : $qrCodeScanResult)
+                .frame(width: 300, height: 300)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
         }
     }
 }
@@ -41,8 +45,8 @@ struct UploadCodeSubView: View {
     }
 }
 
-struct ScanCodeView_Previews: PreviewProvider {
+struct QRScannerView_Previews: PreviewProvider {
     static var previews: some View {
-        ScanCodeView()
+        QRScannerView()
     }
 }

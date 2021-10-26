@@ -53,6 +53,15 @@ struct TextQRView: View {
                 HStack {
                     Button(
                     action: {
+                        text = ""
+                        fgColor = .black
+                        bgColor = .white
+                        content = QRCode().generate(content: "", bg: .white, fg: .black)
+                    }){
+                        Image(systemName: "trash")
+                    }
+                    Button(
+                    action: {
                         showShareSheet(with: [UIImage(data: content!)!])
                     }){
                         Image(systemName: "square.and.arrow.up")

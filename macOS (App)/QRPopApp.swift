@@ -64,7 +64,7 @@ struct QRPopApp: App {
                 }
             }
             CommandGroup(replacing: .help) {
-                NavigationLink(destination: TipsView()) {
+                NavigationLink(destination: HelpView()) {
                     Text("Help")
                 }
                 NavigationLink(destination: AcknowledgmentsView()) {
