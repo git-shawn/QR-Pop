@@ -20,24 +20,19 @@ struct Sidebar: View {
                         Image(systemName: "qrcode")
                     }
                 }
-//                V2.1
-//                NavigationLink(destination: ScanCodeView()) {
-//                    Label {
-//                        Text("Scan a QR Code")
-//                            .foregroundColor(.primary)
-//                    } icon: {
-//                        Image(systemName: "qrcode.viewfinder")
-//                    }
-//                }
                 NavigationLink(destination: GettingStartedView()) {
                     Label {
                         Text("Enable Extensions")
                             .foregroundColor(.primary)
                     } icon: {
-                        Image("extensionSFMac")
-                            .resizable()
-                            .scaledToFit()
-                            .padding(3)
+                        if #available(macOS 12, *) {
+                            Image(systemName: "puzzlepiece.extension")
+                        } else {
+                            Image("extensionSFMac")
+                                .resizable()
+                                .scaledToFit()
+                                .padding(3)
+                        }
                     }
                 }
             }
@@ -46,7 +41,7 @@ struct Sidebar: View {
                 
                 Link(destination: URL(string: "https://fromshawn.dev/qrpop.html")!) {
                     Label {
-                        Text("Developer's Website")
+                        Text("Website")
                             .foregroundColor(.primary)
                     } icon: {
                         Image(systemName: "safari")
