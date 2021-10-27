@@ -32,7 +32,7 @@ struct QRImageView: View {
             .interpolation(.none)
             .resizable()
             .padding(10)
-            .frame(width: 330, height: 330)
+            .frame(width: 310, height: 310)
             .background(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
                     .foregroundColor(bg)
@@ -42,16 +42,20 @@ struct QRImageView: View {
                     .strokeBorder(Color(UIColor.systemGray4), lineWidth: 2)
             )
             .accessibilityLabel("QR Code Image")
-            .padding(10)
             .onDrag({
                 let qrImage = content!
                 return NSItemProvider(item: qrImage as NSSecureCoding, typeIdentifier: UTType.png.identifier)
             })
             .contextMenu {
                 Button {
+                    UIPasteboard.general.image = UIImage(data: content ?? failureImg)!
+                } label: {
+                    Label("Copy", systemImage: "doc.on.doc")
+                }
+                Button {
                     showShareSheet(with: [UIImage(data: content ?? failureImg)!])
                 } label: {
-                    Label("Share code", systemImage: "square.and.arrow.up")
+                    Label("Share", systemImage: "square.and.arrow.up")
                 }
                 Button {
                     let imageSaver = ImageSaver()
@@ -60,7 +64,7 @@ struct QRImageView: View {
                     }
                     imageSaver.writeToPhotoAlbum(image: UIImage(data: content ?? failureImg)!)
                 } label: {
-                    Label("Save code", systemImage: "square.and.arrow.down")
+                    Label("Save", systemImage: "square.and.arrow.down")
                 }
             }
             .toast(isPresenting: $showSavedAlert, duration: 2) {

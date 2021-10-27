@@ -33,6 +33,16 @@ class QRCode: NSObject {
         case WPA
     }
     
+    /// Types of map to generate a QR code for
+    enum mapType {
+        /// Apple Maps
+        case AppleMaps
+        /// Google Maps
+        case GoogleMaps
+        /// Waze
+        case Waze
+    }
+    
     @AppStorage("errorCorrection") var errorLevel: Int = 0
     
     /// This function generates a QR code from a String.
@@ -203,6 +213,44 @@ class QRCode: NSObject {
         let description: String = event.description
         
         let code = generateEvent(title: title, start: start, end: end, description: description, location: location, bg: bg, fg: fg)
+        return code
+    }
+    
+    
+    /// Generate a QR code for a given location.
+    /// - Parameters:
+    ///   - address: The location's street address.
+    ///   - city: The location's city.
+    ///   - state: The location's state.
+    ///   - map: The map application to deeplink to.
+    ///   - directions: Whether or not to show directions.
+    ///   - bg: The background color for the code.
+    ///   - fg: The foreground color for the code.
+    /// - Returns: PNG Data representing the QR code generated.
+    func generateLocation(address: String, city: String, state: String, map: mapType, directions: Bool, bg: Color, fg: Color) -> Data? {
+        
+        var url: String
+        
+        switch map {
+        case .AppleMaps:
+            lazy var aAddr = "\(address),\(city),\(state)"
+            aAddr = aAddr.replacingOccurrences(of: " ", with: "+")
+            if directions {
+                url = "http://maps.apple.com/?daddr=\(aAddr)"
+            } else {
+                url = "http://maps.apple.com/?address=\(aAddr)"
+            }
+        case .GoogleMaps:
+            lazy var gAddr = "\(address)%2C\(city)%2C\(state)"
+            gAddr = gAddr.replacingOccurrences(of: " ", with: "+")
+            url = "https://www.google.com/maps/search/?api=1&query=\(gAddr)"
+        case .Waze:
+            lazy var wAddr = "\(address)%2C\(city)%2C\(state)"
+            wAddr = wAddr.replacingOccurrences(of: " ", with: "%20")
+            url = "https://waze.com/ul?q=\(wAddr)"
+        }
+        
+        let code = generate(content: url, bg: bg, fg: fg)
         return code
     }
 }

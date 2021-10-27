@@ -11,8 +11,8 @@ import AVFoundation
 import SwiftUI
 
 class QRVisionViewController: NSViewController {
-
     var captureSession = AVCaptureSession()
+    let visionManager = QRVisionManager()
 
     lazy var detectBarcodeRequest = VNDetectBarcodesRequest { request, error in
         guard error == nil else {
@@ -95,7 +95,6 @@ extension QRVisionViewController {
                     potentialQRCode.confidence > 0.9
                     else { return }
 
-                    //TODO: These results need sent somewhere else to be processed and update SwiftUI.
                     observationHandler(payload: potentialQRCode.payloadStringValue)
                 }
             }
@@ -104,8 +103,9 @@ extension QRVisionViewController {
 
     func observationHandler(payload: String?) {
         captureSession.stopRunning()
-        print(payload ?? "")
+        visionManager.qrVisionResultsHandler(string: payload!)
         self.removeFromParent()
+        teardownCapture()
     }
 }
 
@@ -157,12 +157,13 @@ extension QRVisionViewController {
 }
 
 struct QRVisionViewControllerRepresentable: NSViewControllerRepresentable {
-    @Binding var result: String
+    
     func makeNSViewController(context: Context) -> some NSViewController {
         let controller = QRVisionViewController()
         return controller
     }
     
     func updateNSViewController(_ nsViewController: NSViewControllerType, context: Context) {
+        //nothing
     }
 }

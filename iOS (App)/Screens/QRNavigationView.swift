@@ -25,6 +25,9 @@ struct QRNavigationView: View {
             NavigationLink(destination: ContactQRView()) {
                 Label("Contact", systemImage: "person.crop.circle")
             }
+            NavigationLink(destination: MapQRView()) {
+                Label("Location", systemImage: "mappin.circle")
+            }
         }.navigationTitle("QR Code Builder")
         .listStyle(.insetGrouped)
     }
