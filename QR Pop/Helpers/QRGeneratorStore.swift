@@ -26,5 +26,6 @@ let QRViews: [QRGeneratorType] = [
     QRGeneratorType.init(name: "FaceTime", icon: "video", destination: AnyView(QRFacetimeView())),
     QRGeneratorType.init(name: "Twitter", icon: "at", destination: AnyView(QRTwitterView())),
     QRGeneratorType.init(name: "Location", icon: "map", destination: AnyView(QRLocationView())),
-    QRGeneratorType.init(name: "Plain Text", icon: "doc.text", destination: AnyView(QRTextView()))
+    QRGeneratorType.init(name: "Plain Text", icon: "doc.text", destination: AnyView(QRTextView())),
+    QRGeneratorType.init(name: "Shortcuts", icon: "square.2.stack.3d", destination: AnyView(QRShortcutView()))
 ]

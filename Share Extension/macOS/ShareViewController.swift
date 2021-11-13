@@ -14,6 +14,7 @@ class ShareViewController: NSViewController {
     @IBOutlet weak var imageView: NSImageCell!
     
     private var processedImage: NSImage?
+    private let qrCode = QRCode()
     
     override var nibName: NSNib.Name? {
         return NSNib.Name("ShareViewController")

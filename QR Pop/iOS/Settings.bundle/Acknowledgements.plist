@@ -30,14 +30,6 @@
             <key>Title</key>
             <string>AlertToast</string>
         </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSChildPaneSpecifier</string>
-            <key>File</key>
-            <string>LocationPickerForSwiftUI</string>
-            <key>Title</key>
-            <string>LocationPickerForSwiftUI</string>
-        </dict>
     </array>
 </dict>
 </plist>
