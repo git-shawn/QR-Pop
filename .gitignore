@@ -1,0 +1,9 @@
+iOS (App)
+*.xassets
+QR Pop/Assets.xcassets
+QR Pop/iOS/AltIcons
+QR Pop.xcodeproj/xcuserdata
+Safari Extension/Resources/images
+*.DS_Store
+*.png
+*.svg

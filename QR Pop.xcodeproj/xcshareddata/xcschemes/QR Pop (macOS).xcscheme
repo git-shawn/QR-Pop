@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "29480E4927319646006C799F"
+               BlueprintIdentifier = "29480E5B27319647006C799F"
                BuildableName = "QR Pop.app"
-               BlueprintName = "QR Pop (iOS)"
+               BlueprintName = "QR Pop (macOS)"
                ReferencedContainer = "container:QR Pop.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,9 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "29480E4927319646006C799F"
+            BlueprintIdentifier = "29480E5B27319647006C799F"
             BuildableName = "QR Pop.app"
-            BlueprintName = "QR Pop (iOS)"
+            BlueprintName = "QR Pop (macOS)"
             ReferencedContainer = "container:QR Pop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,9 +61,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "29480E4927319646006C799F"
+            BlueprintIdentifier = "29480E5B27319647006C799F"
             BuildableName = "QR Pop.app"
-            BlueprintName = "QR Pop (iOS)"
+            BlueprintName = "QR Pop (macOS)"
             ReferencedContainer = "container:QR Pop.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
