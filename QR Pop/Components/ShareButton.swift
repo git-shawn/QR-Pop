@@ -19,7 +19,7 @@ struct ShareButton: View {
     var body: some View {
         Button(action: {
             #if os(iOS)
-            showShareSheet(with: shareContent, formatImageToPrint: true)
+            showShareSheet(with: shareContent)
             #else
             showPicker = true
             #endif

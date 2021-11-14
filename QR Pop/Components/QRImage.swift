@@ -69,7 +69,7 @@ struct QRImage: View {
                 }
                 Button(action: {
                     #if os(iOS)
-                    showShareSheet(with: [qrCode.image], formatImageToPrint: true)
+                    showShareSheet(with: [qrCode.image])
                     #else
                     showPicker = true
                     #endif

@@ -50,7 +50,7 @@ struct QRShortcutView: View {
                 Text("Shortcut Input")
                 Spacer()
                 #endif
-                Picker("Shortcut Input", selection: $input) {
+                Picker("Shortcut Input", selection: $input.animation(.spring())) {
                     Text("None").tag("")
                     Text("Text").tag("text")
                     Text("Clipboard").tag("clipboard")

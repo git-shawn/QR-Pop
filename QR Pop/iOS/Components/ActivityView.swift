@@ -12,25 +12,16 @@ import UIKit
 extension View {
     /// Display UIActivityViewController (Share Sheet) when called for a parameter passed. This function handles presentation.
     /// - Parameter activityItems: The Activity Item to be shared.
-    func showShareSheet(with activityItems: [Any], formatImageToPrint: Bool = false) {
+    func showShareSheet(with activityItems: [Any]) {
         //TODO: Windows is deprecated in iOS15. Come up with an alternative to this.
         guard let source = UIApplication.shared.windows.first?.rootViewController else {
             return
         }
         
-        var activityItemsPrintable: [Any]
-        if formatImageToPrint {
-            let printInfo = UIPrintInfo(dictionary: nil)
-            printInfo.outputType = .general
-            printInfo.jobName = "QR Pop Print"
-            activityItemsPrintable = (activityItems + [printInfo])
-        } else {
-            activityItemsPrintable = activityItems
-        }
-        
         let activityVC = UIActivityViewController(
-        activityItems: activityItemsPrintable,
-        applicationActivities: nil)
+        activityItems: activityItems,
+        applicationActivities: [PrintActivity()])
+        activityVC.excludedActivityTypes = [UIActivity.ActivityType.print]
         
         //Present a popover view in the center of the screen for an iPad.
         //TODO: Attatch the popover to it's source in some way.

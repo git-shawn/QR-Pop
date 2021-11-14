@@ -98,6 +98,11 @@
 		2960865B273D735100A15B56 /* DownloadIOSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960865A273D735100A15B56 /* DownloadIOSView.swift */; };
 		2960865D273D796400A15B56 /* SaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2960865C273D796400A15B56 /* SaveButton.swift */; };
 		29608667273F304F00A15B56 /* HelpBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29608666273F304F00A15B56 /* HelpBook.swift */; };
+		29777A2327408361000E7A99 /* PrintActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A2227408361000E7A99 /* PrintActivity.swift */; };
+		29777A2F2740A3F7000E7A99 /* InitiatePrinting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A292740A3F7000E7A99 /* InitiatePrinting.swift */; };
+		29777A312740A3F7000E7A99 /* View+Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A2B2740A3F7000E7A99 /* View+Rendering.swift */; };
+		29777A322740A3F7000E7A99 /* PageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A2C2740A3F7000E7A99 /* PageRenderer.swift */; };
+		29777A332740A3F7000E7A99 /* PagePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A2D2740A3F7000E7A99 /* PagePreview.swift */; };
 		29AB050F273196E5009D4901 /* QR Pop App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB050E273196E5009D4901 /* QR Pop App.swift */; };
 		29AB0510273196E8009D4901 /* QR Pop App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB050E273196E5009D4901 /* QR Pop App.swift */; };
 		29AB0516273197CB009D4901 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB0512273197CB009D4901 /* PrivacyPolicyView.swift */; };
@@ -283,6 +288,11 @@
 		2960865A273D735100A15B56 /* DownloadIOSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadIOSView.swift; sourceTree = "<group>"; };
 		2960865C273D796400A15B56 /* SaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButton.swift; sourceTree = "<group>"; };
 		29608666273F304F00A15B56 /* HelpBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpBook.swift; sourceTree = "<group>"; };
+		29777A2227408361000E7A99 /* PrintActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintActivity.swift; sourceTree = "<group>"; };
+		29777A292740A3F7000E7A99 /* InitiatePrinting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitiatePrinting.swift; sourceTree = "<group>"; };
+		29777A2B2740A3F7000E7A99 /* View+Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Rendering.swift"; sourceTree = "<group>"; };
+		29777A2C2740A3F7000E7A99 /* PageRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageRenderer.swift; sourceTree = "<group>"; };
+		29777A2D2740A3F7000E7A99 /* PagePreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePreview.swift; sourceTree = "<group>"; };
 		29AB050E273196E5009D4901 /* QR Pop App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QR Pop App.swift"; sourceTree = "<group>"; };
 		29AB0512273197CB009D4901 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		29AB0513273197CB009D4901 /* Sidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
@@ -528,9 +538,29 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		29777A2127408354000E7A99 /* Activities */ = {
+			isa = PBXGroup;
+			children = (
+				29777A2227408361000E7A99 /* PrintActivity.swift */,
+			);
+			path = Activities;
+			sourceTree = "<group>";
+		};
+		29777A272740A3DF000E7A99 /* SwiftUIPrint */ = {
+			isa = PBXGroup;
+			children = (
+				29777A292740A3F7000E7A99 /* InitiatePrinting.swift */,
+				29777A2D2740A3F7000E7A99 /* PagePreview.swift */,
+				29777A2C2740A3F7000E7A99 /* PageRenderer.swift */,
+				29777A2B2740A3F7000E7A99 /* View+Rendering.swift */,
+			);
+			path = SwiftUIPrint;
+			sourceTree = "<group>";
+		};
 		29AB050D273196C9009D4901 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				29777A2127408354000E7A99 /* Activities */,
 				2911FD71273973F800E999C3 /* AltIcons */,
 				29AB052927319848009D4901 /* Views */,
 				29AB052627319825009D4901 /* Components */,
@@ -583,6 +613,7 @@
 		29AB052627319825009D4901 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				29777A272740A3DF000E7A99 /* SwiftUIPrint */,
 				29AB05232731981E009D4901 /* ImageSlider.swift */,
 				29AB052727319834009D4901 /* ActivityView.swift */,
 				294C1B632733676D00835FDF /* ContactPicker.swift */,
@@ -966,9 +997,12 @@
 				29B198A1273202EF0001909F /* QRCodeDesigner.swift in Sources */,
 				29B198812731BFF80001909F /* QRCode.swift in Sources */,
 				294C1B642733676D00835FDF /* ContactPicker.swift in Sources */,
+				29777A322740A3F7000E7A99 /* PageRenderer.swift in Sources */,
 				294C1B68273367BF00835FDF /* QRContactView.swift in Sources */,
 				29480E8127319647006C799F /* ContentView.swift in Sources */,
+				29777A312740A3F7000E7A99 /* View+Rendering.swift in Sources */,
 				29CE5363274023030013DAC9 /* QRShortcutView.swift in Sources */,
+				29777A2327408361000E7A99 /* PrintActivity.swift in Sources */,
 				2911FDAF273A236B00E999C3 /* ModalNavbar.swift in Sources */,
 				294C1B7A27336FA100835FDF /* TextEditorModal.swift in Sources */,
 				29AB053027319853009D4901 /* TabNavigationView.swift in Sources */,
@@ -982,7 +1016,9 @@
 				29AB053127319853009D4901 /* SettingsView.swift in Sources */,
 				294C1B7627336F6100835FDF /* QRTextView.swift in Sources */,
 				294C1B542733624300835FDF /* QRSMSView.swift in Sources */,
+				29777A332740A3F7000E7A99 /* PagePreview.swift in Sources */,
 				294C1B7227336D1400835FDF /* QRLocationView.swift in Sources */,
+				29777A2F2740A3F7000E7A99 /* InitiatePrinting.swift in Sources */,
 				29B198892731C5710001909F /* ImageSaver.swift in Sources */,
 				294C1B892734C91B00835FDF /* ColorContrast.swift in Sources */,
 				29B198972731F7710001909F /* QRGeneratorStore.swift in Sources */,
