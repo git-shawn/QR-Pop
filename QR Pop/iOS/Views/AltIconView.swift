@@ -72,7 +72,7 @@ struct AltIconView: View {
                     VStack(alignment: .leading) {
                         Text("Red")
                         Group {
-                            Text("It won't make your device faster, but it'll ") + Text("look").italic() + Text(" faster!")
+                            Text("It won't make your device faster, but it'll *look* faster!")
                         }
                             .font(.footnote)
                             .foregroundColor(.gray)
@@ -150,6 +150,29 @@ struct AltIconView: View {
                     }
                     Spacer()
                     if (activeIconName == "qralt5") {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.accentColor)
+                    }
+                }
+            }.tint(.primary)
+            
+            Button(action: {
+                UIApplication.shared.setAlternateIconName("qralt6")
+                determineIcon()
+            }) {
+                HStack {
+                    Image("flatAlt")
+                        .cornerRadius(10)
+                        .padding(5)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Flat")
+                        Text("Same great app, now with none of the gradients.")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
+                    Spacer()
+                    if (activeIconName == "qralt6") {
                         Image(systemName: "checkmark")
                             .foregroundColor(.accentColor)
                     }

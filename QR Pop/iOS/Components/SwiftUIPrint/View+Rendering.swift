@@ -36,7 +36,6 @@ public extension UIView {
     
     var pdfPage: CGPDFPage {
         let pdfRenderer = UIGraphicsPDFRenderer(bounds: bounds)
-
         let pdfData = pdfRenderer.pdfData { rendererContext in
             rendererContext.beginPage()
             let cgContext = rendererContext.cgContext
@@ -44,6 +43,7 @@ public extension UIView {
         }
         let dataProvider = CGDataProvider(data: pdfData as CFData)!
         let pdfDoc = CGPDFDocument(dataProvider)!
+        UIGraphicsEndPDFContext();
         return pdfDoc.page(at: 1)!
     }
 }

@@ -218,3 +218,9 @@ extension NSImage {
     var png: Data? { tiffRepresentation?.bitmap?.png }
 }
 #endif
+
+#if os(iOS)
+extension UIImage {
+    var imageSizeInKB: Double { Double((pngData()!.count/1000)) }
+}
+#endif

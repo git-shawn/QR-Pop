@@ -41,6 +41,13 @@
 					<string>qralt5</string>
 				</array>
 			</dict>
+			<key>qralt6</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>qralt6</string>
+				</array>
+			</dict>
 		</dict>
 		<key>CFBundlePrimaryIcon</key>
 		<dict>
@@ -94,6 +101,14 @@
 					<string>qralt5ipadpro</string>
 				</array>
 			</dict>
+			<key>qralt6</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>qralt6ipad</string>
+					<string>qralt6ipadpro</string>
+				</array>
+			</dict>
 		</dict>
 		<key>CFBundlePrimaryIcon</key>
 		<dict>
@@ -105,6 +120,8 @@
 	</dict>
 	<key>UILaunchScreen</key>
 	<dict>
+		<key>UIColorName</key>
+		<string>launchScreenColor</string>
 		<key>UIImageName</key>
 		<string>launchScreenImg</string>
 		<key>UIImageRespectsSafeAreaInsets</key>

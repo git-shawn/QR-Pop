@@ -31,7 +31,7 @@ public class PageRenderer<Page>: UIPrintPageRenderer where Page: View {
         case .fitToPaper:
             frame = paperRect
         }
-        
+    
         let pdfPage = DispatchQueue.main.sync {
             pages[pageIndex]
                 .environment(\.colorScheme, .light)

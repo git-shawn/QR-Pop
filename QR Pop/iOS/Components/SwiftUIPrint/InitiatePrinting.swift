@@ -24,6 +24,8 @@ public func presentPrintInteractionController<Page>(pages: [Page], jobName: Stri
     if let jobName = jobName {
         printInfo.jobName = jobName
     }
+    printInfo.orientation = .portrait
+    printController.showsPaperOrientation = false
     printController.printInfo = printInfo
     printController.printPageRenderer = PageRenderer(pages: pages, fitting: fitting)
     printController.present(animated: true) { _, completed, error in

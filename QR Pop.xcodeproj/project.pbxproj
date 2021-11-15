@@ -103,6 +103,11 @@
 		29777A312740A3F7000E7A99 /* View+Rendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A2B2740A3F7000E7A99 /* View+Rendering.swift */; };
 		29777A322740A3F7000E7A99 /* PageRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A2C2740A3F7000E7A99 /* PageRenderer.swift */; };
 		29777A332740A3F7000E7A99 /* PagePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A2D2740A3F7000E7A99 /* PagePreview.swift */; };
+		29777A392741AF70000E7A99 /* qralt6ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29777A342741AF6F000E7A99 /* qralt6ipad@2x.png */; };
+		29777A3A2741AF70000E7A99 /* qralt6ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 29777A352741AF6F000E7A99 /* qralt6ipad.png */; };
+		29777A3B2741AF70000E7A99 /* qralt6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29777A362741AF6F000E7A99 /* qralt6@2x.png */; };
+		29777A3C2741AF70000E7A99 /* qralt6@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29777A372741AF70000E7A99 /* qralt6@3x.png */; };
+		29777A3D2741AF70000E7A99 /* qralt6ipadpro@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29777A382741AF70000E7A99 /* qralt6ipadpro@2x.png */; };
 		29AB050F273196E5009D4901 /* QR Pop App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB050E273196E5009D4901 /* QR Pop App.swift */; };
 		29AB0510273196E8009D4901 /* QR Pop App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB050E273196E5009D4901 /* QR Pop App.swift */; };
 		29AB0516273197CB009D4901 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB0512273197CB009D4901 /* PrivacyPolicyView.swift */; };
@@ -293,6 +298,11 @@
 		29777A2B2740A3F7000E7A99 /* View+Rendering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Rendering.swift"; sourceTree = "<group>"; };
 		29777A2C2740A3F7000E7A99 /* PageRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageRenderer.swift; sourceTree = "<group>"; };
 		29777A2D2740A3F7000E7A99 /* PagePreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePreview.swift; sourceTree = "<group>"; };
+		29777A342741AF6F000E7A99 /* qralt6ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt6ipad@2x.png"; sourceTree = "<group>"; };
+		29777A352741AF6F000E7A99 /* qralt6ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qralt6ipad.png; sourceTree = "<group>"; };
+		29777A362741AF6F000E7A99 /* qralt6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt6@2x.png"; sourceTree = "<group>"; };
+		29777A372741AF70000E7A99 /* qralt6@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt6@3x.png"; sourceTree = "<group>"; };
+		29777A382741AF70000E7A99 /* qralt6ipadpro@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt6ipadpro@2x.png"; sourceTree = "<group>"; };
 		29AB050E273196E5009D4901 /* QR Pop App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QR Pop App.swift"; sourceTree = "<group>"; };
 		29AB0512273197CB009D4901 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		29AB0513273197CB009D4901 /* Sidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
@@ -417,6 +427,11 @@
 				2911FD8C273974C100E999C3 /* qralt5ipad.png */,
 				2911FD93273974C200E999C3 /* qralt5ipad@2x.png */,
 				2911FD8F273974C100E999C3 /* qralt5ipadpro@2x.png */,
+				29777A362741AF6F000E7A99 /* qralt6@2x.png */,
+				29777A372741AF70000E7A99 /* qralt6@3x.png */,
+				29777A352741AF6F000E7A99 /* qralt6ipad.png */,
+				29777A342741AF6F000E7A99 /* qralt6ipad@2x.png */,
+				29777A382741AF70000E7A99 /* qralt6ipadpro@2x.png */,
 			);
 			path = AltIcons;
 			sourceTree = "<group>";
@@ -887,10 +902,12 @@
 			files = (
 				2911FD562736ED2800E999C3 /* Settings.bundle in Resources */,
 				2911FDA2273974C200E999C3 /* qralt5ipad@2x.png in Resources */,
+				29777A3C2741AF70000E7A99 /* qralt6@3x.png in Resources */,
 				2911FDA4273974C200E999C3 /* qralt1ipad.png in Resources */,
 				2911FDA5273974C200E999C3 /* qralt4ipad.png in Resources */,
 				2911FD7F2739740B00E999C3 /* qralt1@3x.png in Resources */,
 				2911FDA7273974C200E999C3 /* qralt4ipadpro@2x.png in Resources */,
+				29777A3A2741AF70000E7A99 /* qralt6ipad.png in Resources */,
 				2911FDA6273974C200E999C3 /* qralt1ipadpro@2x.png in Resources */,
 				2911FD9B273974C200E999C3 /* qralt5ipad.png in Resources */,
 				2911FDA1273974C200E999C3 /* qralt2ipadpro@2x.png in Resources */,
@@ -900,6 +917,7 @@
 				2911FD9F273974C200E999C3 /* qralt3ipad.png in Resources */,
 				2911FD852739740B00E999C3 /* qralt4@3x.png in Resources */,
 				2911FDA3273974C200E999C3 /* qralt3ipadpro@2x.png in Resources */,
+				29777A3B2741AF70000E7A99 /* qralt6@2x.png in Resources */,
 				2911FD842739740B00E999C3 /* qralt4@2x.png in Resources */,
 				2911FD8A2739740B00E999C3 /* qralt5@2x.png in Resources */,
 				2911FD822739740B00E999C3 /* qralt3@2x.png in Resources */,
@@ -907,6 +925,8 @@
 				2911FDA0273974C200E999C3 /* qralt3ipad@2x.png in Resources */,
 				2911FD9C273974C200E999C3 /* qralt1ipad@2x.png in Resources */,
 				2911FD882739740B00E999C3 /* qralt1@2x.png in Resources */,
+				29777A392741AF70000E7A99 /* qralt6ipad@2x.png in Resources */,
+				29777A3D2741AF70000E7A99 /* qralt6ipadpro@2x.png in Resources */,
 				2911FD812739740B00E999C3 /* qralt2@3x.png in Resources */,
 				2911FD9D273974C200E999C3 /* qralt4ipad@2x.png in Resources */,
 				29480E8327319647006C799F /* Assets.xcassets in Resources */,
