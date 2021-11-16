@@ -43,7 +43,6 @@ public extension UIView {
         }
         let dataProvider = CGDataProvider(data: pdfData as CFData)!
         let pdfDoc = CGPDFDocument(dataProvider)!
-        UIGraphicsEndPDFContext();
         return pdfDoc.page(at: 1)!
     }
 }

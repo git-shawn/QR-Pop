@@ -49,10 +49,12 @@ struct QRContactView: View {
                         .frame(maxWidth: 350)
                     #endif
                 }
-                .padding()
                 #if os(iOS)
                 .buttonStyle(.bordered)
+                .padding()
                 #else
+                .background(.regularMaterial)
+                .padding()
                 .overlay(ContactPicker(contact: $contact, isPresented: $showPicker))
                 .onChange(of: contact) { value in
                     canGenerateCode = true

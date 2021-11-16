@@ -50,7 +50,7 @@ struct QRShortcutView: View {
                 Text("Shortcut Input")
                 Spacer()
                 #endif
-                Picker("Shortcut Input", selection: $input.animation(.spring())) {
+                Picker("Shortcut Input", selection: $input.animation(.easeIn)) {
                     Text("None").tag("")
                     Text("Text").tag("text")
                     Text("Clipboard").tag("clipboard")
@@ -65,7 +65,7 @@ struct QRShortcutView: View {
                 .onChange(of: input) { value in
                     constructCode()
                 }
-            }.padding(20)
+            }.padding(15)
             
             TextField("Enter Shortcut Name", text: $name)
                 .textFieldStyle(QRPopTextStyle())
@@ -159,13 +159,10 @@ private struct shortcutHelpModal: View {
                         Text("Shortcut QR codes activate a Shortcut when scanned, so long as the shortcut is saved on your device already.")
                         Text("What do I enter for Shortcut Name?")
                             .font(.headline)
-                        Text("Enter the name of the shortcut, exactly as it appears on your device. Include all emojis, spaces, and capitalizations the name may include.")
+                        Text("Enter the name of the shortcut, exactly as it appears on your device. Include all emojis, spaces, and capitalizations.")
                         Text("What is an input type?")
                             .font(.headline)
-                        Text("Some shortcuts may require an input to get started. QR Pop can pass codes with text for input, or can request that your device use text in the clipboard instead. If your device doesn't require a text input, just select *none*.")
-                        Text("Why would I want this?")
-                            .font(.headline)
-                        Text("The fun thing about the Shortcuts app is that the possibilities are endless. You could make a shortcut to play your workout playlist, then tape the QR code to your equipment.")
+                        Text("Some shortcuts may require an some text to get started. You can include that text in your code by selecting \"Text\" or you can select \"Clipboard\" to use the last text you copied. If your code doesn't need an input, select \"None.\"")
                     }
                 }.padding()
             }

@@ -21,6 +21,7 @@ public class PageRenderer<Page>: UIPrintPageRenderer where Page: View {
     
     override open func drawPage(at pageIndex: Int, in printableRect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext() else { return }
+        defer { UIGraphicsEndImageContext() }
         context.translateBy(x: 0, y: paperRect.height)
         context.scaleBy(x: 1, y: -1)
         

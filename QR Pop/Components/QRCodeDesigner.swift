@@ -39,7 +39,7 @@ struct QRCodeDesigner: View {
                 .padding()
             }
             VStack(alignment: .center, spacing: 10) {
-                ColorPicker("Background color", selection: $bgColor, supportsOpacity: false)
+                ColorPicker("Background color", selection: $bgColor, supportsOpacity: true)
                 ColorPicker("Foreground color", selection: $fgColor, supportsOpacity: false)
             }.padding(.horizontal, 20)
             .onChange(of: [bgColor, fgColor], perform: {_ in

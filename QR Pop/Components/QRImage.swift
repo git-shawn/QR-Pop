@@ -19,12 +19,14 @@ struct QRImage: View {
     private let imageSaver = ImageSaver()
     #if os(macOS)
     @State private var showPicker = false
+    #else
+    @State private var brightness: CGFloat = 0.5
+    @State private var brightnessToggle: Bool = false
     #endif
 
     
     var body: some View {
         qrCode.swiftImage!
-            .interpolation(.none)
             .resizable()
             .padding(10)
         #if os(macOS)
@@ -52,13 +54,32 @@ struct QRImage: View {
                 return provider
             })
             .contextMenu(menuItems: {
+                #if os(iOS)
+                Button(action: {
+                    if (!brightnessToggle) {
+                        UIScreen.main.brightness = 1
+                    } else {
+                        UIScreen.main.brightness = brightness
+                    }
+                    brightnessToggle.toggle()
+                }) {
+                    if (!brightnessToggle) {
+                        Label("Increase Brightness", systemImage: "lightbulb")
+                    } else {
+                        Label("Decrease Brightness", systemImage: "lightbulb.slash")
+                    }
+                }
+                Divider()
+                #endif
                 Button(action: {
                     Clipboard.writeImage(imageData: qrCode)
                     didCopy = true
                 }) {
                     Label("Copy Image", systemImage: "photo.on.rectangle")
                 }
+                #if os(macOS)
                 Divider()
+                #endif
                 Button(action: {
                     imageSaver.successHandler = {
                         didSave = true
@@ -99,6 +120,13 @@ struct QRImage: View {
             }
             #if os(macOS)
             .background(SharingsPicker(isPresented: $showPicker, sharingItems: [qrCode.image]))
+            #else
+            .onAppear(perform: {
+                brightness = UIScreen.main.brightness
+            })
+            .onDisappear(perform: {
+                UIScreen.main.brightness = brightness
+            })
             #endif
     }
 }

@@ -44,6 +44,9 @@ struct Sidebar: View {
                 }
             }
             Section("More") {
+                NavigationLink(destination: CodeReaderView()) {
+                    Label("Scan a QR Code", systemImage: "qrcode.viewfinder")
+                }
                 NavigationLink(destination: ExtensionGuideView()) {
                     Label("Enable Extensions", systemImage: "puzzlepiece.extension")
                 }

@@ -68,7 +68,7 @@ struct SettingsView: View {
                         Text("15%").tag(1)
                         Text("25%").tag(2)
                         Text("30%").tag(3)
-                    }
+                    }.padding(.top, 5)
                     Text("A higher error correction level will make a QR code more durable, but also more complex. Some codes may even become too complex to scan.")
                         .font(.footnote)
                         .foregroundColor(.gray)

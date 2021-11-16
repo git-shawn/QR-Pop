@@ -45,7 +45,7 @@ struct QRMailView: View {
                     qrData = QRCode().generate(content: (wholeMessage), fg: fgColor, bg: bgColor, encoding: .utf8)
                 }
             
-            TextField("Enter Email Subject", text: $email)
+            TextField("Enter Email Subject", text: $subject)
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.default)
@@ -53,7 +53,7 @@ struct QRMailView: View {
                 .submitLabel(.done)
             #endif
                 .disableAutocorrection(true)
-                .onChange(of: email) { value in
+                .onChange(of: subject) { value in
                     constructWholeMessage()
                     qrData = QRCode().generate(content: (wholeMessage), fg: fgColor, bg: bgColor, encoding: .utf8)
                 }
