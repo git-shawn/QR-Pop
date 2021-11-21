@@ -11,17 +11,23 @@ import Contacts
 import UniformTypeIdentifiers
 
 struct CodeReaderView: View {
+    @State private var showCamera: Bool = false
     var body: some View {
-        TabView {
-            CodeImportView()
-                .tabItem({
-                    Text("Import")
-                })
-            CodeScannerView()
-                .tabItem({
-                    Text("Camera")
-                })
-        }.padding()
+        VStack {
+            Picker("", selection: $showCamera.animation(), content: {
+                Text("Import").tag(false)
+                Text("Camera").tag(true)
+            })
+                .pickerStyle(.segmented)
+                .labelsHidden()
+                .padding()
+                .background(.bar)
+            if showCamera {
+                CodeScannerView().transition(.opacity)
+            } else {
+                CodeImportView().transition(.opacity)
+            }
+        }
         .navigationTitle("QR Code Reader")
     }
 }
@@ -63,7 +69,7 @@ struct CodeImportView: View {
                 .animation(.spring(), value: dropping)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding()
-            Text("Drag an image to scan it")
+            Text("Scan a QR code in an image.")
                 .font(.headline)
             Spacer()
         }.padding()
@@ -135,7 +141,7 @@ struct CodeScannerView: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
                             }
-                            if type != .unknown {
+                            if !buttonText.isEmpty {
                                 Button(action: {
                                     visionActor.handle(payload: payload, type: type)
                                 }) {
@@ -152,7 +158,7 @@ struct CodeScannerView: View {
                     HStack {
                         Spacer()
                     }
-                }
+                }.transition(.opacity)
             } else {
                 VStack {
                     QRVisionViewControllerRepresentable(completionHandler: {payload in scanDidComplete(payload: payload)})
@@ -172,7 +178,7 @@ struct CodeScannerView: View {
         if payload != nil {
             type = visionActor.interpret(payload: payload)
             self.payload = payload!
-            withAnimation(.spring()) {
+            withAnimation() {
                 scanComplete = true
                 labelResults()
             }
@@ -192,7 +198,9 @@ struct CodeScannerView: View {
                 messageContent = "Call \(String(payload[(payload.index(payload.startIndex, offsetBy: 4))...]))"
                 buttonText = "Place Call"
             } else if payload.contains("mailto:") {
-                messageContent = "Send an email to \(String(payload[(payload.index(payload.startIndex, offsetBy: 7))...]))"
+                let splitPayload = payload.split(separator: "?")
+                let emailContainingPayload = String(splitPayload[0])
+                messageContent = "Send an email to \(String(emailContainingPayload[(emailContainingPayload.index(emailContainingPayload.startIndex, offsetBy: 7))...]))"
                 buttonText = "Open Mail"
             } else if payload.contains("facetime-audio:") {
                 messageContent = "Start a facetime audio call with \(String(payload[(payload.index(payload.startIndex, offsetBy: 15))...]))"
@@ -212,8 +220,8 @@ struct CodeScannerView: View {
             messageContent = "Contact Information Found"
             buttonText = "View Contact"
         case .event:
-            messageContent = "Event Found"
-            buttonText = "View Event"
+            messageContent = "An Event was found in this code. Unfortunately, QR Pop can't handle events yet."
+            buttonText = ""
         case .location:
             let geoCoder = CLGeocoder()
             geoCoder.geocodeAddressString((String(payload[(payload.index(payload.startIndex, offsetBy: 4))...]))) { (placemarks, error) in
@@ -227,12 +235,14 @@ struct CodeScannerView: View {
             }
             buttonText = "Open in Maps"
         case .network:
+            messageContent = "A Wifi network was found"
             buttonText = "Connect to Network"
         case .plaintext:
             messageContent = payload
             buttonText = "Copy Text"
         case .unknown:
             messageContent = "No Usable Data Found"
+            buttonText = ""
         }
     }
 }

@@ -114,10 +114,6 @@ extension QRVisionViewController {
         completionHandler(payload)
         captureSession.stopRunning()
     }
-    
-    func resumeObservation() {
-        captureSession.startRunning()
-    }
 }
 
 extension QRVisionViewController: AVCaptureVideoDataOutputSampleBufferDelegate {

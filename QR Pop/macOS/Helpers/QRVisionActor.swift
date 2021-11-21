@@ -11,6 +11,7 @@ import Contacts
 import SwiftUI
 import ContactsUI
 import EventKit
+import CoreWLAN
 
 class QRVisionActor {
     
@@ -42,6 +43,8 @@ class QRVisionActor {
                 return .network
             } else if payload!.isEmpty {
                 return .unknown
+            } else if payload!.contains("mailto:"){
+                return .url
             } else {
                 return .plaintext
             }
@@ -79,6 +82,8 @@ class QRVisionActor {
             }
         }
     }
+
+// -MARK: The below functions perform actions depending on the type of payload found in the QR Code.
     
     /// Opens a URL discovered in a payload. This function can open the following types:
     /// - Web addresses (http, https)
@@ -90,7 +95,9 @@ class QRVisionActor {
     /// - Parameter payload: A payload returned from QRVisionView.
     /// - Warning: This function will automatically open the URL. Do not call until the user has consented.
     private func urlHandler(payload: String) {
-        NSWorkspace.shared.open(URL(string: payload)!)
+        // Converting the payload into Data allows NSWorkspace to accept URLs with Emojis.
+        // This is important for Shortcuts, E-Mail, or other Deep Links which may include Emojis.
+        NSWorkspace.shared.open(URL(dataRepresentation: payload.data(using: .utf8)!, relativeTo: nil)!)
     }
     
     /// Creates a contact from a vCard discovered in a payload.
@@ -113,20 +120,14 @@ class QRVisionActor {
         let vc = CNContactViewController()
         vc.contact = contact
         vc.title = "Scanned Contact"
-        NSApplication.shared.windows.first?.contentViewController?.presentAsModalWindow(vc)
+        NSApplication.shared.windows.first?.contentViewController?.present(vc, asPopoverRelativeTo: .zero, of: NSApplication.shared.windows.first!.contentViewController!.view, preferredEdge: .maxY, behavior: .transient)
     }
     
     /// Creates a calendar event from data discovered in a payload.
     /// The system will present the event to the user and ask for consent before adding it to their calendar, so this function can be safely called whenever.
     /// - Parameter payload: A payload returned from QRVisionView.
     private func eventHandler(payload: String) {
-        #warning("Calendar Event Payloads are Unhandled")
-        let eventStore: EKEventStore = EKEventStore()
-        eventStore.requestAccess(to: .event, completion: { granted, error in
-            if (granted && error == nil) {
-                let event: EKEvent = EKEvent(eventStore: eventStore)
-            }
-        })
+        // -TODO: Handle event payloads.
     }
     
     /// Opens `geo://` addresses discovered in a payload in Apple Maps.
@@ -142,7 +143,73 @@ class QRVisionActor {
     /// - Parameter payload: A payload returned from QRVIsionView.
     /// - Warning: This function will automatically connect to a network. Do not call until the user has consented.
     private func networkHandler(payload: String) {
-        #warning("Network Payloads are Unhandled")
+        var isWEP: Bool? = nil //This may not be necessary for macOS
+        var ssid: String = ""
+        var pass: String = ""
+        
+        // Remove WIFI: from the beginning
+        let parameterString = String(payload[(payload.index(payload.startIndex, offsetBy: 5))...])
+        let parameters = parameterString.split(separator: ";")
+        parameters.forEach {parameter in
+            if parameter.contains("T") {
+                if parameter.contains("WEP") {
+                    isWEP = true
+                } else {
+                    isWEP = false
+                }
+            } else if parameter.contains("S") {
+                let ssidParam = String(parameter).split(separator: ":")
+                ssid = String(ssidParam.last!)
+            } else if parameter.contains("P") {
+                let passParam = String(parameter).split(separator: ":")
+                pass = String(passParam.last!)
+            }
+        }
+        if isWEP != nil {
+            let wifiInterface = CWWiFiClient.shared().interface()
+            do {
+                // Scan for a network with the same SSID name as provided.
+                let wifiNetworks = try wifiInterface?.scanForNetworks(withName: ssid)
+                // The above function returns an optional set, but we only need the first one.
+                guard let wifiNetwork = wifiNetworks?.first else {
+                    // If no network is found in the set, alert the user.
+                    DispatchQueue.main.async {
+                        let alert = NSAlert.init()
+                        alert.messageText = "No Network Found"
+                        alert.informativeText = "QR Pop was unable to find the network named \"\(ssid)\"."
+                        alert.runModal()
+                    }
+                    return
+                }
+                do {
+                    // If a network is found in the set, attempt to associate with it.
+                    try wifiInterface?.associate(to: wifiNetwork, password: pass)
+                    // Alert the user of a successful association.
+                    DispatchQueue.main.async {
+                        let alert = NSAlert.init()
+                        alert.messageText = "Connected"
+                        alert.informativeText = "QR Pop connected you to the network named \"\(ssid)\"."
+                        alert.runModal()
+                    }
+                } catch {
+                    // If the association fails, warn the user.
+                    DispatchQueue.main.async {
+                        let alert = NSAlert.init()
+                        alert.messageText = "Could Not Connect"
+                        alert.informativeText = "QR Pop was unable to connect to the network named \"\(ssid)\". Make sure the password encoded in the QR code you scanned is correct, then try again."
+                        alert.runModal()
+                    }
+                }
+            } catch {
+                // If interfacing fails, warn the user.
+                DispatchQueue.main.async {
+                    let alert = NSAlert.init()
+                    alert.messageText = "No Network Found"
+                    alert.informativeText = "QR Pop was unable to find the network named \"\(ssid)\"."
+                    alert.runModal()
+                }
+            }
+        }
     }
     
     /// Copy plain text found in a payload to the clipboarad.
@@ -159,6 +226,7 @@ private struct ContactViewController: NSViewControllerRepresentable {
     func makeNSViewController(context: Context) -> CNContactViewController {
         let vc = CNContactViewController()
         vc.contact = contact
+        vc.title = "Scanned Contact"
         return vc
     }
     

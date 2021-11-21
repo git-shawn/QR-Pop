@@ -43,6 +43,7 @@ struct Sidebar: View {
                     }
                 }
             }
+            Divider()
             Section("More") {
                 NavigationLink(destination: CodeReaderView()) {
                     Label("Scan a QR Code", systemImage: "qrcode.viewfinder")
@@ -65,6 +66,9 @@ struct Sidebar: View {
         }
         .navigationTitle("QR Pop")
         .listStyle(.sidebar)
+        #if os(macOS)
+        .frame(minWidth: 200, idealWidth: 250)
+        #endif
         .toolbar {
             #if os(macOS)
             ToolbarItem(placement: .navigation) {

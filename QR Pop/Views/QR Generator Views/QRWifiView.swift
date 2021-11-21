@@ -24,7 +24,13 @@ struct QRWifiView: View {
     @State private var showHelp = false
     
     init() {
-        qrData = qrCode.generate(content: "WIFI:T:;S:;P:;;", fg: .black, bg: .white)
+        qrData = qrCode.generate(content: "WIFI:T:WPA;S:;P:;;", fg: .black, bg: .white, encoding: .utf8)
+    }
+    
+    /// Create the QR code.
+    func constructCode() {
+        text = "WIFI:T:\(auth);S:\(ssid);P:\(pass);;"
+        qrData = qrCode.generate(content: text, fg: fgColor, bg: bgColor, encoding: .utf8)
     }
     
     var body: some View {
@@ -41,9 +47,8 @@ struct QRWifiView: View {
                     .pickerStyle(.segmented)
                 #endif
                     .padding()
-                    .onChange(of: auth) { value in
-                        text = "WIFI:T:\(auth);S:\(ssid);P:\(pass);;"
-                        qrData = qrCode.generate(content: text, fg: fgColor, bg: bgColor)
+                    .onChange(of: auth) {_ in
+                        constructCode()
                     }
                 
                 //Accept SSID to generate QR code from
@@ -54,9 +59,8 @@ struct QRWifiView: View {
                     .submitLabel(.done)
                 #endif
                     .disableAutocorrection(true)
-                    .onChange(of: ssid) { value in
-                        text = "WIFI:T:\(auth);S:\(ssid);P:\(pass);;"
-                        qrData = qrCode.generate(content: text, fg: fgColor, bg: bgColor)
+                    .onChange(of: ssid) {_ in
+                        constructCode()
                     }
                 
                 //Accept Wifi Password to generate QR code from
@@ -67,16 +71,15 @@ struct QRWifiView: View {
                     .submitLabel(.done)
                 #endif
                     .disableAutocorrection(true)
-                    .onChange(of: pass) { value in
-                        text = "WIFI:T:\(auth);S:\(ssid);P:\(pass);;"
-                        qrData = qrCode.generate(content: text, fg: fgColor, bg: bgColor)
+                    .onChange(of: pass) {_ in
+                        constructCode()
                     }
             }
             
             #if os(iOS)
             QRCodeDesigner(bgColor: $bgColor, fgColor: $fgColor)
-            .onChange(of: [bgColor, fgColor]) { value in
-                qrData = qrCode.generate(content: text, fg: fgColor, bg: bgColor)
+            .onChange(of: [bgColor, fgColor]) {_ in
+                constructCode()
             }
             #endif
         }.navigationTitle("Wifi Generator")
@@ -101,8 +104,8 @@ struct QRWifiView: View {
                 }
                 .popover(isPresented: $showDesignPopover, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
                     QRCodeDesigner(bgColor: $bgColor, fgColor: $fgColor)
-                    .onChange(of: [bgColor, fgColor]) { value in
-                        qrData = qrCode.generate(content: text, fg: fgColor, bg: bgColor)
+                    .onChange(of: [bgColor, fgColor]) {_ in
+                        constructCode()
                     }.frame(minWidth: 300)
                 }
                 #endif
@@ -114,7 +117,7 @@ struct QRWifiView: View {
                     auth = "WPA"
                     fgColor = .black
                     bgColor = .white
-                    qrData = qrCode.generate(content: "WIFI:T:;S:;P:;;", fg: .black, bg: .white)
+                    constructCode()
                 }){
                     Image(systemName: "trash")
                 }

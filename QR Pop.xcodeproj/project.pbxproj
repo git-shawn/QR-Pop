@@ -111,6 +111,8 @@
 		29777A3F2742B34B000E7A99 /* QRVisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A3E2742B34B000E7A99 /* QRVisionViewController.swift */; };
 		29777A412742B780000E7A99 /* CodeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A402742B780000E7A99 /* CodeReaderView.swift */; };
 		29777A442742BD89000E7A99 /* QRVisionActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29777A432742BD89000E7A99 /* QRVisionActor.swift */; };
+		299BA82D2744C13D0032FDA6 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 299BA82C2744C13D0032FDA6 /* Intents.intentdefinition */; };
+		299BA82E2744C1970032FDA6 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 299BA82C2744C13D0032FDA6 /* Intents.intentdefinition */; };
 		29AB050F273196E5009D4901 /* QR Pop App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB050E273196E5009D4901 /* QR Pop App.swift */; };
 		29AB0510273196E8009D4901 /* QR Pop App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB050E273196E5009D4901 /* QR Pop App.swift */; };
 		29AB0516273197CB009D4901 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AB0512273197CB009D4901 /* PrivacyPolicyView.swift */; };
@@ -309,6 +311,7 @@
 		29777A3E2742B34B000E7A99 /* QRVisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRVisionViewController.swift; sourceTree = "<group>"; };
 		29777A402742B780000E7A99 /* CodeReaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeReaderView.swift; sourceTree = "<group>"; };
 		29777A432742BD89000E7A99 /* QRVisionActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRVisionActor.swift; sourceTree = "<group>"; };
+		299BA82C2744C13D0032FDA6 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		29AB050E273196E5009D4901 /* QR Pop App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QR Pop App.swift"; sourceTree = "<group>"; };
 		29AB0512273197CB009D4901 /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		29AB0513273197CB009D4901 /* Sidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
@@ -456,6 +459,7 @@
 		29480E3227319645006C799F /* QR Pop */ = {
 			isa = PBXGroup;
 			children = (
+				299BA82C2744C13D0032FDA6 /* Intents.intentdefinition */,
 				29AB051F273197DE009D4901 /* Helpers */,
 				29AB051E273197DA009D4901 /* Components */,
 				29AB0511273197B6009D4901 /* Views */,
@@ -1031,6 +1035,7 @@
 				29AB051A273197CB009D4901 /* EmptyView.swift in Sources */,
 				29AB052827319834009D4901 /* ActivityView.swift in Sources */,
 				294C1B852734256F00835FDF /* SEPermissionModal.swift in Sources */,
+				299BA82E2744C1970032FDA6 /* Intents.intentdefinition in Sources */,
 				29B198A1273202EF0001909F /* QRCodeDesigner.swift in Sources */,
 				29B198812731BFF80001909F /* QRCode.swift in Sources */,
 				294C1B642733676D00835FDF /* ContactPicker.swift in Sources */,
@@ -1093,6 +1098,7 @@
 				29B1989E273201520001909F /* QRLinkView.swift in Sources */,
 				29608655273CC2E500A15B56 /* InAppSettingsView.swift in Sources */,
 				29B198982731F7710001909F /* QRGeneratorStore.swift in Sources */,
+				299BA82D2744C13D0032FDA6 /* Intents.intentdefinition in Sources */,
 				29AB051B273197CB009D4901 /* EmptyView.swift in Sources */,
 				29480E8227319647006C799F /* ContentView.swift in Sources */,
 				29AB0519273197CB009D4901 /* Sidebar.swift in Sources */,
@@ -1531,6 +1537,7 @@
 				INFOPLIST_FILE = "QR Pop/macOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "QR Pop";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "QR Pop would like to add events found in QR codes to your calendar.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "QR Pop would like to generate a QR Code for a chosen contact.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -1570,6 +1577,7 @@
 				INFOPLIST_FILE = "QR Pop/macOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "QR Pop";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "QR Pop would like to add events found in QR codes to your calendar.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "QR Pop would like to generate a QR Code for a chosen contact.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;

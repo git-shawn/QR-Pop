@@ -118,6 +118,8 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSUserActivityTypes</key>
+	<array/>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>
