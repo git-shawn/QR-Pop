@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct DownloadIOSView: View {
-    @State private var qrCode: Data = QRCode().generate(content: "https://apps.apple.com/us/app/qr-pop/id1587360435", fg: .primary, bg: Color("SystemBkg"))
+    private let qrCode = QRCode()
     @State private var fg = Color.primary
     @State private var bg = Color("SystemBkg")
     
+    init() {
+        qrCode.codeContent = "https://apps.apple.com/us/app/qr-pop/id1587360435"
+        qrCode.backgroundColor = Color("SystemBkg")
+        qrCode.foregroundColor = .primary
+    }
+    
     var body: some View {
         VStack {
-            QRImage(qrCode: $qrCode, bg: $bg, fg: $fg)
+            qrCode.imgData.swiftImage
                 .padding(.bottom)
             Text("Scan to Download QR Pop for iOS")
                 .font(.headline)

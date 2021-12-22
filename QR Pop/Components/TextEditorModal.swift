@@ -38,9 +38,9 @@ struct TextEditorModal: View {
                     .padding(.vertical, 10)
                     .padding(.horizontal, 15)
                     .background(.ultraThickMaterial)
-                    .clipShape(Capsule())
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     .overlay(
-                        Capsule()
+                        RoundedRectangle(cornerRadius: 10)
                             .stroke(lineWidth: 1)
                             .fill(gradient)
                             .opacity(0.1)

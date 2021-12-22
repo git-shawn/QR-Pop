@@ -10,27 +10,25 @@ import UniformTypeIdentifiers
 import AlertToast
 
 struct QRImage: View {
-    @Binding var qrCode: Data
-    @Binding var bg: Color
-    @Binding var fg: Color
+    @EnvironmentObject var qrCode: QRCode
+    
     @State var showShare: Bool = false
     @State private var didSave: Bool = false
     @State private var didCopy: Bool = false
+    @State private var showData: Bool = false
     private let imageSaver = ImageSaver()
+    
     #if os(macOS)
     @State private var showPicker = false
-    #else
-    @State private var brightness: CGFloat = 0.5
-    @State private var brightnessToggle: Bool = false
     #endif
 
     
     var body: some View {
-        qrCode.swiftImage!
+        qrCode.imgData.swiftImage!
             .resizable()
             .padding(10)
         #if os(macOS)
-            .frame(maxWidth: 300, maxHeight: 300)
+            .frame(maxWidth: 350, maxHeight: 350)
         #else
             .frame(maxWidth: 400, maxHeight: 400)
         #endif
@@ -38,41 +36,24 @@ struct QRImage: View {
             .cornerRadius(10)
             .background(
                 RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .foregroundColor(bg)
+                    .foregroundColor(qrCode.backgroundColor)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .strokeBorder(fg, lineWidth: 3)
+                    .strokeBorder(qrCode.foregroundColor, lineWidth: 3)
             )
             .accessibilityLabel("QR Code Image")
             .onDrag({
                 #if os(iOS)
-                let provider = NSItemProvider(object: qrCode.image as UIImage)
+                let provider = NSItemProvider(object: qrCode.imgData.image as UIImage)
                 #else
-                let provider = NSItemProvider(item: qrCode as NSSecureCoding, typeIdentifier: UTType.png.identifier)
+                let provider = NSItemProvider(item: qrCode.imgData as NSSecureCoding, typeIdentifier: UTType.png.identifier)
                 #endif
                 return provider
             })
             .contextMenu(menuItems: {
-                #if os(iOS)
                 Button(action: {
-                    if (!brightnessToggle) {
-                        UIScreen.main.brightness = 1
-                    } else {
-                        UIScreen.main.brightness = brightness
-                    }
-                    brightnessToggle.toggle()
-                }) {
-                    if (!brightnessToggle) {
-                        Label("Increase Brightness", systemImage: "lightbulb")
-                    } else {
-                        Label("Decrease Brightness", systemImage: "lightbulb.slash")
-                    }
-                }
-                Divider()
-                #endif
-                Button(action: {
-                    Clipboard.writeImage(imageData: qrCode)
+                    Clipboard.writeImage(imageData: qrCode.imgData)
                     didCopy = true
                 }) {
                     Label("Copy Image", systemImage: "photo.on.rectangle")
@@ -84,13 +65,13 @@ struct QRImage: View {
                     imageSaver.successHandler = {
                         didSave = true
                     }
-                    imageSaver.save(imageData: qrCode)
+                    imageSaver.save(imageData: qrCode.imgData)
                 }) {
                     Label("Save Image", systemImage: "square.and.arrow.down")
                 }
                 Button(action: {
                     #if os(iOS)
-                    showShareSheet(with: [qrCode.image])
+                    showShareSheet(with: [qrCode.imgData.image])
                     #else
                     showPicker = true
                     #endif
@@ -101,7 +82,7 @@ struct QRImage: View {
                 Divider()
                 Button(action: {
                     let printView = NSImageView(frame: NSRect(x: 0, y: 0, width: 300, height: 300))
-                    printView.image = qrCode.image
+                    printView.image = qrCode.imgData.image
                     let printOperation = NSPrintOperation(view: printView)
                     printOperation.printInfo.scalingFactor = 1
                     printOperation.printInfo.isVerticallyCentered = true
@@ -111,6 +92,12 @@ struct QRImage: View {
                     Label("Print Image", systemImage: "")
                 }
                 #endif
+                Divider()
+                Button(action: {
+                    showData.toggle()
+                }) {
+                    Label("View Encoded Data", systemImage: "rectangle.and.text.magnifyingglass")
+                }
             })
             .toast(isPresenting: $didSave, duration: 2, tapToDismiss: true) {
                 AlertToast(displayMode: .alert, type: .systemImage("checkmark", .accentColor), title: "Image Saved")
@@ -118,15 +105,24 @@ struct QRImage: View {
             .toast(isPresenting: $didCopy, duration: 2, tapToDismiss: true) {
                 AlertToast(displayMode: .alert, type: .systemImage("photo.on.rectangle", .accentColor), title: "Image Copied")
             }
+            .sheet(isPresented: $showData, content: {
+                ModalNavbar(navigationTitle: "Data", showModal: $showData) {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                Text("Encoded Raw Data")
+                                    .font(.largeTitle)
+                                    .bold()
+                                Spacer()
+                            }
+                            Text("\(qrCode.codeContent)")
+                            Spacer()
+                        }.padding()
+                    }
+                }
+            })
             #if os(macOS)
-            .background(SharingsPicker(isPresented: $showPicker, sharingItems: [qrCode.image]))
-            #else
-            .onAppear(perform: {
-                brightness = UIScreen.main.brightness
-            })
-            .onDisappear(perform: {
-                UIScreen.main.brightness = brightness
-            })
+            .background(SharingsPicker(isPresented: $showPicker, sharingItems: [qrCode.imgData.image]))
             #endif
     }
 }
@@ -152,12 +148,3 @@ extension Data {
     var image: UIImage { UIImage(data: self)! }
 }
 #endif
-
-struct QRImage_Previews: PreviewProvider {
-    @State static var bg: Color = .white
-    @State static var fg: Color = .black
-    @State static var qrImage: Data = QRCode().generate(content: "", fg: fg, bg: bg)
-    static var previews: some View {
-        QRImage(qrCode: $qrImage, bg: $bg, fg: $fg)
-    }
-}

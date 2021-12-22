@@ -38,6 +38,14 @@
             <key>Title</key>
             <string>SwiftUIPrint</string>
         </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSChildPaneSpecifier</string>
+            <key>File</key>
+            <string>CodeScanner</string>
+            <key>Title</key>
+            <string>CodeScanner</string>
+        </dict>
     </array>
 </dict>
 </plist>

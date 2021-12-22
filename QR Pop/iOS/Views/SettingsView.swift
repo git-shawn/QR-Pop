@@ -203,6 +203,16 @@ struct SettingsView: View {
     }
 }
 
+extension UIColor {
+    class func color(withData data:Data) -> UIColor {
+         return NSKeyedUnarchiver.unarchiveObject(with: data) as! UIColor
+    }
+
+    func encode() -> Data {
+         return NSKeyedArchiver.archivedData(withRootObject: self)
+    }
+}
+
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()

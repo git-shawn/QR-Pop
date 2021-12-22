@@ -77,10 +77,6 @@ private struct SafariExtensionContent: View {
                         Label("Why?", systemImage: "questionmark.circle")
                             .labelStyle(.iconOnly)
                     }
-                    #if os(macOS)
-                    .buttonStyle(.plain)
-                    .foregroundColor(.accentColor)
-                    #endif
                     .sheet(
                         isPresented: $showAllowSheet
                     ) {
@@ -92,14 +88,13 @@ private struct SafariExtensionContent: View {
                 Label("Find QR Pop in the Sidebar", systemImage: "2.circle")
                 Label("Enable QR Pop", systemImage: "3.circle")
                 Label("Select \"Always Allow on Every Website\"", systemImage: "4.circle")
+                    .help("QR Pop needs enabled on all websites to provide you with our convenient QR Code button everywhere you visit.")
                 Label("Start Making QR Codes", systemImage: "5.circle")
                 Button(action: {
                     SFSafariApplication.showPreferencesForExtension(withIdentifier: "shwndvs.QR-Pop.Extension")
                 }) {
                     Text("Open Safari Preferences")
-                }.buttonStyle(.borderedProminent)
-                .frame(maxWidth: 380)
-                .padding(.vertical)
+                }.buttonStyle(QRPopProminentButton())
                 #endif
             }
             #if os(iOS)
@@ -148,11 +143,13 @@ private struct ShareExtensionContent: View {
                     Label("Add \"Generate QR Code\"", systemImage: "4.circle")
                 }.font(.title3)
                 ShareButton(shareContent: [URL(string: "https://apps.apple.com/us/app/qr-pop/id1587360435")!], buttonTitle: "Show Share Sheet", hideIcon: true)
+                #if os(iOS)
                 .buttonStyle(.borderedProminent)
                 .frame(maxWidth: 380)
                 .padding(.vertical)
-                #if os(iOS)
                 .font(.title3)
+                #else
+                .buttonStyle(QRPopProminentButton())
                 #endif
 
             }

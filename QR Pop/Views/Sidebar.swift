@@ -17,17 +17,7 @@ struct Sidebar: View {
             #if os(macOS)
             Section("QR Code Generators") {
                 ForEach(QRViews) { view in
-                    NavigationLink(destination: {
-                        ScrollView {
-                            HStack {
-                                Spacer()
-                                view.destination
-                                    .frame(maxWidth: 400)
-                                Spacer()
-                            }
-                            .frame(minWidth: 200)
-                        }
-                    }) {
+                    NavigationLink(destination: QRGeneratorView(generatorType: view)) {
                         Label(title: {
                             Text("\(view.name)")
                         }, icon: {
@@ -40,14 +30,10 @@ struct Sidebar: View {
                                 Image(systemName: "\(view.icon)")
                             }
                         })
-                    }
+                    }.help(view.description)
                 }
             }
-            Divider()
             Section("More") {
-                NavigationLink(destination: CodeReaderView()) {
-                    Label("Scan a QR Code", systemImage: "qrcode.viewfinder")
-                }
                 NavigationLink(destination: ExtensionGuideView()) {
                     Label("Enable Extensions", systemImage: "puzzlepiece.extension")
                 }
@@ -58,6 +44,9 @@ struct Sidebar: View {
             }, label: {
                 Label("QR Code Generator", systemImage: "qrcode")
             })
+            NavigationLink(destination: QRCameraView()) {
+                Label("Duplicate QR Code", systemImage: "camera.on.rectangle")
+            }
             NavigationLink(destination: ExtensionGuideView()) {
                 Label("Enable Extensions", systemImage: "puzzlepiece.extension")
             }
@@ -71,7 +60,7 @@ struct Sidebar: View {
         #endif
         .toolbar {
             #if os(macOS)
-            ToolbarItem(placement: .navigation) {
+            ToolbarItem(placement: .cancellationAction) {
                 Button(action: toggleSidebar, label: {
                     Image(systemName: "sidebar.leading")
                 })

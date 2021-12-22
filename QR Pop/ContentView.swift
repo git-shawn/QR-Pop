@@ -21,15 +21,7 @@ struct ContentView: View {
         #else
         NavigationView {
             Sidebar()
-            ScrollView {
-                HStack {
-                    Spacer()
-                    QRLinkView()
-                        .frame(maxWidth: 400)
-                    Spacer()
-                }
-                .frame(minWidth: 200)
-            }
+            QRGeneratorView(generatorType: QRViews.first!)
         }
         #endif
     }

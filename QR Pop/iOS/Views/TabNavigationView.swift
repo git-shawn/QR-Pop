@@ -19,21 +19,29 @@ struct TabNavigationView: View {
                 Text("Generator")
             }
             NavigationView {
+                QRCameraView()
+            }
+            .tag(1)
+            .tabItem {
+                Image(systemName: "camera.on.rectangle")
+                Text("Duplicate")
+            }
+            NavigationView {
                 ExtensionGuideView()
             }
-                .tag(1)
-                .tabItem {
-                    Image(systemName: "puzzlepiece.extension")
-                    Text("Guides")
-                }
+            .tag(2)
+            .tabItem {
+                Image(systemName: "puzzlepiece.extension")
+                Text("Extensions")
+            }
             NavigationView {
                 SettingsView()
             }
-                .tag(2)
-                .tabItem {
-                    Image(systemName: "gearshape")
-                    Text("Settings")
-                }
+            .tag(3)
+            .tabItem {
+                Image(systemName: "gearshape")
+                Text("Settings")
+            }
         }
     }
 }

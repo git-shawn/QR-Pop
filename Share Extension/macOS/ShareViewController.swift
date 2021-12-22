@@ -46,6 +46,8 @@ class ShareViewController: NSViewController {
                         let context = CIContext()
                         guard let cgImage = context.createCGImage(scaledQrImage, from: scaledQrImage.extent) else {return}
                         self.processedImage = NSImage(cgImage: cgImage, size: NSSize(width: 250, height: 250))
+                        self.processedImage = roundCorners(image: self.processedImage!, width: self.processedImage!.size.width, height: self.processedImage!.size.height, fill: NSColor.white, radius: 16)
+                        self.processedImage = roundCorners(image: self.processedImage!, width: self.processedImage!.size.width, height: self.processedImage!.size.height, fill: NSColor.black, radius: 20)
                         
                         //Insert the QR Code into the Storyboard
                         DispatchQueue.main.async {
@@ -95,8 +97,35 @@ class ShareViewController: NSViewController {
 
 }
 
+func roundCorners(image: NSImage, width: CGFloat = 192, height: CGFloat = 192, fill: NSColor, radius: CGFloat) -> NSImage {
+    let xRad = radius
+    let yRad = radius
+    let existing = image
+    let esize = existing.size
+    let newSize = NSMakeSize(esize.width+10, esize.height+10)
+    let composedImage = NSImage(size: newSize)
+
+    composedImage.lockFocus()
+    let ctx = NSGraphicsContext.current
+    ctx?.imageInterpolation = NSImageInterpolation.high
+    fill.setFill()
+
+    let imageFrame = NSRect(x: 0, y: 0, width: width+10, height: height+10)
+    let clipPath = NSBezierPath(roundedRect: imageFrame, xRadius: xRad, yRadius: yRad)
+    clipPath.windingRule = .evenOdd
+    clipPath.addClip()
+
+    let rect = NSRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+    rect.fill()
+    image.draw(at: NSPoint(x: 5, y: 5), from: rect, operation: NSCompositingOperation.sourceAtop, fraction: 1)
+    composedImage.unlockFocus()
+
+    return composedImage
+}
+
 //An extension to NSImage that saves the object as a PNG
 extension NSImage {
+    
     @discardableResult
     func saveAsPNG(url: URL) -> Bool {
         guard let tiffData = self.tiffRepresentation else {

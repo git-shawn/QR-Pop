@@ -8,6 +8,10 @@
 	<array>
 		<string>group.shwndvs.qr-pop</string>
 	</array>
+	<key>com.apple.security.assets.pictures.read-only</key>
+	<true/>
+	<key>com.apple.security.device.camera</key>
+	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
 	<key>com.apple.security.personal-information.addressbook</key>
@@ -15,6 +19,8 @@
 	<key>com.apple.security.personal-information.location</key>
 	<true/>
 	<key>com.apple.security.personal-information.photos-library</key>
+	<true/>
+	<key>com.apple.security.print</key>
 	<true/>
 </dict>
 </plist>

@@ -22,16 +22,7 @@ struct QRView: View {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 30) {
                     ForEach(data) { view in
-                        NavigationLink(destination: {
-                            ScrollView {
-                                HStack {
-                                    Spacer()
-                                    view.destination
-                                        .frame(maxWidth: 400)
-                                    Spacer()
-                                }
-                            }
-                        }) {
+                        NavigationLink(destination: QRGeneratorView(generatorType: view)) {
                             GridItemContainer(label: "\(view.name)") {
                                 if (view.name == "Twitter") {
                                     Image("twitterLogo")
@@ -42,7 +33,7 @@ struct QRView: View {
                                     Image(systemName: "\(view.icon)")
                                         .font(.system(size: 32))
                                 }
-                            }
+                            }.help(view.description)
                         }
                     }
                 }.padding()
@@ -59,16 +50,7 @@ struct QRView: View {
         } else {
             List {
                 ForEach(data) { view in
-                    NavigationLink(destination: {
-                        ScrollView {
-                            HStack {
-                                Spacer()
-                                view.destination
-                                    .frame(maxWidth: 400)
-                                Spacer()
-                            }
-                        }
-                    }) {
+                    NavigationLink(destination: QRGeneratorView(generatorType: view)) {
                         Label(title: {
                             Text("\(view.name)")
                         }, icon: {
@@ -81,7 +63,7 @@ struct QRView: View {
                                 Image(systemName: "\(view.icon)")
                             }
                         })
-                    }
+                    }.help(view.description)
                 }
             }.navigationTitle("QR Generator")
             .toolbar(content: {
@@ -114,11 +96,9 @@ private struct GridItemContainer <Content: View> : View {
             .buttonStyle(PlainButtonStyle())
             .padding()
             .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(Color.gray)
-                    .opacity(0.1)
-                    .aspectRatio(1, contentMode: .fit)
+                .ultraThickMaterial
             )
+            .cornerRadius(16)
             Text("\(label)")
                 .foregroundColor(.secondary)
                 .font(.subheadline)

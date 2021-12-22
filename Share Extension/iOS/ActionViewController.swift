@@ -48,12 +48,11 @@ class ActionViewController: UIViewController {
                                     
                                     DispatchQueue.main.async {
                                         self.imageView.contentMode = .scaleAspectFit
-                                        self.imageView.image = processedImage.imageWithInsets(insetDimen: 10)
-                                        self.imageView.layer.masksToBounds = true
-                                        self.imageView.backgroundColor = .white
+                                        self.imageView.layer.borderColor = UIColor.black.cgColor
                                         self.imageView.layer.cornerRadius = 16
                                         self.imageView.layer.borderWidth = 3
-                                        self.imageView.layer.borderColor = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
+                                        self.imageView.layer.backgroundColor = UIColor.white.cgColor
+                                        self.imageView.image = processedImage.withInset(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
                                     }
                                 }
                         }
@@ -84,12 +83,11 @@ class ActionViewController: UIViewController {
                                     
                                     DispatchQueue.main.async {
                                         self.imageView.contentMode = .scaleAspectFit
-                                        self.imageView.image = processedImage.imageWithInsets(insetDimen: 10)
-                                        self.imageView.layer.masksToBounds = true
-                                        self.imageView.backgroundColor = .white
+                                        self.imageView.layer.borderColor = UIColor.black.cgColor
                                         self.imageView.layer.cornerRadius = 16
                                         self.imageView.layer.borderWidth = 3
-                                        self.imageView.layer.borderColor = CGColor.init(red: 0, green: 0, blue: 0, alpha: 1)
+                                        self.imageView.layer.backgroundColor = UIColor.white.cgColor
+                                        self.imageView.image = processedImage.withInset(UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
                                     }
                                 }
                             }
@@ -116,17 +114,16 @@ class ActionViewController: UIViewController {
 }
 
 extension UIImage {
-  func imageWithInsets(insetDimen: CGFloat) -> UIImage {
-      return imageWithInset(insets: UIEdgeInsets(top: insetDimen, left: insetDimen, bottom: insetDimen, right: insetDimen))
-  }
-  
-  func imageWithInset(insets: UIEdgeInsets) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(CGSize(width: self.size.width + insets.left + insets.right, height: self.size.height + insets.top + insets.bottom), false, self.scale)
-    let origin = CGPoint(x: insets.left, y: insets.top)
-      self.draw(at: origin)
-    let imageWithInsets = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-      return imageWithInsets!
-  }
-  
+    func withInset(_ insets: UIEdgeInsets) -> UIImage? {
+        let cgSize = CGSize(width: self.size.width + insets.left * self.scale + insets.right * self.scale,
+                            height: self.size.height + insets.top * self.scale + insets.bottom * self.scale)
+
+        UIGraphicsBeginImageContextWithOptions(cgSize, false, self.scale)
+        defer { UIGraphicsEndImageContext() }
+
+        let origin = CGPoint(x: insets.left * self.scale, y: insets.top * self.scale)
+        self.draw(at: origin)
+
+        return UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(self.renderingMode)
+    }
 }
