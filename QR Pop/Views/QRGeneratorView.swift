@@ -102,6 +102,18 @@ struct QRGeneratorView: View {
                     Button(action: {showHelp = true}) {
                         Label("Help", systemImage: "questionmark")
                     }
+                    #else
+                    Button(action: {
+                        let printView = NSImageView(frame: NSRect(x: 0, y: 0, width: 300, height: 300))
+                        printView.image = qrCode.imgData.image
+                        let printOperation = NSPrintOperation(view: printView)
+                        printOperation.printInfo.scalingFactor = 1
+                        printOperation.printInfo.isVerticallyCentered = true
+                        printOperation.printInfo.isHorizontallyCentered = true
+                        printOperation.runModal(for: NSApplication.shared.windows.first!, delegate: self, didRun: nil, contextInfo: nil)
+                    }) {
+                        Label("Print Code", systemImage: "printer")
+                    }
                     #endif
                     Button(action: {presentCode = true}) {
                         Label("Present Code", systemImage: "arrow.up.left.and.arrow.down.right")

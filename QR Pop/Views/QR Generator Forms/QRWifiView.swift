@@ -24,6 +24,11 @@ struct QRWifiView: View {
     var body: some View {
         VStack(alignment: .center) {
             Group {
+                #if os(macOS)
+                GetWifiButton()
+                    .environmentObject(qrCode)
+                #endif
+                
                 Picker("Wifi Authentication Method", selection: $auth) {
                     Text("WPA").tag("WPA")
                     Text("WEP").tag("WEP")
