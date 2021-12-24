@@ -163,10 +163,13 @@
 		29B1989E273201520001909F /* QRLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B1989C273201520001909F /* QRLinkView.swift */; };
 		29B198A1273202EF0001909F /* QRCodeDesigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B198A0273202EF0001909F /* QRCodeDesigner.swift */; };
 		29B198A2273202EF0001909F /* QRCodeDesigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B198A0273202EF0001909F /* QRCodeDesigner.swift */; };
-		29CE535E274013060013DAC9 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B1987E2731BDC40001909F /* QRCode.swift */; };
 		29CE5361274015820013DAC9 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 29CE535F274015780013DAC9 /* icon.icns */; };
 		29CE5363274023030013DAC9 /* QRShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CE5362274023030013DAC9 /* QRShortcutView.swift */; };
 		29CE5364274023030013DAC9 /* QRShortcutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CE5362274023030013DAC9 /* QRShortcutView.swift */; };
+		29DC98CC2774FC0A00C4E0D1 /* QRCryptoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DC98CB2774FC0A00C4E0D1 /* QRCryptoView.swift */; };
+		29DC98CD2774FC0A00C4E0D1 /* QRCryptoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DC98CB2774FC0A00C4E0D1 /* QRCryptoView.swift */; };
+		29DC98D027752D9D00C4E0D1 /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 29DC98CF27752D9D00C4E0D1 /* EFQRCode */; };
+		29DC98D227752DB200C4E0D1 /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 29DC98D127752DB200C4E0D1 /* EFQRCode */; };
 		29E1369827441BF8004EA0CE /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29E1369727441BF8004EA0CE /* MainInterface.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -356,6 +359,7 @@
 		29B198A0273202EF0001909F /* QRCodeDesigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDesigner.swift; sourceTree = "<group>"; };
 		29CE535F274015780013DAC9 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		29CE5362274023030013DAC9 /* QRShortcutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRShortcutView.swift; sourceTree = "<group>"; };
+		29DC98CB2774FC0A00C4E0D1 /* QRCryptoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCryptoView.swift; sourceTree = "<group>"; };
 		29E1369727441BF8004EA0CE /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -365,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29AB0534273198F5009D4901 /* AlertToast in Frameworks */,
+				29DC98D027752D9D00C4E0D1 /* EFQRCode in Frameworks */,
 				29B1984127319A920001909F /* StoreKit.framework in Frameworks */,
 				29654909277228D800E2AFE3 /* CodeScanner in Frameworks */,
 			);
@@ -375,6 +380,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29B1984727319BD00001909F /* StoreKit.framework in Frameworks */,
+				29DC98D227752DB200C4E0D1 /* EFQRCode in Frameworks */,
 				29608650273CC2AB00A15B56 /* Preferences in Frameworks */,
 				2911FD692738818600E999C3 /* AlertToast in Frameworks */,
 			);
@@ -734,6 +740,7 @@
 				294C1B7127336D1400835FDF /* QRLocationView.swift */,
 				294C1B7527336F6100835FDF /* QRTextView.swift */,
 				29CE5362274023030013DAC9 /* QRShortcutView.swift */,
+				29DC98CB2774FC0A00C4E0D1 /* QRCryptoView.swift */,
 			);
 			path = "QR Generator Forms";
 			sourceTree = "<group>";
@@ -760,6 +767,7 @@
 			packageProductDependencies = (
 				29AB0533273198F5009D4901 /* AlertToast */,
 				29654908277228D800E2AFE3 /* CodeScanner */,
+				29DC98CF27752D9D00C4E0D1 /* EFQRCode */,
 			);
 			productName = "QR Pop (iOS)";
 			productReference = 29480E4A27319646006C799F /* QR Pop.app */;
@@ -784,6 +792,7 @@
 			packageProductDependencies = (
 				2911FD682738818600E999C3 /* AlertToast */,
 				2960864F273CC2AB00A15B56 /* Preferences */,
+				29DC98D127752DB200C4E0D1 /* EFQRCode */,
 			);
 			productName = "QR Pop (macOS)";
 			productReference = 29480E5C27319647006C799F /* QR Pop.app */;
@@ -900,6 +909,7 @@
 				29AB0532273198F5009D4901 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				2960864E273CC2AB00A15B56 /* XCRemoteSwiftPackageReference "Preferences" */,
 				29654907277228D800E2AFE3 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				29DC98CE27752D9D00C4E0D1 /* XCRemoteSwiftPackageReference "EFQRCode" */,
 			);
 			productRefGroup = 29480E4B27319646006C799F /* Products */;
 			projectDirPath = "";
@@ -1055,6 +1065,7 @@
 				29AB050F273196E5009D4901 /* QR Pop App.swift in Sources */,
 				29AB052E27319853009D4901 /* AltIconView.swift in Sources */,
 				294C1B58273362EF00835FDF /* QRFacetimeView.swift in Sources */,
+				29DC98CC2774FC0A00C4E0D1 /* QRCryptoView.swift in Sources */,
 				294C1B7D273370BC00835FDF /* QRWifiView.swift in Sources */,
 				29AB053127319853009D4901 /* SettingsView.swift in Sources */,
 				294C1B7627336F6100835FDF /* QRTextView.swift in Sources */,
@@ -1092,6 +1103,7 @@
 				294C1B8A2734C91B00835FDF /* ColorContrast.swift in Sources */,
 				29B1988C2731E2EE0001909F /* ShareButton.swift in Sources */,
 				2911FDB3273A29D500E999C3 /* ComponentStyles.swift in Sources */,
+				29DC98CD2774FC0A00C4E0D1 /* QRCryptoView.swift in Sources */,
 				294C1B4D2733611200835FDF /* QRMailView.swift in Sources */,
 				2960864B273CBE8600A15B56 /* Acknowledgements.swift in Sources */,
 				2911FD6B273883D300E999C3 /* ContactPicker.swift in Sources */,
@@ -1149,7 +1161,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				29B1986F2731A4750001909F /* ShareViewController.swift in Sources */,
-				29CE535E274013060013DAC9 /* QRCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1320,7 +1331,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1353,7 +1364,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1396,7 +1407,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1439,7 +1450,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1476,7 +1487,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1509,7 +1520,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1548,7 +1559,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1588,7 +1599,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1621,7 +1632,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Action";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1651,7 +1662,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Action";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1684,7 +1695,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1714,7 +1725,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.7;
+				MARKETING_VERSION = 2.8;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1817,6 +1828,14 @@
 				kind = branch;
 			};
 		};
+		29DC98CE27752D9D00C4E0D1 /* XCRemoteSwiftPackageReference "EFQRCode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EFPrefix/EFQRCode.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1839,6 +1858,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 29AB0532273198F5009D4901 /* XCRemoteSwiftPackageReference "AlertToast" */;
 			productName = AlertToast;
+		};
+		29DC98CF27752D9D00C4E0D1 /* EFQRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29DC98CE27752D9D00C4E0D1 /* XCRemoteSwiftPackageReference "EFQRCode" */;
+			productName = EFQRCode;
+		};
+		29DC98D127752DB200C4E0D1 /* EFQRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29DC98CE27752D9D00C4E0D1 /* XCRemoteSwiftPackageReference "EFQRCode" */;
+			productName = EFQRCode;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

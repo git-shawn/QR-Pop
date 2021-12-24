@@ -58,7 +58,7 @@ struct ModalNavbar<Content: View>: View {
             .keyboardShortcut(.cancelAction)
             .buttonStyle(.plain)
             .padding()
-        }.frame(width: 500, height: 500)
+        }.frame(width: 500, height: 550)
         #endif
     }
 }

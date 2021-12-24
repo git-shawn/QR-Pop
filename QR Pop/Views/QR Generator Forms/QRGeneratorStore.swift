@@ -28,5 +28,6 @@ let QRViews: [QRGeneratorType] = [
     QRGeneratorType.init(name: "Twitter", description: "Opens Twitter when scanned.", icon: "at", destination: AnyView(QRTwitterView())),
     QRGeneratorType.init(name: "Location", description: "Opens Maps to a specified location when scanned.", icon: "map", destination: AnyView(QRLocationView())),
     QRGeneratorType.init(name: "Plain Text", description: "Presents some text when scanned.", icon: "doc.text", destination: AnyView(QRTextView())),
-    QRGeneratorType.init(name: "Shortcuts", description: "Activates a Shortcut when scanned.", icon: "square.2.stack.3d", destination: AnyView(QRShortcutView()))
+    QRGeneratorType.init(name: "Shortcuts", description: "Activates a Shortcut when scanned.", icon: "square.2.stack.3d", destination: AnyView(QRShortcutView())),
+    QRGeneratorType.init(name: "Bitcoin", description: "Requests a specified cryptocurrency when scanned.", icon: "bitcoinsign.circle", destination: AnyView(QRCryptoView()))
 ]

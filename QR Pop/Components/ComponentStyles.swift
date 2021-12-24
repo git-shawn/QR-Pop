@@ -18,30 +18,32 @@ struct QRPopTextStyle: TextFieldStyle {
     #endif
     
     func _body(configuration: TextField<Self._Label>) -> some View {
-        configuration
-            .textFieldStyle(.plain)
-            .multilineTextAlignment(.leading)
-        #if os(iOS)
-            .padding(.horizontal)
-            .padding(.top, 10)
-            .padding(.bottom, 5)
-        #else
-            .padding(.vertical, 10)
-            .padding(.horizontal, 15)
-            .background(.ultraThickMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(lineWidth: 1)
-                    .fill(gradient)
-                    .opacity(0.1)
-            )
-            .padding(10)
-        #endif
-        #if os(iOS)
-        Divider()
-            .padding(.leading)
-        #endif
+        VStack {
+            configuration
+                .textFieldStyle(.plain)
+                .multilineTextAlignment(.leading)
+            #if os(iOS)
+                .padding(.horizontal)
+                .padding(.top, 10)
+                .padding(.bottom, 5)
+            #else
+                .padding(.vertical, 10)
+                .padding(.horizontal, 15)
+                .background(.ultraThickMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(lineWidth: 1)
+                        .fill(gradient)
+                        .opacity(0.1)
+                )
+                .padding(10)
+            #endif
+            #if os(iOS)
+            Divider()
+                .padding(.horizontal)
+            #endif
+        }
     }
 }
 
@@ -98,3 +100,14 @@ struct QRPopProminentButton: ButtonStyle {
     }
 }
 #endif
+
+struct QRPopBorderlessMenu: MenuStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Menu(configuration)
+            .padding(12)
+            .foregroundColor(.accentColor)
+            .frame(maxWidth: 350)
+            .background(Color("ButtonBkg"))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+}

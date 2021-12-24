@@ -14,7 +14,7 @@ struct QRTextView: View {
     @State private var showTextModal: Bool = false
 
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             TextEditorModal(showTextEditor: $showTextModal, text: $text)
                 .onChange(of: showTextModal) {_ in
                     qrCode.setContent(string: text)

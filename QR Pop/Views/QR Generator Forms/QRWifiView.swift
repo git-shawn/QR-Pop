@@ -22,7 +22,7 @@ struct QRWifiView: View {
     }
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             Group {
                 #if os(macOS)
                 GetWifiButton()

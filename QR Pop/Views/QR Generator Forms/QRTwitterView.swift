@@ -17,13 +17,13 @@ struct QRTwitterView: View {
     @State private var showTextModal: Bool = false
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             Picker("Twitter URL Type", selection: $twitterInt) {
                 Text("Follow").tag("Follow")
                 Text("Tweet").tag("Tweet")
             }
                 .pickerStyle(.segmented)
-                .padding()
+                .padding(.horizontal)
             
             if (twitterInt == "Follow") {
                 Group {

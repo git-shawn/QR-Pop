@@ -20,12 +20,30 @@
         }
       },
       {
+        "package": "EFQRCode",
+        "repositoryURL": "https://github.com/EFPrefix/EFQRCode.git",
+        "state": {
+          "branch": null,
+          "revision": "56278ea800d7fdc20f42cd77bdbf0fecc8c1c0c8",
+          "version": "6.2.0"
+        }
+      },
+      {
         "package": "Preferences",
         "repositoryURL": "https://github.com/sindresorhus/Preferences",
         "state": {
           "branch": "main",
           "revision": "ffeaaad1def45d0625720dc1adae3789cd9c167d",
           "version": null
+        }
+      },
+      {
+        "package": "swift_qrcodejs",
+        "repositoryURL": "https://github.com/ApolloZhu/swift_qrcodejs.git",
+        "state": {
+          "branch": null,
+          "revision": "374dc7f7b9e76c6aeb393f6a84590c6d387e1ecb",
+          "version": "2.2.2"
         }
       }
     ]

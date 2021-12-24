@@ -11,6 +11,7 @@ struct QRCalendarView: View {
     @EnvironmentObject var qrCode: QRCode
 
     @State private var eventName: String = ""
+    @State private var eventLocation: String = ""
     @State private var startTime = Date()
     @State private var startString: String = ""
     @State private var endTime = Date()
@@ -26,12 +27,12 @@ struct QRCalendarView: View {
     }
     
     private func setCodeContent() {
-        wholeEvent = "BEGIN:VEVENT\nSUMMARY:\(eventName)\nDTSTART:\(startString)\nDTEND:\(endString)\nEND:VEVENT"
+        wholeEvent = "BEGIN:VEVENT\nSUMMARY:\(eventName)\nLOCATION:\(eventLocation)\nDTSTART:\(startString)\nDTEND:\(endString)\nEND:VEVENT"
         qrCode.setContent(string: wholeEvent)
     }
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             TextField("Event Name", text: $eventName)
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
@@ -39,6 +40,16 @@ struct QRCalendarView: View {
                 .submitLabel(.done)
             #endif
                 .onChange(of: eventName) { value in
+                    setCodeContent()
+                }
+            
+            TextField("Event Location", text: $eventLocation)
+                .textFieldStyle(QRPopTextStyle())
+            #if os(iOS)
+                .keyboardType(.default)
+                .submitLabel(.done)
+            #endif
+                .onChange(of: eventLocation) { value in
                     setCodeContent()
                 }
             
@@ -68,6 +79,7 @@ struct QRCalendarView: View {
         }.onChange(of: qrCode.codeContent, perform: {value in
             if (value.isEmpty) {
                 eventName = ""
+                eventLocation = ""
                 startTime = Date()
                 startString = ""
                 endTime = Date()

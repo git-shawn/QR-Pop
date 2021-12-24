@@ -46,6 +46,14 @@
             <key>Title</key>
             <string>CodeScanner</string>
         </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSChildPaneSpecifier</string>
+            <key>File</key>
+            <string>EFQRCode</string>
+            <key>Title</key>
+            <string>EFQRCode</string>
+        </dict>
     </array>
 </dict>
 </plist>

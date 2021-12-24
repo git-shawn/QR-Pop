@@ -19,6 +19,8 @@ struct QRCameraView: View {
     @State private var scanContent: String = ""
     @State private var hasScanned: Bool = false
     @State private var showHelp: Bool = false
+    @State private var showPicker: Bool = false
+    @State private var noCodeFound: Bool = false
     @State private var flashOn: Bool = false
     @State private var showScannedData: Bool = false
     
@@ -91,8 +93,39 @@ struct QRCameraView: View {
                 
                 Text("Scan a QR Code to Duplicate It")
                     .font(.headline)
+                Button(
+                action: {
+                    showPicker = true
+                }) {
+                    Label("Duplicate Code from Gallery", systemImage: "photo.on.rectangle.angled")
+                }.buttonStyle(.bordered)
+                .padding()
+                .sheet(isPresented: $showPicker) {
+                    ImagePicker(sourceType: .photoLibrary, onImagePicked: {image in
+                        if let features = detectQRCode(image), !features.isEmpty{
+                            for case let row as CIQRCodeFeature in features {
+                                if (row.messageString != nil) {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        qrCode.setContent(string: row.messageString!)
+                                        withAnimation() {
+                                            hasScanned = true
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            print("empty!")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                noCodeFound = true
+                            }
+                        }
+                    }).ignoresSafeArea()
+                }
             }
         }.navigationTitle("Duplicate")
+        .alert(isPresented: $noCodeFound, content: {
+            Alert(title: Text("No Code Found in Image"))
+        })
         .sheet(isPresented: $showHelp, content: {
             ScannerHelpModal(isPresented: $showHelp)
         })
@@ -169,6 +202,29 @@ private struct ScannerHelpModal: View {
             }
         }
     }
+}
+
+/// Detect a QR Code from an Image, then return the result as  CIFeature.
+///
+/// From https://stackoverflow.com/a/49275021
+/// - Parameter image: The image to scan for a QR Code.
+/// - Returns: The results of the scan as a CIFeature.
+private func detectQRCode(_ image: UIImage?) -> [CIFeature]? {
+    if let image = image, let ciImage = CIImage.init(image: image){
+        var options: [String: Any]
+        let context = CIContext()
+        options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+        let qrDetector = CIDetector(ofType: CIDetectorTypeQRCode, context: context, options: options)
+        if ciImage.properties.keys.contains((kCGImagePropertyOrientation as String)){
+            options = [CIDetectorImageOrientation: ciImage.properties[(kCGImagePropertyOrientation as String)] ?? 1]
+        } else {
+            options = [CIDetectorImageOrientation: 1]
+        }
+        let features = qrDetector?.features(in: ciImage, options: options)
+        return features
+
+    }
+    return nil
 }
 
 struct QRCameraView_Previews: PreviewProvider {

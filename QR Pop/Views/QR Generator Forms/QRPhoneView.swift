@@ -13,7 +13,7 @@ struct QRPhoneView: View {
     @State private var text: String = ""
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             TextField("Enter Phone Number", text: $text)
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)

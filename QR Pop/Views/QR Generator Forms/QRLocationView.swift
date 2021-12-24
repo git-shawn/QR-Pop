@@ -20,7 +20,7 @@ struct QRLocationView: View {
     @State private var long: String = "-90.1848"
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             if (foundLocation != "none") {
                 Text(foundLocation)
                     .multilineTextAlignment(.center)

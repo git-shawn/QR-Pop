@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Contacts
 import Combine
+import EFQRCode
 #if os(macOS)
 import Cocoa
 #else
@@ -18,8 +19,31 @@ import UIKit
 class QRCode: NSObject, ObservableObject {
     @AppStorage("errorCorrection") private var errorLevel: Int = 0
     @Published var codeContent: String = ""
-    @Published var backgroundColor: Color = .white
+    var backgroundColor: Color = .white  {
+        willSet {
+            objectWillChange.send()
+        }
+        didSet {
+            if overlayImage != nil {
+                prepareOverlay()
+            }
+        }
+    }
     @Published var foregroundColor: Color = .black
+    @Published var generatorSource: QRGeneratorType? = nil
+    var overlayImage: Data? = nil {
+        willSet {
+            objectWillChange.send()
+        }
+        didSet {
+            if overlayImage != nil {
+                prepareOverlay()
+                generate()
+            }
+        }
+    }
+    @Published var pointStyle: QRPointStyle = .square
+    private var editedOverlay: CGImage? = nil
     
     /// PNG Data of the QR code generated.
     @Published var imgData: Data
@@ -35,6 +59,8 @@ class QRCode: NSObject, ObservableObject {
         codeContent = ""
         backgroundColor = .white
         foregroundColor = .black
+        editedOverlay = nil
+        overlayImage = nil
         generate()
     }
     
@@ -43,69 +69,36 @@ class QRCode: NSObject, ObservableObject {
     /// - Warning: All codes are now generated using UTF8 encoding and cannot exceed 2000 characters of data.
     /// - Returns: PNG Data of a QR code.
     func generate() {
-        // Too much data will cause the CIFilter to fail.
-        if codeContent.count > 2000 {
-            print("Error, excessive data sent to QRCode.swift. UTF8 encoded data should not exceed 2000 characters.")
-            imgData = errorImgData()
-        }
+        var correctionLevel: EFInputCorrectionLevel
         
-        // Create the CIFilter to make the QR code
-        guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else {
-            print("Error initiating CIQRCodeGenerator CIFilter")
-            return imgData = errorImgData()
-        }
-
-        // Encode the data
-        guard let qrData = codeContent.data(using: .utf8) else {
-            print("Error encoding content string. Invalid String likely passed to QRCode.generate().")
-            return imgData = errorImgData()
-        }
-        qrFilter.setDefaults()
-        qrFilter.setValue(qrData, forKey: "inputMessage")
-        
-        // Apply the error correction level chosen by the user, or L (7%) by default.
         switch errorLevel {
         // 7% error correction
         case 0:
-            qrFilter.setValue("L", forKey: "inputCorrectionLevel")
+            correctionLevel = .l
         // 15% error correction
         case 1:
-            qrFilter.setValue("M", forKey: "inputCorrectionLevel")
+            correctionLevel = .m
         // 25% error correction
         case 2:
-            qrFilter.setValue("Q", forKey: "inputCorrectionLevel")
+            correctionLevel = .q
         // 30% error correction
         case 3:
-            qrFilter.setValue("H", forKey: "inputCorrectionLevel")
+            correctionLevel = .h
         default:
-            qrFilter.setValue("L", forKey: "inputCorrectionLevel")
+            correctionLevel = .m
         }
+        
+        let codeSize = EFIntSize(width: 1000, height: 1000)
+        let iconSize = EFIntSize(width: 250, height: 250)
+        
+        if (overlayImage == nil) {
+            guard let cgCode = EFQRCode.generate(for: codeContent, encoding: .utf8, inputCorrectionLevel: correctionLevel, size: codeSize, backgroundColor: backgroundColor.cgColor!, foregroundColor: foregroundColor.cgColor!, pointStyle: pointStyle.efPointStyle) else { return imgData = errorImgData() }
+            imgData = cgCode.png!
+        } else {
+            guard let cgCode = EFQRCode.generate(for: codeContent, encoding: .utf8, inputCorrectionLevel: .h, size: codeSize, backgroundColor: backgroundColor.cgColor!, foregroundColor: foregroundColor.cgColor!, icon: editedOverlay, iconSize: iconSize, pointStyle: pointStyle.efPointStyle) else { return imgData = errorImgData() }
 
-        // Create the CIFilter to colorize the QR code
-        guard let colorFilter = CIFilter(name: "CIFalseColor") else {
-            print("Error initiating CIFalseColor CIFilter")
-            return imgData = errorImgData()
+            imgData = cgCode.png!
         }
-
-        // Apply color to the QR Code
-        colorFilter.setDefaults()
-        colorFilter.setValue(qrFilter.outputImage, forKey: "inputImage")
-        colorFilter.setValue(colorToCIColor(color: foregroundColor), forKey: "inputColor0")
-        colorFilter.setValue(colorToCIColor(color: backgroundColor), forKey: "inputColor1")
-        
-        guard let ciImage = colorFilter.outputImage else {
-            print("Error generating output image for QR code in QRCode.swift.")
-            return imgData = errorImgData()
-        }
-        
-        // Scale the QR code so that it looks nice on retina displays
-        let transform = CGAffineTransform(scaleX: 25, y: 25)
-        let scaledCIImage = ciImage.transformed(by: transform)
-        
-        // Convert the data to an NSImage
-        let ciData = ciImgToData(image: scaledCIImage)
-        
-        imgData = ciData
     }
     
     #if os(iOS)
@@ -129,6 +122,7 @@ class QRCode: NSObject, ObservableObject {
              return nil
          }
      }
+    
     #else
     /// Generate a vCard from a Contact.
     /// - Parameter contact: The contact to transform into a vCard.
@@ -169,7 +163,12 @@ class QRCode: NSObject, ObservableObject {
     /// Set the data to be encoded into the QR code.
     /// - Parameter string: The String to be encoded.
     func setContent(string: String) {
-        codeContent = string
+        if (string.count > 2000) {
+            print("Error: Content is too large to encode. QRCode.swift-166")
+            codeContent = ""
+        } else {
+            codeContent = string
+        }
         generate()
     }
     
@@ -177,6 +176,15 @@ class QRCode: NSObject, ObservableObject {
     /// - Returns: The String encoded.
     func getContent() -> String {
         return codeContent
+    }
+    
+    func prepareOverlay() {
+        let canvasSize = CGSize(width: 300, height: 300)
+        
+        let background = UIImage.init(color: UIColor(backgroundColor), size: canvasSize)
+        let combinedImages = background!.merge(image: overlayImage!.image)
+        
+        editedOverlay = combinedImages.cgImage
     }
 
     /// Converts a CIImage to PNG Data on iOS and macOS
@@ -220,6 +228,16 @@ class QRCode: NSObject, ObservableObject {
 
 //MARK: - Image to Data Conversion Functions
 
+extension CGImage {
+    var png: Data? {
+        guard let mutableData = CFDataCreateMutable(nil, 0),
+            let destination = CGImageDestinationCreateWithData(mutableData, "public.png" as CFString, 1, nil) else { return nil }
+        CGImageDestinationAddImage(destination, self, nil)
+        guard CGImageDestinationFinalize(destination) else { return nil }
+        return mutableData as Data
+    }
+}
+
 #if os(macOS)
 extension NSBitmapImageRep {
     var png: Data? { representation(using: .png, properties: [:]) }
@@ -235,141 +253,73 @@ extension NSImage {
 #if os(iOS)
 extension UIImage {
     var imageSizeInKB: Double { Double((pngData()!.count/1000)) }
-}
-#endif
-
-//MARK: - Image Overlay Functions
-
-#if os(iOS)
-extension UIImage {
     
-    /// Overlay an image with another image. The overlaying image will be centered and a quarter the size of the initial image.
-    /// - Parameter overlay: The image to overlay
-    /// - Returns: A new image, created as a merger of the initial image and the overlay.
-    /// - Warning: If being used for a QR Code, the code's error correction must be as high as possible.
-    func overlayWith(overlay: UIImage, bgColor: Color) -> UIImage {
-        let initialImage = self
-
+    convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
+      let rect = CGRect(origin: .zero, size: size)
+      UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
+      color.setFill()
+      UIRectFill(rect)
+      let image = UIGraphicsGetImageFromCurrentImageContext()
+      UIGraphicsEndImageContext()
+      
+      guard let cgImage = image?.cgImage else { return nil }
+      self.init(cgImage: cgImage)
+    }
+    
+    func merge(image: UIImage) -> UIImage {
+        let largestValue = (image.size.width > image.size.height ? image.size.width : image.size.height)
+        let size = CGSize(width: largestValue+50, height: largestValue+50)
+        
         UIGraphicsBeginImageContext(size)
 
-        // The initial size of the QR code
-        let codeSize = CGRect(x: 0, y: 0, width: initialImage.size.width, height: initialImage.size.height)
-        // The size of the overlaying image, which is 25% the size of the QR code.
-        let overlaySize = CGRect(x: ((initialImage.size.width * 0.5)-(initialImage.size.width * 0.125)), y: ((initialImage.size.width * 0.5)-(initialImage.size.width * 0.125)), width: (initialImage.size.width * 0.25), height: (initialImage.size.width * 0.25))
-        
-        let croppedOverlay = overlay.cropToBounds(width: (initialImage.size.width * 0.5), height: (initialImage.size.height * 0.5))
-        let solidImage = croppedOverlay.imageWithColor(backgroundColor: UIColor(bgColor))
-        
-        initialImage.draw(in: codeSize)
-        solidImage.draw(in: overlaySize, blendMode: .normal, alpha: 1.0)
+        let areaSize = CGRect(origin: .zero, size: size)
+        self.draw(in: areaSize)
 
-        let mergedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        image.draw(at: CGPoint(x: ((largestValue+50)-image.size.width)/2, y: ((largestValue+50)-image.size.height)/2), blendMode: .normal, alpha: 1)
+        
+        let merged: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        return mergedImage
-    }
-    
-    /// Crop an image to bounds programatically.
-    /// By Cole at https://stackoverflow.com/a/32041649
-    /// - Parameters:
-    ///   - image: The UIImage to be cropped
-    ///   - width: The new width
-    ///   - height: The new height
-    /// - Returns: The cropped UIImage
-    func cropToBounds(width: Double, height: Double) -> UIImage {
-        let image = self
-        let cgimage = image.cgImage!
-        let contextImage: UIImage = UIImage(cgImage: cgimage)
-        let contextSize: CGSize = contextImage.size
-        var posX: CGFloat = 0.0
-        var posY: CGFloat = 0.0
-        var cgwidth: CGFloat = CGFloat(width)
-        var cgheight: CGFloat = CGFloat(height)
-
-        // See what size is longer and create the center off of that
-        if contextSize.width > contextSize.height {
-            posX = ((contextSize.width - contextSize.height) / 2)
-            posY = 0
-            cgwidth = contextSize.height
-            cgheight = contextSize.height
-        } else {
-            posX = 0
-            posY = ((contextSize.height - contextSize.width) / 2)
-            cgwidth = contextSize.width
-            cgheight = contextSize.width
-        }
-
-        let rect: CGRect = CGRect(x: posX, y: posY, width: cgwidth, height: cgheight)
-
-        // Create bitmap image from context using the rect
-        let imageRef: CGImage = cgimage.cropping(to: rect)!
-
-        // Create a new image based on the imageRef and rotate back to the original orientation
-        let newImage: UIImage = UIImage(cgImage: imageRef, scale: image.scale, orientation: image.imageOrientation)
-
-        return newImage
-    }
-    
-    func imageWithColor(backgroundColor: UIColor) -> UIImage {
-        let image = self
-        UIGraphicsBeginImageContextWithOptions(image.size, false, image.scale)
-        backgroundColor.setFill()
-        //UIRectFill(CGRect(origin: .zero, size: image.size))
-        let rect = CGRect(origin: .zero, size: image.size)
-        let path = UIBezierPath(arcCenter: CGPoint(x:rect.midX, y:rect.midY), radius: rect.midX, startAngle: 0, endAngle: 6.28319, clockwise: true)
-        path.fill()
-        image.draw(at: .zero)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return newImage
-    }
-}
-#else
-extension NSImage {
-    
-    /// Overlay an image with another image. The overlaying image will be centered and a quarter the size of the initial image.
-    /// - Parameter overlay: The image to overlay
-    /// - Returns: A new image, created as a merger of the initial image and the overlay.
-    /// - Warning: If being used for a QR Code, the code's error correction must be as high as possible.
-    func overlayWith(overlay: NSImage) -> NSImage {
-        // Convert the images to CIImage
-        guard let initialImage = CIImage(data: self.png!) else {
-            print("Error: Could not convert initial image into CIImage in QRCodeDesigner.swift")
-            return NSImage(imageLiteralResourceName: "codeFailure")
-        }
-        guard let overlayImage = CIImage(data: overlay.png!) else {
-            print("Error: Could not convert overlay into CIImage in QRCodeDesigner.swift")
-            return NSImage(imageLiteralResourceName: "codeFailure")
-        }
         
-        // Resize the
-        guard let resizeFilter = CIFilter(name:"CILanczosScaleTransform") else {
-            print("Error: Could not scale images in QRCodeDesigner.swift")
-            return NSImage(imageLiteralResourceName: "codeFailure")
-        }
-        let scale = self.size.height * 0.25
-        let aspectRatio = overlay.size.width / overlay.size.height
-        
-        resizeFilter.setValue(overlayImage, forKey: kCIInputImageKey)
-        resizeFilter.setValue(scale, forKey: kCIInputScaleKey)
-        resizeFilter.setValue(aspectRatio, forKey: kCIInputAspectRatioKey)
-        let resizedOverlayImage = resizeFilter.outputImage
-        
-        guard let filter = CIFilter(name: "CIAdditionCompositing") else {
-            print("Error: Could not composite images in QRCodeDesigner.swift")
-            return NSImage(imageLiteralResourceName: "codeFailure")
-        }
-        filter.setDefaults()
-        
-        filter.setValue(resizedOverlayImage, forKey: "inputImage")
-        filter.setValue(initialImage, forKey: "inputBackgroundImage")
-        
-        let combineResultImage = filter.outputImage
-        
-        let rep = NSCIImageRep(ciImage: combineResultImage!)
-        let finalResult = NSImage(size: rep.size)
-        finalResult.addRepresentation(rep)
-        
-        return finalResult
+        return merged
     }
 }
 #endif
+
+//MARK: - Additional Point Styles
+
+class StarPointStyle: EFPointStyle {
+    func fillRect(context: CGContext, rect: CGRect, isStatic: Bool) {
+        let path = CGMutablePath()
+        var points: [CGPoint] = []
+        let radius = Float(rect.width / 2)
+        let angel = Double.pi * 2 / 5
+        for i in 1...5 {
+            let x = Float(rect.width / 2) - sinf(Float(i) * Float(angel)) * radius + Float(rect.origin.x)
+            let y = Float(rect.height / 2) - cosf(Float(i) * Float(angel)) * radius + Float(rect.origin.y)
+            points.append(CGPoint(x: CGFloat(x), y: CGFloat(y)))
+        }
+        path.move(to: points.first!)
+        for i in 1...5 {
+            let index = (2 * i) % 5
+            path.addLine(to: points[index])
+        }
+        context.addPath(path)
+        context.fillPath()
+    }
+}
+
+enum QRPointStyle: Int, CaseIterable, Hashable {
+    case square
+    case circle
+    case diamond
+    case star
+
+    var efPointStyle: EFPointStyle {
+        switch self {
+        case .square: return EFSquarePointStyle.square
+        case .circle: return EFCirclePointStyle.circle
+        case .diamond: return EFDiamondPointStyle.diamond
+        case .star: return StarPointStyle()
+        }
+    }
+}

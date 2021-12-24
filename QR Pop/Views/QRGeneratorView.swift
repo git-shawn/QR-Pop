@@ -22,13 +22,10 @@ struct QRGeneratorView: View {
     let initialBrightness: CGFloat = UIScreen.main.brightness
     #endif
     
-    //Unique variables for link
-    @State private var text: String = ""
-    
     var body: some View {
         GeometryReader {geometry in
+            if (geometry.size.width < 600) {
             ScrollView {
-                if (geometry.size.width < 600) {
                     VStack {
                         QRImage()
                             .environmentObject(qrCode)
@@ -41,12 +38,17 @@ struct QRGeneratorView: View {
                         #endif
                     }.padding(.horizontal)
                     .frame(width: geometry.size.width)
-                } else {
-                    HStack(alignment: .center, spacing: 15) {
+                }
+            }  else {
+                HStack(alignment: .center, spacing: 15) {
+                    VStack {
                         QRImage()
                             .environmentObject(qrCode)
                             .padding()
                             .frame(maxHeight: geometry.size.height)
+                        Spacer()
+                    }
+                    ScrollView {
                         VStack {
                             generatorType.destination
                                 .environmentObject(qrCode)
@@ -54,11 +56,14 @@ struct QRGeneratorView: View {
                             QRCodeDesigner()
                                 .environmentObject(qrCode)
                             #endif
-                        }.padding(.trailing)
-                    }.frame(width: geometry.size.width)
-                }
+                        }.padding(.vertical, 10)
+                    }.padding(.trailing)
+                }.frame(width: geometry.size.width)
             }
         }.navigationTitle(generatorType.name)
+        .onAppear(perform: {
+            qrCode.generatorSource = generatorType
+        })
         .toolbar(content: {
             #if os(macOS)
             ToolbarItem(placement: toolbarTrailingPlacement) {
@@ -73,8 +78,6 @@ struct QRGeneratorView: View {
                         .frame(minWidth: 300)
                 }
             }
-            #endif
-            #if os(macOS)
             ToolbarItem(placement: toolbarTrailingPlacement) {
                 SaveButton(qrCode: qrCode.imgData)
             }
@@ -149,7 +152,7 @@ struct QRGeneratorView: View {
                             .cornerRadius(16)
                         #if os(iOS)
                             .frame(maxWidth: geometry.size.width-20, maxHeight: geometry.size.height-20, alignment: .center)
-                            .shadow(color: Color(.displayP3, red: 0, green: 0, blue: 0, opacity: 0.1), radius: 16, x: 10, y: 10)
+                            .shadow(color: qrCode.foregroundColor.opacity(0.2), radius: 20, x: 0, y: 10)
                             .padding(10)
                         #else
                             .frame(width: 650, height: 650, alignment: .center)

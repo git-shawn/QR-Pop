@@ -22,12 +22,12 @@ struct QRFacetimeView: View {
     }
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             Picker("FaceTime Video or Audio", selection: $isFacetimeAudio) {
                 Text("Video").tag(false)
                 Text("Audio").tag(true)
             }
-                .padding()
+                .padding(.horizontal)
                 .pickerStyle(.segmented)
                 .onChange(of: isFacetimeAudio) {_ in
                     setCodeContent()

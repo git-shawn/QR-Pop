@@ -30,7 +30,7 @@ struct QRMailView: View {
     }
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             TextField("Enter Email Address", text: $email)
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)

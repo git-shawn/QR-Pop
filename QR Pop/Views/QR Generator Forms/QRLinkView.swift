@@ -13,7 +13,7 @@ struct QRLinkView: View {
     @State private var text: String = ""
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             TextField("Enter URL", text: $text)
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)

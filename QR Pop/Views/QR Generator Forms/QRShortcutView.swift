@@ -29,7 +29,7 @@ struct QRShortcutView: View {
     }
     
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 10) {
             HStack {
                 #if os(iOS)
                 Text("Shortcut Input")
@@ -44,13 +44,13 @@ struct QRShortcutView: View {
                 .pickerStyle(.menu)
                 .padding(.vertical, 5)
                 .padding(.horizontal, 15)
-                .background(.ultraThickMaterial)
+                .background(Color("ButtonBkg"))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 #endif
                 .onChange(of: input) { value in
                     setCodeContent()
                 }
-            }.padding(15)
+            }.padding(.horizontal, 15)
             
             TextField("Enter Shortcut Name", text: $name)
                 .textFieldStyle(QRPopTextStyle())

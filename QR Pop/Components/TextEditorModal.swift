@@ -48,13 +48,13 @@ struct TextEditorModal: View {
                     .padding(10)
                     #else
                     .padding(.horizontal)
-                    .padding(.top, 10)
+                    .padding(.top, 11)
                     .padding(.bottom, 5)
                     #endif
                     
                     #if os(iOS)
                     Divider()
-                    .padding(.leading)
+                    .padding(.horizontal)
                     #endif
                 }
             }

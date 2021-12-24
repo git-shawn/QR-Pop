@@ -127,10 +127,20 @@ struct QRContactView: View {
             }, content: {
                 ModalNavbar(navigationTitle: "New Contact", showModal: $showBuilder) {
                     ScrollView {
-                        VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: 20) {
+                            #if os(macOS)
                             Text("Contact QR Code")
                                 .font(.largeTitle)
                                 .bold()
+                            #else
+                            HStack {
+                                Spacer()
+                                Image(systemName: "person.crop.rectangle")
+                                    .font(.system(size: 80))
+                                    .foregroundColor(Color.accentColor)
+                                Spacer()
+                            }
+                            #endif
                             HStack(alignment: .center, spacing: 10) {
                                 VStack {
                                     TextField("First Name", text: $firstName)
@@ -201,7 +211,6 @@ struct QRContactView: View {
                                     focusedField = nil
                                 }
                             #endif
-                            Spacer()
                             HStack {
                                 Spacer()
                                 Button(action: {
@@ -213,8 +222,6 @@ struct QRContactView: View {
                                         .foregroundColor(.white)
                                         .padding(10)
                                         .frame(maxWidth: 350)
-                                        .background(Color.accentColor)
-                                        .cornerRadius(10)
                                         #endif
                                 }
                                 #if os(macOS)
