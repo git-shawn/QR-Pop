@@ -61,6 +61,7 @@ struct QRPopPlainButton: ButtonStyle {
             .padding(10)
             .frame(maxWidth: 350)
             .background(.ultraThickMaterial)
+            .brightness(0.1)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .overlay(
                 RoundedRectangle(cornerRadius: 10)

@@ -65,6 +65,9 @@ struct GetWifiButton: View {
         case .unknown:
             failureAlert()
             return
+        @unknown default:
+            failureAlert()
+            return
         }
         
         // Request password for SSID

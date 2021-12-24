@@ -5,6 +5,9 @@
 //  Created by Shawn Davis on 10/18/21.
 //
 import SwiftUI
+#if os(macOS)
+import UniformTypeIdentifiers
+#endif
 
 /// A panel of design elements to customize a QR code
 struct QRCodeDesigner: View {
@@ -13,11 +16,7 @@ struct QRCodeDesigner: View {
     @State var showOverlayPicker: Bool = false
     @State private var warningVisible: Bool = false
     @State private var showPicker: Bool = false
-    #if os(iOS)
     @State private var showDesigner: Bool = false
-    #else
-    @State private var showDesigner: Bool = true
-    #endif
     
     var body: some View {
         VStack {
@@ -26,23 +25,21 @@ struct QRCodeDesigner: View {
                     .font(.headline)
                     .padding(.vertical, 10)
                     .padding(.leading)
-                #if os(iOS)
-                Image(systemName: "chevron.right.circle")
+                Image(systemName: "chevron.up.circle")
                     .foregroundColor(.accentColor)
                     .imageScale(.large)
                     .transition(.move(edge: .leading))
-                    .rotationEffect(.degrees(showDesigner ? 90 : 0))
-                    .animation(.spring(), value: showDesigner)
+                    .rotationEffect(.degrees(showDesigner ? 180 : 0))
+                    .animation(.interpolatingSpring(stiffness: 75, damping: 5, initialVelocity: 5), value: showDesigner)
                     .onTapGesture {
                         withAnimation() {
                             showDesigner.toggle()
                         }
                     }
-                #endif
                 Spacer()
                 if (!showDesigner && warningVisible) {
                     Image(systemName: "eye.trianglebadge.exclamationmark")
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.accentColor)
                         .imageScale(.large)
                         .padding(.trailing)
                 }
@@ -75,8 +72,23 @@ struct QRCodeDesigner: View {
                         .padding(.bottom, 15)
                     }
                     VStack(alignment: .center, spacing: 10) {
+                        #if os(iOS)
                         ColorPicker("Background color", selection: $qrCode.backgroundColor, supportsOpacity: true)
                         ColorPicker("Foreground color", selection: $qrCode.foregroundColor, supportsOpacity: false)
+                        #else
+                        HStack() {
+                            Text("Background color")
+                            Spacer()
+                            ColorPicker("Background color", selection: $qrCode.backgroundColor, supportsOpacity: true)
+                                .labelsHidden()
+                        }.frame(maxWidth: 350)
+                        HStack() {
+                            Text("Foreground color")
+                            Spacer()
+                            ColorPicker("Foreground color", selection: $qrCode.foregroundColor, supportsOpacity: false)
+                                .labelsHidden()
+                        }.frame(maxWidth: 350)
+                        #endif
                         
                         HStack(alignment: .firstTextBaseline) {
                             #if os(iOS)
@@ -95,6 +107,8 @@ struct QRCodeDesigner: View {
                         .padding(.horizontal)
                         .background(Color("ButtonBkg"))
                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                        #else
+                        .frame(maxWidth: 350)
                         #endif
                         .padding(.top)
                         .onChange(of: qrCode.pointStyle, perform: {_ in qrCode.generate()})
@@ -113,16 +127,30 @@ struct QRCodeDesigner: View {
                                 qrCode.overlayImage = image.pngData()!
                             }).ignoresSafeArea()
                         }
-                        #if os(iOS)
                         .buttonStyle(PlainButtonStyle())
                         .foregroundColor(.accentColor)
                         .padding(.vertical, 6)
                         .padding(.horizontal)
                         .background(Color("ButtonBkg"))
                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .padding(.vertical, 10)
                         #else
+                        Button(action: {
+                            let panel = NSOpenPanel()
+                            panel.canChooseDirectories = false
+                            panel.canChooseFiles = true
+                            panel.allowsMultipleSelection = false
+                            panel.title = "Pick an Image to Add"
+                            panel.allowedContentTypes = [UTType.image]
+                            if panel.runModal() == .OK {
+                                let image = NSImage(byReferencing: panel.url!)
+                                qrCode.overlayImage = image.resized(to: NSSize(width: 300, height: CGFloat(ceil(300/image.size.width * image.size.height))))?.png!
+                            }
+                        }) {
+                            Label("Add Image", systemImage: "photo")
+                            .labelStyle(.titleOnly)
+                        }
                         .buttonStyle(QRPopPlainButton())
-                        #endif
                         .padding(.vertical, 10)
                         #endif
                         
@@ -134,11 +162,11 @@ struct QRCodeDesigner: View {
                 }.transition(.moveAndFade)
             }
         }.padding(5)
-        #if os(iOS)
         .background(.thickMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(.vertical)
-        #else
+        #if os(macOS)
+        .padding(.horizontal, 10)
         .onAppear(perform: {
             evaluateContrast()
         })
@@ -162,8 +190,32 @@ struct QRCodeDesigner: View {
 extension AnyTransition {
     static var moveAndFade: AnyTransition {
         .asymmetric(
-            insertion: .move(edge: .top).combined(with: .opacity),
-            removal: .move(edge: .bottom).combined(with: .opacity)
+            insertion: .move(edge: .top).combined(with: .opacity.animation(.easeIn(duration: 0.65))),
+            removal: .move(edge: .top).combined(with: .opacity.animation(.easeOut(duration: 0.1)))
         )
     }
 }
+
+#if os(macOS)
+extension NSImage {
+    func resized(to newSize: NSSize) -> NSImage? {
+        if let bitmapRep = NSBitmapImageRep(
+            bitmapDataPlanes: nil, pixelsWide: Int(newSize.width), pixelsHigh: Int(newSize.height),
+            bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+            colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0
+        ) {
+            bitmapRep.size = newSize
+            NSGraphicsContext.saveGraphicsState()
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmapRep)
+            draw(in: NSRect(x: 0, y: 0, width: newSize.width, height: newSize.height), from: .zero, operation: .copy, fraction: 1.0)
+            NSGraphicsContext.restoreGraphicsState()
+
+            let resizedImage = NSImage(size: newSize)
+            resizedImage.addRepresentation(bitmapRep)
+            return resizedImage
+        }
+
+        return nil
+    }
+}
+#endif

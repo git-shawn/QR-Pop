@@ -179,12 +179,22 @@ class QRCode: NSObject, ObservableObject {
     }
     
     func prepareOverlay() {
+        #if os(iOS)
         let canvasSize = CGSize(width: 300, height: 300)
         
         let background = UIImage.init(color: UIColor(backgroundColor), size: canvasSize)
         let combinedImages = background!.merge(image: overlayImage!.image)
         
         editedOverlay = combinedImages.cgImage
+        #else
+        let largestValue = ((overlayImage?.image.size.width)! > (overlayImage?.image.size.height)! ? overlayImage?.image.size.width : overlayImage?.image.size.height)
+        let canvasSize = CGSize(width: largestValue!+50, height: largestValue!+50)
+        
+        let background = NSImage.init(color: NSColor(backgroundColor), size: canvasSize)
+        let combinedImages = background!.merge(image: overlayImage!.image)
+        
+        editedOverlay = combinedImages.cgImage(forProposedRect: nil, context: nil, hints: nil)
+        #endif
     }
 
     /// Converts a CIImage to PNG Data on iOS and macOS
@@ -247,6 +257,26 @@ extension Data {
 }
 extension NSImage {
     var png: Data? { tiffRepresentation?.bitmap?.png }
+    
+    convenience init?(color: NSColor, size: CGSize = CGSize(width: 1, height:1)) {
+        self.init(size: size)
+        lockFocus()
+        color.drawSwatch(in: NSRect(origin: .zero, size: size))
+        unlockFocus()
+    }
+    
+    func merge(image: NSImage) -> NSImage {
+        let largestValue = (image.size.width > image.size.height ? image.size.width : image.size.height)
+        let size = CGSize(width: largestValue+50, height: largestValue+50)
+        self.lockFocus()
+
+        let areaSize = CGRect(origin: .zero, size: size)
+        self.draw(in: areaSize)
+        image.draw(at: CGPoint(x: ((largestValue+50)-image.size.width)/2, y: ((largestValue+50)-image.size.height)/2), from: NSZeroRect, operation: .sourceOver, fraction: 1)
+        
+        self.unlockFocus()
+        return self
+    }
 }
 #endif
 

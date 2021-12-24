@@ -32,52 +32,40 @@ struct QRGeneratorView: View {
                             .padding()
                         generatorType.destination
                             .environmentObject(qrCode)
-                        #if os(iOS)
                         QRCodeDesigner()
                             .environmentObject(qrCode)
-                        #endif
                     }.padding(.horizontal)
                     .frame(width: geometry.size.width)
                 }
             }  else {
-                HStack(alignment: .center, spacing: 15) {
+                HStack(alignment: .top, spacing: 15) {
                     VStack {
                         QRImage()
                             .environmentObject(qrCode)
                             .padding()
-                            .frame(maxHeight: geometry.size.height)
                         Spacer()
-                    }
+                    }.frame(maxHeight: geometry.size.height)
                     ScrollView {
                         VStack {
                             generatorType.destination
                                 .environmentObject(qrCode)
-                            #if os(iOS)
                             QRCodeDesigner()
                                 .environmentObject(qrCode)
-                            #endif
                         }.padding(.vertical, 10)
                     }.padding(.trailing)
                 }.frame(width: geometry.size.width)
             }
         }.navigationTitle(generatorType.name)
+        #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+        #else
+        .frame(minWidth: 300)
+        #endif
         .onAppear(perform: {
             qrCode.generatorSource = generatorType
         })
         .toolbar(content: {
             #if os(macOS)
-            ToolbarItem(placement: toolbarTrailingPlacement) {
-                Button(
-                action: {
-                    showDesignPopover.toggle()
-                }){
-                    Label("Style", systemImage: "paintpalette")
-                }.popover(isPresented: $showDesignPopover, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
-                    QRCodeDesigner()
-                        .environmentObject(qrCode)
-                        .frame(minWidth: 300)
-                }
-            }
             ToolbarItem(placement: toolbarTrailingPlacement) {
                 SaveButton(qrCode: qrCode.imgData)
             }
@@ -90,17 +78,6 @@ struct QRGeneratorView: View {
                     Button(role: .destructive, action: qrCode.reset) {
                         Label("Clear", systemImage: "trash")
                     }
-//                    Button(action: qrCode.reset) {
-//                        Label("Add to Widget", systemImage: "apps.iphone.badge.plus")
-//                    }
-//                    Button(action: qrCode.reset) {
-//                        Label("Add to Watch", systemImage: "applewatch")
-//                    }
-//                    Divider()
-//                    Button(action: qrCode.reset) {
-//                        Label("Save as SVG", systemImage: "arrow.down.doc")
-//                    }
-//                    Divider()
                     #if os(iOS)
                     Button(action: {showHelp = true}) {
                         Label("Help", systemImage: "questionmark")
