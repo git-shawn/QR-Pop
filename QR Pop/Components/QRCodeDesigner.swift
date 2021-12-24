@@ -30,7 +30,7 @@ struct QRCodeDesigner: View {
                     .imageScale(.large)
                     .transition(.move(edge: .leading))
                     .rotationEffect(.degrees(showDesigner ? 180 : 0))
-                    .animation(.interpolatingSpring(stiffness: 75, damping: 5, initialVelocity: 5), value: showDesigner)
+                    .animation(.interpolatingSpring(stiffness: 75, damping: 7, initialVelocity: 6), value: showDesigner)
                     .onTapGesture {
                         withAnimation() {
                             showDesigner.toggle()
