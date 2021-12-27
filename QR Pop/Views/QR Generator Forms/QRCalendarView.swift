@@ -53,7 +53,7 @@ struct QRCalendarView: View {
                     setCodeContent()
                 }
             
-            DatePicker("Event Start", selection: $startTime)
+            DatePicker("Start", selection: $startTime)
                 .padding(.horizontal)
                 .padding(.vertical, 5)
                 .onChange(of: startTime, perform: {valeu in
@@ -65,7 +65,7 @@ struct QRCalendarView: View {
                 .padding(.leading)
                 .padding(.bottom)
             
-            DatePicker("Event End  ", selection: $endTime)
+            DatePicker("End", selection: $endTime)
                 .padding(.horizontal)
                 .padding(.bottom, 5)
                 .onChange(of: endTime, perform: {valeu in

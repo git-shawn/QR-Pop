@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Sidebar: View {
+    @State private var selection: Int? = nil
     #if os(iOS)
     @State private var showSettings: Bool = false
     #endif
@@ -17,7 +18,7 @@ struct Sidebar: View {
             #if os(macOS)
             Section("QR Code Generators") {
                 ForEach(QRViews) { view in
-                    NavigationLink(destination: QRGeneratorView(generatorType: view)) {
+                    NavigationLink(destination: QRGeneratorView(generatorType: view), tag: view.id, selection: $selection) {
                         Label(title: {
                             Text("\(view.name)")
                         }, icon: {

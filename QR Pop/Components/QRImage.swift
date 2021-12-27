@@ -16,6 +16,7 @@ struct QRImage: View {
     @State private var didSave: Bool = false
     @State private var didCopy: Bool = false
     @State private var showData: Bool = false
+    @State private var isDropping: Bool = false
     private let imageSaver = ImageSaver()
     
     #if os(macOS)
@@ -29,6 +30,7 @@ struct QRImage: View {
             .padding(10)
         #if os(macOS)
             .frame(maxWidth: 350, maxHeight: 350)
+            .blur(radius: (isDropping ? 6 : 0))
         #else
             .frame(maxWidth: 400, maxHeight: 400)
         #endif
@@ -51,6 +53,20 @@ struct QRImage: View {
                 #endif
                 return provider
             })
+        #if os(macOS)
+            .onDrop(of: ["public.file-url"], isTargeted: $isDropping, perform: {providers -> Bool in
+                providers.first?.loadDataRepresentation(forTypeIdentifier: "public.file-url", completionHandler: { (data, error) in
+                    if let data = data, let path = NSString(data: data, encoding: 4), let url = URL(string: path as String) {
+                        let image = NSImage(contentsOf: url)
+                        DispatchQueue.main.async {
+                            qrCode.overlayImage = image?.png
+                            qrCode.generate()
+                        }
+                    }
+                })
+                return true
+            })
+        #endif
             .contextMenu(menuItems: {
                 Button(action: {
                     Clipboard.writeImage(imageData: qrCode.imgData)

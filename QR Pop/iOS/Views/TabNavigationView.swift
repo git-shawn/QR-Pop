@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct TabNavigationView: View {
+    @State private var tabSelection = 0
+    
     var body: some View {
-        TabView {
+        TabView(selection: $tabSelection) {
             NavigationView {
                 QRView()
             }
@@ -42,7 +44,9 @@ struct TabNavigationView: View {
                 Image(systemName: "gearshape")
                 Text("Settings")
             }
-        }
+        }.onContinueUserActivity("shwndvs.QR-Pop.generator-selection", perform: {activity in
+            tabSelection = 0
+        })
     }
 }
 

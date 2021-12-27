@@ -6,6 +6,10 @@
 //
 
 import SwiftUI
+import CoreSpotlight
+#if os(iOS)
+import Intents
+#endif
 
 struct QRGeneratorView: View {
     @StateObject var qrCode = QRCode()
@@ -51,7 +55,12 @@ struct QRGeneratorView: View {
                                 .environmentObject(qrCode)
                             QRCodeDesigner()
                                 .environmentObject(qrCode)
-                        }.padding(.vertical, 10)
+                        }
+                        #if os(iOS)
+                        .padding(.vertical, 10)
+                        #else
+                        .padding(.vertical)
+                        #endif
                     }.padding(.trailing)
                 }.frame(width: geometry.size.width)
             }
@@ -103,6 +112,16 @@ struct QRGeneratorView: View {
                 }
             }
         })
+        .userActivity("shwndvs.QR-Pop.generator-selection") { activity in
+            activity.isEligibleForSearch = true
+            activity.title = "\(generatorType.name) Generator"
+            activity.userInfo = ["genId": generatorType.id]
+
+            let attributes = CSSearchableItemAttributeSet(contentType: UTType.item)
+            
+            attributes.contentDescription = "Generate a QR Code"
+            activity.contentAttributeSet = attributes
+        }
         #if os(iOS)
         .alert(isPresented: $showHelp) {
             Alert(title: Text("\(generatorType.name) Generator"), message: Text(generatorType.description), dismissButton: .default(Text("Close")))

@@ -5,6 +5,8 @@
 	<key>AppIdentifierPrefix</key>
 	<string>$(AppIdentifierPrefix)</string>
 	<key>NSUserActivityTypes</key>
-	<array/>
+	<array>
+		<string>shwndvs.QR-Pop.generator-selection</string>
+	</array>
 </dict>
 </plist>

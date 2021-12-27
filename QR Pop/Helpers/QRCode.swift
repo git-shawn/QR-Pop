@@ -19,16 +19,7 @@ import UIKit
 class QRCode: NSObject, ObservableObject {
     @AppStorage("errorCorrection") private var errorLevel: Int = 0
     @Published var codeContent: String = ""
-    var backgroundColor: Color = .white  {
-        willSet {
-            objectWillChange.send()
-        }
-        didSet {
-            if overlayImage != nil {
-                prepareOverlay()
-            }
-        }
-    }
+    @Published var backgroundColor: Color = .white
     @Published var foregroundColor: Color = .black
     @Published var generatorSource: QRGeneratorType? = nil
     var overlayImage: Data? = nil {
@@ -37,13 +28,11 @@ class QRCode: NSObject, ObservableObject {
         }
         didSet {
             if overlayImage != nil {
-                prepareOverlay()
                 generate()
             }
         }
     }
     @Published var pointStyle: QRPointStyle = .square
-    private var editedOverlay: CGImage? = nil
     
     /// PNG Data of the QR code generated.
     @Published var imgData: Data
@@ -59,7 +48,6 @@ class QRCode: NSObject, ObservableObject {
         codeContent = ""
         backgroundColor = .white
         foregroundColor = .black
-        editedOverlay = nil
         overlayImage = nil
         generate()
     }
@@ -89,14 +77,19 @@ class QRCode: NSObject, ObservableObject {
         }
         
         let codeSize = EFIntSize(width: 1000, height: 1000)
-        let iconSize = EFIntSize(width: 250, height: 250)
         
         if (overlayImage == nil) {
             guard let cgCode = EFQRCode.generate(for: codeContent, encoding: .utf8, inputCorrectionLevel: correctionLevel, size: codeSize, backgroundColor: backgroundColor.cgColor!, foregroundColor: foregroundColor.cgColor!, pointStyle: pointStyle.efPointStyle) else { return imgData = errorImgData() }
+
             imgData = cgCode.png!
         } else {
-            guard let cgCode = EFQRCode.generate(for: codeContent, encoding: .utf8, inputCorrectionLevel: .h, size: codeSize, backgroundColor: backgroundColor.cgColor!, foregroundColor: foregroundColor.cgColor!, icon: editedOverlay, iconSize: iconSize, pointStyle: pointStyle.efPointStyle) else { return imgData = errorImgData() }
-
+            let scaleFactor = ((overlayImage?.image.size.width)!)/250
+            let iconWidth = ((overlayImage?.image.size.width)!)/scaleFactor
+            let iconHeight = ((overlayImage?.image.size.height)!)/scaleFactor
+            let iconSize = EFIntSize(width: Int(iconWidth), height: Int(iconHeight))
+            
+            guard let cgCode = EFQRCode.generate(for: codeContent, encoding: .utf8, inputCorrectionLevel: .h, size: codeSize, backgroundColor: backgroundColor.cgColor!, foregroundColor: foregroundColor.cgColor!, icon: overlayImage?.cgImage!, iconSize: iconSize, pointStyle: pointStyle.efPointStyle) else { return imgData = errorImgData() }
+            
             imgData = cgCode.png!
         }
     }
@@ -177,25 +170,6 @@ class QRCode: NSObject, ObservableObject {
     func getContent() -> String {
         return codeContent
     }
-    
-    func prepareOverlay() {
-        #if os(iOS)
-        let canvasSize = CGSize(width: 300, height: 300)
-        
-        let background = UIImage.init(color: UIColor(backgroundColor), size: canvasSize)
-        let combinedImages = background!.merge(image: overlayImage!.image)
-        
-        editedOverlay = combinedImages.cgImage
-        #else
-        let largestValue = ((overlayImage?.image.size.width)! > (overlayImage?.image.size.height)! ? overlayImage?.image.size.width : overlayImage?.image.size.height)
-        let canvasSize = CGSize(width: largestValue!+50, height: largestValue!+50)
-        
-        let background = NSImage.init(color: NSColor(backgroundColor), size: canvasSize)
-        let combinedImages = background!.merge(image: overlayImage!.image)
-        
-        editedOverlay = combinedImages.cgImage(forProposedRect: nil, context: nil, hints: nil)
-        #endif
-    }
 
     /// Converts a CIImage to PNG Data on iOS and macOS
     /// - Parameter image: The CIImage to convert
@@ -216,23 +190,11 @@ class QRCode: NSObject, ObservableObject {
     /// - Returns: PNG Data for the error image
     private func errorImgData() -> Data {
         #if os(macOS)
-        let nsimage = NSImage(imageLiteralResourceName: "codeFailure")
-        return nsimage.png!
+        let error = NSImage(imageLiteralResourceName: "codeFailure").png!
         #else
-        let uiimage = UIImage(named: "codeFailure")
-        return uiimage!.pngData()!
+        let error = UIImage(imageLiteralResourceName: "codeFailure").pngData()!
         #endif
-    }
-    
-    /// Converts a SwiftUI Color to CIColor on iOS and macOS
-    /// - Parameter color: The SwiftUI Color to convert
-    /// - Returns: `color` as a CIColor
-    private func colorToCIColor(color: Color) -> CIColor {
-        #if os(macOS)
-        return CIColor(color: NSColor(color))!
-        #else
-        return CIColor(color: UIColor(color))
-        #endif
+        return error
     }
 }
 
@@ -254,64 +216,17 @@ extension NSBitmapImageRep {
 }
 extension Data {
     var bitmap: NSBitmapImageRep? { NSBitmapImageRep(data: self) }
+    var cgImage: CGImage? { self.image.cgImage(forProposedRect: nil, context: nil, hints: nil)}
 }
 extension NSImage {
     var png: Data? { tiffRepresentation?.bitmap?.png }
-    
-    convenience init?(color: NSColor, size: CGSize = CGSize(width: 1, height:1)) {
-        self.init(size: size)
-        lockFocus()
-        color.drawSwatch(in: NSRect(origin: .zero, size: size))
-        unlockFocus()
-    }
-    
-    func merge(image: NSImage) -> NSImage {
-        let largestValue = (image.size.width > image.size.height ? image.size.width : image.size.height)
-        let size = CGSize(width: largestValue+50, height: largestValue+50)
-        self.lockFocus()
-
-        let areaSize = CGRect(origin: .zero, size: size)
-        self.draw(in: areaSize)
-        image.draw(at: CGPoint(x: ((largestValue+50)-image.size.width)/2, y: ((largestValue+50)-image.size.height)/2), from: NSZeroRect, operation: .sourceOver, fraction: 1)
-        
-        self.unlockFocus()
-        return self
-    }
 }
-#endif
-
-#if os(iOS)
+#else
+extension Data {
+    var cgImage: CGImage? { self.image.cgImage }
+}
 extension UIImage {
     var imageSizeInKB: Double { Double((pngData()!.count/1000)) }
-    
-    convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
-      let rect = CGRect(origin: .zero, size: size)
-      UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
-      color.setFill()
-      UIRectFill(rect)
-      let image = UIGraphicsGetImageFromCurrentImageContext()
-      UIGraphicsEndImageContext()
-      
-      guard let cgImage = image?.cgImage else { return nil }
-      self.init(cgImage: cgImage)
-    }
-    
-    func merge(image: UIImage) -> UIImage {
-        let largestValue = (image.size.width > image.size.height ? image.size.width : image.size.height)
-        let size = CGSize(width: largestValue+50, height: largestValue+50)
-        
-        UIGraphicsBeginImageContext(size)
-
-        let areaSize = CGRect(origin: .zero, size: size)
-        self.draw(in: areaSize)
-
-        image.draw(at: CGPoint(x: ((largestValue+50)-image.size.width)/2, y: ((largestValue+50)-image.size.height)/2), blendMode: .normal, alpha: 1)
-        
-        let merged: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        
-        return merged
-    }
 }
 #endif
 

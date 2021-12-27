@@ -114,45 +114,64 @@ struct QRCodeDesigner: View {
                         .onChange(of: qrCode.pointStyle, perform: {_ in qrCode.generate()})
                         }
                         
-                        #if os(iOS)
-                        Button(action: {
-                            showPicker = true
-                        }) {
-                            Label("Add Image", systemImage: "photo")
-                            .labelStyle(.titleOnly)
-                            .padding(5)
-                            .frame(maxWidth: 350)
-                        }.popover(isPresented: $showPicker) {
-                            ImagePicker(sourceType: .photoLibrary, onImagePicked: {image in
-                                qrCode.overlayImage = image.pngData()!
-                            }).ignoresSafeArea()
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .foregroundColor(.accentColor)
-                        .padding(.vertical, 6)
-                        .padding(.horizontal)
-                        .background(Color("ButtonBkg"))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .padding(.vertical, 10)
-                        #else
-                        Button(action: {
-                            let panel = NSOpenPanel()
-                            panel.canChooseDirectories = false
-                            panel.canChooseFiles = true
-                            panel.allowsMultipleSelection = false
-                            panel.title = "Pick an Image to Add"
-                            panel.allowedContentTypes = [UTType.image]
-                            if panel.runModal() == .OK {
-                                let image = NSImage(byReferencing: panel.url!)
-                                qrCode.overlayImage = image.resized(to: NSSize(width: 300, height: CGFloat(ceil(300/image.size.width * image.size.height))))?.png!
+                        HStack {
+                            #if os(iOS)
+                            Button(action: {
+                                showPicker = true
+                            }) {
+                                Label("Add Image", systemImage: "photo")
+                                .labelStyle(.titleOnly)
+                                .padding(5)
+                                .frame(maxWidth: 350)
+                            }.popover(isPresented: $showPicker) {
+                                ImagePicker(sourceType: .photoLibrary, onImagePicked: {image in
+                                    qrCode.overlayImage = image.pngData()!
+                                }).ignoresSafeArea()
                             }
-                        }) {
-                            Label("Add Image", systemImage: "photo")
-                            .labelStyle(.titleOnly)
+                            .buttonStyle(PlainButtonStyle())
+                            .foregroundColor(.accentColor)
+                            .padding(.vertical, 6)
+                            .padding(.horizontal)
+                            .background(Color("ButtonBkg"))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.vertical, 10)
+                            #else
+                            Button(action: {
+                                let panel = NSOpenPanel()
+                                panel.canChooseDirectories = false
+                                panel.canChooseFiles = true
+                                panel.allowsMultipleSelection = false
+                                panel.title = "Pick an Image to Add"
+                                panel.allowedContentTypes = [UTType.png, UTType.jpeg]
+                                if panel.runModal() == .OK {
+                                    let image = NSImage(byReferencing: panel.url!)
+                                    qrCode.overlayImage = image.resized(to: NSSize(width: 300, height: CGFloat(ceil(300/image.size.width * image.size.height))))?.png!
+                                }
+                            }) {
+                                Label("Add Image", systemImage: "photo")
+                                .labelStyle(.titleOnly)
+                            }
+                            .buttonStyle(QRPopPlainButton())
+                            .padding(.vertical, 10)
+                            #endif
+                            if (qrCode.overlayImage != nil) {
+                                Button(action: {
+                                    qrCode.overlayImage = nil
+                                    qrCode.generate()
+                                }) {
+                                    Label("Remove Image", systemImage: "trash")
+                                        .foregroundColor(.red)
+                                        .labelStyle(.iconOnly)
+                                    #if os(macOS)
+                                        .imageScale(.large)
+                                    #endif
+                                }
+                                #if os(macOS)
+                                    .buttonStyle(PlainButtonStyle())
+                                #endif
+                                .padding(.leading, 6)
+                            }
                         }
-                        .buttonStyle(QRPopPlainButton())
-                        .padding(.vertical, 10)
-                        #endif
                         
                     }.padding(.horizontal, 20)
                     .onChange(of: [qrCode.backgroundColor, qrCode.foregroundColor], perform: {_ in
