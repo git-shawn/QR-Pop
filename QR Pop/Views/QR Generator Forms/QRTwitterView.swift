@@ -9,25 +9,33 @@ import SwiftUI
 
 struct QRTwitterView: View {
     @EnvironmentObject var qrCode: QRCode
-
-    @State private var toFollow: String = ""
-    @State private var tweet: String = ""
-    @State private var twitterInt = "Follow"
-    @State private var fullURL = "https://www.twitter.com/"
+    
     @State private var showTextModal: Bool = false
+    
+    private func setCodeContent() {
+        if qrCode.formStates[0].isEmpty {
+            qrCode.formStates[1] = qrCode.formStates[1].replacingOccurrences(of: "@", with: "")
+            let fullURL = "https://twitter.com/intent/user?screen_name=\(qrCode.formStates[1])"
+            qrCode.setContent(string: fullURL)
+        } else {
+            let sanitizedTweet = qrCode.formStates[2].replacingOccurrences(of: " ", with: "%20")
+            let fullURL = "https://twitter.com/intent/tweet?text=\(sanitizedTweet)"
+            qrCode.setContent(string: fullURL)
+        }
+    }
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Picker("Twitter URL Type", selection: $twitterInt) {
-                Text("Follow").tag("Follow")
-                Text("Tweet").tag("Tweet")
+            Picker("Twitter URL Type", selection: $qrCode.formStates[0]) {
+                Text("Follow").tag("")
+                Text("Tweet").tag("t")
             }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
             
-            if (twitterInt == "Follow") {
+            if (qrCode.formStates[0].isEmpty) {
                 Group {
-                    TextField("Enter Account Name", text: $toFollow)
+                    TextField("Enter Account Name", text: $qrCode.formStates[1])
                         .textFieldStyle(QRPopTextStyle())
                     #if os(iOS)
                         .keyboardType(.default)
@@ -35,45 +43,18 @@ struct QRTwitterView: View {
                         .autocapitalization(.none)
                     #endif
                         .disableAutocorrection(true)
-                        .onChange(of: toFollow) {_ in
-                            combineURL()
-                            qrCode.setContent(string: fullURL)
+                        .onChange(of: qrCode.formStates) {_ in
+                            setCodeContent()
                         }
-                }.animation(.spring(), value: twitterInt)
+                }.animation(.spring(), value: qrCode.formStates[1])
             } else {
-                TextEditorModal(showTextEditor: $showTextModal, text: $tweet)
+                TextEditorModal(showTextEditor: $showTextModal, text: $qrCode.formStates[2])
                     .onChange(of: showTextModal) {_ in
-                        combineURL()
-                        qrCode.setContent(string: fullURL)
+                        setCodeContent()
                     }
-                    .animation(.spring(), value: twitterInt)
+                    .animation(.spring(), value: qrCode.formStates)
             }
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                toFollow = ""
-                tweet = ""
-                twitterInt = "Follow"
-                fullURL = "https://www.twitter.com/"
-            }
-        })
-    }
-    
-    private func combineURL() {
-        if (twitterInt == "Follow") {
-            combineFollowURL()
-        } else {
-            combineTweetURL()
         }
-    }
-    
-    private func combineFollowURL() {
-        toFollow = toFollow.replacingOccurrences(of: "@", with: "")
-        fullURL = "https://twitter.com/intent/user?screen_name=\(toFollow)"
-    }
-    
-    private func combineTweetURL() {
-        let saniTweet = tweet.replacingOccurrences(of: " ", with: "%20")
-        fullURL = "https://twitter.com/intent/tweet?text=\(saniTweet)"
     }
 }
 

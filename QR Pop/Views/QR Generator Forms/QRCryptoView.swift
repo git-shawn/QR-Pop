@@ -10,16 +10,12 @@ import SwiftUI
 struct QRCryptoView: View {
     @EnvironmentObject var qrCode: QRCode
     
-    @State private var text: String = ""
-    @State private var amount: String = ""
-    @State private var prefix: String = "bitcoin"
-    
     private func setCodeContent() {
         var content: String
-        if (amount.isEmpty) {
-            content = "\(prefix):\(text)"
+        if (qrCode.formStates[2].isEmpty) {
+            content = "\(qrCode.formStates[0]):\(qrCode.formStates[1])"
         } else {
-            content = "\(prefix):\(text)?amount\(amount)"
+            content = "\(qrCode.formStates[0]):\(qrCode.formStates[1])?amount\(qrCode.formStates[2])"
         }
         qrCode.setContent(string: content)
     }
@@ -31,7 +27,7 @@ struct QRCryptoView: View {
                 Text("Cryptocurrency Type")
                 Spacer()
                 #endif
-                Picker("Cryptocurrency Type", selection: $prefix) {
+                Picker("Cryptocurrency Type", selection: $qrCode.formStates[0]) {
                     Text("Bitcoin").tag("bitcoin")
                     Text("Ethereum").tag("ethereum")
                     Text("Bitcoin Cash").tag("bitcoincash")
@@ -43,14 +39,10 @@ struct QRCryptoView: View {
                     .padding(.horizontal, 15)
                     .background(Color("ButtonBkg"))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .animation(.interactiveSpring(), value: prefix)
                     #endif
-                    .onChange(of: prefix) {_ in
-                        setCodeContent()
-                    }
             }.padding(.horizontal, 15)
             
-            TextField("Public Wallet Address", text: $text)
+            TextField("Public Wallet Address", text: $qrCode.formStates[1])
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.twitter)
@@ -58,25 +50,21 @@ struct QRCryptoView: View {
                 .submitLabel(.done)
             #endif
                 .disableAutocorrection(true)
-                .onChange(of: text) {_ in
-                    setCodeContent()
-                }
                 .help("The address of the wallet the scanner should send cryptocurrency to.")
             
-            TextField("Amount", text: $amount)
+            TextField("Amount", text: $qrCode.formStates[2])
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.numberPad)
             #endif
-                .onChange(of: amount) {_ in
-                    setCodeContent()
-                }
                 .help("The amount of cryptocurrency to send.")
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                text = ""
-                amount = ""
-                prefix = "bitcoin"
+            
+        }.onChange(of: qrCode.formStates, perform: {_ in
+            setCodeContent()
+        })
+        .onAppear(perform: {
+            if qrCode.formStates[0].isEmpty {
+                qrCode.formStates[0] = "bitcoin"
             }
         })
     }

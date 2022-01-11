@@ -9,12 +9,10 @@ import SwiftUI
 
 struct QRPhoneView: View {
     @EnvironmentObject var qrCode: QRCode
-
-    @State private var text: String = ""
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            TextField("Enter Phone Number", text: $text)
+            TextField("Enter Phone Number", text: $qrCode.formStates[0])
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.phonePad)
@@ -22,13 +20,8 @@ struct QRPhoneView: View {
                 .submitLabel(.done)
             #endif
                 .disableAutocorrection(true)
-                .onChange(of: text) { value in
-                    qrCode.setContent(string: "tel:"+text)
-                }
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                text = ""
-            }
+        }.onChange(of: qrCode.formStates, perform: {_ in
+            qrCode.setContent(string: qrCode.formStates[0])
         })
     }
 }

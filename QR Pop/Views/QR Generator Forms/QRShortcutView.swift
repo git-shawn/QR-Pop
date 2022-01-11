@@ -9,21 +9,17 @@ import SwiftUI
 
 struct QRShortcutView: View {
     @EnvironmentObject var qrCode: QRCode
-
-    @State private var name: String = ""
-    @State private var input: String = ""
-    @State private var inputString: String = ""
     
     func setCodeContent() {
         var codeString: String = ""
-        let formattedName = name.replacingOccurrences(of: " ", with: "%20")
+        let formattedName = qrCode.formStates[1].replacingOccurrences(of: " ", with: "%20")
         
-        if (input.isEmpty) {
+        if (qrCode.formStates[0].isEmpty) {
             codeString = "shortcuts://run-shortcut?name=\(formattedName)"
-        } else if (input == "clipboard") {
+        } else if (qrCode.formStates[0] == "clipboard") {
             codeString = "shortcuts://run-shortcut?name=\(formattedName)&input=clipboard"
         } else {
-            codeString = "shortcuts://run-shortcut?name=\(formattedName)&input=\(inputString)"
+            codeString = "shortcuts://run-shortcut?name=\(formattedName)&input=\(qrCode.formStates[2])"
         }
         qrCode.setContent(string: codeString)
     }
@@ -35,7 +31,7 @@ struct QRShortcutView: View {
                 Text("Shortcut Input")
                 Spacer()
                 #endif
-                Picker("Shortcut Input", selection: $input.animation(.easeIn)) {
+                Picker("Shortcut Input", selection: $qrCode.formStates[0].animation(.easeIn)) {
                     Text("None").tag("")
                     Text("Text").tag("text")
                     Text("Clipboard").tag("clipboard")
@@ -47,12 +43,9 @@ struct QRShortcutView: View {
                 .background(Color("ButtonBkg"))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 #endif
-                .onChange(of: input) { value in
-                    setCodeContent()
-                }
             }.padding(.horizontal, 15)
             
-            TextField("Enter Shortcut Name", text: $name)
+            TextField("Enter Shortcut Name", text: $qrCode.formStates[1])
                 .textFieldStyle(QRPopTextStyle())
                 .help("The name of the Shortcut, exactly as it appears in the app.")
             #if os(iOS)
@@ -60,12 +53,9 @@ struct QRShortcutView: View {
                 .submitLabel(.done)
             #endif
                 .disableAutocorrection(true)
-                .onChange(of: name) { value in
-                    setCodeContent()
-                }
             
-            if (input == "text") {
-                TextField("Enter Input Text", text: $inputString)
+            if (qrCode.formStates[0] == "text") {
+                TextField("Enter Input Text", text: $qrCode.formStates[2])
                     .textFieldStyle(QRPopTextStyle())
                     .help("The input to pass to the Shortcut when it runs.")
                 #if os(iOS)
@@ -73,16 +63,9 @@ struct QRShortcutView: View {
                     .submitLabel(.done)
                 #endif
                     .disableAutocorrection(true)
-                    .onChange(of: inputString) { value in
-                        setCodeContent()
-                    }
             }
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                name = ""
-                input = ""
-                inputString = ""
-            }
+        }.onChange(of: qrCode.formStates, perform: {_ in
+            setCodeContent()
         })
     }
 }

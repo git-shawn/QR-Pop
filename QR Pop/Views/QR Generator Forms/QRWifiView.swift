@@ -10,14 +10,9 @@ import SwiftUI
 struct QRWifiView: View {
     @EnvironmentObject var qrCode: QRCode
 
-    @State private var text = "WIFI:T:;S:;P:;;"
-    @State private var ssid = ""
-    @State private var pass = ""
-    @State private var auth = "WPA"
-
     /// Create the QR code.
     private func setCodeContent() {
-        text = "WIFI:T:\(auth);S:\(ssid);P:\(pass);;"
+        let text = "WIFI:T:\(qrCode.formStates[0]);S:\(qrCode.formStates[1]);P:\(qrCode.formStates[2]);;"
         qrCode.setContent(string: text)
     }
     
@@ -28,8 +23,7 @@ struct QRWifiView: View {
                 GetWifiButton()
                     .environmentObject(qrCode)
                 #endif
-                
-                Picker("Wifi Authentication Method", selection: $auth) {
+                Picker("Wifi Authentication Method", selection: $qrCode.formStates[0]) {
                     Text("WPA").tag("WPA")
                     Text("WEP").tag("WEP")
                 }
@@ -38,12 +32,9 @@ struct QRWifiView: View {
                     .pickerStyle(.segmented)
                 #endif
                     .padding()
-                    .onChange(of: auth) {_ in
-                        setCodeContent()
-                    }
                 
                 //Accept SSID to generate QR code from
-                TextField("Enter Wifi SSID", text: $ssid)
+                TextField("Enter Wifi SSID", text: $qrCode.formStates[1])
                     .help("The public name of a Wifi network.")
                     .textFieldStyle(QRPopTextStyle())
                 #if os(iOS)
@@ -51,28 +42,22 @@ struct QRWifiView: View {
                     .submitLabel(.done)
                 #endif
                     .disableAutocorrection(true)
-                    .onChange(of: ssid) {_ in
-                        setCodeContent()
-                    }
                 
                 //Accept Wifi Password to generate QR code from
-                SecureField("Enter Wifi Password", text: $pass)
+                SecureField("Enter Wifi Password", text: $qrCode.formStates[2])
                     .textFieldStyle(QRPopTextStyle())
                 #if os(iOS)
                     .autocapitalization(.none)
                     .submitLabel(.done)
                 #endif
                     .disableAutocorrection(true)
-                    .onChange(of: pass) {_ in
-                        setCodeContent()
-                    }
             }
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                text = "WIFI:T:;S:;P:;;"
-                ssid = ""
-                pass = ""
-                auth = "WPA"
+        }.onChange(of: qrCode.formStates) {_ in
+            setCodeContent()
+        }
+        .onAppear(perform: {
+            if qrCode.formStates[0].isEmpty {
+                qrCode.formStates[0] = "WPA"
             }
         })
     }

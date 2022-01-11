@@ -9,29 +9,17 @@ import SwiftUI
 
 struct QRMailView: View {
     @EnvironmentObject var qrCode: QRCode
-
-    @State private var email: String = ""
-    @State private var subject: String = ""
-    @State private var emailBody: String = ""
-    @State private var wholeMessage: String = ""
+    
     @State private var showTextModal: Bool = false
     
     private func setCodeContent() {
-        if !emailBody.isEmpty && !subject.isEmpty {
-            wholeMessage = "mailto:\(email)?subject=\(subject)&body=\(emailBody)"
-        } else if emailBody.isEmpty && !subject.isEmpty {
-            wholeMessage = "mailto:\(email)?subject=\(subject)"
-        } else if !emailBody.isEmpty && subject.isEmpty {
-            wholeMessage = "mailto:\(email)?body=\(emailBody)"
-        } else {
-            wholeMessage = "mailto:\(email)"
-        }
+        let wholeMessage = "mailto:\(qrCode.formStates[0])?subject=\(qrCode.formStates[1])&body=\(qrCode.formStates[2])"
         qrCode.setContent(string: wholeMessage)
     }
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            TextField("Enter Email Address", text: $email)
+            TextField("Enter Email Address", text: $qrCode.formStates[0])
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.emailAddress)
@@ -39,11 +27,11 @@ struct QRMailView: View {
                 .submitLabel(.done)
             #endif
                 .disableAutocorrection(true)
-                .onChange(of: email) { value in
+                .onChange(of: qrCode.formStates[0]) {value in
                     setCodeContent()
                 }
             
-            TextField("Enter Email Subject", text: $subject)
+            TextField("Enter Email Subject", text: $qrCode.formStates[1])
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.default)
@@ -51,22 +39,15 @@ struct QRMailView: View {
                 .submitLabel(.done)
             #endif
                 .disableAutocorrection(true)
-                .onChange(of: subject) { value in
+                .onChange(of: qrCode.formStates[1]) {value in
                     setCodeContent()
                 }
             
-            TextEditorModal(showTextEditor: $showTextModal, text: $emailBody)
+            TextEditorModal(showTextEditor: $showTextModal, text: $qrCode.formStates[2])
                 .onChange(of: showTextModal) {_ in
                     setCodeContent()
                 }
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                email = ""
-                subject = ""
-                emailBody = ""
-                wholeMessage = ""
-            }
-        })
+        }
     }
 }
 

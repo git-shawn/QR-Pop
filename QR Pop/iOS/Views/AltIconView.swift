@@ -109,6 +109,29 @@ struct AltIconView: View {
             }.tint(.primary)
             
             Button(action: {
+                UIApplication.shared.setAlternateIconName("qralt7")
+                determineIcon()
+            }) {
+                HStack {
+                    Image("greenAlt")
+                        .cornerRadius(10)
+                        .padding(5)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Green")
+                        Text("A little taste of the outdoors.")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
+                    Spacer()
+                    if (activeIconName == "qralt7") {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.accentColor)
+                    }
+                }
+            }.tint(.primary)
+            
+            Button(action: {
                 UIApplication.shared.setAlternateIconName("qralt4")
                 determineIcon()
             }) {
@@ -173,6 +196,29 @@ struct AltIconView: View {
                     }
                     Spacer()
                     if (activeIconName == "qralt6") {
+                        Image(systemName: "checkmark")
+                            .foregroundColor(.accentColor)
+                    }
+                }
+            }.tint(.primary)
+            
+            Button(action: {
+                UIApplication.shared.setAlternateIconName("qralt8")
+                determineIcon()
+            }) {
+                HStack {
+                    Image("colorAlt")
+                        .cornerRadius(10)
+                        .padding(5)
+                    
+                    VStack(alignment: .leading) {
+                        Text("Rainbow")
+                        Text("Why settle for just one color, anyway?")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                    }
+                    Spacer()
+                    if (activeIconName == "qralt8") {
                         Image(systemName: "checkmark")
                             .foregroundColor(.accentColor)
                     }

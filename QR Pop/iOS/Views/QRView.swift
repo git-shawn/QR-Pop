@@ -72,6 +72,11 @@ struct QRView: View {
                     }.help(view.description)
                 }
             }.navigationTitle("QR Generator")
+            .onContinueUserActivity("shwndvs.QR-Pop.generator-selection", perform: {activity in
+                if let genId = activity.userInfo?["genId"] as? NSNumber {
+                    selection = genId.intValue
+                }
+            })
             .toolbar(content: {
                 ToolbarItem(content: {
                     Button(action: {

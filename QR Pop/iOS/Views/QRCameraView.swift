@@ -32,7 +32,7 @@ struct QRCameraView: View {
         case .success(let code):
             qrCode.setContent(string: code.string)
         case .failure(let error):
-            print("Scanning failed")
+            print("Scanning failed: \(error)")
         }
     }
     
@@ -78,6 +78,7 @@ struct QRCameraView: View {
             #if os(iOS)
             QRCodeDesigner()
                 .environmentObject(qrCode)
+                .padding(.horizontal)
             #endif
             } else {
                 CodeScannerView(codeTypes: [.qr], scanMode: .once, showViewfinder: true, shouldVibrateOnSuccess: true, completion: self.handleScan)

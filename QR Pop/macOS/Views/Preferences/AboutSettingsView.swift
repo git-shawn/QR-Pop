@@ -25,7 +25,7 @@ struct AboutSettingsView: View {
                     Text("QR Pop!")
                         .font(.largeTitle)
                         .bold()
-                    Text("© 2021 Shawn Davis")
+                    Text("© 2022 Shawn Davis")
                 }
             })
             Preferences.Section(title: "Leave a Review", verticalAlignment: .top) {

@@ -133,6 +133,16 @@
 		29AB0534273198F5009D4901 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 29AB0533273198F5009D4901 /* AlertToast */; };
 		29AB0539273199DC009D4901 /* qrcode.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 29AB0538273199DC009D4901 /* qrcode.min.js */; };
 		29AB053A273199DC009D4901 /* qrcode.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 29AB0538273199DC009D4901 /* qrcode.min.js */; };
+		29AE2C4327873A7700F9E1A5 /* qralt7ipadpro@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C3D27873A7600F9E1A5 /* qralt7ipadpro@2x.png */; };
+		29AE2C4427873A7700F9E1A5 /* qralt8ipadpro@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C3E27873A7600F9E1A5 /* qralt8ipadpro@2x.png */; };
+		29AE2C4527873A7700F9E1A5 /* qralt7ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C3F27873A7600F9E1A5 /* qralt7ipad.png */; };
+		29AE2C4627873A7700F9E1A5 /* qralt7ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C4027873A7600F9E1A5 /* qralt7ipad@2x.png */; };
+		29AE2C4727873A7700F9E1A5 /* qralt8ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C4127873A7600F9E1A5 /* qralt8ipad.png */; };
+		29AE2C4827873A7700F9E1A5 /* qralt8ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C4227873A7700F9E1A5 /* qralt8ipad@2x.png */; };
+		29AE2C4D27873AAF00F9E1A5 /* qralt7@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C4927873AAE00F9E1A5 /* qralt7@3x.png */; };
+		29AE2C4E27873AAF00F9E1A5 /* qralt8@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C4A27873AAE00F9E1A5 /* qralt8@3x.png */; };
+		29AE2C4F27873AAF00F9E1A5 /* qralt8@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C4B27873AAE00F9E1A5 /* qralt8@2x.png */; };
+		29AE2C5027873AAF00F9E1A5 /* qralt7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29AE2C4C27873AAE00F9E1A5 /* qralt7@2x.png */; };
 		29B1984127319A920001909F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B1984027319A920001909F /* StoreKit.framework */; };
 		29B1984727319BD00001909F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B1984627319BD00001909F /* StoreKit.framework */; };
 		29B1984A27319C820001909F /* ImageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B1984927319C820001909F /* ImageSlider.swift */; };
@@ -330,6 +340,16 @@
 		29AB052D27319853009D4901 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		29AB0538273199DC009D4901 /* qrcode.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = qrcode.min.js; sourceTree = "<group>"; };
 		29AB053B273199EE009D4901 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		29AE2C3D27873A7600F9E1A5 /* qralt7ipadpro@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt7ipadpro@2x.png"; sourceTree = "<group>"; };
+		29AE2C3E27873A7600F9E1A5 /* qralt8ipadpro@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt8ipadpro@2x.png"; sourceTree = "<group>"; };
+		29AE2C3F27873A7600F9E1A5 /* qralt7ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qralt7ipad.png; sourceTree = "<group>"; };
+		29AE2C4027873A7600F9E1A5 /* qralt7ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt7ipad@2x.png"; sourceTree = "<group>"; };
+		29AE2C4127873A7600F9E1A5 /* qralt8ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qralt8ipad.png; sourceTree = "<group>"; };
+		29AE2C4227873A7700F9E1A5 /* qralt8ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt8ipad@2x.png"; sourceTree = "<group>"; };
+		29AE2C4927873AAE00F9E1A5 /* qralt7@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt7@3x.png"; sourceTree = "<group>"; };
+		29AE2C4A27873AAE00F9E1A5 /* qralt8@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt8@3x.png"; sourceTree = "<group>"; };
+		29AE2C4B27873AAE00F9E1A5 /* qralt8@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt8@2x.png"; sourceTree = "<group>"; };
+		29AE2C4C27873AAE00F9E1A5 /* qralt7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qralt7@2x.png"; sourceTree = "<group>"; };
 		29B1984027319A920001909F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.0.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		29B1984227319A980001909F /* QR Pop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QR Pop.entitlements"; sourceTree = "<group>"; };
 		29B1984527319AB10001909F /* Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Extension.entitlements; sourceTree = "<group>"; };
@@ -355,6 +375,8 @@
 		29B198962731F7710001909F /* QRGeneratorStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRGeneratorStore.swift; sourceTree = "<group>"; };
 		29B1989C273201520001909F /* QRLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRLinkView.swift; sourceTree = "<group>"; };
 		29B198A0273202EF0001909F /* QRCodeDesigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeDesigner.swift; sourceTree = "<group>"; };
+		29BEFDD3277CD7DF0091388E /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		29BEFDD5277CD7DF0091388E /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		29CE535F274015780013DAC9 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		29CE5362274023030013DAC9 /* QRShortcutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRShortcutView.swift; sourceTree = "<group>"; };
 		29DC98CB2774FC0A00C4E0D1 /* QRCryptoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCryptoView.swift; sourceTree = "<group>"; };
@@ -419,6 +441,16 @@
 		2911FD71273973F800E999C3 /* AltIcons */ = {
 			isa = PBXGroup;
 			children = (
+				29AE2C4C27873AAE00F9E1A5 /* qralt7@2x.png */,
+				29AE2C4927873AAE00F9E1A5 /* qralt7@3x.png */,
+				29AE2C4B27873AAE00F9E1A5 /* qralt8@2x.png */,
+				29AE2C4A27873AAE00F9E1A5 /* qralt8@3x.png */,
+				29AE2C3F27873A7600F9E1A5 /* qralt7ipad.png */,
+				29AE2C4027873A7600F9E1A5 /* qralt7ipad@2x.png */,
+				29AE2C3D27873A7600F9E1A5 /* qralt7ipadpro@2x.png */,
+				29AE2C4127873A7600F9E1A5 /* qralt8ipad.png */,
+				29AE2C4227873A7700F9E1A5 /* qralt8ipad@2x.png */,
+				29AE2C3E27873A7600F9E1A5 /* qralt8ipadpro@2x.png */,
 				2911FD7B2739740B00E999C3 /* qralt1@2x.png */,
 				2911FD722739740A00E999C3 /* qralt1@3x.png */,
 				2911FD95273974C200E999C3 /* qralt1ipad.png */,
@@ -672,6 +704,8 @@
 				29B1984627319BD00001909F /* StoreKit.framework */,
 				29B1984027319A920001909F /* StoreKit.framework */,
 				29B198542731A2FF0001909F /* UniformTypeIdentifiers.framework */,
+				29BEFDD3277CD7DF0091388E /* WidgetKit.framework */,
+				29BEFDD5277CD7DF0091388E /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -927,28 +961,38 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29AE2C4727873A7700F9E1A5 /* qralt8ipad.png in Resources */,
+				29AE2C5027873AAF00F9E1A5 /* qralt7@2x.png in Resources */,
 				2911FD562736ED2800E999C3 /* Settings.bundle in Resources */,
 				2911FDA2273974C200E999C3 /* qralt5ipad@2x.png in Resources */,
 				29777A3C2741AF70000E7A99 /* qralt6@3x.png in Resources */,
 				2911FDA4273974C200E999C3 /* qralt1ipad.png in Resources */,
 				2911FDA5273974C200E999C3 /* qralt4ipad.png in Resources */,
 				2911FD7F2739740B00E999C3 /* qralt1@3x.png in Resources */,
+				29AE2C4D27873AAF00F9E1A5 /* qralt7@3x.png in Resources */,
 				2911FDA7273974C200E999C3 /* qralt4ipadpro@2x.png in Resources */,
 				29777A3A2741AF70000E7A99 /* qralt6ipad.png in Resources */,
 				2911FDA6273974C200E999C3 /* qralt1ipadpro@2x.png in Resources */,
 				2911FD9B273974C200E999C3 /* qralt5ipad.png in Resources */,
+				29AE2C4527873A7700F9E1A5 /* qralt7ipad.png in Resources */,
 				2911FDA1273974C200E999C3 /* qralt2ipadpro@2x.png in Resources */,
 				2911FD862739740B00E999C3 /* qralt5@3x.png in Resources */,
+				29AE2C4F27873AAF00F9E1A5 /* qralt8@2x.png in Resources */,
+				29AE2C4E27873AAF00F9E1A5 /* qralt8@3x.png in Resources */,
+				29AE2C4827873A7700F9E1A5 /* qralt8ipad@2x.png in Resources */,
+				29AE2C4427873A7700F9E1A5 /* qralt8ipadpro@2x.png in Resources */,
 				2911FDA8273974C200E999C3 /* qralt2ipad@2x.png in Resources */,
 				2911FD8B2739740B00E999C3 /* qralt3@3x.png in Resources */,
 				2911FD9F273974C200E999C3 /* qralt3ipad.png in Resources */,
 				2911FD852739740B00E999C3 /* qralt4@3x.png in Resources */,
 				2911FDA3273974C200E999C3 /* qralt3ipadpro@2x.png in Resources */,
+				29AE2C4627873A7700F9E1A5 /* qralt7ipad@2x.png in Resources */,
 				29777A3B2741AF70000E7A99 /* qralt6@2x.png in Resources */,
 				2911FD842739740B00E999C3 /* qralt4@2x.png in Resources */,
 				2911FD8A2739740B00E999C3 /* qralt5@2x.png in Resources */,
 				2911FD822739740B00E999C3 /* qralt3@2x.png in Resources */,
 				2911FD9E273974C200E999C3 /* qralt5ipadpro@2x.png in Resources */,
+				29AE2C4327873A7700F9E1A5 /* qralt7ipadpro@2x.png in Resources */,
 				2911FDA0273974C200E999C3 /* qralt3ipad@2x.png in Resources */,
 				2911FD9C273974C200E999C3 /* qralt1ipad@2x.png in Resources */,
 				2911FD882739740B00E999C3 /* qralt1@2x.png in Resources */,
@@ -1315,7 +1359,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Safari Extension/iOS/Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";
@@ -1327,7 +1371,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1348,7 +1392,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Safari Extension/iOS/Extension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";
@@ -1360,7 +1404,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1385,7 +1429,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "QR Pop/iOS/QR Pop.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "QR Pop/iOS/Info.plist";
@@ -1403,7 +1447,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1428,7 +1472,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "QR Pop/iOS/QR Pop.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "QR Pop/iOS/Info.plist";
@@ -1446,7 +1490,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1470,7 +1514,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Safari Extension/macOS/QR Pop.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1483,7 +1527,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1503,7 +1547,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Safari Extension/macOS/QR Pop.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1516,7 +1560,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1539,7 +1583,7 @@
 				CODE_SIGN_ENTITLEMENTS = "QR Pop/macOS/QR Pop.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1555,7 +1599,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1579,7 +1623,7 @@
 				CODE_SIGN_ENTITLEMENTS = "QR Pop/macOS/QR Pop.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1595,7 +1639,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -1616,7 +1660,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
 				CODE_SIGN_ENTITLEMENTS = "Share Extension/iOS/Action.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Share Extension/iOS/Info.plist";
@@ -1628,7 +1672,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Action";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1646,7 +1690,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ExtensionIcon;
 				CODE_SIGN_ENTITLEMENTS = "Share Extension/iOS/Action.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Share Extension/iOS/Info.plist";
@@ -1658,7 +1702,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Action";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1678,7 +1722,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1691,7 +1735,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1708,7 +1752,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 38;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1721,7 +1765,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 2.8;
+				MARKETING_VERSION = 2.8.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-macOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;

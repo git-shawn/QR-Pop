@@ -16,12 +16,23 @@ import Cocoa
 import UIKit
 #endif
 
+/// A helper class to facilitate the creation of QR codes.
 class QRCode: NSObject, ObservableObject {
+    //MARK: - Variables
+    /// The error correction level as defined by the user in Settings
     @AppStorage("errorCorrection") private var errorLevel: Int = 0
+    
+    /// Data to be encoded
     @Published var codeContent: String = ""
+    
+    /// Background and foreground color, respectively, of the code.
     @Published var backgroundColor: Color = .white
     @Published var foregroundColor: Color = .black
+    
+    /// The type of generator that created the code.
     @Published var generatorSource: QRGeneratorType? = nil
+    
+    /// The image or icon to overlay on the QR code.
     var overlayImage: Data? = nil {
         willSet {
             objectWillChange.send()
@@ -32,14 +43,22 @@ class QRCode: NSObject, ObservableObject {
             }
         }
     }
+    
+    /// The style of each data point within the QR code.
     @Published var pointStyle: QRPointStyle = .square
     
     /// PNG Data of the QR code generated.
     @Published var imgData: Data
     
+    /// A single array to hold all states within a generator form.
+    @Published var formStates: [String] = []
+    
     override init() {
         imgData = "".data(using: .utf8)!
         super.init()
+        for _ in 1...10 {
+            formStates.append("")
+        }
         generate()
     }
     
@@ -49,6 +68,10 @@ class QRCode: NSObject, ObservableObject {
         backgroundColor = .white
         foregroundColor = .black
         overlayImage = nil
+        formStates.removeAll()
+        for _ in 1...10 {
+            formStates.append("")
+        }
         generate()
     }
     
@@ -92,65 +115,6 @@ class QRCode: NSObject, ObservableObject {
             
             imgData = cgCode.png!
         }
-    }
-    
-    #if os(iOS)
-     /// Generate a vCard from a Contact.
-     /// - Parameter contact: The contact to transform into a vCard.
-     /// - Returns: The vCard data as a String. If error, returns nil.
-     private func vcard(contact: CNContact) -> String? {
-         var data = Data()
-         let contactStore = CNContactStore()
-         var fetchedContact = contact
-         do {
-             try fetchedContact = contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactVCardSerialization.descriptorForRequiredKeys()])
-         } catch {
-             return nil
-         }
-         do {
-             try (data = CNContactVCardSerialization.data(with: [fetchedContact]))
-             let contactString = String(decoding: data, as: UTF8.self)
-             return contactString
-         } catch {
-             return nil
-         }
-     }
-    
-    #else
-    /// Generate a vCard from a Contact.
-    /// - Parameter contact: The contact to transform into a vCard.
-    /// - Returns: The vCard data as a String. If error, returns nil.
-    private func vcard(contact: CNContact) -> String? {
-        var data = Data()
-        let contactStore = CNContactStore()
-        var fetchedContact = contact
-        do {
-            try fetchedContact = contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactVCardSerialization.descriptorForRequiredKeys()])
-        } catch {
-            return nil
-        }
-        do {
-            try (data = CNContactVCardSerialization.data(with: [fetchedContact]))
-            let contactString = String(decoding: data, as: UTF8.self)
-            return contactString
-        } catch {
-            return nil
-        }
-    }
-    #endif
-     
-    /// Generates a QR code for a given contact.
-    /// - Parameters:
-    ///   - contact: The CNContact to convert to a QR code.
-    ///   - bg: The background color for the QR code.
-    ///   - fg: The foregroound color for the QR code.
-    ///   - correction: Optional, the error correction level for the QR code.
-    /// - Returns: An image of  the QR code generated.
-    func generateContact(contact: CNContact) {
-        let vcard: String? = self.vcard(contact: contact)
-        guard vcard != nil else {return imgData = errorImgData()}
-        codeContent = vcard!
-        generate()
     }
     
     /// Set the data to be encoded into the QR code.
@@ -198,7 +162,29 @@ class QRCode: NSObject, ObservableObject {
     }
 }
 
-//MARK: - Image to Data Conversion Functions
+//MARK: - Image-Data Conversion Functions
+
+#if os(macOS)
+extension Data {
+    /// Returns the data as a SwiftUI image.
+    /// - Warning: Unsafely translates the data. Be confident this is an image.
+    var swiftImage: Image? { Image(nsImage: NSImage(data: self)!) }
+    
+    /// Returns the data as an NSImage or UIImage, depending on the platform.
+    /// - Warning: Unsafely translates the data. Be confident this is an image.
+    var image: NSImage { NSImage(data: self)! }
+}
+#else
+extension Data {
+    /// Returns the data as a SwiftUI image.
+    /// - Warning: Unsafely translates the data. Be confident this is an image.
+    var swiftImage: Image? { Image(uiImage: UIImage(data: self)!) }
+    
+    /// Returns the data as an NSImage or UIImage, depending on the platform.
+    /// - Warning - Unsafely translates the data. Be confident this is an image.
+    var image: UIImage { UIImage(data: self)! }
+}
+#endif
 
 extension CGImage {
     var png: Data? {

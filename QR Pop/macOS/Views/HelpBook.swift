@@ -15,6 +15,7 @@ struct HelpBook: View {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(spacing: 10) {
                         Image("launchScreenImg")
+                            .foregroundColor(.accentColor)
                         VStack(alignment: .leading, spacing: 3) {
                             Text("QR Pop User Guide")
                                 .font(.title2)

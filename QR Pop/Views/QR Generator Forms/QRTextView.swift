@@ -10,20 +10,15 @@ import SwiftUI
 struct QRTextView: View {
     @EnvironmentObject var qrCode: QRCode
 
-    @State private var text: String = ""
     @State private var showTextModal: Bool = false
 
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            TextEditorModal(showTextEditor: $showTextModal, text: $text)
+            TextEditorModal(showTextEditor: $showTextModal, text: $qrCode.formStates[0])
                 .onChange(of: showTextModal) {_ in
-                    qrCode.setContent(string: text)
+                    qrCode.setContent(string: qrCode.formStates[0])
                 }
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                text = ""
-            }
-        })
+        }
     }
 }
 

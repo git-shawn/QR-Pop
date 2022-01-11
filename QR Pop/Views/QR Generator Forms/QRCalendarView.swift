@@ -10,55 +10,41 @@ import SwiftUI
 struct QRCalendarView: View {
     @EnvironmentObject var qrCode: QRCode
 
-    @State private var eventName: String = ""
-    @State private var eventLocation: String = ""
     @State private var startTime = Date()
-    @State private var startString: String = ""
     @State private var endTime = Date()
-    @State private var endString: String = ""
-    @State private var wholeEvent: String = ""
     let formatter = DateFormatter()
     
     init() {
         formatter.dateFormat = "yyyyMMdd'T'HHmmss'Z'"
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
-        startString = formatter.string(from: startTime)
-        endString = formatter.string(from: endTime)
     }
     
     private func setCodeContent() {
-        wholeEvent = "BEGIN:VEVENT\nSUMMARY:\(eventName)\nLOCATION:\(eventLocation)\nDTSTART:\(startString)\nDTEND:\(endString)\nEND:VEVENT"
+        let wholeEvent = "BEGIN:VEVENT\nSUMMARY:\(qrCode.formStates[0])\nLOCATION:\(qrCode.formStates[1])\nDTSTART:\(qrCode.formStates[2])\nDTEND:\(qrCode.formStates[3])\nEND:VEVENT"
         qrCode.setContent(string: wholeEvent)
     }
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            TextField("Event Name", text: $eventName)
+            TextField("Event Name", text: $qrCode.formStates[0])
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.default)
                 .submitLabel(.done)
             #endif
-                .onChange(of: eventName) { value in
-                    setCodeContent()
-                }
             
-            TextField("Event Location", text: $eventLocation)
+            TextField("Event Location", text: $qrCode.formStates[1])
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.default)
                 .submitLabel(.done)
             #endif
-                .onChange(of: eventLocation) { value in
-                    setCodeContent()
-                }
             
             DatePicker("Start", selection: $startTime)
                 .padding(.horizontal)
                 .padding(.vertical, 5)
-                .onChange(of: startTime, perform: {valeu in
-                    startString = formatter.string(from: startTime)
-                    setCodeContent()
+                .onChange(of: startTime, perform: {_ in
+                    qrCode.formStates[2] = formatter.string(from: startTime)
                 })
             
             Divider()
@@ -68,25 +54,16 @@ struct QRCalendarView: View {
             DatePicker("End", selection: $endTime)
                 .padding(.horizontal)
                 .padding(.bottom, 5)
-                .onChange(of: endTime, perform: {valeu in
-                    endString = formatter.string(from: endTime)
-                    setCodeContent()
+                .onChange(of: endTime, perform: {_ in
+                    qrCode.formStates[3] = formatter.string(from: endTime)
                 })
             
             Divider()
                 .padding(.leading)
                 .padding(.bottom)
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                eventName = ""
-                eventLocation = ""
-                startTime = Date()
-                startString = ""
-                endTime = Date()
-                endString = ""
-                wholeEvent = ""
-            }
-        })
+        }.onChange(of: qrCode.formStates) {_ in
+            setCodeContent()
+        }
     }
 }
 

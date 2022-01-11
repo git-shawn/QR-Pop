@@ -10,30 +10,24 @@ import SwiftUI
 struct QRFacetimeView: View {
     @EnvironmentObject var qrCode: QRCode
 
-    @State private var text: String = ""
-    @State private var isFacetimeAudio: Bool = false
-
     private func setCodeContent() {
-        if (isFacetimeAudio) {
-            qrCode.setContent(string: "facetime-audio:"+text)
+        if (qrCode.formStates[0] == "") {
+            qrCode.setContent(string: "facetime-audio:"+qrCode.formStates[1])
         } else {
-            qrCode.setContent(string: "facetime:"+text)
+            qrCode.setContent(string: "facetime:"+qrCode.formStates[1])
         }
     }
     
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            Picker("FaceTime Video or Audio", selection: $isFacetimeAudio) {
-                Text("Video").tag(false)
-                Text("Audio").tag(true)
+            Picker("FaceTime Video or Audio", selection: $qrCode.formStates[0]) {
+                Text("Video").tag("")
+                Text("Audio").tag("a")
             }
                 .padding(.horizontal)
                 .pickerStyle(.segmented)
-                .onChange(of: isFacetimeAudio) {_ in
-                    setCodeContent()
-                }
             
-            TextField("Enter Phone Number or Email", text: $text)
+            TextField("Enter Phone Number or Email", text: $qrCode.formStates[1])
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.namePhonePad)
@@ -41,14 +35,9 @@ struct QRFacetimeView: View {
                 .submitLabel(.done)
             #endif
                 .disableAutocorrection(true)
-                .onChange(of: text) {_ in
-                    setCodeContent()
-                }
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                text = ""
-                isFacetimeAudio = false
-            }
+            
+        }.onChange(of: qrCode.formStates, perform: {_ in
+            setCodeContent()
         })
     }
 }

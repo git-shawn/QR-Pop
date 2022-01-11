@@ -25,10 +25,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 text: url,
                 width: info.codeSize,
                 height: info.codeSize,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
+                colorDark : info.fgColor,
+                colorLight : info.bgColor,
                 correctLevel : QRCode.CorrectLevel.L
             });
+            
+            // Match the QR Code's padding and border to the user's chosen colors.
+            document.getElementById("qr-render").getElementsByTagName("img")[0].style.backgroundColor=info.bgColor;
+            document.getElementById("qr-render").getElementsByTagName("img")[0].style.borderColor=info.fgColor;
         }
     }
 

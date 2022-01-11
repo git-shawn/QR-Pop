@@ -29,9 +29,11 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
             let codeSize = defaults?.integer(forKey: "codeSize") ?? 190
             let showHostname = defaults?.bool(forKey: "urlToggle") ?? true
             let referralToggle = defaults?.bool(forKey: "referralToggle") ?? false
+            let bgColor = defaults?.string(forKey: "extBgColor") ?? "#ffffff"
+            let fgColor = defaults?.string(forKey: "extFgColor") ?? "#000000"
             
             let response = NSExtensionItem()
-            response.userInfo = [ SFExtensionMessageKey: [ "codeSize": codeSize, "showHostname": showHostname, "referralToggle": referralToggle ] ]
+            response.userInfo = [ SFExtensionMessageKey: [ "codeSize": codeSize, "showHostname": showHostname, "referralToggle": referralToggle, "bgColor": bgColor, "fgColor": fgColor ] ]
             context.completeRequest(returningItems: [response], completionHandler: nil)
         }
     }

@@ -13,8 +13,8 @@ body {
 
 img {
     border: 2px solid #1D1D1F;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 10px;
     background-color: #fff;
     margin: 0 auto;
 }
@@ -32,11 +32,7 @@ p {
 }
 
 @media (prefers-color-scheme: dark) {
-    img {
-        -webkit-filter: invert(1);
-        filter: invert(1);
-    }
-
+    
     p {
         color: #fff;
     }

@@ -9,6 +9,7 @@ import SwiftUI
 import CoreSpotlight
 #if os(iOS)
 import Intents
+import EFQRCode
 #endif
 
 struct QRGeneratorView: View {
@@ -18,10 +19,8 @@ struct QRGeneratorView: View {
     @State private var presentCode: Bool = false
     
     #if os(macOS)
-    @State private var showDesignPopover: Bool = false
     private let toolbarTrailingPlacement: ToolbarItemPlacement = .primaryAction
     #else
-    @State private var showHelp: Bool = false
     private let toolbarTrailingPlacement: ToolbarItemPlacement = .navigationBarTrailing
     let initialBrightness: CGFloat = UIScreen.main.brightness
     #endif
@@ -50,6 +49,9 @@ struct QRGeneratorView: View {
                         Spacer()
                     }.frame(maxHeight: geometry.size.height)
                     ScrollView {
+                        #if os(macOS)
+                        Spacer()
+                        #endif
                         VStack {
                             generatorType.destination
                                 .environmentObject(qrCode)
@@ -84,14 +86,14 @@ struct QRGeneratorView: View {
             }
             ToolbarItem(placement: toolbarTrailingPlacement) {
                 Menu {
+                    #if os(iOS)
+                    Text("\(generatorType.description)")
+                    Divider()
+                    #endif
                     Button(role: .destructive, action: qrCode.reset) {
                         Label("Clear", systemImage: "trash")
                     }
-                    #if os(iOS)
-                    Button(action: {showHelp = true}) {
-                        Label("Help", systemImage: "questionmark")
-                    }
-                    #else
+                    #if os(macOS)
                     Button(action: {
                         let printView = NSImageView(frame: NSRect(x: 0, y: 0, width: 300, height: 300))
                         printView.image = qrCode.imgData.image
@@ -113,20 +115,20 @@ struct QRGeneratorView: View {
             }
         })
         .userActivity("shwndvs.QR-Pop.generator-selection") { activity in
+            #if os(iOS)
             activity.isEligibleForSearch = true
-            activity.title = "\(generatorType.name) Generator"
-            activity.userInfo = ["genId": generatorType.id]
-
-            let attributes = CSSearchableItemAttributeSet(contentType: UTType.item)
             
+            let attributes = CSSearchableItemAttributeSet(contentType: UTType.item)
             attributes.contentDescription = "Generate a QR Code"
             activity.contentAttributeSet = attributes
+            #endif
+            
+            activity.isEligibleForHandoff = true
+            activity.title = "\(generatorType.name) Generator"
+            activity.userInfo = ["genId": generatorType.id]
+            activity.becomeCurrent()
         }
-        #if os(iOS)
-        .alert(isPresented: $showHelp) {
-            Alert(title: Text("\(generatorType.name) Generator"), message: Text(generatorType.description), dismissButton: .default(Text("Close")))
-        }
-        #else
+        #if os(macOS)
         .touchBar() {
             HStack {
                 Button(role: .destructive, action: qrCode.reset) {

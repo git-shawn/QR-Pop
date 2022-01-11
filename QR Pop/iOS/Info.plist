@@ -50,6 +50,20 @@
 					<string>qralt6</string>
 				</array>
 			</dict>
+			<key>qralt7</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>qralt7</string>
+				</array>
+			</dict>
+			<key>qralt8</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>qralt8</string>
+				</array>
+			</dict>
 		</dict>
 		<key>CFBundlePrimaryIcon</key>
 		<dict>
@@ -111,6 +125,22 @@
 					<string>qralt6ipadpro</string>
 				</array>
 			</dict>
+			<key>qralt7</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>qralt7ipad</string>
+					<string>qralt7ipadpro</string>
+				</array>
+			</dict>
+			<key>qralt8</key>
+			<dict>
+				<key>CFBundleIconFiles</key>
+				<array>
+					<string>qralt8ipad</string>
+					<string>qralt8ipadpro</string>
+				</array>
+			</dict>
 		</dict>
 		<key>CFBundlePrimaryIcon</key>
 		<dict>
@@ -122,6 +152,7 @@
 	</dict>
 	<key>NSUserActivityTypes</key>
 	<array>
+		<string>ConfigurationIntent</string>
 		<string>shwndvs.QR-Pop.generator-selection</string>
 	</array>
 	<key>UILaunchScreen</key>

@@ -142,25 +142,3 @@ struct QRImage: View {
             #endif
     }
 }
-
-#if os(macOS)
-extension Data {
-    /// Returns the data as a SwiftUI image.
-    /// - Warning: Unsafely translates the data. Be confident this is an image.
-    var swiftImage: Image? { Image(nsImage: NSImage(data: self)!) }
-    
-    /// Returns the data as an NSImage or UIImage, depending on the platform.
-    /// - Warning: Unsafely translates the data. Be confident this is an image.
-    var image: NSImage { NSImage(data: self)! }
-}
-#else
-extension Data {
-    /// Returns the data as a SwiftUI image.
-    /// - Warning: Unsafely translates the data. Be confident this is an image.
-    var swiftImage: Image? { Image(uiImage: UIImage(data: self)!) }
-    
-    /// Returns the data as an NSImage or UIImage, depending on the platform.
-    /// - Warning - Unsafely translates the data. Be confident this is an image.
-    var image: UIImage { UIImage(data: self)! }
-}
-#endif

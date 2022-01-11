@@ -67,6 +67,7 @@ struct QR_PopApp: App {
         }
         #if os(macOS)
         .windowToolbarStyle(.unified)
+        .handlesExternalEvents(matching: ["*"])
         .commands {
             SidebarCommands()
             CommandGroup(replacing: .appInfo) {

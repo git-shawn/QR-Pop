@@ -10,11 +10,9 @@ import SwiftUI
 struct QRLinkView: View {
     @EnvironmentObject var qrCode: QRCode
     
-    @State private var text: String = ""
-    
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            TextField("Enter URL", text: $text)
+            TextField("Enter URL", text: $qrCode.formStates[0])
                 .textFieldStyle(QRPopTextStyle())
             #if os(iOS)
                 .keyboardType(.URL)
@@ -22,14 +20,10 @@ struct QRLinkView: View {
                 .submitLabel(.done)
             #endif
                 .disableAutocorrection(true)
-                .onChange(of: text) { value in
-                    qrCode.setContent(string: value)
+                .onChange(of: qrCode.formStates) { _ in
+                    qrCode.setContent(string: qrCode.formStates[0])
                 }
-        }.onChange(of: qrCode.codeContent, perform: {value in
-            if (value.isEmpty) {
-                text = ""
-            }
-        })
+        }
     }
 }
 

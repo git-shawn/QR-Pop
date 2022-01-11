@@ -171,7 +171,7 @@ struct QRCodeDesigner: View {
                                 #endif
                                 .padding(.leading, 6)
                             }
-                        }
+                        }.animation(.interactiveSpring(), value: qrCode.overlayImage)
                         
                     }.padding(.horizontal, 20)
                     .onChange(of: [qrCode.backgroundColor, qrCode.foregroundColor], perform: {_ in

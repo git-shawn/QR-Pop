@@ -22,7 +22,7 @@ let QRViews: [QRGeneratorType] = [
     QRGeneratorType.init(id: 3, name: "Calendar Event", description: "Adds a calendar event when scanned.", icon: "calendar", destination: AnyView(QRCalendarView())),
     QRGeneratorType.init(id: 4, name: "Contact Card", description: "Adds a contact when scanned.", icon: "person.crop.square.filled.and.at.rectangle", destination: AnyView(QRContactView())),
     QRGeneratorType.init(id: 5, name: "Email", description: "Sends an email when scanned.", icon: "envelope", destination: AnyView(QRMailView())),
-    QRGeneratorType.init(id: 6, name: "Phone Number", description: "Begins a call when scanned.", icon: "phone", destination: AnyView(QRPhoneView())),
+    QRGeneratorType.init(id: 6, name: "Phone Number", description: "Begins a phone call when scanned.", icon: "phone", destination: AnyView(QRPhoneView())),
     QRGeneratorType.init(id: 7, name: "Text Message", description: "Initiates a text message when scanned.", icon: "text.bubble", destination: AnyView(QRSMSView())),
     QRGeneratorType.init(id: 8, name: "FaceTime", description: "Begins a FaceTime call when scanned.", icon: "video", destination: AnyView(QRFacetimeView())),
     QRGeneratorType.init(id: 9, name: "Twitter", description: "Opens Twitter when scanned.", icon: "at", destination: AnyView(QRTwitterView())),

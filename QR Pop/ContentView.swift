@@ -21,7 +21,6 @@ struct ContentView: View {
         #else
         NavigationView {
             Sidebar()
-            QRGeneratorView(generatorType: QRViews.first!)
         }
         #endif
     }

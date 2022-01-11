@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct Sidebar: View {
-    @State private var selection: Int? = nil
+    @State private var selection: Int? = 1
     #if os(iOS)
     @State private var showSettings: Bool = false
     #endif
-    @State private var isActive: Bool = true
     var body: some View {
         List {
             #if os(macOS)
@@ -40,15 +39,13 @@ struct Sidebar: View {
                 }
             }
             #else
-            NavigationLink(isActive: $isActive, destination: {
-                QRView()
-            }, label: {
+            NavigationLink(destination: QRView(), tag: 1, selection: $selection) {
                 Label("QR Code Generator", systemImage: "qrcode")
-            })
-            NavigationLink(destination: QRCameraView()) {
+            }
+            NavigationLink(destination: QRCameraView(), tag: 2, selection: $selection) {
                 Label("Duplicate QR Code", systemImage: "camera.on.rectangle")
             }
-            NavigationLink(destination: ExtensionGuideView()) {
+            NavigationLink(destination: ExtensionGuideView(), tag: 3, selection: $selection) {
                 Label("Enable Extensions", systemImage: "puzzlepiece.extension")
             }
             #endif
@@ -58,6 +55,11 @@ struct Sidebar: View {
         .listStyle(.sidebar)
         #if os(macOS)
         .frame(minWidth: 200, idealWidth: 250)
+        .onContinueUserActivity("shwndvs.QR-Pop.generator-selection", perform: { activity in
+            if let genId = activity.userInfo?["genId"] as? NSNumber {
+                selection = genId.intValue
+            }
+        })
         #endif
         .toolbar {
             #if os(macOS)

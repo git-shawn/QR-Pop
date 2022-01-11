@@ -20,7 +20,9 @@ struct DownloadIOSView: View {
     
     var body: some View {
         VStack {
-            qrCode.imgData.swiftImage
+            qrCode.imgData.swiftImage!
+                .resizable()
+                .aspectRatio(contentMode: .fit)
                 .padding(.bottom)
             Text("Scan to Download QR Pop for iOS")
                 .font(.headline)
