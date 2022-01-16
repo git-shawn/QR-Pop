@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct TabNavigationView: View {
-    @State private var tabSelection = 0
+    @EnvironmentObject private var navController: NavigationController
     
     var body: some View {
-        TabView(selection: $tabSelection) {
+        TabView(selection: $navController.activeRoute) {
             NavigationView {
                 QRView()
             }
-            .tag(0)
+            .tag(Routes.generator)
             .tabItem {
                 Image(systemName: "qrcode")
                 Text("Generator")
@@ -23,7 +23,7 @@ struct TabNavigationView: View {
             NavigationView {
                 QRCameraView()
             }
-            .tag(1)
+            .tag(Routes.duplicate)
             .tabItem {
                 Image(systemName: "camera.on.rectangle")
                 Text("Duplicate")
@@ -31,7 +31,7 @@ struct TabNavigationView: View {
             NavigationView {
                 ExtensionGuideView()
             }
-            .tag(2)
+            .tag(Routes.extensions)
             .tabItem {
                 Image(systemName: "puzzlepiece.extension")
                 Text("Extensions")
@@ -39,14 +39,12 @@ struct TabNavigationView: View {
             NavigationView {
                 SettingsView()
             }
-            .tag(3)
+            .tag(Routes.settings)
             .tabItem {
                 Image(systemName: "gearshape")
                 Text("Settings")
             }
-        }.onContinueUserActivity("shwndvs.QR-Pop.generator-selection", perform: {activity in
-            tabSelection = 0
-        })
+        }
     }
 }
 

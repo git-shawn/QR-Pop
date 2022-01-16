@@ -117,6 +117,7 @@ struct QRGeneratorView: View {
         .userActivity("shwndvs.QR-Pop.generator-selection") { activity in
             #if os(iOS)
             activity.isEligibleForSearch = true
+            activity.isEligibleForPrediction = true
             
             let attributes = CSSearchableItemAttributeSet(contentType: UTType.item)
             attributes.contentDescription = "Generate a QR Code"

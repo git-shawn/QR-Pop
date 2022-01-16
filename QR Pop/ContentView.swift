@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject private var navController: NavigationController
+    
     var body: some View {
         #if os(iOS)
         if (UIDevice.current.userInterfaceIdiom == .phone) {
@@ -17,6 +19,11 @@ struct ContentView: View {
                 Sidebar()
                 QRView()
             }
+            .onContinueUserActivity("shwndvs.QR-Pop.generator-selection", perform: { activity in
+                if let genId = activity.userInfo?["genId"] as? NSNumber {
+                    navController.open(generator: Int(truncating: genId))
+                }
+            })
         }
         #else
         NavigationView {

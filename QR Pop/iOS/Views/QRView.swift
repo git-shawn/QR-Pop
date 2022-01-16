@@ -16,14 +16,14 @@ struct QRView: View {
     ]
     
     @AppStorage("genViewList") var genViewList: Bool = false
-    @State private var selection: Int? = nil
+    @EnvironmentObject private var navController: NavigationController
     
     var body: some View {
         if(!genViewList) {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 30) {
                     ForEach(data) { view in
-                        NavigationLink(destination: QRGeneratorView(generatorType: view), tag: view.id, selection: $selection) {
+                        NavigationLink(destination: QRGeneratorView(generatorType: view), tag: view.id, selection: $navController.activeGenerator) {
                             GridItemContainer(label: "\(view.name)") {
                                 if (view.name == "Twitter") {
                                     Image("twitterLogo")
@@ -48,15 +48,10 @@ struct QRView: View {
                     })
                 })
             })
-            .onContinueUserActivity("shwndvs.QR-Pop.generator-selection", perform: {activity in
-                if let genId = activity.userInfo?["genId"] as? NSNumber {
-                    selection = genId.intValue
-                }
-            })
         } else {
             List {
                 ForEach(data) { view in
-                    NavigationLink(destination: QRGeneratorView(generatorType: view), tag: view.id, selection: $selection) {
+                    NavigationLink(destination: QRGeneratorView(generatorType: view), tag: view.id, selection: $navController.activeGenerator) {
                         Label(title: {
                             Text("\(view.name)")
                         }, icon: {
@@ -72,11 +67,6 @@ struct QRView: View {
                     }.help(view.description)
                 }
             }.navigationTitle("QR Generator")
-            .onContinueUserActivity("shwndvs.QR-Pop.generator-selection", perform: {activity in
-                if let genId = activity.userInfo?["genId"] as? NSNumber {
-                    selection = genId.intValue
-                }
-            })
             .toolbar(content: {
                 ToolbarItem(content: {
                     Button(action: {

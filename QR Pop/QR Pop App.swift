@@ -52,22 +52,38 @@ struct QR_PopApp: App {
     }
     #endif
     
+    @StateObject var navController = NavigationController()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(navController)
                 .onAppear(perform: {
                     StoreManager.shared.startObserving()
                 })
                 .onDisappear(perform: {
                     StoreManager.shared.stopObserving()
                 })
+                .onOpenURL(perform: {url in
+                    URLManager().handle(url: url, nav: navController)
+                })
+                .onContinueUserActivity("shwndvs.QR-Pop.generator-selection", perform: { activity in
+                    if let genId = activity.userInfo?["genId"] as? NSNumber {
+                        navController.open(generator: Int(truncating: genId))
+                    }
+                })
             #if os(iOS)
+                .onContinueUserActivity("shwndvs.QR-Pop.route-selection", perform: { activity in
+                    if let route = activity.userInfo?["route"] as? String {
+                        if route == "duplicate" {
+                            navController.open(route: .duplicate)
+                        }
+                    }
+                })
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
             #endif
         }
         #if os(macOS)
         .windowToolbarStyle(.unified)
-        .handlesExternalEvents(matching: ["*"])
         .commands {
             SidebarCommands()
             CommandGroup(replacing: .appInfo) {
@@ -79,6 +95,8 @@ struct QR_PopApp: App {
                         hidesToolbarForSingleItem: true
                     ).show()
                 }
+            }
+            CommandGroup(replacing: CommandGroupPlacement.newItem) {
             }
             CommandGroup(replacing: .help) {
                 NavigationLink(destination: HelpBook()) {

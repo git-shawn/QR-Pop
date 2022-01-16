@@ -81,7 +81,9 @@ struct GetWifiButton: View {
             print(wifiPassword)
             
             //Generate code from SSID and Password
-            qrCode.setContent(string: "WIFI:T:\(authMethod);S:\(ssidString);P:\(wifiPassword);;")
+            qrCode.formStates[0] = authMethod
+            qrCode.formStates[1] = ssidString
+            qrCode.formStates[2] = wifiPassword
         }
     }
     

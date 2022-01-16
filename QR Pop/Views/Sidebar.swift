@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct Sidebar: View {
-    @State private var selection: Int? = 1
+    @EnvironmentObject private var navController: NavigationController
+    
     #if os(iOS)
     @State private var showSettings: Bool = false
     #endif
@@ -17,7 +18,7 @@ struct Sidebar: View {
             #if os(macOS)
             Section("QR Code Generators") {
                 ForEach(QRViews) { view in
-                    NavigationLink(destination: QRGeneratorView(generatorType: view), tag: view.id, selection: $selection) {
+                    NavigationLink(destination: QRGeneratorView(generatorType: view), tag: view.id, selection: $navController.activeGenerator) {
                         Label(title: {
                             Text("\(view.name)")
                         }, icon: {
@@ -34,18 +35,21 @@ struct Sidebar: View {
                 }
             }
             Section("More") {
-                NavigationLink(destination: ExtensionGuideView()) {
+                NavigationLink(destination: ExtensionGuideView(), tag: Routes.extensions, selection: $navController.activeRoute) {
                     Label("Enable Extensions", systemImage: "puzzlepiece.extension")
+                }
+                NavigationLink(destination: QRCameraView(), tag: Routes.duplicate, selection: $navController.activeRoute) {
+                    Label("Duplicate QR Code", systemImage: "camera.on.rectangle")
                 }
             }
             #else
-            NavigationLink(destination: QRView(), tag: 1, selection: $selection) {
+            NavigationLink(destination: QRView(), tag: Routes.generator, selection: $navController.activeRoute) {
                 Label("QR Code Generator", systemImage: "qrcode")
             }
-            NavigationLink(destination: QRCameraView(), tag: 2, selection: $selection) {
+            NavigationLink(destination: QRCameraView(), tag: Routes.duplicate, selection: $navController.activeRoute) {
                 Label("Duplicate QR Code", systemImage: "camera.on.rectangle")
             }
-            NavigationLink(destination: ExtensionGuideView(), tag: 3, selection: $selection) {
+            NavigationLink(destination: ExtensionGuideView(), tag: Routes.extensions, selection: $navController.activeRoute) {
                 Label("Enable Extensions", systemImage: "puzzlepiece.extension")
             }
             #endif
@@ -55,11 +59,6 @@ struct Sidebar: View {
         .listStyle(.sidebar)
         #if os(macOS)
         .frame(minWidth: 200, idealWidth: 250)
-        .onContinueUserActivity("shwndvs.QR-Pop.generator-selection", perform: { activity in
-            if let genId = activity.userInfo?["genId"] as? NSNumber {
-                selection = genId.intValue
-            }
-        })
         #endif
         .toolbar {
             #if os(macOS)

@@ -7,13 +7,13 @@
 
 import SwiftUI
 import CodeScanner
+import UniformTypeIdentifiers
+import CoreSpotlight
+import Intents
 import AVFoundation
 
 struct QRCameraView: View {
     @StateObject var qrCode = QRCode()
-    #if os(macOS)
-    @State private var showDesignPopover: Bool = false
-    #endif
     
     //Unique variables for link
     @State private var scanContent: String = ""
@@ -127,6 +127,19 @@ struct QRCameraView: View {
         .alert(isPresented: $noCodeFound, content: {
             Alert(title: Text("No Code Found in Image"))
         })
+        .userActivity("shwndvs.QR-Pop.route-selection") { activity in
+            activity.isEligibleForSearch = true
+            activity.isEligibleForPrediction = true
+            activity.isEligibleForHandoff = false
+            
+            let attributes = CSSearchableItemAttributeSet(contentType: UTType.item)
+            attributes.contentDescription = "Copy a QR code using the camera."
+            activity.contentAttributeSet = attributes
+            activity.title = "Duplicate QR Code"
+            
+            activity.userInfo = ["route": "duplicate"]
+            activity.becomeCurrent()
+        }
         .sheet(isPresented: $showHelp, content: {
             ScannerHelpModal(isPresented: $showHelp)
         })
@@ -162,15 +175,17 @@ struct QRCameraView: View {
                     }
                     ShareButton(shareContent: [qrCode.imgData.image], buttonTitle: "Share")
                 } else {
-                    Button(
-                    action: {
-                        flashOn.toggle()
-                        toggleTorch(on: flashOn)
-                    }) {
-                        if flashOn {
-                            Label("Turn Off Flash", systemImage: "lightbulb.slash")
-                        } else {
-                            Label("Turn On Flash", systemImage: "lightbulb")
+                    if (AVCaptureDevice.default(for: AVMediaType.video)!.hasTorch) {
+                        Button(
+                        action: {
+                            flashOn.toggle()
+                            toggleTorch(on: flashOn)
+                        }) {
+                            if flashOn {
+                                Label("Turn Off Flash", systemImage: "lightbulb.slash")
+                            } else {
+                                Label("Turn On Flash", systemImage: "lightbulb")
+                            }
                         }
                     }
                 }

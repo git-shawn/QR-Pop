@@ -20,7 +20,7 @@ extension View {
         
         let activityVC = UIActivityViewController(
         activityItems: activityItems,
-        applicationActivities: [PrintActivity()])
+        applicationActivities: [PrintActivity(), WidgetActivity()])
         activityVC.excludedActivityTypes = [UIActivity.ActivityType.print, UIActivity.ActivityType.assignToContact]
         
         //Present a popover view in the center of the screen for an iPad.

@@ -178,6 +178,13 @@ extension StoreManager: SKPaymentTransactionObserver {
     }
 }
 
+// Support tipping directly from the App Store.
+extension StoreManager {
+    func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
+        return true
+    }
+}
+
 /// Store products in a database of all products. This can be programatically fed into a list, but for QR Pop's purposes there's only one product.
 /// We'll always reference it as the only object in the array.
 final class productsDB: ObservableObject, Identifiable {
@@ -191,4 +198,3 @@ final class productsDB: ObservableObject, Identifiable {
         }
     }
 }
-
