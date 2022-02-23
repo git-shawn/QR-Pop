@@ -17,7 +17,7 @@ class WidgetActivity: UIActivity {
     }
     
     override var activityImage: UIImage?{
-        return UIImage(systemName: "rectangle.badge.plus")
+        return UIImage(named: "addWidget")
     }
  
     override var activityType: UIActivity.ActivityType{

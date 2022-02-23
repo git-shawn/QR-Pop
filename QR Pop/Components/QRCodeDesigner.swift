@@ -178,7 +178,7 @@ struct QRCodeDesigner: View {
                         qrCode.generate()
                         evaluateContrast()
                     }).padding(.bottom)
-                }.transition(.moveAndFade)
+                }.transition(.moveAndFadeToTop)
             }
         }.padding(5)
         .background(.thickMaterial)
@@ -207,10 +207,17 @@ struct QRCodeDesigner: View {
 }
 
 extension AnyTransition {
-    static var moveAndFade: AnyTransition {
+    static var moveAndFadeToTop: AnyTransition {
         .asymmetric(
             insertion: .move(edge: .top).combined(with: .opacity.animation(.easeIn(duration: 0.65))),
             removal: .move(edge: .top).combined(with: .opacity.animation(.easeOut(duration: 0.1)))
+        )
+    }
+    
+    static var moveAndFadeToBottom: AnyTransition {
+        .asymmetric(
+            insertion: .move(edge: .bottom).combined(with: .opacity.animation(.easeIn(duration: 0.3))),
+            removal: .move(edge: .bottom).combined(with: .opacity.animation(.easeOut(duration: 0.3)))
         )
     }
 }

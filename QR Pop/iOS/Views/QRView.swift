@@ -10,6 +10,7 @@ import SwiftUI
 struct QRView: View {
     
     let data = QRViews
+    @State var query = ""
     
     let columns = [
         GridItem(.adaptive(minimum: 100))
@@ -22,7 +23,7 @@ struct QRView: View {
         if(!genViewList) {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 30) {
-                    ForEach(data) { view in
+                    ForEach(data.filter{ return query.isEmpty ? true : $0.name.lowercased().contains(query.lowercased())}) { view in
                         NavigationLink(destination: QRGeneratorView(generatorType: view), tag: view.id, selection: $navController.activeGenerator) {
                             GridItemContainer(label: "\(view.name)") {
                                 if (view.name == "Twitter") {
@@ -38,7 +39,8 @@ struct QRView: View {
                         }
                     }
                 }.padding()
-            }.navigationTitle("QR Generator")
+            }.navigationTitle("Create")
+            .searchable(text: $query)
             .toolbar(content: {
                 ToolbarItem(content: {
                     Button(action: {
@@ -50,7 +52,7 @@ struct QRView: View {
             })
         } else {
             List {
-                ForEach(data) { view in
+                ForEach(data.filter{ return query.isEmpty ? true : $0.name.lowercased().contains(query.lowercased())}) { view in
                     NavigationLink(destination: QRGeneratorView(generatorType: view), tag: view.id, selection: $navController.activeGenerator) {
                         Label(title: {
                             Text("\(view.name)")
@@ -66,7 +68,8 @@ struct QRView: View {
                         })
                     }.help(view.description)
                 }
-            }.navigationTitle("QR Generator")
+            }.navigationTitle("Create")
+            .searchable(text: $query)
             .toolbar(content: {
                 ToolbarItem(content: {
                     Button(action: {
@@ -93,12 +96,13 @@ private struct GridItemContainer <Content: View> : View {
         VStack(alignment: .center, spacing: 10) {
             VStack(alignment: .center) {
                 content
-            }.frame(width: 50, height: 50)
+            }.frame(width: 60, height: 60)
             .buttonStyle(PlainButtonStyle())
             .padding()
             .background(
-                .ultraThickMaterial
+                .regularMaterial
             )
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color(uiColor: UIColor.separator), lineWidth: 1))
             .cornerRadius(16)
             Text("\(label)")
                 .foregroundColor(.secondary)

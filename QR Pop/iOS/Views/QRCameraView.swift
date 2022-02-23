@@ -52,55 +52,77 @@ struct QRCameraView: View {
     }
     
     var body: some View {
-        ScrollView {
+        ZStack(alignment: .bottom) {
             if hasScanned {
-            QRImage()
-                .environmentObject(qrCode)
-                .padding()
-            
-            HStack {
-                Spacer()
-                Button(
-                action: {
-                    withAnimation() {
-                        hasScanned = false
+                ScrollView {
+                    QRImage()
+                        .environmentObject(qrCode)
+                        .padding()
+                    
+                    HStack {
+                        Spacer()
+                        Button(
+                        action: {
+                            withAnimation() {
+                                hasScanned = false
+                            }
+                            scanContent = ""
+                            flashOn = false
+                            toggleTorch(on: false)
+                            qrCode.reset()
+                        }) {
+                            Label("Scan Another Code", systemImage: "camera")
+                        }.buttonStyle(.bordered)
+                        Spacer()
                     }
-                    scanContent = ""
-                    flashOn = false
-                    toggleTorch(on: false)
-                    qrCode.reset()
-                }) {
-                    Label("Scan Another Code", systemImage: "camera")
-                }.buttonStyle(.bordered)
-                Spacer()
-            }
-                
-            #if os(iOS)
-            QRCodeDesigner()
-                .environmentObject(qrCode)
-                .padding(.horizontal)
-            #endif
+                        
+                    QRCodeDesigner()
+                        .environmentObject(qrCode)
+                        .padding(.horizontal)
+                }
             } else {
-                CodeScannerView(codeTypes: [.qr], scanMode: .once, showViewfinder: true, shouldVibrateOnSuccess: true, completion: self.handleScan)
-                    .frame(minWidth: 300, minHeight: 300, maxHeight: 600)
-                    .aspectRatio(7/5, contentMode: .fit)
-                    .cornerRadius(16)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .strokeBorder(Color.primary, lineWidth: 3)
-                    )
-                    .padding(20)
-                    .transition(.scale)
-                
-                Text("Scan a QR Code to Duplicate It")
-                    .font(.headline)
-                Button(
-                action: {
-                    showPicker = true
-                }) {
-                    Label("Duplicate Code from Gallery", systemImage: "photo.on.rectangle.angled")
-                }.buttonStyle(.bordered)
-                .padding()
+                CodeScannerView(codeTypes: [.qr], scanMode: .once, showViewfinder: false, shouldVibrateOnSuccess: true, completion: self.handleScan)
+                    .ignoresSafeArea()
+                    .transition(.moveAndFadeToTop)
+                if (AVCaptureDevice.default(for: AVMediaType.video)!.hasTorch) {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Spacer()
+                            Button(
+                            action: {
+                                flashOn.toggle()
+                                toggleTorch(on: flashOn)
+                            }) {
+                                Label("Toggle Flash", systemImage: flashOn ? "bolt.slash.circle.fill" : "bolt.circle.fill")
+                            }
+                            .padding()
+                            .labelStyle(.iconOnly)
+                            .symbolRenderingMode(.hierarchical)
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                        }
+                        Spacer()
+                    }
+                }
+                VStack(alignment: .leading) {
+                    Text("Duplicate")
+                        .font(.largeTitle)
+                        .bold()
+                        .padding()
+                    HStack {
+                        Spacer()
+                        Button(
+                        action: {
+                            showPicker = true
+                        }) {
+                            Label("Duplicate Code from Gallery", systemImage: "photo.on.rectangle.angled")
+                        }.buttonStyle(.bordered)
+                        .padding(.bottom)
+                        Spacer()
+                    }
+                }.background(.regularMaterial)
+                .transition(.moveAndFadeToBottom)
+                .navigationBarHidden(true)
                 .sheet(isPresented: $showPicker) {
                     ImagePicker(sourceType: .photoLibrary, onImagePicked: {image in
                         if let features = detectQRCode(image), !features.isEmpty{
@@ -166,29 +188,13 @@ struct QRCameraView: View {
                 }) {
                     Label("Help", systemImage: "questionmark.circle")
                 }
-                if hasScanned {
-                    Button(
-                    action: {
-                        showScannedData.toggle()
-                    }) {
-                        Label("Show Scanned Data", systemImage: "rectangle.and.text.magnifyingglass")
-                    }
-                    ShareButton(shareContent: [qrCode.imgData.image], buttonTitle: "Share")
-                } else {
-                    if (AVCaptureDevice.default(for: AVMediaType.video)!.hasTorch) {
-                        Button(
-                        action: {
-                            flashOn.toggle()
-                            toggleTorch(on: flashOn)
-                        }) {
-                            if flashOn {
-                                Label("Turn Off Flash", systemImage: "lightbulb.slash")
-                            } else {
-                                Label("Turn On Flash", systemImage: "lightbulb")
-                            }
-                        }
-                    }
+                Button(
+                action: {
+                    showScannedData.toggle()
+                }) {
+                    Label("Show Scanned Data", systemImage: "rectangle.and.text.magnifyingglass")
                 }
+                ShareButton(shareContent: [qrCode.imgData.image], buttonTitle: "Share")
             }
         })
     }

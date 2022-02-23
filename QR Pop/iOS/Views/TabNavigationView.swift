@@ -11,30 +11,22 @@ struct TabNavigationView: View {
     @EnvironmentObject private var navController: NavigationController
     
     var body: some View {
-        TabView(selection: $navController.activeRoute) {
+        TabView() {
             NavigationView {
                 QRView()
             }
             .tag(Routes.generator)
             .tabItem {
                 Image(systemName: "qrcode")
-                Text("Generator")
+                Text("Create")
             }
             NavigationView {
                 QRCameraView()
             }
             .tag(Routes.duplicate)
             .tabItem {
-                Image(systemName: "camera.on.rectangle")
+                Image(systemName: "qrcode.viewfinder")
                 Text("Duplicate")
-            }
-            NavigationView {
-                ExtensionGuideView()
-            }
-            .tag(Routes.extensions)
-            .tabItem {
-                Image(systemName: "puzzlepiece.extension")
-                Text("Extensions")
             }
             NavigationView {
                 SettingsView()

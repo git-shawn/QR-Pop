@@ -107,6 +107,9 @@ struct SettingsView: View {
                         })
                     }
                 }
+                NavigationLink(destination: ExtensionGuideView(), label: {
+                    Label("Enable App Extensions", systemImage: "puzzlepiece.extension")
+                })
                 HStack {
                     Button(action: {
                         guard let url = URL(string: UIApplication.openSettingsURLString) else {
