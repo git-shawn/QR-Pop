@@ -61,8 +61,12 @@ struct QRPopWidget: Widget {
 
 struct QRPopWidget_Previews: PreviewProvider {
     static var previews: some View {
-        WidgetEntryView(entry: WidgetEntry(date: Date()))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
+        Group {
+            WidgetEntryView(entry: WidgetEntry(date: Date()))
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+            WidgetEntryView(entry: WidgetEntry(date: Date()))
+                .previewContext(WidgetPreviewContext(family: .systemSmall))
+        }
     }
 }
 
