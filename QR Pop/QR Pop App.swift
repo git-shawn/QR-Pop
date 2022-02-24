@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 #if os(macOS)
 import Preferences
 #endif
@@ -50,6 +51,46 @@ struct QR_PopApp: App {
 
         return Preferences.PaneHostingController(pane: paneView)
     }
+    #else
+    @ObservedObject var externalDisplayContent = ExternalDisplayContent()
+    @State var additionalWindows: [UIWindow] = []
+    
+    private var screenDidConnectPublisher: AnyPublisher<UIScreen, Never> {
+            NotificationCenter.default
+                .publisher(for: UIScreen.didConnectNotification)
+                .compactMap { $0.object as? UIScreen }
+                .receive(on: RunLoop.main)
+                .eraseToAnyPublisher()
+        }
+
+    private var screenDidDisconnectPublisher: AnyPublisher<UIScreen, Never> {
+        NotificationCenter.default
+            .publisher(for: UIScreen.didDisconnectNotification)
+            .compactMap { $0.object as? UIScreen }
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
+    }
+    
+    private func screenDidConnect(_ screen: UIScreen) {
+        let window = UIWindow(frame: screen.bounds)
+
+        window.windowScene = UIApplication.shared.connectedScenes
+            .first { ($0 as? UIWindowScene)?.screen == screen }
+            as? UIWindowScene
+
+        let view = ExternalView()
+            .environmentObject(externalDisplayContent)
+        let controller = UIHostingController(rootView: view)
+        window.rootViewController = controller
+        window.isHidden = false
+        additionalWindows.append(window)
+        externalDisplayContent.isShowingOnExternalDisplay = true
+    }
+    
+    private func screenDidDisconnect(_ screen: UIScreen) {
+        additionalWindows.removeAll { $0.screen == screen }
+        externalDisplayContent.isShowingOnExternalDisplay = false
+    }
     #endif
     
     @StateObject var navController = NavigationController()
@@ -79,6 +120,15 @@ struct QR_PopApp: App {
                         }
                     }
                 })
+                .environmentObject(externalDisplayContent)
+                .onReceive(
+                    screenDidConnectPublisher,
+                    perform: screenDidConnect
+                )
+                .onReceive(
+                    screenDidDisconnectPublisher,
+                    perform: screenDidDisconnect
+                )
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
             #endif
         }

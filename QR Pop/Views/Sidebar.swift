@@ -39,18 +39,15 @@ struct Sidebar: View {
                     Label("Enable Extensions", systemImage: "puzzlepiece.extension")
                 }
                 NavigationLink(destination: QRCameraView(), tag: Routes.duplicate, selection: $navController.activeRoute) {
-                    Label("Duplicate QR Code", systemImage: "camera.on.rectangle")
+                    Label("Duplicate", systemImage: "qrcode.viewfinder")
                 }
             }
             #else
             NavigationLink(destination: QRView(), tag: Routes.generator, selection: $navController.activeRoute) {
-                Label("QR Code Generator", systemImage: "qrcode")
+                Label("Create", systemImage: "qrcode")
             }
             NavigationLink(destination: QRCameraView(), tag: Routes.duplicate, selection: $navController.activeRoute) {
-                Label("Duplicate QR Code", systemImage: "camera.on.rectangle")
-            }
-            NavigationLink(destination: ExtensionGuideView(), tag: Routes.extensions, selection: $navController.activeRoute) {
-                Label("Enable Extensions", systemImage: "puzzlepiece.extension")
+                Label("Duplicate", systemImage: "qrcode.viewfinder")
             }
             #endif
             

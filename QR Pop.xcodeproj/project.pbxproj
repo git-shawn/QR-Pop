@@ -192,6 +192,8 @@
 		29DC98D027752D9D00C4E0D1 /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 29DC98CF27752D9D00C4E0D1 /* EFQRCode */; };
 		29DC98D227752DB200C4E0D1 /* EFQRCode in Frameworks */ = {isa = PBXBuildFile; productRef = 29DC98D127752DB200C4E0D1 /* EFQRCode */; };
 		29E1369827441BF8004EA0CE /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29E1369727441BF8004EA0CE /* MainInterface.storyboard */; };
+		CDE56C4327C7D44E00E079B9 /* ExternalDisplayContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE56C4227C7D44E00E079B9 /* ExternalDisplayContent.swift */; };
+		CDE56C4527C7D52F00E079B9 /* ExternalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE56C4427C7D52F00E079B9 /* ExternalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -411,6 +413,8 @@
 		29CE5362274023030013DAC9 /* QRShortcutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRShortcutView.swift; sourceTree = "<group>"; };
 		29DC98CB2774FC0A00C4E0D1 /* QRCryptoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCryptoView.swift; sourceTree = "<group>"; };
 		29E1369727441BF8004EA0CE /* MainInterface.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		CDE56C4227C7D44E00E079B9 /* ExternalDisplayContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalDisplayContent.swift; sourceTree = "<group>"; };
+		CDE56C4427C7D52F00E079B9 /* ExternalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -726,6 +730,7 @@
 				294C1B882734C91B00835FDF /* ColorContrast.swift */,
 				297F20852794951E00776960 /* URLManager.swift */,
 				297F208A2794AA4400776960 /* NavigationController.swift */,
+				CDE56C4227C7D44E00E079B9 /* ExternalDisplayContent.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -750,6 +755,7 @@
 				29AB052A27319853009D4901 /* AltIconView.swift */,
 				29AB052D27319853009D4901 /* SettingsView.swift */,
 				29AB052C27319853009D4901 /* TabNavigationView.swift */,
+				CDE56C4427C7D52F00E079B9 /* ExternalView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1159,7 +1165,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				29B1988F2731E5440001909F /* Clipboard.swift in Sources */,
+				CDE56C4327C7D44E00E079B9 /* ExternalDisplayContent.swift in Sources */,
 				29AB0516273197CB009D4901 /* PrivacyPolicyView.swift in Sources */,
+				CDE56C4527C7D52F00E079B9 /* ExternalView.swift in Sources */,
 				29AB0521273197E6009D4901 /* StoreManager.swift in Sources */,
 				29AB05242731981F009D4901 /* ImageSlider.swift in Sources */,
 				294C1B4C2733611200835FDF /* QRMailView.swift in Sources */,

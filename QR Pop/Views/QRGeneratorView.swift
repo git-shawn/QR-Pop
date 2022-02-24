@@ -16,13 +16,14 @@ struct QRGeneratorView: View {
     @StateObject var qrCode = QRCode()
     
     var generatorType: QRGeneratorType
-    @State private var presentCode: Bool = false
     
     #if os(macOS)
     private let toolbarTrailingPlacement: ToolbarItemPlacement = .primaryAction
     #else
     private let toolbarTrailingPlacement: ToolbarItemPlacement = .navigationBarTrailing
+    
     let initialBrightness: CGFloat = UIScreen.main.brightness
+    @EnvironmentObject var externalDisplayContent: ExternalDisplayContent
     #endif
     
     var body: some View {
@@ -106,9 +107,6 @@ struct QRGeneratorView: View {
                         Label("Print Code", systemImage: "printer")
                     }
                     #endif
-                    Button(action: {presentCode = true}) {
-                        Label("Present Code", systemImage: "arrow.up.left.and.arrow.down.right")
-                    }
                 } label: {
                     Label("More...", systemImage: "ellipsis.circle")
                 }
@@ -129,87 +127,11 @@ struct QRGeneratorView: View {
             activity.userInfo = ["genId": generatorType.id]
             activity.becomeCurrent()
         }
-        #if os(macOS)
-        .touchBar() {
-            HStack {
-                Button(role: .destructive, action: qrCode.reset) {
-                    Label("Clear All", systemImage: "trash")
-                }.foregroundColor(.red)
-                Button(action: {presentCode = true}) {
-                    Label("Present Code", systemImage: "arrow.up.left.and.arrow.down.right")
-                }
-            }
-        }
+        #if os(iOS)
+        .onChange(of: qrCode.imgData, perform: {data in
+            externalDisplayContent.codeImage = data
+            externalDisplayContent.backgroundColor = qrCode.backgroundColor
+        })
         #endif
-        .sheet(isPresented: $presentCode) {
-            GeometryReader { geometry in
-                VStack(alignment: .center) {
-                    Spacer()
-                        qrCode.imgData.swiftImage!
-                            .resizable()
-                            .aspectRatio(1, contentMode: .fit)
-                            .cornerRadius(16)
-                        #if os(iOS)
-                            .frame(maxWidth: geometry.size.width-20, maxHeight: geometry.size.height-20, alignment: .center)
-                            .shadow(color: qrCode.foregroundColor.opacity(0.2), radius: 20, x: 0, y: 10)
-                            .padding(10)
-                        #else
-                            .frame(width: 650, height: 650, alignment: .center)
-                            .shadow(color: Color(.displayP3, red: 0, green: 0, blue: 0, opacity: 0.1), radius: 16, x: 0, y: 10)
-                            .onTapGesture {
-                                presentCode = false
-                            }
-                        #endif
-                    Spacer()
-                }
-                #if os(iOS)
-                .frame(width: geometry.size.width)
-                #else
-                .frame(width: 700, height: 700)
-                #endif
-            }
-            #if os(iOS)
-            .background(BackgroundClearView())
-                .ignoresSafeArea()
-            .onAppear(perform: {
-                UIScreen.main.brightness = CGFloat(1)
-            })
-            .onDisappear(perform: {
-                UIScreen.main.brightness = initialBrightness
-            })
-            #else
-            .frame(width: 700, height: 700)
-            .touchBar() {
-                Button(action: {presentCode = false}) {
-                    Label("Dimiss Code", systemImage: "arrow.down.right.and.arrow.up.left")
-                }
-            }
-            #endif
-        }
     }
 }
-
-#if os(iOS)
-struct BackgroundClearView: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView()
-        DispatchQueue.main.async {
-            view.superview?.superview?.backgroundColor = .clear
-        }
-        view.applyBlurEffect()
-        return view
-    }
-
-    func updateUIView(_ uiView: UIView, context: Context) {}
-}
-
-extension UIView {
-    func applyBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .systemMaterial)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        addSubview(blurEffectView)
-    }
-}
-#endif

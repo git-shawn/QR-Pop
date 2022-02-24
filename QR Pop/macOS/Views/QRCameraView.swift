@@ -31,11 +31,9 @@ struct QRCameraView: View {
     }
     
     var body: some View {
-        ScrollView {
-            HStack {
-                Spacer()
-                VStack {
-                    if hasScanned {
+        VStack {
+            if hasScanned {
+                ScrollView {
                     QRImage()
                         .environmentObject(qrCode)
                         .padding()
@@ -59,51 +57,62 @@ struct QRCameraView: View {
                         .environmentObject(qrCode)
                         .padding(.horizontal)
                         .frame(maxWidth: 450)
-                    } else {
+                }
+            } else {
+                GeometryReader { geometry in
+                    ZStack(alignment: .bottom) {
                         CodeScannerControllerRepresentable(completionHandler: self.handleScan)
-                            .frame(minWidth: 300, maxWidth: 500, minHeight: 300, maxHeight: 400)
-                            .aspectRatio(4/3, contentMode: .fit)
-                            .cornerRadius(16)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 16)
-                                    .strokeBorder(Color.primary, lineWidth: 2)
-                            )
-                            .padding(20)
-                            .transition(.scale)
-                        
-                        Text("Scan a QR Code to Duplicate It")
-                            .font(.headline)
-                        Button(
-                        action: {
-                            let panel = NSOpenPanel()
-                            panel.canChooseDirectories = false
-                            panel.canChooseFiles = true
-                            panel.allowsMultipleSelection = false
-                            panel.title = "Pick an Image to Scan"
-                            panel.allowedContentTypes = [UTType.png, UTType.jpeg]
-                            if panel.runModal() == .OK {
-                                let image = NSImage(byReferencing: panel.url!)
-                                let result = EFQRCode.recognize(image.cgImage(forProposedRect: nil, context: nil, hints: nil)!)
-                                if (!result.isEmpty) {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        qrCode.setContent(string: result.first!)
-                                        withAnimation() {
-                                            hasScanned = true
+                            .scaledToFill()
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .ignoresSafeArea()
+                        VStack(alignment: .center) {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Image(systemName: "viewfinder")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(maxWidth: geometry.size.width/2, maxHeight: geometry.size.height/2)
+                                    .foregroundColor(.white)
+                                    .opacity(0.7)
+                                Spacer()
+                            }
+                            Spacer()
+                            Spacer()
+                        }.transition(.scale)
+                        HStack {
+                            Spacer()
+                            Button(
+                            action: {
+                                let panel = NSOpenPanel()
+                                panel.canChooseDirectories = false
+                                panel.canChooseFiles = true
+                                panel.allowsMultipleSelection = false
+                                panel.title = "Pick an Image to Scan"
+                                panel.allowedContentTypes = [UTType.png, UTType.jpeg]
+                                if panel.runModal() == .OK {
+                                    let image = NSImage(byReferencing: panel.url!)
+                                    let result = EFQRCode.recognize(image.cgImage(forProposedRect: nil, context: nil, hints: nil)!)
+                                    if (!result.isEmpty) {
+                                            qrCode.setContent(string: result.first!)
+                                            withAnimation() {
+                                                hasScanned = true
+                                            }
+                                    } else {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                            noCodeFound = true
                                         }
                                     }
-                                } else {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                        noCodeFound = true
-                                    }
                                 }
-                            }
-                        }) {
-                            Label("Duplicate Code from Image", systemImage: "photo.on.rectangle.angled")
-                        }.buttonStyle(.bordered)
-                        .padding()
+                            }) {
+                                Label("Duplicate Code from Image", systemImage: "photo.on.rectangle.angled")
+                            }.buttonStyle(QRPopPlainButton())
+                            .padding()
+                            Spacer()
+                        }.background(.regularMaterial)
+                        .transition(.moveAndFadeToBottom)
                     }
                 }
-                Spacer()
             }
         }.navigationTitle("Duplicate")
         .alert(isPresented: $noCodeFound, content: {
