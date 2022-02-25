@@ -14,6 +14,8 @@ import Preferences
 @main
 struct QR_PopApp: App {
     #if os(macOS)
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     let appIdentifierPrefix =
         Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
     
