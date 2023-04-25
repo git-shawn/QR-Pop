@@ -34,6 +34,8 @@
 	<array>
 		<string>TimelineConfigurationIntent</string>
 	</array>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>TimelineConfigurationIntent</string>
