@@ -2,13 +2,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <title>QR Pop</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
     <p id="website-title">👋<br>Open a webpage to begin</p>
     <br>
-    <center><div id="qr-render"></div></center>
-    
+    <div id="qr-render" class="center""></div>
+    <div class="footer"">
+        <div class="spacer"></div>
+        <button id="openQRPopButton">Open in QR Pop</button>
+        <button id="optionsButton"/>
+    </div>
     <script src="qrcode.min.js"></script>
     <script src="popup.js"></script>
 </body>

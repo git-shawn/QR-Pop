@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>QR Pop Settings</title>
+        <script src="options.js"></script>
+        <style>
+            html {
+                background-color: #f2f2f7;
+                color: #2c2c2c;
+            }
+            body {
+                padding: 1em;
+                margin: 0 auto;
+                min-width: 250px;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+                "Helvetica Neue", sans-serif;
+            }
+            
+            p {
+                transition: all 0.2s ease-in-out;
+            }
+            
+            .formFooter {
+                font-family: -apple-system-footnote, BlinkMacSystemFont, sans-serif;
+                font-size: 12px;
+                opacity: 0.7;
+                padding: 8px;
+            }
+            
+            .colorPicker {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-color: transparent;
+                width: 32px;
+                height: 32px;
+                border: none;
+                border-radius: 100%;
+                cursor: pointer;
+                padding: 1px 3px;
+            }
+            
+            .colorPicker::-webkit-color-swatch {
+                border-radius: 100%;
+                padding: 0px;
+                border: none;
+            }
+            
+            .colorPicker::-moz-color-swatch {
+                border-radius: 100%;
+                border: none;
+            }
+            
+            .gradientBorder {
+                color: transparent;
+                display: inline-block;
+                position: relative;
+                z-index: 0;
+            }
+            
+            .gradientBorder:before {
+                content: "";
+                position: absolute;
+                z-index: -1;
+                inset: 0;
+                padding: 3px;
+                border-radius: 50%;
+                background: conic-gradient(
+                rgba(255, 0, 0, 1) 0%,
+                rgba(255, 154, 0, 1) 10%,
+                rgba(208, 222, 33, 1) 20%,
+                rgba(79, 220, 74, 1) 30%,
+                rgba(63, 218, 216, 1) 40%,
+                rgba(47, 201, 226, 1) 50%,
+                rgba(28, 127, 238, 1) 60%,
+                rgba(95, 21, 242, 1) 70%,
+                rgba(186, 12, 248, 1) 80%,
+                rgba(251, 7, 217, 1) 90%,
+                rgba(255, 0, 0, 1) 100%
+                );
+                -webkit-mask: linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+            }
+            
+            h1 {
+                font: -apple-system-title1;
+                font-size: 42px;
+                font-weight: 700;
+                margin: 0px;
+            }
+            
+            select {
+                background-color: transparent;
+                -webkit-appearance: none;
+                text-align-last: right;
+                border: none;
+                color: #2c2c2c;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+                "Helvetica Neue", sans-serif;
+                font-size: 16px;
+                opacity: 0.7;
+                padding-right: 25px;
+                background: transparent;
+                background-image: url(chevronupdown.svg);
+                background-size: 12px;
+                background-repeat: no-repeat;
+                background-position-x: 100%;
+                background-position-y: 2px;
+            }
+            
+            .formContainer {
+                background-color: #ffffff;
+                border-radius: 12px;
+                padding: 2px 12px;
+                margin-top: 8px;
+            }
+            
+            .formRow {
+                display: flex;
+                -webkit-flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+            
+            .extraTrailingPadding {
+                padding-right: 6px;
+            }
+            
+            .divider {
+                border-top: 1px solid #eaeaea;
+            }
+            
+            .form-switch {
+                display: inline-block;
+                cursor: pointer;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            .form-switch i {
+                position: relative;
+                display: inline-block;
+                margin-right: 0.5rem;
+                width: 46px;
+                height: 26px;
+                background-color: #e6e6e6;
+                border-radius: 23px;
+                vertical-align: text-bottom;
+                transition: all 0.3s linear;
+            }
+            
+            .form-switch i::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                width: 42px;
+                height: 22px;
+                border-radius: 11px;
+                transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1);
+                transition: all 0.25s linear;
+            }
+            
+            .form-switch i::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                width: 22px;
+                height: 22px;
+                background-color: #fff;
+                border-radius: 11px;
+                box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24);
+                transform: translate3d(2px, 2px, 0);
+                transition: all 0.2s ease-in-out;
+            }
+            
+            .form-switch:active i::after {
+                width: 28px;
+                transform: translate3d(2px, 2px, 0);
+            }
+            
+            .form-switch:active input:checked + i::after {
+                transform: translate3d(16px, 2px, 0);
+            }
+            
+            .form-switch input {
+                display: none;
+            }
+            
+            .form-switch input:checked + i {
+                background-color: #4bd763;
+            }
+            
+            .form-switch input:checked + i::before {
+                transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0);
+            }
+            
+            .form-switch input:checked + i::after {
+                transform: translate3d(22px, 2px, 0);
+            }
+            
+            @supports (-webkit-touch-callout: none) {
+                .colorPicker {
+                    padding: 2px;
+                }
+            }
+            
+            @media (prefers-color-scheme: dark) {
+                html {
+                    color: #fafafa;
+                    background-color: #000000;
+                }
+                select {
+                    color: #fafafa;
+                    background-image: url(chevronupdown-dark.svg);
+                }
+                .formContainer {
+                    background-color: #1c1c1e;
+                }
+                .divider {
+                    border-top: 1px solid #252527;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="form">
+            <h1>QR Pop Settings</h1>
+            <br />
+            <div class="formContainer">
+                <div class="formRow extraTrailingPadding">
+                    <p>QR Code Size</p>
+                    <select name="codeSizePicker" id="codeSizePicker">
+                        <option value="100">Extra Small</option>
+                        <option value="150">Small</option>
+                        <option value="200">Medium</option>
+                        <option value="250">Large</option>
+                        <option value="300">Extra Large</option>
+                    </select>
+                </div>
+                
+                <div class="formRow divider">
+                    <p>Show Webpage URL</p>
+                    <label class="form-switch">
+                        <input type="checkbox" id="showURL" />
+                        <i></i>
+                    </label>
+                </div>
+                
+                <div class="formRow divider extraTrailingPadding">
+                    <p>Background Color</p>
+                    <input
+                    type="color"
+                    class="colorPicker gradientBorder"
+                    id="bgColorPicker"
+                    name="bgColorPicker"
+                    value="#ffffff"
+                    />
+                </div>
+                
+                <div class="formRow divider extraTrailingPadding">
+                    <p>Foreground Color</p>
+                    <input
+                    type="color"
+                    class="colorPicker gradientBorder"
+                    id="fgColorPicker"
+                    name="fgColorPicker"
+                    value="#000000"
+                    />
+                </div>
+            </div>
+            <br />
+            <div class="formContainer">
+                <div class="formRow">
+                    <p>Remove UTM Codes</p>
+                    <label class="form-switch">
+                        <input type="checkbox" id="hideUTM" />
+                        <i></i>
+                    </label>
+                </div>
+            </div>
+            <div class="formFooter">
+                Websites may sometimes include extra information called "UTM parameters"
+                in their URL. QR Pop can attempt to remove these parameters to simplify
+                your code.
+            </div>
+        </div>
+    </body>
+</html>

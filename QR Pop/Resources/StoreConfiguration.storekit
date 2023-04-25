@@ -1,0 +1,35 @@
+{
+  "identifier" : "3BB170C6",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "1591244721",
+      "localizations" : [
+        {
+          "description" : "Show your support for QR Pop by leaving a tip",
+          "displayName" : "Buy Me a Coffee",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "QRTip1",
+      "referenceName" : "$1 Tip",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "1587360435",
+    "_developerTeamID" : "QK557BC776",
+    "_lastSynchronizedDate" : 701022121.28086996
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 2,
+    "minor" : 0
+  }
+}

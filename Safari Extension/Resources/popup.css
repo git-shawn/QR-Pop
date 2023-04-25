@@ -27,13 +27,68 @@ p {
     color: #1D1D1F;
 }
 
+.center {
+    display: block;
+    margin: 0 auto;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 6px;
+}
+
+.footer>.spacer {
+    width: 24px;
+}
+
 #website-title {
     text-align: center;
+}
+
+#optionsButton {
+    border: none;
+    background-color: transparent;
+    text-decoration: none;
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    background-color: #1D1D1F;
+    -webkit-mask-image: url(images/gearshape.svg);
+    mask-image: url(images/gearshape.svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+}
+
+#openQRPopButton {
+    display: none;
+    border: none;
+    border-radius: 1em;
+    background-color: #ffded0;
+    color: #FF7033;
+    font-family: system-ui;
+    font-size: 14px;
+    padding: 10px 24px;
+    cursor: pointer;
 }
 
 @media (prefers-color-scheme: dark) {
     
     p {
         color: #fff;
+    }
+    
+    #optionsButton {
+        background-color: #fff;
+    }
+
+    #openQRPopButton {
+        background-color: #6e2100;
+        color: #FF621F;
     }
 }

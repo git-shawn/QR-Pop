@@ -1,0 +1,66 @@
+//
+//  TextForm.swift
+//  QR Pop
+//
+//  Created by Shawn Davis on 9/25/22.
+//
+
+import SwiftUI
+
+struct TextForm: View {
+    @Binding var model: BuilderModel
+    
+    /// TextField focus information
+    private enum Field: Hashable {
+        case text
+    }
+    @FocusState private var focusedField: Field?
+    
+    @State private var writeFullScreen: Bool = false
+    
+    var body: some View {
+        ScrollViewReader { proxy in
+            VStack(spacing: 20) {
+                TextField("Message", text: $model.responses[0], axis: .vertical)
+                    .lineLimit(8, reservesSpace: true)
+                    .textFieldStyle(FormTextFieldStyle())
+                    .focused($focusedField, equals: .text)
+                    .limitInputLength(value: $model.responses[0], length: 1500)
+                    .submitLabel(.return)
+                    .textEditor("Plain Text", text: $model.responses[0], isPresented: $writeFullScreen)
+                    .id(Field.text)
+            }
+            .onChange(of: model.responses, debounce: 1) {val in
+                model.result = model.responses[0]
+            }
+#if os(iOS)
+            .onChange(of: focusedField) { field in
+                if field == .text {
+                    withAnimation {
+                        proxy.scrollTo(Field.text, anchor: .center)
+                    }
+                }
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .keyboard, content: {
+                    if focusedField == .text {
+                        Button(action: {
+                            writeFullScreen.toggle()
+                        }, label: {
+                            Label("Make Textfield Fullscreen", systemImage: "arrow.up.backward.and.arrow.down.forward.circle")
+                        })
+                    }
+                    Spacer()
+                    Button("Done", action: {focusedField = nil})
+                })
+            }
+#endif
+        }
+    }
+}
+
+struct TextForm_Previews: PreviewProvider {
+    static var previews: some View {
+        TextForm(model: .constant(BuilderModel(for: .text)))
+    }
+}

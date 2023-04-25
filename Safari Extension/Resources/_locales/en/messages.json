@@ -4,7 +4,7 @@
         "description": "The display name for the extension."
     },
     "extension_description": {
-        "message": "Quickly display a QR code for the website you are viewing.",
+        "message": "Quickly create a QR code for whatever webpage you're visiting.",
         "description": "Description of what the extension does."
     }
 }

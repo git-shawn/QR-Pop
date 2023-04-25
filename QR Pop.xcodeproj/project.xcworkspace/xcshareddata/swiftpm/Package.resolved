@@ -1,52 +1,41 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "AlertToast",
-        "repositoryURL": "https://github.com/elai950/AlertToast.git",
-        "state": {
-          "branch": "master",
-          "revision": "60dbc124480f7f4f3989c8fa9e228b0a81e841b1",
-          "version": null
-        }
-      },
-      {
-        "package": "CodeScanner",
-        "repositoryURL": "https://github.com/twostraws/CodeScanner",
-        "state": {
-          "branch": null,
-          "revision": "d954f02dc06efe7adf24b8f62e39819235f9898c",
-          "version": "2.0.0"
-        }
-      },
-      {
-        "package": "EFQRCode",
-        "repositoryURL": "https://github.com/EFPrefix/EFQRCode.git",
-        "state": {
-          "branch": null,
-          "revision": "56278ea800d7fdc20f42cd77bdbf0fecc8c1c0c8",
-          "version": "6.2.0"
-        }
-      },
-      {
-        "package": "Preferences",
-        "repositoryURL": "https://github.com/sindresorhus/Preferences",
-        "state": {
-          "branch": "main",
-          "revision": "ffeaaad1def45d0625720dc1adae3789cd9c167d",
-          "version": null
-        }
-      },
-      {
-        "package": "swift_qrcodejs",
-        "repositoryURL": "https://github.com/ApolloZhu/swift_qrcodejs.git",
-        "state": {
-          "branch": null,
-          "revision": "374dc7f7b9e76c6aeb393f6a84590c6d387e1ecb",
-          "version": "2.2.2"
-        }
+  "pins" : [
+    {
+      "identity" : "connections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftUI-Plus/Connections",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c305864791a8987e43d2da69996f1bb9fb14b97b"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "pagertabstripview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/xmartlabs/PagerTabStripView",
+      "state" : {
+        "revision" : "39ec00d2577adf75d82d1c7023c56950b96d2298",
+        "version" : "4.0.0"
+      }
+    },
+    {
+      "identity" : "qrcode",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dagronf/QRCode",
+      "state" : {
+        "branch" : "main",
+        "revision" : "afdd9190b25b3b6a9abc74c8824aec13f6a02357"
+      }
+    },
+    {
+      "identity" : "swift-qrcode-generator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dagronf/swift-qrcode-generator",
+      "state" : {
+        "revision" : "5ca09b6a2ad190f94aa3d6ddef45b187f8c0343b",
+        "version" : "1.0.3"
+      }
+    }
+  ],
+  "version" : 2
 }

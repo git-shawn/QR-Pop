@@ -1,23 +1,41 @@
-# QR Pop 💥
+![HeroImage](GitHubResources/QRPopHero.png)
 
-QR Pop is a simple iOS & MacOS app and Safari extension built to make displaying QR codes easy. The Safari Extension is inspired by the quick QR Code feature in Google Chrome, and built using [qrcodejs](https://github.com/davidshimjs/qrcodejs). QR Pop extends the Share Sheet/Share Menu on iOS and macOS to allow users to generate QR codes from most apps that share URLs as well. The app itself can generate QR codes for wifi networks, contacts, links, and more from a user's input.
+# QR Pop 
+![ios](https://img.shields.io/badge/iOS-16.1-green)
+![mac](https://img.shields.io/badge/macOS-13.1-green)
+![watch](https://img.shields.io/badge/watchOS-9.1-green)
 
-[**Download Here!**](https://apps.apple.com/us/app/qr-pop/id1587360435?mt=12)
+QR Pop is a clean, convenient, and privacy-first QR code generator for macOS and iOS. 
+
+It is built primarily using **Swift UI** and utilizes a variety of system extensions to allow for the creation of QR codes in Safari, the Share Sheet, and the app itself.
+
+QR Pop can generate codes for URLs, Wi-Fi Networks, Calendar Events, Contacts, Locations, and more. Codes can be exported as images or saved to CoreData/iCloud.
+
+[Download Here](https://apps.apple.com/us/app/qr-pop/id1587360435?mt=12)
 
 ## Privacy 🕵️
+QR Pop contains no logging or analytics packages and, in fact, does not perform any network requests at all. That being said, QR Pop does utilize CloudKit alongside CoreData. iCloud usage is optional and is subject to [Apple's Privacy Policy](https://www.apple.com/legal/privacy/en-ww/).
 
-Safari extensions require user permission to access website data, and for good reason. The QR pop app reads the URL of every website a user visits, so that it can generate QR codes when called on. Likewise, the app may request information as well that you wuoldn't like to share (like your wifi password to generate a qr code for your network).
+Likewise, the QR Pop Safari Extension does not contain a content script and does not read the content of any webpages. Like the main application, the QR Pop Safari Extension does not interface with any external servers and instead creates all codes on-device.
 
-The code is posted here in the interest of total transparency. All QR code processing happens on-device, so information like those URLs never leave the extension. There are also no trackers, loggers, etc. in the app.
+## Building this project 🛠️
+1. Clone the Repo
+2. Update the signing `Team` for each target.
+3. Build
 
-[**Privacy Policy**](https://fromshawn.dev/qrpop.html#privacy)
+QR Pop uses the Swift Package Manager, so building is fairly straight forward.
 
-## How it Works ⚙️
+## Features & Bugs 🐞
+If you have an idea for a new feature, or have run into a bug, please file an Issue. Feature requests should be marked with `enhancement` while bugs should be marked with `bug`.
 
-In Safari, QR Pop simply requests the URL from the page via JavaScript and then generates a QR code of that URL using [qrcodejs](https://github.com/davidshimjs/qrcodejs).
+For bugs, please include detailed instructions to reproduce the issue.
 
-In the Share Sheet/Share Menu, QR Pop accepts a URL (either in Swift's URL format or as a String) and generates a QR code using CoreImage. The app itself also allows for QR code generation using CoreImage. In the app, the user can customize the QR code by selecting a foreground and background.
+Not all requested features will be added, but I do hope all reported bugs can be squashed.
 
-## License
+## Acknowledgments 🤝
+- QR Pop uses [QRCode](https://github.com/dagronf/QRCode) library to generate and stylize codes in the main application and some extensions.
+- QR Pop uses [QRCode.js](https://github.com/davidshimjs/qrcodejs) to generate codes in the Safari Extension.
+- Other packages used:
+	- [Connections](https://github.com/SwiftUI-Plus/Connections)
+	- [PagerTabStripView](https://github.com/xmartlabs/PagerTabStripView)
 
-QR Pop is licensed under GPL-3.0. If you use any of the ideas in here, I'd love to see them!

@@ -1,8 +1,13 @@
-window.addEventListener("DOMContentLoaded", (event) => {
-    
+const optionsButton = document.getElementById("optionsButton");
+
+window.onload = function() {
+    optionsButton.addEventListener("click", openOptions);
+
     function handleResponse(message) {
+        console.log(message)
         let info = message.response;
         var url = info.url
+        let codeSize = parseInt(info.codeSize)+40
         
         if(info.hostname && info.url){
             
@@ -20,11 +25,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
             
             // Set the QR Code to be the user's desired with.
             // The body should be 40px larger than the code, 20 on each side.
-            document.body.style.width = ((info.codeSize+40) + "px")
+            if (codeSize > 150) {
+                document.body.style.width = ((codeSize) + "px")
+            } else {
+                document.body.style.minWidth = ("150px")
+            }
             new QRCode(document.getElementById("qr-render"), {
-                text: url,
-                width: info.codeSize,
-                height: info.codeSize,
+            text: url,
+            width: info.codeSize,
+            height: info.codeSize,
                 colorDark : info.fgColor,
                 colorLight : info.bgColor,
                 correctLevel : QRCode.CorrectLevel.L
@@ -33,16 +42,24 @@ window.addEventListener("DOMContentLoaded", (event) => {
             // Match the QR Code's padding and border to the user's chosen colors.
             document.getElementById("qr-render").getElementsByTagName("img")[0].style.backgroundColor=info.bgColor;
             document.getElementById("qr-render").getElementsByTagName("img")[0].style.borderColor=info.fgColor;
+
+            // Display and set the "Open in QR Pop Button"
+            document.getElementById("openQRPopButton").onclick = function() { window.open("qrpop:///buildlink/?"+encodeURIComponent(url)) };
+            document.getElementById("openQRPopButton").style.display = "inline-block";
         }
     }
-
+    
     function handleError(error) {
         console.log(`Error: ${error}`);
     }
-
+    
     // Request website information and user preferences from content.js
     browser.tabs.query({active: true, currentWindow: true}, function (tabs) {
         var sending = browser.tabs.sendMessage(tabs[0].id, { type: "getWebInfo" });
         sending.then(handleResponse, handleError);
     });
-});
+}
+
+function openOptions() {
+    browser.runtime.openOptionsPage();
+}

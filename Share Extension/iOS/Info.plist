@@ -6,26 +6,28 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
-			<key>NSExtensionActivationRule</key>
-			<dict>
-				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-				<integer>1</integer>
-			</dict>
-			<key>NSExtensionServiceAllowsFinderPreviewItem</key>
-			<false/>
-			<key>NSExtensionServiceAllowsTouchBarItem</key>
-			<false/>
-			<key>NSExtensionServiceFinderPreviewIconName</key>
-			<string>NSActionTemplate</string>
-			<key>NSExtensionServiceTouchBarBezelColorName</key>
-			<string>TouchBarBezel</string>
-			<key>NSExtensionServiceTouchBarIconName</key>
-			<string>NSActionTemplate</string>
+            <key>NSExtensionActivationRule</key>
+            <string>SUBQUERY (
+                extensionItems,
+                $extensionItem,
+                SUBQUERY (
+                $extensionItem.attachments,
+                $attachment,
+                (
+                ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url"
+                || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.vcard"
+                || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.text"
+                || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image"
+                || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "shwndvs.QR-Pop.TemplateData"
+                )
+                ).@count == 1
+                ).@count == 1
+            </string>
 		</dict>
-		<key>NSExtensionMainStoryboard</key>
-		<string>MainInterface</string>
+        <key>NSExtensionPrincipalClass</key>
+        <string>$(PRODUCT_MODULE_NAME).ShareViewController</string>
 		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.ui-services</string>
+		<string>com.apple.share-services</string>
 	</dict>
 </dict>
 </plist>

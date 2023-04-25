@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>CFBundleIconFile</key>
-	<string>icon</string>
-	<key>NSExtension</key>
-	<dict>
-		<key>NSExtensionAttributes</key>
-		<dict>
-			<key>NSExtensionActivationRule</key>
-			<string>SUBQUERY (
-                extensionItems,
-                $extensionItem,
-                SUBQUERY (
-                $extensionItem.attachments,
-                $attachment,
-                (
-                ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url"
-                )
-                AND
-                (
-                NOT ( ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.file-url"
-                )
-                )
-                ).@count == 1
-                ).@count == 1
-            </string>
-		</dict>
-		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.share-services</string>
-		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).ShareViewController</string>
-	</dict>
-</dict>
+    <dict>
+        <key>CFBundleIconFile</key>
+        <string>icon</string>
+        <key>NSExtension</key>
+        <dict>
+            <key>NSExtensionAttributes</key>
+            <dict>
+                <key>NSExtensionActivationRule</key>
+                <string>SUBQUERY (
+                    extensionItems,
+                    $extensionItem,
+                    SUBQUERY (
+                    $extensionItem.attachments,
+                    $attachment,
+                    (
+                    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url"
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.vcard"
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.text"
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "shwndvs.QR-Pop.TemplateData"
+                    )
+                    ).@count == 1
+                    ).@count == 1
+                </string>
+            </dict>
+            <key>NSExtensionPointIdentifier</key>
+            <string>com.apple.share-services</string>
+            <key>NSExtensionPrincipalClass</key>
+            <string>$(PRODUCT_MODULE_NAME).ShareViewController</string>
+        </dict>
+    </dict>
 </plist>
