@@ -3126,7 +3126,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Safari-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.SafariExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3161,7 +3161,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Safari-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.SafariExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -3194,7 +3194,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Safari-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.SafariExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -3228,7 +3228,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Safari-Extension";
+				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.SafariExt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
