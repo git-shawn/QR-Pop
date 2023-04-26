@@ -19,6 +19,7 @@
                     ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url"
                     || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.vcard"
                     || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.text"
+                    || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image"
                     || ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "shwndvs.QR-Pop.TemplateData"
                     )
                     ).@count == 1

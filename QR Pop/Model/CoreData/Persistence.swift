@@ -25,13 +25,15 @@ class Persistence: ObservableObject {
     static let shared = Persistence()
 #endif
     
-    private let inMemory: Bool  // Disables writing anything to an actual store.
+    // Disables writing anything to an actual store.
+    private let inMemory: Bool
     
 #if canImport(CoreSpotlight)
     private(set) var spotlightIndexer: SpotlightDelegate?
 #endif
     
-    lazy var cloudAvailable: Bool = {
+    /// A Boolean that is true if iCloud is available on this device.
+    var cloudAvailable: Bool = {
         FileManager.default.ubiquityIdentityToken != nil
     }()
     
@@ -60,13 +62,7 @@ class Persistence: ObservableObject {
         description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
         description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         
-        Persistence.logger.notice("Is iCloud Available? \(self.cloudAvailable)")
-        
-        if cloudAvailable {
-            description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier:"iCloud.shwndvs.QR-Pop")
-        } else {
-            description.cloudKitContainerOptions = nil
-        }
+        description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier:"iCloud.shwndvs.QR-Pop")
         
         container.persistentStoreDescriptions = [description]
         container.viewContext.automaticallyMergesChangesFromParent = true
@@ -74,7 +70,7 @@ class Persistence: ObservableObject {
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                Persistence.logger.error("The container could not be loaded: \(error.localizedDescription)")
+                logger.error("The container could not be loaded: \(error.localizedDescription)")
                 debugPrint(error)
             }
         })
@@ -191,8 +187,7 @@ extension Persistence {
     /// - Returns: A `QREntity` matching the `id`.
     func getQREntityWithUUID(_ identifier: UUID?) throws -> QREntity {
         guard let identifier = identifier else {
-            debugPrint("Invalid UUID")
-            Persistence.logger.notice("A QREntity was requested using an invalid UUID.")
+            logger.notice("A QREntity was requested using an invalid UUID.")
             throw PersistenceError.invalidUUID
         }
         
@@ -201,7 +196,7 @@ extension Persistence {
         let items = try container.viewContext.fetch(request)
         
         guard let item = items.first else {
-            Persistence.logger.warning("No entity found with valid UUID.")
+            logger.warning("No QREntity was found with provided UUID.")
             throw PersistenceError.noEntityFound
         }
         return item
@@ -212,7 +207,7 @@ extension Persistence {
     /// - Returns: A `TemplateEntity` matching the `id`.
     func getTemplateEntityWithUUID(_ identifier: UUID?) throws -> TemplateEntity {
         guard let identifier = identifier else {
-            Persistence.logger.notice("A QREntity was requested using an invalid UUID.")
+            logger.notice("A TemplateEntity was requested using an invalid UUID.")
             throw PersistenceError.invalidUUID
         }
         
@@ -221,7 +216,7 @@ extension Persistence {
         let items = try container.viewContext.fetch(request)
         
         guard let item = items.first else {
-            Persistence.logger.warning("No entity found with valid UUID.")
+            logger.warning("No TemplateEntity was entity found with provided UUID.")
             throw PersistenceError.noEntityFound
         }
         return item
@@ -428,9 +423,6 @@ extension Persistence {
             }
         }
     }
-    
-    private static let logger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "persistence"
-    )
 }
+
+fileprivate let logger = Logger(subsystem: Constants.bundleIdentifier, category: "persistence")

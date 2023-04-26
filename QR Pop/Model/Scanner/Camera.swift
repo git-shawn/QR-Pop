@@ -6,7 +6,6 @@
 //
 //  Based on this tutorial by Apple
 //  https://developer.apple.com/tutorials/sample-apps/capturingphotos-camerapreview
-//
 
 import AVFoundation
 import OSLog
@@ -354,9 +353,7 @@ class Camera: NSObject {
     }
     
     @objc
-    func updateForDeviceOrientation() {
-        //TODO: Figure out if we need this for anything.
-    }
+    func updateForDeviceOrientation() { }
     
     private func videoOrientationFor(_ deviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation? {
         switch deviceOrientation {

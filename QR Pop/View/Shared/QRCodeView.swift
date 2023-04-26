@@ -104,7 +104,6 @@ extension QRCodeView {
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
             }
             .aspectRatio(1, contentMode: .fit)
-            .animation(.default, value: builder)
             .animation(.default, value: design)
             .contentShape(.dragPreview, RoundedRectangle(cornerRadius: cornerRadius))
 #if os(iOS)

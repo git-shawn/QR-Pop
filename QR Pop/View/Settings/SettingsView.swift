@@ -27,13 +27,11 @@ struct SettingsView: View {
                     LabeledContent("Syncing with iCloud", content: {
                         Image(systemName: "checkmark.icloud.fill")
                             .foregroundColor(.cyan)
-                            .symbolRenderingMode(.hierarchical)
                     })
                 } else {
                     LabeledContent("Not syncing with iCloud", content: {
                         Image(systemName: "xmark.icloud.fill")
                             .foregroundColor(.red)
-                            .symbolRenderingMode(.hierarchical)
                     })
                 }
             }, header: {

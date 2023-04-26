@@ -21,11 +21,6 @@ class CameraModel: ObservableObject {
         Task {
             await handleViewfinderStream()
         }
-//        camera.scanResult
-//            .publisher
-//            .sink(receiveValue: { [weak self] r in
-//                self?.codeScanResult = r
-//            } )
     }
     
     func handleViewfinderStream() async {

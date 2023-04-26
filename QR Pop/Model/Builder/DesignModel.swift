@@ -182,7 +182,7 @@ extension DesignModel {
         
         /// A user-facing String describing the eye shape.
         var title: String {
-            generator.title.uppercaseFirstLetter
+            generator.title.capitalized
         }
         
         /// The eye shape's `QRCodeEyeShapeGenerator` for use within the model.

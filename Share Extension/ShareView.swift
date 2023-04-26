@@ -36,6 +36,8 @@ struct ShareView: View {
                     imageView(content: content)
                 case .error:
                     invalidInputView
+                case .badScan:
+                    invalidImageView
                 }
             }
             .navigationTitle("QR Pop")
@@ -46,7 +48,7 @@ struct ShareView: View {
             .navigationBarTitleDisplayMode(.inline)
 #else
             .toolbar(.visible, for: .windowToolbar)
-            .frame(maxWidth: 500, maxHeight: 500)
+            .frame(maxWidth: 350, maxHeight: 400)
 #endif
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
@@ -72,119 +74,159 @@ extension ShareView {
     
     func handleInput() {
         guard let sharedItem = sharedItem,
-              let attachments = sharedItem.attachments
+              let attachments = sharedItem.attachments,
+              let attachment = attachments.first
         else {
+            logger.error("Unable to process shared item.")
             extensionItemType = .error
             return
         }
         
-        attachments.forEach { attachment in
-            
-            if attachment.hasItemConformingToTypeIdentifier(UTType.url.identifier) {
-                debugPrint("URL Shared")
-                _ = attachment.loadObject(ofClass: URL.self, completionHandler: { (url,_) in
-                    guard let url = url else {
+        logger.debug("\(attachment.registeredTypeIdentifiers)")
+        
+        // Contacts
+        if attachment.hasItemConformingToTypeIdentifier(UTType.vCard.identifier) {
+            attachment.loadItem(forTypeIdentifier: UTType.vCard.identifier) { (contact,_) in
+                if let contactData = contact as? Data, let vCardString = String(data: contactData, encoding: .utf8) {
+                    
+                    // Regex to detect PHOTO; followed by some text, a colon, and a BASE64 photo
+                    let photoRegex = Regex {
+                        "PHOTO;"
+                        let colon = CharacterClass(.anyOf(":"))
+                        OneOrMore(colon.inverted)
+                        ":"
+                        OneOrMore {
+                            Capture {
+                                CharacterClass(
+                                    .whitespace,
+                                    ("a"..."z"),
+                                    ("A"..."Z"),
+                                    ("0"..."9"),
+                                    .anyOf("+"),
+                                    .anyOf("/")
+                                )
+                            }
+                        }
+                        One(.newlineSequence)
+                    }
+                    
+                    // Parse the Contact's name and set
+                    let vCardCleaned = vCardString.replacing(photoRegex, with: "")
+                    if let vCardData = vCardCleaned.data(using: .utf8),
+                       let contacts = try? CNContactVCardSerialization.contacts(with: vCardData),
+                       let contact = contacts.first {
+                        extensionItemType = .contact(contact: contact, model: QRModel(design: DesignModel(), content: BuilderModel(text: vCardCleaned)))
+                    } else {
+                        logger.error("Shared contact could not be encoded.")
+                        extensionItemType = .error
+                    }
+                } else {
+                    logger.error("Shared contact could not be read.")
+                    extensionItemType = .error
+                }
+            }
+        }
+        
+        // Images
+        else if attachment.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
+            attachment.loadItem(forTypeIdentifier: UTType.image.identifier) { (imageItem,_) in
+                
+                if let fileURL = imageItem as? URL {
+                    guard fileURL.startAccessingSecurityScopedResource(),
+                          let imageData = try? Data(contentsOf: fileURL),
+                          let image = PlatformImage(data: imageData)
+                    else {
+                        logger.error("Shared image could not be accessed.")
                         extensionItemType = .error
                         return
                     }
                     
-                    // URL is an actual URL
-                    if !url.isFileURL && !url.absoluteString.isEmpty {
-                        extensionItemType = .url(url: url, model: QRModel(design: DesignModel(), content: BuilderModel(text: url.absoluteString)))
-                        
-                        // URL is a filepath referencing a `.QRPT` file
-                    } else if url.isFileURL && url.pathExtension.lowercased() == "qrpt" {
-                        guard url.startAccessingSecurityScopedResource(),
-                              let data = try? Data(contentsOf: url),
-                              let templateModel = try? TemplateModel(fromData: data)
-                        else {
-                            extensionItemType = .error
-                            return
-                        }
-                        url.stopAccessingSecurityScopedResource()
-                        extensionItemType = .template(model: templateModel)
-                        
-                    } else {
-                        extensionItemType = .error
+                    guard let scannedContentArray = QRCode.DetectQRCodes(in: image),
+                          let scannedContent = scannedContentArray.first,
+                          let contentString = scannedContent.messageString,
+                          !contentString.isEmpty
+                    else {
+                        logger.notice("Shared image could not be decoded. It may not have contained a QR code.")
+                        fileURL.stopAccessingSecurityScopedResource()
+                        extensionItemType = .badScan
                         return
                     }
-                })
-                
-            }
-            else if attachment.hasItemConformingToTypeIdentifier(UTType.vCard.identifier) {
-                debugPrint("Contact Shared")
-                attachment.loadItem(forTypeIdentifier: UTType.vCard.identifier) { (contact,_) in
-                    if let contactData = contact as? Data, let vCardString = String(data: contactData, encoding: .utf8) {
-                        
-                        // Regex to detect PHOTO; followed by some text, a colon, and a BASE64 photo
-                        let photoRegex = Regex {
-                            "PHOTO;"
-                            let colon = CharacterClass(.anyOf(":"))
-                            OneOrMore(colon.inverted)
-                            ":"
-                            OneOrMore {
-                                Capture {
-                                    CharacterClass(
-                                        .whitespace,
-                                        ("a"..."z"),
-                                        ("A"..."Z"),
-                                        ("0"..."9"),
-                                        .anyOf("+"),
-                                        .anyOf("/")
-                                    )
-                                }
-                            }
-                            One(.newlineSequence)
-                        }
-                        
-                        // Parse the Contact's name and set
-                        let vCardCleaned = vCardString.replacing(photoRegex, with: "")
-                        if let vCardData = vCardCleaned.data(using: .utf8),
-                           let contacts = try? CNContactVCardSerialization.contacts(with: vCardData),
-                           let contact = contacts.first {
-                            extensionItemType = .contact(contact: contact, model: QRModel(design: DesignModel(), content: BuilderModel(text: vCardCleaned)))
-                        } else {
-                            extensionItemType = .error
-                        }
-                    } else {
-                        extensionItemType = .error
-                    }
-                }
-                
-            }
-            else if attachment.hasItemConformingToTypeIdentifier(UTType.image.identifier) {
-                debugPrint("Image Shared")
-                attachment.loadItem(forTypeIdentifier: UTType.image.identifier) { (filePath,_) in
-                    guard let fileURL = filePath as? URL,
-                          fileURL.startAccessingSecurityScopedResource(),
-                          let imageData = try? Data(contentsOf: fileURL),
-                          let image = PlatformImage(data: imageData),
+                    
+                    fileURL.stopAccessingSecurityScopedResource()
+                    extensionItemType = .image(content: contentString)
+                    
+                } else if let fileData = imageItem as? Data {
+                    
+                    guard let image = PlatformImage(data: fileData),
                           let scannedContentArray = QRCode.DetectQRCodes(in: image),
                           let scannedContent = scannedContentArray.first,
                           let contentString = scannedContent.messageString,
                           !contentString.isEmpty
                     else {
+                        logger.notice("Shared image could not be decoded. It may not have contained a QR code.")
+                        extensionItemType = .badScan
+                        return
+                    }
+                    
+                    extensionItemType = .image(content: contentString)
+                    
+                } else {
+                    logger.error("Image was shared in an unpredictable way.")
+                    extensionItemType = .error
+                    return
+                }
+            }
+        }
+        
+        // URLs
+        else if attachment.canLoadObject(ofClass: URL.self) {
+            _ = attachment.loadObject(ofClass: URL.self, completionHandler: { (url,_) in
+                guard let url = url else {
+                    logger.error("Shared URL could not be read.")
+                    extensionItemType = .error
+                    return
+                }
+                
+                // URL is an actual URL
+                if !url.isFileURL && !url.absoluteString.isEmpty {
+                    extensionItemType = .url(url: url, model: QRModel(design: DesignModel(), content: BuilderModel(text: url.absoluteString)))
+                    
+                    // URL is a filepath referencing a `.QRPT` file
+                } else if url.isFileURL && url.pathExtension.lowercased() == "qrpt" {
+                    guard url.startAccessingSecurityScopedResource(),
+                          let data = try? Data(contentsOf: url),
+                          let templateModel = try? TemplateModel(fromData: data)
+                    else {
+                        logger.error("Shared Template could not be accessed.")
                         extensionItemType = .error
                         return
                     }
-                    fileURL.stopAccessingSecurityScopedResource()
-                    
-                    extensionItemType = .image(content: contentString)
+                    url.stopAccessingSecurityScopedResource()
+                    extensionItemType = .template(model: templateModel)
+
+                } else {
+                    logger.notice("Invalid URL passed to QR Pop Share Extension. Likely a file.")
+                    extensionItemType = .error
+                    return
+                }
+            })
+            
+        }
+        
+        // Text
+        else if attachment.hasItemConformingToTypeIdentifier(UTType.text.identifier) {
+            attachment.loadItem(forTypeIdentifier: UTType.text.identifier) { (string,_) in
+                if let string = string as? String, !string.isEmpty, let url = URL(string: string) {
+                    extensionItemType = .url(url: url, model: QRModel(design: DesignModel(), content: BuilderModel(text: url.absoluteString)))
+                } else {
+                    logger.warning("Shared String was not relevant.")
+                    extensionItemType = .error
                 }
             }
-            else if attachment.hasItemConformingToTypeIdentifier(UTType.text.identifier) {
-                debugPrint("Text Shared")
-                attachment.loadItem(forTypeIdentifier: UTType.text.identifier) { (string,_) in
-                    if let string = string as? String, !string.isEmpty, let url = URL(string: string) {
-                        extensionItemType = .url(url: url, model: QRModel(design: DesignModel(), content: BuilderModel(text: url.absoluteString)))
-                    } else {
-                        extensionItemType = .error
-                    }
-                }
-            }
-            else {
-                extensionItemType = .error
-            }
+        }
+        else {
+            logger.warning("Unexpected item shared: \(attachment.registeredTypeIdentifiers)")
+            extensionItemType = .error
         }
     }
 }
@@ -200,6 +242,7 @@ extension ShareView {
         case template(model: TemplateModel)
         case image(content: String)
         case error
+        case badScan
     }
 }
 
@@ -314,8 +357,7 @@ extension ShareView {
                         dismiss()
                     }
                 } catch let error {
-                    debugPrint(error)
-                    Logger(subsystem: Constants.bundleIdentifier, category: "share-extension").error("Could not save Template.")
+                    logger.error("Could not save Template: \(error.localizedDescription)")
                     toast = .error(note: "Could not save")
                 }
                 
@@ -365,13 +407,14 @@ extension ShareView {
                     ScrollView {
                         LazyVStack(alignment: .leading) {
                             Text(content)
+                                .textSelection(.enabled)
                         }
                         .frame(maxWidth: .infinity)
                     }
                 })
             }
 #if os(macOS)
-            .padding(40)
+            .padding()
 #endif
             Spacer()
             Button("Edit in QR Pop", action: {
@@ -403,6 +446,45 @@ extension ShareView {
     }
 }
 
+// MARK: - Invalid Scan View
+
+extension ShareView {
+    
+    var invalidImageView: some View {
+        
+        VStack {
+#if os(macOS)
+            Spacer()
+#endif
+            VStack(spacing: 20) {
+                Image(systemName: "rectangle.and.text.magnifyingglass")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(.secondary)
+                    .frame(width: 150)
+                Text("No QR Code Found in Image")
+                    .font(.title3)
+                    .foregroundColor(.secondary)
+            }
+#if os(macOS)
+            Spacer()
+            HStack(spacing: 20) {
+                Spacer()
+                Button("Cancel", action: dismiss)
+                    .buttonStyle(.bordered)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            .background(.quaternary, ignoresSafeAreaEdges: .all)
+#endif
+        }
+#if os(iOS)
+        .padding()
+#endif
+        
+    }
+}
+
 // MARK: - Invalid Input View
 
 extension ShareView {
@@ -417,7 +499,6 @@ extension ShareView {
                 Image(systemName: "square.and.arrow.up.trianglebadge.exclamationmark")
                     .resizable()
                     .scaledToFit()
-                    .symbolRenderingMode(.hierarchical)
                     .foregroundColor(.secondary)
                     .frame(width: 150)
                 Text("This Content is Not Supported")
@@ -464,3 +545,16 @@ extension ShareView {
         }
     }
 }
+
+// URL Extension
+
+extension URL {
+    
+    /// A Boolean that is true if the path extension is `.png`, `.jpg`, `.jpeg`, or `.gif`.
+    var isImageURL: Bool {
+        let imageExtensions = ["png", "jpg", "jpeg", "gif"]
+        return imageExtensions.contains(pathExtension.lowercased())
+    }
+}
+
+fileprivate let logger = Logger(subsystem: Constants.bundleIdentifier, category: "share-extension")

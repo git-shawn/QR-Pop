@@ -15,6 +15,7 @@ struct CodeDetailView: View {
     
     @State private var tabSelection: Int = 1
     @State private var showDeleteDialog: Bool = false
+    @State private var brightenCode: Bool = false
     @Environment(\.dismiss) var dismiss
     @Environment(\.managedObjectContext) var moc
     
@@ -78,6 +79,20 @@ struct CodeDetailView: View {
                     Label("Back to Menu", systemImage: "arrowshape.turn.up.backward")
                 })
                 
+                Button(action: {
+                    brightenCode.toggle()
+                }, label: {
+                    Label(title: {
+                        Text("Brighten Code")
+                    }, icon: {
+                        if brightenCode {
+                            Image(systemName: "lightbulb.slash")
+                        } else {
+                            Image(systemName: "lightbulb")
+                        }
+                    })
+                })
+                
                 ShareLink("Share Code", item: model, preview: SharePreview("\(title)", image: model))
                     .tint(.blue)
                 
@@ -105,28 +120,36 @@ struct CodeDetailView: View {
     
     var code: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: (15))
+            RoundedRectangle(cornerRadius: 10)
                 .fill(model.design.backgroundColor)
                 .zIndex(0)
+                .brightness(brightenCode ? 1 : 0)
             ZStack {
                 QRCodeShape(text: model.content.result)?
                     .components(.eyeOuter)
-                    .fill(model.design.eyeColor)
+                    .fill(brightenCode ? .black : model.design.eyeColor)
+                    .zIndex(0)
                 QRCodeShape(text: model.content.result)?
                     .components(.eyePupil)
-                    .fill(model.design.pupilColor)
+                    .fill(brightenCode ? .black : model.design.pupilColor)
+                    .zIndex(1)
                 QRCodeShape(text: model.content.result)?
                     .components(.onPixels)
-                    .fill(model.design.pixelColor)
+                    .fill(brightenCode ? .black : model.design.pixelColor)
+                    .zIndex(2)
             }
+            .zIndex(1)
+            .padding(10)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(model.design.backgroundColor, ignoresSafeAreaEdges: .all)
+        .aspectRatio(1, contentMode: .fit)
+        .padding(.top)
     }
 }
 
+#if targetEnvironment(simulator)
 struct CodeDetailView_Previews: PreviewProvider {
     static var previews: some View {
         CodeDetailView()
     }
 }
+#endif

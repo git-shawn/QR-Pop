@@ -117,6 +117,7 @@
 		CD53D66929F481EA004DAC9A /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03329ECC8DF00976328 /* Haptics.swift */; };
 		CD53D66A29F481FD004DAC9A /* FileDocument+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02E29ECC8DF00976328 /* FileDocument+QRPop.swift */; };
 		CD53D66B29F481FD004DAC9A /* FileDocument+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02E29ECC8DF00976328 /* FileDocument+QRPop.swift */; };
+		CD611F1B29F8C584008F6B4B /* QR Pop.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CD9DAB1329F45EFF008B3C1F /* QR Pop.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD788D9C29C381F8003B5965 /* PagerTabStripView in Frameworks */ = {isa = PBXBuildFile; productRef = CD788D9B29C381F8003B5965 /* PagerTabStripView */; };
 		CD788DB229C4C2D3003B5965 /* Connections in Frameworks */ = {isa = PBXBuildFile; productRef = CD788DB129C4C2D3003B5965 /* Connections */; };
 		CD788DE229C66597003B5965 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD788DE129C66597003B5965 /* StoreKit.framework */; };
@@ -414,6 +415,13 @@
 			remoteGlobalIDString = CD1FF4F429F378F9006E6832;
 			remoteInfo = "Widget MacExtension";
 		};
+		CD611F1C29F8C584008F6B4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD06302E29BCD64C007ECEC2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CD9DAB1229F45EFF008B3C1F;
+			remoteInfo = "QR Pop Watch App";
+		};
 		CD7A3FB829F396A900D23D54 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CD06302E29BCD64C007ECEC2 /* Project object */;
@@ -459,6 +467,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		CD611F1E29F8C584008F6B4B /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				CD611F1B29F8C584008F6B4B /* QR Pop.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CD6E427F29CAA79D008B9DAF /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -645,6 +664,7 @@
 		CDBAC31B29EF2AB900976328 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		CDBAC31C29EF2AB900976328 /* popup.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = popup.css; sourceTree = "<group>"; };
 		CDC324EA29F06D8100AE91AC /* chevronupdown.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chevronupdown.svg; sourceTree = "<group>"; };
+		CDC87A1D29F8CB0E007EFF73 /* QR-Pop-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "QR-Pop-Watch-App-Info.plist"; sourceTree = "<group>"; };
 		CDCFA8DD29D7E1E900452895 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
 		CDD5C72C29D8B38100AF1C37 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		CDFE670629F4DA7B0086BF7A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -791,6 +811,7 @@
 		CD06302D29BCD64C007ECEC2 = {
 			isa = PBXGroup;
 			children = (
+				CDC87A1D29F8CB0E007EFF73 /* QR-Pop-Watch-App-Info.plist */,
 				CD06303829BCD64C007ECEC2 /* QR Pop */,
 				CD9DAB1429F45EFF008B3C1F /* WatchOS */,
 				CDBAC1E429EF263400976328 /* Safari Extension */,
@@ -1312,6 +1333,7 @@
 				CD06303329BCD64C007ECEC2 /* Frameworks */,
 				CD06303429BCD64C007ECEC2 /* Resources */,
 				CD6E427F29CAA79D008B9DAF /* Embed Foundation Extensions */,
+				CD611F1E29F8C584008F6B4B /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
@@ -1327,6 +1349,7 @@
 				CD7A3FCA29F396B400D23D54 /* PBXTargetDependency */,
 				CD9DAAF529F45EE7008B3C1F /* PBXTargetDependency */,
 				CD9DAB0A29F45EF2008B3C1F /* PBXTargetDependency */,
+				CD611F1D29F8C584008F6B4B /* PBXTargetDependency */,
 			);
 			name = "QR Pop";
 			packageProductDependencies = (
@@ -2176,6 +2199,12 @@
 			target = CD1FF4F429F378F9006E6832 /* Widget Mac */;
 			targetProxy = CD1FF50229F378FA006E6832 /* PBXContainerItemProxy */;
 		};
+		CD611F1D29F8C584008F6B4B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = CD9DAB1229F45EFF008B3C1F /* QR Pop Watch App */;
+			targetProxy = CD611F1C29F8C584008F6B4B /* PBXContainerItemProxy */;
+		};
 		CD7A3FB929F396A900D23D54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			platformFilter = ios;
@@ -2228,7 +2257,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Quicklook Extension/Info.plist";
@@ -2259,7 +2288,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Quicklook Extension/Info.plist";
@@ -2292,7 +2321,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2324,7 +2353,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2473,7 +2502,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"QR Pop/Preview Content\"";
 				DEVELOPMENT_TEAM = QK557BC776;
@@ -2530,7 +2559,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"QR Pop/Preview Content\"";
 				DEVELOPMENT_TEAM = QK557BC776;
@@ -2582,7 +2611,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Thumbnail Extension/Info.plist";
@@ -2613,7 +2642,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Thumbnail Extension/Info.plist";
@@ -2648,7 +2677,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/iOS/Info.plist;
@@ -2682,7 +2711,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/iOS/Info.plist;
@@ -2717,7 +2746,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2751,7 +2780,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2783,7 +2812,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/iOS/IntentInfo.plist;
@@ -2815,7 +2844,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/iOS/IntentInfo.plist;
@@ -2848,7 +2877,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2880,7 +2909,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2912,7 +2941,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Share Extension/iOS/Info.plist";
@@ -2944,7 +2973,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Share Extension/iOS/Info.plist";
@@ -2978,7 +3007,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3011,7 +3040,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3042,11 +3071,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WatchOS/Resources/QR Pop Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "QR-Pop-Watch-App-Info.plist";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "shwndvs.QR-Pop";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -3074,11 +3104,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WatchOS/Resources/QR Pop Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "QR-Pop-Watch-App-Info.plist";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "shwndvs.QR-Pop";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -3108,7 +3139,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3143,7 +3174,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3177,7 +3208,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";
@@ -3211,7 +3242,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 100;
+				CURRENT_PROJECT_VERSION = 103;
 				DEVELOPMENT_TEAM = QK557BC776;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Safari Extension/iOS/Info.plist";

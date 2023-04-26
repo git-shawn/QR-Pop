@@ -16,6 +16,11 @@ struct QRPopWatchApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistence.container.viewContext)
                 .defaultAppStorage(.appGroup)
+#if targetEnvironment(simulator)
+                .task {
+                    persistence.loadPersistenceWithSimualtedData()
+                }
+#endif
         }
     }
 }

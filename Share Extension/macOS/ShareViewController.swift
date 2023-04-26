@@ -18,7 +18,7 @@ class ShareViewController: NSViewController {
         
         hostedView.invalidateIntrinsicContentSize()
         hostedView.translatesAutoresizingMaskIntoConstraints = false
-        hostedView.frame = NSRect(origin: .zero, size: CGSize(width: 500, height: 500))
+        hostedView.frame = NSRect(origin: .zero, size: CGSize(width: 350, height: 400))
         
         self.view = hostedView
     }
