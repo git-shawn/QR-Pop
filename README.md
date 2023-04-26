@@ -13,7 +13,7 @@ QR Pop can generate codes for URLs, Wi-Fi Networks, Calendar Events, Contacts, L
 
 [Download Here](https://apps.apple.com/us/app/qr-pop/id1587360435?mt=12)
 
-[![Join TestFlight](GitHubResources/TestflightButton)](https://testflight.apple.com/join/pW7vfuS0)
+[![Join TestFlight](GitHubResources/TestflightButton.png)](https://testflight.apple.com/join/pW7vfuS0)
 
 ## Privacy 🕵️
 QR Pop contains no logging or analytics packages and, in fact, does not perform any network requests at all. That being said, QR Pop does utilize CloudKit alongside CoreData. iCloud usage is optional and is subject to [Apple's Privacy Policy](https://www.apple.com/legal/privacy/en-ww/).
