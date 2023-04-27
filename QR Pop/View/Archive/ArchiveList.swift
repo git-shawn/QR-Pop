@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import AppIntents
 
 struct ArchiveList: View {
     @FetchRequest(sortDescriptors: []) var archive: FetchedResults<QREntity>
+    @AppStorage("showArchiveSiriTip", store: .appGroup) var showArchiveSiriTip: Bool = true
     @EnvironmentObject var sceneModel: SceneModel
     @EnvironmentObject var navigationModel: NavigationModel
     @Environment(\.managedObjectContext) var moc
@@ -28,13 +30,10 @@ struct ArchiveList: View {
                 }
             },
             deleteAction: { entity in
-                do {
-                    moc.delete(entity)
-                    try moc.save()
-                } catch let error {
-                    debugPrint(error)
-                    Constants.viewLogger.error("QREntity could not be deleted")
+                moc.delete(entity)
+                guard Persistence.shared.saveQREntity(sender: "ArchiveList") else {
                     sceneModel.toaster = .error(note: "QR code could not delete")
+                    return
                 }
             })
         .navigationTitle("Archive")
@@ -54,6 +53,21 @@ struct ArchiveList: View {
                 }
             }
         )
+#if os(iOS)
+        .safeAreaInset(edge: .bottom, content: {
+            if !archive.isEmpty {
+                SiriTipView(
+                    intent: ViewArchiveIntent(),
+                    isVisible: $showArchiveSiriTip)
+                .scenePadding()
+                .background (
+                    Rectangle()
+                        .fill(.ultraThinMaterial)
+                        .ignoresSafeArea()
+                )
+            }
+        })
+#endif
     }
 }
 

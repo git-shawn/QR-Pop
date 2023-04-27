@@ -15,18 +15,15 @@
 import CoreData
 import CloudKit
 import SwiftUI
+import OSLog
 #if canImport(CoreSpotlight)
 import CoreSpotlight
+#elseif canImport(WidgetKit)
+import WidgetKit
 #endif
-import OSLog
 
 class Persistence: ObservableObject {
-#if !targetEnvironment(simulator)
     static let shared = Persistence()
-#endif
-    
-    // Disables writing anything to an actual store.
-    private let inMemory: Bool
     
 #if canImport(CoreSpotlight)
     private(set) var spotlightIndexer: SpotlightDelegate?
@@ -36,10 +33,6 @@ class Persistence: ObservableObject {
     var cloudAvailable: Bool = {
         FileManager.default.ubiquityIdentityToken != nil
     }()
-    
-    init(inMemory: Bool = false) {
-        self.inMemory = inMemory
-    }
     
     lazy var container: NSPersistentCloudKitContainer = {
         setupContainer()
@@ -52,12 +45,12 @@ class Persistence: ObservableObject {
         let container = NSPersistentCloudKitContainer(name: "Database")
         var description: NSPersistentStoreDescription
         
-        if !inMemory {
-            let storeURL = URL.storeURL(for: Constants.groupIdentifier, databaseName: "Database")
-            description = NSPersistentStoreDescription(url: storeURL)
-        } else {
-            description = NSPersistentStoreDescription(url: URL(fileURLWithPath: "/dev/null"))
-        }
+#if !targetEnvironment(simulator)
+        let storeURL = URL.storeURL(for: Constants.groupIdentifier, databaseName: "Database")
+        description = NSPersistentStoreDescription(url: storeURL)
+#else
+        description = NSPersistentStoreDescription(url: URL(fileURLWithPath: "/dev/null"))
+#endif
         
         description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
         description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
@@ -87,13 +80,11 @@ class Persistence: ObservableObject {
     }
 }
 
-// MARK: - Simulated Data
+// MARK: - Simulate Data
 
 extension Persistence {
     
 #if targetEnvironment(simulator)
-    static let shared = Persistence(inMemory: true)
-    
     func loadPersistenceWithSimualtedData() {
         let viewContext = self.container.viewContext
         
@@ -127,6 +118,51 @@ extension Persistence {
         }
     }
 #endif
+}
+
+// MARK: - Save Functions
+
+extension Persistence {
+    
+    /// Save any changes to the context.
+    /// - Parameter sender: A String identifier for logging purposes.
+    func saveQREntity(sender: String = "unspecified") -> Bool {
+        guard save(sender) else { return false }
+        
+#if canImport(AppIntent)
+        QRPopShortcuts.updateAppShortcutParameters()
+#endif
+#if canImport(WidgetCenter)
+        WidgetCenter.shared.reloadTimelines(ofKind: "ArchiveWidget")
+#endif
+        return true
+    }
+    
+    /// Save any changes to the context.
+    /// - Parameter sender: A String identifier for logging purposes.
+    ///
+    /// This function commits **all** changes made to the context, not just those impacting `TemplateEntities`.
+    func saveTemplateEntity(sender: String = "unspecified") -> Bool {
+        guard save(sender) else { return false }
+        
+        // Do something after saving
+        
+        return true
+    }
+    
+    private func save(_ sender: String) -> Bool {
+        if self.container.viewContext.hasChanges {
+            do {
+                try self.container.viewContext.save()
+                return true
+            } catch {
+                logger.warning("Database changes called by \"\(sender, privacy: .public)\" could not be saved.")
+                return false
+            }
+        } else {
+            return false
+        }
+    }
 }
 
 // MARK: - Delete Functions

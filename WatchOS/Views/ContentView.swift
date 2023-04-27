@@ -63,7 +63,7 @@ struct ContentView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-#warning("Placeholder URL used")
+            #warning("Placeholder URL used")
             VStack(spacing: 10) {
                 QRCodeViewUI(
                     content: "https://www.fromshawn.dev/qrpop/watchhelp",

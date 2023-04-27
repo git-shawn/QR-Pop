@@ -157,6 +157,12 @@ class Camera: NSObject {
         self.deviceInput = deviceInput
         self.videoOutput = videoOutput
         
+#if os(iOS)
+        if captureSession.isMultitaskingCameraAccessSupported {
+            captureSession.isMultitaskingCameraAccessEnabled = true
+        }
+#endif
+        
         updateVideoOutputConnection()
         
         isCaptureSessionConfigured = true

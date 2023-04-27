@@ -366,6 +366,8 @@
 		CDBAC32C29EF2AB900976328 /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = CDBAC31C29EF2AB900976328 /* popup.css */; };
 		CDC324EB29F06D8100AE91AC /* chevronupdown.svg in Resources */ = {isa = PBXBuildFile; fileRef = CDC324EA29F06D8100AE91AC /* chevronupdown.svg */; };
 		CDC324EC29F06D8100AE91AC /* chevronupdown.svg in Resources */ = {isa = PBXBuildFile; fileRef = CDC324EA29F06D8100AE91AC /* chevronupdown.svg */; };
+		CDC8C8DA29F9F639004C239C /* IntentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8D929F9F639004C239C /* IntentProvider.swift */; };
+		CDC8C8DC29F9F643004C239C /* ViewArchiveIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8DB29F9F643004C239C /* ViewArchiveIntent.swift */; };
 		CDFE670729F4DA7B0086BF7A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE670629F4DA7B0086BF7A /* ContentView.swift */; };
 		CDFE670929F5AAB80086BF7A /* Image+QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE670829F5AAB80086BF7A /* Image+QRCode.swift */; };
 		CDFE670F29F6BA120086BF7A /* BuilderCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE670E29F6BA120086BF7A /* BuilderCommands.swift */; };
@@ -664,7 +666,9 @@
 		CDBAC31B29EF2AB900976328 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		CDBAC31C29EF2AB900976328 /* popup.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = popup.css; sourceTree = "<group>"; };
 		CDC324EA29F06D8100AE91AC /* chevronupdown.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chevronupdown.svg; sourceTree = "<group>"; };
-		CDC87A1D29F8CB0E007EFF73 /* QR-Pop-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "QR-Pop-Watch-App-Info.plist"; sourceTree = "<group>"; };
+		CDC87A1D29F8CB0E007EFF73 /* QR-Pop-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QR-Pop-Watch-App-Info.plist"; sourceTree = "<group>"; };
+		CDC8C8D929F9F639004C239C /* IntentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentProvider.swift; sourceTree = "<group>"; };
+		CDC8C8DB29F9F643004C239C /* ViewArchiveIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewArchiveIntent.swift; sourceTree = "<group>"; };
 		CDCFA8DD29D7E1E900452895 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
 		CDD5C72C29D8B38100AF1C37 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		CDFE670629F4DA7B0086BF7A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -811,7 +815,6 @@
 		CD06302D29BCD64C007ECEC2 = {
 			isa = PBXGroup;
 			children = (
-				CDC87A1D29F8CB0E007EFF73 /* QR-Pop-Watch-App-Info.plist */,
 				CD06303829BCD64C007ECEC2 /* QR Pop */,
 				CD9DAB1429F45EFF008B3C1F /* WatchOS */,
 				CDBAC1E429EF263400976328 /* Safari Extension */,
@@ -850,6 +853,7 @@
 				CDBAC09A29ECC8E700976328 /* QRPopApp.swift */,
 				CDBABFEC29ECC8DF00976328 /* View */,
 				CDBAC03C29ECC8DF00976328 /* Model */,
+				CDC8C8D629F9F5A8004C239C /* Intents */,
 				CDBAC02629ECC8DF00976328 /* Utils */,
 				CD788DD029C64C40003B5965 /* Resources */,
 				CD06304529BCD64D007ECEC2 /* Preview Content */,
@@ -1253,6 +1257,15 @@
 			path = options;
 			sourceTree = "<group>";
 		};
+		CDC8C8D629F9F5A8004C239C /* Intents */ = {
+			isa = PBXGroup;
+			children = (
+				CDC8C8D929F9F639004C239C /* IntentProvider.swift */,
+				CDC8C8DB29F9F643004C239C /* ViewArchiveIntent.swift */,
+			);
+			path = Intents;
+			sourceTree = "<group>";
+		};
 		CDFE670429F4DA3D0086BF7A /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1266,9 +1279,10 @@
 		CDFE670529F4DA410086BF7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CD9DAB1B29F45F00008B3C1F /* Preview Content */,
-				CD9DAB1929F45F00008B3C1F /* Assets.xcassets */,
 				CD4F20AB29F4C87E0037082F /* QR Pop Watch App.entitlements */,
+				CDC87A1D29F8CB0E007EFF73 /* QR-Pop-Watch-App-Info.plist */,
+				CD9DAB1929F45F00008B3C1F /* Assets.xcassets */,
+				CD9DAB1B29F45F00008B3C1F /* Preview Content */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1825,6 +1839,7 @@
 				CDBAC06F29ECC8DF00976328 /* EventForm.swift in Sources */,
 				CDBAC06029ECC8DF00976328 /* QRLogoOverlay.swift in Sources */,
 				CDBAC04D29ECC8DF00976328 /* SettingsCommands.swift in Sources */,
+				CDC8C8DC29F9F643004C239C /* ViewArchiveIntent.swift in Sources */,
 				CDBAC1CB29ED935500976328 /* View+GeometryProxy.swift in Sources */,
 				CDBAC1C429ED935500976328 /* UserDefaults+QRPop.swift in Sources */,
 				CDBAC1D629ED935500976328 /* Published+UserDefaults.swift in Sources */,
@@ -1903,6 +1918,7 @@
 				CDBAC05129ECC8DF00976328 /* TabNavigation.swift in Sources */,
 				CDBAC05029ECC8DF00976328 /* ArchiveList.swift in Sources */,
 				CDBAC1CD29ED935500976328 /* FileDocument+QRPop.swift in Sources */,
+				CDC8C8DA29F9F639004C239C /* IntentProvider.swift in Sources */,
 				CDBAC1C629ED935500976328 /* String+QRPop.swift in Sources */,
 				CDBAC06629ECC8DF00976328 /* BuilderView.swift in Sources */,
 				CD4F20AA29F4B8D30037082F /* WifiHandler.swift in Sources */,
@@ -2514,10 +2530,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "QR Pop";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "QR Pop would like permission to access the camera on your device to scan QR codes.";
-				INFOPLIST_KEY_NSContactsUsageDescription = "QR Pop would like permission to access contacts on your device";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "QR Pop would like permission to access photos on your device";
-				INFOPLIST_KEY_NSSiriUsageDescription = "QR Pop would like to share features and information, such as your QR Code Library, with Siri ";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses your camera to scan, decode, and duplicate QR codes.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "This app uses your contacts to create QR codes.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app uses your photo library to save QR codes you've created.";
+				INFOPLIST_KEY_NSSiriUsageDescription = "This app would like to share your QR code Archive with Siri.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -2571,10 +2587,10 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "QR Pop";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "QR Pop would like permission to access the camera on your device to scan QR codes.";
-				INFOPLIST_KEY_NSContactsUsageDescription = "QR Pop would like permission to access contacts on your device";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "QR Pop would like permission to access photos on your device";
-				INFOPLIST_KEY_NSSiriUsageDescription = "QR Pop would like to share features and information, such as your QR Code Library, with Siri ";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses your camera to scan, decode, and duplicate QR codes.";
+				INFOPLIST_KEY_NSContactsUsageDescription = "This app uses your contacts to create QR codes.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app uses your photo library to save QR codes you've created.";
+				INFOPLIST_KEY_NSSiriUsageDescription = "This app would like to share your QR code Archive with Siri.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -3076,7 +3092,7 @@
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "QR-Pop-Watch-App-Info.plist";
+				INFOPLIST_FILE = "WatchOS/Resources/QR-Pop-Watch-App-Info.plist";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "shwndvs.QR-Pop";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
@@ -3109,7 +3125,7 @@
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "QR-Pop-Watch-App-Info.plist";
+				INFOPLIST_FILE = "WatchOS/Resources/QR-Pop-Watch-App-Info.plist";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "shwndvs.QR-Pop";
 				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;

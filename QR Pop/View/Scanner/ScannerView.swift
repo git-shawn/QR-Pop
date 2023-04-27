@@ -28,9 +28,6 @@ struct ScannerView: View {
                 scanner
             case .failure(let error):
                 ScannerErrorView(error: error)
-#if os(iOS)
-                    .toolbarColorScheme(nil, for: .navigationBar, .tabBar)
-#endif
                     .toolbar {
                         if Camera.QRCodeScanError.noResult == error {
                             ToolbarItem(placement: .navigation) {
@@ -42,9 +39,6 @@ struct ScannerView: View {
                     }
             case .success(let content):
                 BuilderView(model: QRModel(title: "Scan Results", design: DesignModel(), content: BuilderModel(text: content)))
-#if os(iOS)
-                    .toolbarColorScheme(.none, for: .navigationBar, .tabBar)
-#endif
                     .toolbar {
                         ToolbarItem(placement: .navigation) {
                             ImageButton("Scan Again", systemImage: "chevron.backward", action: {
@@ -90,11 +84,13 @@ extension ScannerView {
             self.result = result
             model.camera.stop()
         }
+        .onDisappear {
+            model.camera.stop()
+        }
         .background(Color.black, ignoresSafeAreaEdges: .all)
 #if os(iOS)
         .persistentSystemOverlays(.hidden)
         .ignoresSafeArea(.all)
-        .toolbarColorScheme(.dark, for: .navigationBar, .tabBar)
         .toolbar(.visible, for: .tabBar, .navigationBar)
         .toolbarBackground(.visible, for: .tabBar, .navigationBar)
         .navigationTitle("Scanner")
@@ -124,7 +120,7 @@ extension ScannerView {
                 ImageButton("Switch Cameras", systemImage: "arrow.triangle.2.circlepath", action: {
                     model.camera.switchCaptureDevice()
                 })
-                .tint(.white)
+                .tint(.primary)
                 .disabled(!model.camera.hasMultipleCaptureDevices)
             }
             
@@ -141,15 +137,15 @@ extension ScannerView {
                 }, primaryAction: {
                     isPickingPhoto = true
                 })
-                .tint(.white)
+                .tint(.primary)
             }
             
             ToolbarItem(placement: .navigationBarLeading) {
                 if model.camera.isTorchAvailable {
-                    ImageButton("Toggle Flash", systemImage: model.camera.isTorchOn ? "bolt.circle" : "bolt.slash.circle") {
+                    ImageButton("Toggle Flash", systemImage: model.camera.isTorchOn ? "bolt.circle.fill" : "bolt.slash.circle") {
                         model.camera.toggleTorch()
                     }
-                    .tint(model.camera.isTorchOn ? .yellow : .white)
+                    .tint(.primary)
                 }
             }
             

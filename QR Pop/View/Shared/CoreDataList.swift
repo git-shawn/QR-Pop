@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import WidgetKit
 
 struct CoreDataList<FetchedEntity: Entity>: View {
     var fetchedItems: [FetchedEntity]
@@ -225,7 +224,6 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                     entityToRename?.title = newTitle
                     newTitle = ""
                     try moc.save()
-                    WidgetCenter.shared.reloadTimelines(ofKind: "ArchiveWidget")
                 } catch let error {
                     debugPrint(error)
                 }

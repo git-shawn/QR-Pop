@@ -210,7 +210,7 @@ extension QRModel {
     /// - Warning: This function saves the newly created entity with `NSManagedObjectContext.save()`.
     @discardableResult func placeInCoreDataAndSave(context: NSManagedObjectContext) throws -> QREntity {
         let entity = try placeInCoreData(context: context)
-        try context.save()
+        _ = Persistence.shared.saveQREntity(sender: "QRModel")
         return entity
     }
 }

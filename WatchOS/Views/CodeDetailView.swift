@@ -107,7 +107,7 @@ struct CodeDetailView: View {
         .confirmationDialog("Delete Code from Library?", isPresented: $showDeleteDialog, actions: {
             Button("Delete", role: .destructive, action: {
                 moc.delete(entity)
-                try? moc.save()
+                _ = Persistence.shared.saveQREntity(sender: "CodeDetailView")
                 dismiss()
             })
             Button("Cancel", role: .cancel, action: {})

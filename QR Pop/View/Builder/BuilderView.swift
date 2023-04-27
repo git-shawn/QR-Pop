@@ -7,7 +7,6 @@
 
 import SwiftUI
 import PagerTabStripView
-import WidgetKit
 
 struct BuilderView: View {
     @State var model: QRModel = QRModel()
@@ -280,9 +279,7 @@ extension BuilderView {
                             entity?.design = try model.design.asData()
                             entity?.logo = model.design.logo
                             try moc.save()
-                            
-                            // Reload all widgets in case this entity is being presented.
-                            WidgetCenter.shared.reloadTimelines(ofKind: "ArchiveWidget")
+
                             hasMadeChanges = false
                             sceneModel.toaster = .saved(note: "Change saved")
                         } catch let error {

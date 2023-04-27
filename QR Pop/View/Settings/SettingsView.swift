@@ -19,6 +19,10 @@ struct SettingsView: View {
     @State private var erasingData = false
     @Environment(\.openURL) var openURL
     
+    #if DEBUG
+    @AppStorage("showArchiveSiriTip", store: .appGroup) var showArchiveSiriTip: Bool = true
+    #endif
+    
     var body: some View {
         Form {
             
@@ -247,7 +251,7 @@ struct SettingsView: View {
                 })
                 
                 ImageButton("Reset Siri Tips", systemImage: "mic.badge.xmark", action: {
-                    print("version counter not implemented yet")
+                    showArchiveSiriTip = true
                 })
                 
                 ImageButton("Wipe Core Data", systemImage: "externaldrive.badge.xmark", action: {
