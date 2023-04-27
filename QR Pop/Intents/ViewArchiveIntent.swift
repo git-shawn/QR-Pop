@@ -9,13 +9,29 @@ import SwiftUI
 import AppIntents
 import OSLog
 
-struct ViewArchiveIntent: AppIntent {
-    
+struct ViewArchiveIntent: AppIntent, PredictableIntent {
+
     static var title: LocalizedStringResource = "View My Archive"
     static var description = IntentDescription("View a QR code saved within your Archive")
+    static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
     
-    @Parameter(title: "QR Code", optionsProvider: ArchiveOptionsProvider())
+    @Parameter(
+        title: "QR Code",
+        requestValueDialog: "Which code would you like to view?",
+        optionsProvider: ArchiveOptionsProvider())
     var code: ArchiveIntentEntity
+    
+    static var parameterSummary: some ParameterSummary {
+        Summary("View \(\.$code) from my Archive.")
+    }
+    
+    // This may or may not work. It's not clear how to test this.
+    static var predictionConfiguration: some IntentPredictionConfiguration {
+        IntentPrediction(parameters: (\.$code)) { code in
+            DisplayRepresentation(
+                title: "View \"\(code.name)\" from your Archive")
+        }
+    }
     
     func perform() async throws -> some ShowsSnippetView & ProvidesDialog {
         let entity = try persistence.getQREntityWithUUID(code.id)

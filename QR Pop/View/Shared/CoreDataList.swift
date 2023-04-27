@@ -43,60 +43,61 @@ struct CoreDataList<FetchedEntity: Entity>: View {
     var body: some View {
         List {
             ForEach(filteredEntities, id: \.id) { item in
-                HStack(spacing: 10) {
-                    ZStack {
-                        if isEditing {
-                            Button(action: {
-                                if let index = selectedEntities.firstIndex(of: item) {
-                                    selectedEntities.remove(at: index)
-                                } else {
-                                    selectedEntities.append(item)
-                                }
-                            }, label: {
-                                ZStack {
-                                    if selectedEntities.contains(item) {
-                                        Label("Deselect", systemImage: "checkmark.circle.fill")
-                                            .foregroundColor(.accentColor)
-                                    } else {
-                                        Label("Select", systemImage: "circle")
-                                            .foregroundColor(.secondary)
-                                    }
-                                }
-                                .imageScale(.large)
-                                .labelStyle(.iconOnly)
-                                .buttonStyle(.plain)
-                            })
-                            .buttonStyle(.plain)
+                Button(action: {
+                    if !isEditing {
+                        selectAction(item)
+                    } else {
+                        if let index = selectedEntities.firstIndex(of: item) {
+                            selectedEntities.remove(at: index)
+                        } else {
+                            selectedEntities.append(item)
                         }
                     }
-                    .transition(.push(from: .leading))
-                    
-                    Button(action: {
-                        selectAction(item)
-                    }, label: {
-                        VStack {
-                            HStack(spacing: 14) {
-                                if let data = item.design, let model = try? DesignModel(decoding: data, with: item.logo) {
-                                    QRCodeView(qrcode: .constant(QRModel(design: model, content: BuilderModel())))
-                                        .frame(width: 52, height: 52)
-                                }
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(item.title ?? "QR Code")
-                                        .foregroundColor(.primary)
-                                    Text("\(item.created ?? Date(), format: Date.FormatStyle(date: .numeric, time: .shortened))")
-                                        .font(.footnote)
+                }, label: {
+                    VStack {
+                        HStack(spacing: 14) {
+                            ZStack {
+                                if isEditing && selectedEntities.contains(item) {
+                                    Label("Deselect", systemImage: "checkmark.circle.fill")
+                                        .foregroundColor(.accentColor)
+                                } else if isEditing {
+                                    Label("Select", systemImage: "circle")
                                         .foregroundColor(.secondary)
                                 }
-                                Spacer()
-                                Image(systemName: "chevron.forward")
-                                    .foregroundColor(.tertiaryLabel)
                             }
+                            .imageScale(.large)
+                            .labelStyle(.iconOnly)
+                            .buttonStyle(.plain)
+                            .transition(.push(from: .leading))
+                            
+                            if let data = item.design, let model = try? DesignModel(decoding: data, with: item.logo) {
+                                QRCodeView(qrcode: .constant(QRModel(design: model, content: BuilderModel())))
+                                    .frame(width: 52, height: 52)
+                            }
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(item.title ?? "QR Code")
+                                    .foregroundColor(.primary)
+                                Text("\(item.created ?? Date(), format: Date.FormatStyle(date: .numeric, time: .shortened))")
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                            Image(systemName: "chevron.forward")
+                                .foregroundColor(.tertiaryLabel)
                         }
-                        .contentShape(Rectangle())
-                    })
-                    .disabled(isEditing)
-                    .buttonStyle(.plain)
-                }
+                    }
+                    .contentShape(Rectangle())
+                })
+                .listRowSeparator(.visible)
+                .buttonStyle(.plain)
+                .listRowBackground(
+                    ZStack {
+                        if selectedEntities.contains(item) {
+                            ContainerRelativeShape()
+                                .fill(.quaternary)
+                        }
+                    }
+                )
                 .contextMenu {
                     ImageButton("Rename", systemImage: "pencil", action: {
                         newTitle = item.title ?? "QR Code"
@@ -124,8 +125,9 @@ struct CoreDataList<FetchedEntity: Entity>: View {
         }
 #if os(iOS)
         .listStyle(.plain)
+        .toolbar(.visible, for: .bottomBar)
 #else
-        .listStyle(.inset(alternatesRowBackgrounds: true))
+        .listStyle(.inset)
         .environment(\.defaultMinListRowHeight, 64)
 #endif
         .onChange(of: sort) { sort in
@@ -174,6 +176,23 @@ struct CoreDataList<FetchedEntity: Entity>: View {
             
             ToolbarItemGroup(placement: .optionsBar) {
                 if isEditing {
+                    Button("Select All", action: {
+                        withAnimation {
+                            selectedEntities = filteredEntities
+                        }
+                    })
+                    
+                    Divider()
+                    
+                    Button("Clear Selection", action: {
+                        withAnimation {
+                            selectedEntities = []
+                        }
+                    })
+                    .disabled(selectedEntities.isEmpty)
+                    
+                    Divider()
+                    
                     ImageButton("Trash", systemImage: "trash", role: .destructive, action: {
                         withAnimation {
                             deleteItems(selectedEntities)
@@ -246,12 +265,13 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                     .labelStyle(SelectedLabelStyle(sort == .createdLatest || sort == .createdOldest))
             })
         }, label: {
-            Text("Sort")
+            Label("Sort", systemImage: "arrow.up.arrow.down.circle")
+#if os(macOS)
+                .labelStyle(.titleOnly)
+#endif
         })
         .environment(\.menuOrder, .fixed)
-#if os(macOS)
         .help("Sort this list either alphabetically or by date created.")
-#endif
     }
     
     // MARK: - Edit Button

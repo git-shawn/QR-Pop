@@ -18,7 +18,6 @@ struct QR_PopApp: App {
             RootView()
                 .handlesExternalEvents(preferring: ["file://", "qrpop://"], allowing: ["*"])
                 .environment(\.managedObjectContext, persistence.container.viewContext)
-
 #if os(iOS)
             // MARK: - iOS: Listen for Non-Interactive Scenes
                 .onReceive(MirrorModel.shared.sceneWillConnectPublisher, perform: MirrorModel.shared.sceneWillConnect)

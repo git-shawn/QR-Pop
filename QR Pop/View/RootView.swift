@@ -22,7 +22,7 @@ struct RootView: View {
 #endif
     
     var body: some View {
-        Group {
+        ZStack {
             if horizontalSizeClass == .compact || UIDevice.current.userInterfaceIdiom == .phone {
                 TabNavigation()
             } else {

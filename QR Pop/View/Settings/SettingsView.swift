@@ -150,6 +150,15 @@ struct SettingsView: View {
                     .buttonStyle(OutboundLinkButtonStyle())
 #endif
                 
+                Link(destination: URL(string: "https://apps.apple.com/us/app/qr-pop/id1587360435?action=write-review")!, label: {
+                    Label("Leave a Review", systemImage: "star.bubble")
+                })
+#if os(macOS)
+                .labelStyle(OutboundLinkLabelStyle())
+#else
+                .buttonStyle(OutboundLinkButtonStyle())
+#endif
+                
                 TipButton()
                     .tint(.primary)
             }
@@ -245,6 +254,7 @@ struct SettingsView: View {
             .tint(.primary)
             
             Section {
+                
                 ImageButton("Deploy CloudKit Schema", systemImage: "icloud.and.arrow.up", action: {
                     do {
                         try Persistence.shared.container.initializeCloudKitSchema()
