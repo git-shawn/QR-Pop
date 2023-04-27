@@ -12,7 +12,6 @@ protocol Entity: Equatable {
     var id: UUID? { get set }
     var title: String? { get set }
     var created: Date? { get set }
-    var viewed: Date? { get set }
     var design: Data? { get set }
     var logo: Data? { get set }
 }

@@ -368,6 +368,25 @@
 		CDC324EC29F06D8100AE91AC /* chevronupdown.svg in Resources */ = {isa = PBXBuildFile; fileRef = CDC324EA29F06D8100AE91AC /* chevronupdown.svg */; };
 		CDC8C8DA29F9F639004C239C /* IntentProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8D929F9F639004C239C /* IntentProvider.swift */; };
 		CDC8C8DC29F9F643004C239C /* ViewArchiveIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8DB29F9F643004C239C /* ViewArchiveIntent.swift */; };
+		CDC8C8DD29FABFFA004C239C /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
+		CDC8C8DE29FABFFB004C239C /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
+		CDC8C8DF29FABFFC004C239C /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
+		CDC8C8E029FABFFC004C239C /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
+		CDC8C8E129FABFFC004C239C /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
+		CDC8C8E229FABFFD004C239C /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
+		CDC8C8E429FACE4E004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8E529FAD1F9004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8E629FAD1F9004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8E729FAD1FA004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8E829FAD1FA004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8E929FAD1FA004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8EA29FAD1FB004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8EB29FAD1FB004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8EC29FAD1FC004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8ED29FAD1FC004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8EE29FAD1FC004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8EF29FAD1FD004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDC8C8F029FAD1FD004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
 		CDFE670729F4DA7B0086BF7A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE670629F4DA7B0086BF7A /* ContentView.swift */; };
 		CDFE670929F5AAB80086BF7A /* Image+QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE670829F5AAB80086BF7A /* Image+QRCode.swift */; };
 		CDFE670F29F6BA120086BF7A /* BuilderCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE670E29F6BA120086BF7A /* BuilderCommands.swift */; };
@@ -669,6 +688,7 @@
 		CDC87A1D29F8CB0E007EFF73 /* QR-Pop-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "QR-Pop-Watch-App-Info.plist"; sourceTree = "<group>"; };
 		CDC8C8D929F9F639004C239C /* IntentProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentProvider.swift; sourceTree = "<group>"; };
 		CDC8C8DB29F9F643004C239C /* ViewArchiveIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewArchiveIntent.swift; sourceTree = "<group>"; };
+		CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+QRPop.swift"; sourceTree = "<group>"; };
 		CDCFA8DD29D7E1E900452895 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
 		CDD5C72C29D8B38100AF1C37 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		CDFE670629F4DA7B0086BF7A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -1155,6 +1175,7 @@
 				CDBAC03529ECC8DF00976328 /* View+Debounce.swift */,
 				CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */,
 				CD4F20A929F4B8D30037082F /* WifiHandler.swift */,
+				CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1799,6 +1820,7 @@
 				CD1FF4AB29F36300006E6832 /* CGColor+QRPop.swift in Sources */,
 				CD1FF4A829F362D1006E6832 /* Color+QRCode.swift in Sources */,
 				CD1FF4A229F3626D006E6832 /* QRCode+Codable.swift in Sources */,
+				CDC8C8ED29FAD1FC004C239C /* OSLog+QRPop.swift in Sources */,
 				CD03E1B729F187B900302011 /* PreviewProvider.swift in Sources */,
 				CD1FF49D29F36237006E6832 /* Color+Codable.swift in Sources */,
 				CD1FF4A029F3624E006E6832 /* Platform.swift in Sources */,
@@ -1820,6 +1842,7 @@
 				CD1FF4AD29F3630B006E6832 /* CGSize+QRPop.swift in Sources */,
 				CD1FF4A729F362C9006E6832 /* String+QRPop.swift in Sources */,
 				CD1FF49F29F36242006E6832 /* Constants.swift in Sources */,
+				CDC8C8EC29FAD1FC004C239C /* OSLog+QRPop.swift in Sources */,
 				CD1FF4A929F362D1006E6832 /* Color+QRCode.swift in Sources */,
 				CD1FF49C29F36237006E6832 /* Color+Codable.swift in Sources */,
 				CD1FF4A429F362C1006E6832 /* Image+Position.swift in Sources */,
@@ -1844,6 +1867,7 @@
 				CDBAC1C429ED935500976328 /* UserDefaults+QRPop.swift in Sources */,
 				CDBAC1D629ED935500976328 /* Published+UserDefaults.swift in Sources */,
 				CDBAC1C729ED935500976328 /* Color+Random.swift in Sources */,
+				CDC8C8E429FACE4E004C239C /* OSLog+QRPop.swift in Sources */,
 				CD4F20A429F4B4BF0037082F /* MenuBarView.swift in Sources */,
 				CDBAC06B29ECC8DF00976328 /* PhoneForm.swift in Sources */,
 				CDBAC07129ECC8DF00976328 /* ContactForm.swift in Sources */,
@@ -1949,6 +1973,7 @@
 				CD1FF4CA29F36FE2006E6832 /* QRCode+Codable.swift in Sources */,
 				CD1FF4C429F36FC5006E6832 /* CGColor+QRPop.swift in Sources */,
 				CD1FF4C829F36FD9006E6832 /* Image+Position.swift in Sources */,
+				CDC8C8EB29FAD1FB004C239C /* OSLog+QRPop.swift in Sources */,
 				CD1FF4BC29F36F92006E6832 /* ThumbnailProvider.swift in Sources */,
 				CD1FF4C629F36FCE006E6832 /* Color+Codable.swift in Sources */,
 				CD1FF4CF29F36FF3006E6832 /* QRModel.swift in Sources */,
@@ -1967,7 +1992,9 @@
 				CD1FF52229F37A97006E6832 /* QRCode+Codable.swift in Sources */,
 				CD1FF52629F37A9B006E6832 /* Constants.swift in Sources */,
 				CD7A3FA729F38CB700D23D54 /* TimelineIntentHandler.swift in Sources */,
+				CDC8C8EA29FAD1FB004C239C /* OSLog+QRPop.swift in Sources */,
 				CD7A3FA329F38CB700D23D54 /* TimelineIntent.intentdefinition in Sources */,
+				CDC8C8DD29FABFFA004C239C /* EntityProtocol.swift in Sources */,
 				CD7A3F9B29F37F2100D23D54 /* Database.xcdatamodeld in Sources */,
 				CD7A3FAC29F38EAE00D23D54 /* Published+UserDefaults.swift in Sources */,
 				CD1FF51729F37A79006E6832 /* CGColor+QRPop.swift in Sources */,
@@ -1996,7 +2023,9 @@
 				CD7A3FA229F38A1C00D23D54 /* WidgetViews.swift in Sources */,
 				CD1FF50029F378FA006E6832 /* TimelineIntent.intentdefinition in Sources */,
 				CD1FF52529F37A98006E6832 /* String+QRPop.swift in Sources */,
+				CDC8C8E929FAD1FA004C239C /* OSLog+QRPop.swift in Sources */,
 				CD1FF52729F37A9C006E6832 /* Constants.swift in Sources */,
+				CDC8C8DE29FABFFB004C239C /* EntityProtocol.swift in Sources */,
 				CD7A3F9A29F37F2100D23D54 /* Database.xcdatamodeld in Sources */,
 				CD7A3FAD29F38EAE00D23D54 /* Published+UserDefaults.swift in Sources */,
 				CD1FF51229F37A6E006E6832 /* BuilderModel.swift in Sources */,
@@ -2022,8 +2051,10 @@
 			files = (
 				CD7A3FE929F397FF00D23D54 /* Platform.swift in Sources */,
 				CD7A3FE529F397F400D23D54 /* Color+Random.swift in Sources */,
+				CDC8C8DF29FABFFC004C239C /* EntityProtocol.swift in Sources */,
 				CD7A3FED29F3980500D23D54 /* QRCode+Codable.swift in Sources */,
 				CD7A3FDC29F397E000D23D54 /* Database.xcdatamodeld in Sources */,
+				CDC8C8E829FAD1FA004C239C /* OSLog+QRPop.swift in Sources */,
 				CD7A3FD229F397DC00D23D54 /* QRModel.swift in Sources */,
 				CD7A3FF529F3983A00D23D54 /* TimelineIntent.intentdefinition in Sources */,
 				CD7A3FF129F3980C00D23D54 /* UserDefaults+QRPop.swift in Sources */,
@@ -2049,8 +2080,10 @@
 			files = (
 				CD7A3FEA29F397FF00D23D54 /* Platform.swift in Sources */,
 				CD7A3FE629F397F400D23D54 /* Color+Random.swift in Sources */,
+				CDC8C8E029FABFFC004C239C /* EntityProtocol.swift in Sources */,
 				CD7A3FEE29F3980500D23D54 /* QRCode+Codable.swift in Sources */,
 				CD7A3FD729F397DD00D23D54 /* QRModel.swift in Sources */,
+				CDC8C8E729FAD1FA004C239C /* OSLog+QRPop.swift in Sources */,
 				CD7A3FF629F3983B00D23D54 /* TimelineIntent.intentdefinition in Sources */,
 				CD7A3FF229F3980D00D23D54 /* UserDefaults+QRPop.swift in Sources */,
 				CD9DAB2B29F45F37008B3C1F /* Database.xcdatamodeld in Sources */,
@@ -2076,6 +2109,7 @@
 			files = (
 				CD9DAB5F29F4604A008B3C1F /* ShareView.swift in Sources */,
 				CD9DAB4629F45F64008B3C1F /* Platform.swift in Sources */,
+				CDC8C8E129FABFFC004C239C /* EntityProtocol.swift in Sources */,
 				CD9DAB4029F45F54008B3C1F /* Color+Random.swift in Sources */,
 				CD53D66629F48178004DAC9A /* SceneModel.swift in Sources */,
 				CD9DAB6229F46A2C008B3C1F /* QRCodeView.swift in Sources */,
@@ -2090,6 +2124,7 @@
 				CD9DAB4329F45F5F008B3C1F /* Image+Position.swift in Sources */,
 				CD9DAB2C29F45F37008B3C1F /* Database.xcdatamodeld in Sources */,
 				CD53D66A29F481FD004DAC9A /* FileDocument+QRPop.swift in Sources */,
+				CDC8C8E629FAD1F9004C239C /* OSLog+QRPop.swift in Sources */,
 				CD9DAB5629F45F81008B3C1F /* Constants.swift in Sources */,
 				CD9DAAEF29F45EE7008B3C1F /* ShareViewController.swift in Sources */,
 				CD9DAB3529F45F46008B3C1F /* CGColor+QRPop.swift in Sources */,
@@ -2108,6 +2143,7 @@
 			files = (
 				CD78A19A29F4961F00EF2C6F /* ShareView.swift in Sources */,
 				CD9DAB4729F45F65008B3C1F /* Platform.swift in Sources */,
+				CDC8C8E229FABFFD004C239C /* EntityProtocol.swift in Sources */,
 				CD9DAB4129F45F55008B3C1F /* Color+Random.swift in Sources */,
 				CD9DAB4D29F45F6D008B3C1F /* QRCode+Codable.swift in Sources */,
 				CD9DAB2829F45F33008B3C1F /* QRModel.swift in Sources */,
@@ -2122,6 +2158,7 @@
 				CD9DAB3F29F45F52008B3C1F /* Color+QRCode.swift in Sources */,
 				CD9DAB4429F45F5F008B3C1F /* Image+Position.swift in Sources */,
 				CD9DAB2A29F45F35008B3C1F /* Database.xcdatamodeld in Sources */,
+				CDC8C8E529FAD1F9004C239C /* OSLog+QRPop.swift in Sources */,
 				CD9DAB5529F45F80008B3C1F /* Constants.swift in Sources */,
 				CD9DAB0329F45EF2008B3C1F /* ShareViewController.swift in Sources */,
 				CD9DAB3629F45F46008B3C1F /* CGColor+QRPop.swift in Sources */,
@@ -2143,6 +2180,7 @@
 				CD9DAB4E29F45F6D008B3C1F /* QRCode+Codable.swift in Sources */,
 				CD9DAB2229F45F2E008B3C1F /* QRModel.swift in Sources */,
 				CD9DAB2129F45F2E008B3C1F /* Persistence.swift in Sources */,
+				CDC8C8F029FAD1FD004C239C /* OSLog+QRPop.swift in Sources */,
 				CD9DAB2D29F45F38008B3C1F /* Database.xcdatamodeld in Sources */,
 				CD9DAB3D29F45F51008B3C1F /* Color+QRCode.swift in Sources */,
 				CD9DAB3929F45F4A008B3C1F /* CGSize+QRPop.swift in Sources */,
@@ -2167,6 +2205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDBAC1E629EF263400976328 /* SafariWebExtensionHandler.swift in Sources */,
+				CDC8C8EF29FAD1FD004C239C /* OSLog+QRPop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2175,6 +2214,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDBAC2A729EF292300976328 /* SafariWebExtensionHandler.swift in Sources */,
+				CDC8C8EE29FAD1FC004C239C /* OSLog+QRPop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

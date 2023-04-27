@@ -32,7 +32,7 @@ extension QRModel {
     init(withEntity entity: QREntity) throws {
         let decoder = JSONDecoder()
         guard let designData = entity.design, let builderData = entity.builder else {
-            QRModel.logger.warning("An entity from Core Data could not be decoded.")
+            Logger.logModel.error("QRModel: A valid QREntity object could not be deocded.")
             throw QRModelError.decodingFailure
         }
         
@@ -78,7 +78,7 @@ extension QRModel {
     /// - Returns: `.PNG` data representing a QR code.
     func pngData(for dimension: Int) throws -> Data {
         guard let data = qrCodeDoc.pngData(dimension: dimension) else {
-            QRModel.logger.warning("`.PNG` data could not be generated from the model.")
+            Logger.logModel.notice("QRModel: PNG data could not be generated.")
             throw QRModelError.renderFailure
         }
         return data
@@ -91,7 +91,7 @@ extension QRModel {
     /// - Returns: `.JPEG` data representing a QR code.
     func jpegData(for dimension: Int, compression: Double = 0.8) throws -> Data {
         guard let data = qrCodeDoc.jpegData(dimension: dimension, compression: compression) else {
-            QRModel.logger.warning("`.JPEG` data could not be generated from the model.")
+            Logger.logModel.notice("QRModel: JPEG data could not be generated.")
             throw QRModelError.renderFailure
         }
         return data
@@ -102,7 +102,7 @@ extension QRModel {
     /// - Returns: `.PDF` data representing a QR code.
     func pdfData(for dimension: Int = 256) throws -> Data {
         guard let data = qrCodeDoc.pdfData(dimension: dimension) else {
-            QRModel.logger.warning("`.PDF` data could not be generated from the model.")
+            Logger.logModel.notice("QRModel: PDF data could not be generated.")
             throw QRModelError.renderFailure
         }
         return data
@@ -113,7 +113,7 @@ extension QRModel {
     /// - Returns: `.SVG` data representing a QR code.
     func svgData(for dimension: Int = 256) throws -> Data {
         guard let data = qrCodeDoc.svgData(dimension: dimension) else {
-            QRModel.logger.warning("`.SVG` data could not be generated from the model.")
+            Logger.logModel.notice("QRModel: SVG data could not be generated.")
             throw QRModelError.renderFailure
         }
         return data
@@ -136,7 +136,7 @@ extension QRModel {
     /// - Warning: This function is not available for macOS.
     func addToPhotoLibrary(for dimensions: Int) throws {
         guard let image = platformImage(for: dimensions) else {
-            QRModel.logger.warning("Either a UIImage or NSImage could not be generated from the model.")
+            Logger.logModel.notice("QRModel: A PlatformImage could not be generated.")
             throw QRModelError.exportFailure
         }
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
@@ -194,7 +194,6 @@ extension QRModel {
     @discardableResult func placeInCoreData(context: NSManagedObjectContext) throws -> QREntity {
         let entity = QREntity(context: context)
         entity.created = Date()
-        entity.viewed = Date()
         entity.id = UUID()
         entity.design = try self.design.asData()
         entity.builder = try self.content.asData()
@@ -210,7 +209,7 @@ extension QRModel {
     /// - Warning: This function saves the newly created entity with `NSManagedObjectContext.save()`.
     @discardableResult func placeInCoreDataAndSave(context: NSManagedObjectContext) throws -> QREntity {
         let entity = try placeInCoreData(context: context)
-        _ = Persistence.shared.saveQREntity(sender: "QRModel")
+        try Persistence.shared.container.viewContext.atomicSave()
         return entity
     }
 }
@@ -248,9 +247,4 @@ extension QRModel {
     enum QRModelError: Error, LocalizedError {
         case renderFailure, decodingFailure, exportFailure
     }
-    
-    private static let logger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "qrModel"
-    )
 }

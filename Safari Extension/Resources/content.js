@@ -1,7 +1,6 @@
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     
     if (request.type == "getWebInfo") {
-        console.log("Getting web info...")
         
         let gettingItems = browser.storage.local.get({
         codeSize: "190",
@@ -10,7 +9,6 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
         showHostname: "true",
         referralToggle: "true"
         }, (items) => {
-            console.log(items);
             
             var webInfo = {
             hostname: window.location.hostname,
@@ -21,8 +19,6 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
             bgColor: items.bgColor,
             fgColor: items.fgColor
             };
-            
-            console.log(webInfo);
             
             sendResponse({ response: webInfo });
         });

@@ -77,12 +77,12 @@ extension ShareView {
               let attachments = sharedItem.attachments,
               let attachment = attachments.first
         else {
-            logger.error("Unable to process shared item.")
+            Logger.logExtension.fault("ShareExtension: The activity passed from the system could not be read.")
             extensionItemType = .error
             return
         }
         
-        logger.debug("\(attachment.registeredTypeIdentifiers)")
+        Logger.logExtension.debug("ShareExtension: \(attachment.registeredTypeIdentifiers)")
         
         // Contacts
         if attachment.hasItemConformingToTypeIdentifier(UTType.vCard.identifier) {
@@ -117,11 +117,11 @@ extension ShareView {
                        let contact = contacts.first {
                         extensionItemType = .contact(contact: contact, model: QRModel(design: DesignModel(), content: BuilderModel(text: vCardCleaned)))
                     } else {
-                        logger.error("Shared contact could not be encoded.")
+                        Logger.logExtension.error("SharExtension: Shared contact could not be encoded.")
                         extensionItemType = .error
                     }
                 } else {
-                    logger.error("Shared contact could not be read.")
+                    Logger.logExtension.error("ShareExtension: Shared contact could not be read.")
                     extensionItemType = .error
                 }
             }
@@ -136,7 +136,7 @@ extension ShareView {
                           let imageData = try? Data(contentsOf: fileURL),
                           let image = PlatformImage(data: imageData)
                     else {
-                        logger.error("Shared image could not be accessed.")
+                        Logger.logExtension.error("ShareExtension: Shared image could not be accessed.")
                         extensionItemType = .error
                         return
                     }
@@ -146,7 +146,7 @@ extension ShareView {
                           let contentString = scannedContent.messageString,
                           !contentString.isEmpty
                     else {
-                        logger.notice("Shared image could not be decoded. It may not have contained a QR code.")
+                        Logger.logExtension.notice("ShareExtension: Shared image could not be decoded. It may not have contained a QR code.")
                         fileURL.stopAccessingSecurityScopedResource()
                         extensionItemType = .badScan
                         return
@@ -163,7 +163,7 @@ extension ShareView {
                           let contentString = scannedContent.messageString,
                           !contentString.isEmpty
                     else {
-                        logger.notice("Shared image could not be decoded. It may not have contained a QR code.")
+                        Logger.logExtension.notice("ShareExtension: Shared image could not be decoded. It may not have contained a QR code.")
                         extensionItemType = .badScan
                         return
                     }
@@ -171,7 +171,7 @@ extension ShareView {
                     extensionItemType = .image(content: contentString)
                     
                 } else {
-                    logger.error("Image was shared in an unpredictable way.")
+                    Logger.logExtension.error("ShareExtension: Image was shared in an unpredictable way.")
                     extensionItemType = .error
                     return
                 }
@@ -182,7 +182,7 @@ extension ShareView {
         else if attachment.canLoadObject(ofClass: URL.self) {
             _ = attachment.loadObject(ofClass: URL.self, completionHandler: { (url,_) in
                 guard let url = url else {
-                    logger.error("Shared URL could not be read.")
+                    Logger.logExtension.error("ShareExtension: Shared URL could not be read.")
                     extensionItemType = .error
                     return
                 }
@@ -197,7 +197,7 @@ extension ShareView {
                           let data = try? Data(contentsOf: url),
                           let templateModel = try? TemplateModel(fromData: data)
                     else {
-                        logger.error("Shared Template could not be accessed.")
+                        Logger.logExtension.error("ShareExtension: Shared Template could not be accessed.")
                         extensionItemType = .error
                         return
                     }
@@ -205,7 +205,7 @@ extension ShareView {
                     extensionItemType = .template(model: templateModel)
 
                 } else {
-                    logger.notice("Invalid URL passed to QR Pop Share Extension. Likely a file.")
+                    Logger.logExtension.notice("ShareExtension: Invalid URL passed to QR Pop Share Extension. Likely a file.")
                     extensionItemType = .error
                     return
                 }
@@ -219,13 +219,13 @@ extension ShareView {
                 if let string = string as? String, !string.isEmpty, let url = URL(string: string) {
                     extensionItemType = .url(url: url, model: QRModel(design: DesignModel(), content: BuilderModel(text: url.absoluteString)))
                 } else {
-                    logger.warning("Shared String was not relevant.")
+                    Logger.logExtension.notice("ShareExtension: Shared String was not relevant.")
                     extensionItemType = .error
                 }
             }
         }
         else {
-            logger.warning("Unexpected item shared: \(attachment.registeredTypeIdentifiers)")
+            Logger.logExtension.notice("ShareExtension: Unexpected item shared: \(attachment.registeredTypeIdentifiers, privacy: .public)")
             extensionItemType = .error
         }
     }
@@ -356,9 +356,9 @@ extension ShareView {
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
                         dismiss()
                     }
-                } catch let error {
-                    logger.error("Could not save Template: \(error.localizedDescription)")
-                    toast = .error(note: "Could not save")
+                } catch {
+                    Logger.logExtension.error("ShareExtension: Template could not be inserted into the database")
+                    toast = .error(note: "Template could not be saved")
                 }
                 
             }, label: {
@@ -556,5 +556,3 @@ extension URL {
         return imageExtensions.contains(pathExtension.lowercased())
     }
 }
-
-fileprivate let logger = Logger(subsystem: Constants.bundleIdentifier, category: "share-extension")

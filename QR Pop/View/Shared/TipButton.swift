@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 import StoreKit
 
 struct TipButton: View {
@@ -38,18 +39,16 @@ struct TipButton: View {
                 case .verified(let transaction):
                     await transaction.finish()
                     sceneModel.toaster = .custom(image: Image(systemName: "party.popper"), imageColor: .pink, title: "Thank You!", note: "I really appreciate your support")
-                case .unverified(_, let error):
-                    debugPrint("Purcahse came back unverified: \(error.localizedDescription)")
-                    Constants.viewLogger.warning("A purcahse returned unverified.")
+                case .unverified(_,_):
+                    Logger.logView.notice("TipButton: A purcahse returned unverified.")
                 }
             case .userCancelled, .pending:
                 break
             default:
                 break
             }
-        } catch let error {
-            debugPrint(error)
-            Constants.viewLogger.error("Purchase error occured in Tip Button")
+        } catch {
+            Logger.logView.error("TipButton: An unexpected error occured during purchase().")
         }
     }
 }

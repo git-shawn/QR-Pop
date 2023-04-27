@@ -100,7 +100,7 @@ extension DesignModel {
               let scaledImage = try? platformImage.resized(to: CGSize(width: 256, height: 256))
         else {
             invalidateLogo()
-            DesignModel.logger.warning("Attempted to set invalid data as logo.")
+            Logger.logModel.notice("DesignModel: Attempted to set invalid data as logo.")
             throw DesignModelError.logoFailure
         }
         
@@ -152,16 +152,14 @@ extension DesignModel {
     /// - Warning: This function **saves** its changes within the context.
     @discardableResult func createTemplate(named title: String, in context: NSManagedObjectContext) throws -> TemplateEntity {
         let entity = TemplateEntity(context: context)
-        let rightNow = Date()
         
         entity.id = UUID()
-        entity.created = rightNow
-        entity.viewed = rightNow
+        entity.created = Date()
         entity.title = title.isEmpty ? "Template" : title
         entity.logo = self.logo
         entity.design = try self.asData()
         
-        try context.save()
+        try context.atomicSave()
         return entity
     }
     
@@ -314,9 +312,4 @@ extension DesignModel {
     enum DesignModelError: Error, LocalizedError {
         case logoFailure
     }
-    
-    private static let logger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "designModel"
-    )
 }

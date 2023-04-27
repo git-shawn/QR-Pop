@@ -4,7 +4,7 @@ window.onload = function() {
     optionsButton.addEventListener("click", openOptions);
 
     function handleResponse(message) {
-        console.log(message)
+
         let info = message.response;
         var url = info.url
         let codeSize = parseInt(info.codeSize)+40
@@ -50,7 +50,7 @@ window.onload = function() {
     }
     
     function handleError(error) {
-        console.log(`Error: ${error}`);
+        console.error(`Error: ${error}`);
     }
     
     // Request website information and user preferences from content.js

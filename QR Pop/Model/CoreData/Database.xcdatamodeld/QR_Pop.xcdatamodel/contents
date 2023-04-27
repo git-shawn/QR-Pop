@@ -5,9 +5,8 @@
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="design" optional="YES" attributeType="Binary"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="logo" optional="YES" attributeType="Binary"/>
+        <attribute name="logo" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="title" attributeType="String" defaultValueString="QR Code" spotlightIndexingEnabled="YES"/>
-        <attribute name="viewed" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="TemplateEntity" representedClassName="TemplateEntity" syncable="YES" codeGenerationType="class">
         <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -15,6 +14,5 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="logo" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="title" attributeType="String" defaultValueString="Template"/>
-        <attribute name="viewed" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
 </model>

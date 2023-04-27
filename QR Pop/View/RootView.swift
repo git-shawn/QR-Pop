@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 import StoreKit
 import CoreSpotlight
 
@@ -81,9 +82,8 @@ struct RootView: View {
                 case .verified(let transaction):
                     sceneModel.toaster = .custom(image: Image(systemName: "party.popper"), imageColor: .pink, title: "Thank You!", note: "I really appreciate your support")
                     await transaction.finish()
-                case .unverified(_,let error):
-                    debugPrint("Unverified transaction found in Transaction.updates: \(error.localizedDescription)")
-                    Constants.viewLogger.warning("Unverified transaction found: \(error.localizedDescription)")
+                case .unverified(_,_):
+                    Logger.logView.notice("RootView: An unverified transaction was found.")
                 }
             }
         }

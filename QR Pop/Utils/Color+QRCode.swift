@@ -17,8 +17,7 @@ extension Color {
         if let cgColor = cgColor {
             return QRCode.FillStyle.Solid(cgColor)
         } else {
-            debugPrint("Could not create CGColor")
-            Color.logger.warning("Color couldn't be converted to CGColor.")
+            Logger.logModel.error("Color: Color does not have member CGColor.")
             return QRCode.FillStyle.Solid(.black)
         }
     }
@@ -33,13 +32,8 @@ extension Color {
         if let cgColor = color.cgColor {
             return QRCode.FillStyle.Solid(cgColor)
         } else {
-            Color.logger.warning("Color with opacity couldn't be converted to CGColor.")
+            Logger.logModel.error("Color: Color does not have member CGColor.")
             return QRCode.FillStyle.Solid(.black)
         }
     }
-    
-    private static let logger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "color+qrpop"
-    )
 }

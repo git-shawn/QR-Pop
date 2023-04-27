@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct NewTemplateView: View {
     let model: TemplateModel
@@ -56,10 +57,9 @@ struct NewTemplateView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
                         dismiss()
                     }
-                } catch let error {
-                    debugPrint(error)
-                    Constants.viewLogger.error("Could not save Template to Database.")
-                    toast = .error(note: "Template not added")
+                } catch {
+                    Logger.logView.error("NewTemplateView: Tempalte could not be inserted into the database.")
+                    toast = .error(note: "Template could not be added")
                 }
             }, label: {
                 Text("Add to Templates")
@@ -96,10 +96,9 @@ struct NewTemplateView: View {
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
                             dismiss()
                         }
-                    } catch let error {
-                        debugPrint(error)
-                        Constants.viewLogger.error("Could not save Template to Database.")
-                        toast = .error(note: "Template not added")
+                    } catch {
+                        Logger.logView.error("NewTemplateView: Tempalte could not be inserted into the database.")
+                        toast = .error(note: "Template could not be added")
                     }
                 })
             }

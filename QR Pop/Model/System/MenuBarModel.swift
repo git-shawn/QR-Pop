@@ -43,7 +43,7 @@ struct MenuBarModel {
               let cgImage = nsImage.cgImage,
               ((try? FileManager.default.removeItem(at: resultURL)) != nil)
         else {
-            MenuBarModel.logger.error("Could not capture region of screen.")
+            Logger.logView.error("MenuBar: Could not capture a region of the screen.")
             throw MenuBarError.captureError
         }
         
@@ -99,7 +99,5 @@ extension MenuBarModel {
             }
         }
     }
-    
-    static var logger = Logger(subsystem: Constants.bundleIdentifier, category: "menubar")
 }
 #endif

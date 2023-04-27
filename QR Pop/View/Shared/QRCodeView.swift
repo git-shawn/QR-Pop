@@ -7,6 +7,7 @@
 
 import SwiftUI
 import QRCode
+import OSLog
 
 
 struct QRCodeView: View, Equatable {
@@ -190,9 +191,8 @@ extension QRCodeView {
                     do {
                         try design.setLogo(item)
                         return true
-                    } catch let error {
-                        debugPrint(error)
-                        Constants.viewLogger.error("Could not set logo image via drop target.")
+                    } catch {
+                        Logger.logView.notice("QRCodeView: A valid image could not be added to the model via dropDestination().")
                         return false
                     }
                 }

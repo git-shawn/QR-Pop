@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import OSLog
 
 struct TemplateCarousel: View {
     @FetchRequest private var templates: FetchedResults<TemplateEntity>
@@ -108,7 +109,7 @@ extension TemplateCarousel {
                     entityToRename?.title = templateTitle
                     templateTitle = ""
                     entityToRename = nil
-                    try moc.save()
+                    try moc.atomicSave()
                 } catch let error {
                     debugPrint(error)
                 }
@@ -162,10 +163,9 @@ extension TemplateCarousel {
                 do {
                     try designModel.createTemplate(named: templateTitle, in: moc)
                     templateTitle = ""
-                } catch let error {
-                    debugPrint(error)
-                    Constants.viewLogger.error("Template could not be created.")
-                    sceneModel.toaster = .error(note: "Template not saved.")
+                } catch {
+                    Logger.logView.error("TemplateCarousel: A template could not be created from the model.")
+                    sceneModel.toaster = .error(note: "Template could not be saved")
                 }
             })
         }, message: {
@@ -220,6 +220,7 @@ extension TemplateCarousel {
     var allTempaltesSheet: some View {
         NavigationStack {
             CoreDataList<TemplateEntity>(
+                entityType: .template,
                 fetchedItems: Array(templates),
                 selectAction: { template in
                     guard let design = template.design,
@@ -227,16 +228,6 @@ extension TemplateCarousel {
                     else { return }
                     self.designModel = designModel
                     viewingAllTemplates = false
-                },
-                deleteAction: { template in
-                    do {
-                        moc.delete(template)
-                        try moc.save()
-                    } catch let error {
-                        debugPrint(error)
-                        Constants.viewLogger.error("Could not save changes to database from All Templates Sheet in Template Carousel.")
-                        sceneModel.toaster = .error(note: "Changes not saved.")
-                    }
                 })
             .navigationTitle("All Templates")
             .toolbar {
@@ -285,11 +276,10 @@ extension TemplateCarousel {
             ImageButton("Delete Template", systemImage: "trash", role: .destructive, action: {
                 do {
                     moc.delete(entity)
-                    try moc.save()
-                } catch let error {
-                    Constants.viewLogger.error("Error deleting Template from Carousel.")
-                    debugPrint(error)
-                    sceneModel.toaster = .error(note: "Could not delete")
+                    try moc.atomicSave()
+                } catch {
+                    Logger.logView.error("TemplateCarousel: A template could not be removed from the database.")
+                    sceneModel.toaster = .error(note: "Template could not be deleted")
                 }
             })
         }
@@ -301,9 +291,7 @@ extension TemplateCarousel {
 extension TemplateCarousel {
     
     /// Assign the chosen template to the bound ``DesignModel``.
-    /// This function also increments a `TemplateEntity`'s `viewed` property.
     func assignTemplate(model: TemplateModel, template: TemplateEntity) {
-        template.viewed = Date()
         self.designModel = model.design
     }
 }

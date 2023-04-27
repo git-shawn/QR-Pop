@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreGraphics
-import OSLog
 
 struct Constants {
     private init() {}
@@ -24,11 +23,6 @@ extension Constants {
     
     // Handoff Values
     static let builderHandoffActivity = "shwndvs.qr-pop.buildingCode"
-    
-    static let viewLogger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "view"
-    )
 }
 
 // MARK: - Extend Bundle

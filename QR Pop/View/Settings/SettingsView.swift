@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 #if os(macOS)
 import SafariServices
 #endif
@@ -186,9 +187,8 @@ struct SettingsView: View {
                         do {
                             try Persistence.shared.deleteEntity("QREntity")
                             sceneModel.toaster = .custom(image: Image(systemName: "trash"), imageColor: .accentColor, title: "Erased", note: "Archive erased")
-                        } catch let error {
-                            Constants.viewLogger.error("Could not delete all `QREntities` from the database.")
-                            debugPrint(error)
+                        } catch {
+                            Logger.logView.error("Settings: Could not delete all `QREntities` from the database.")
                             sceneModel.toaster = .error(note: "Archive not erased")
                         }
                     })
@@ -198,7 +198,7 @@ struct SettingsView: View {
                             try Persistence.shared.deleteEntity("TemplateEntity")
                             sceneModel.toaster = .custom(image: Image(systemName: "trash"), imageColor: .accentColor, title: "Erased", note: "Templates erased")
                         } catch let error {
-                            Constants.viewLogger.error("Could not delete all `TemplateEntities` from the database.")
+                            Logger.logView.error("Settings: Could not delete all `TemplateEntities` from the database.")
                             debugPrint(error)
                             sceneModel.toaster = .error(note: "Templates not erased")
                         }
@@ -245,6 +245,13 @@ struct SettingsView: View {
             .tint(.primary)
             
             Section {
+                ImageButton("Deploy CloudKit Schema", systemImage: "icloud.and.arrow.up", action: {
+                    do {
+                        try Persistence.shared.container.initializeCloudKitSchema()
+                    } catch let error {
+                        fatalError("\(error)")
+                    }
+                })
                 ImageButton("Reset Version Counter", systemImage: "clock.badge.xmark", action: {
                     lastMajorVersion = 0.0
                     sceneModel.toaster = .success(note: "Whats New Reset")
@@ -257,6 +264,7 @@ struct SettingsView: View {
                 ImageButton("Wipe Core Data", systemImage: "externaldrive.badge.xmark", action: {
                     do {
                         try Persistence.shared.deleteAllEntities()
+                        try Persistence.shared.container.viewContext.atomicSave()
                         sceneModel.toaster = .success(note: "Database erased")
                     } catch {}
                 })

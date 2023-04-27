@@ -16,9 +16,8 @@ import CoreData
 import CloudKit
 import SwiftUI
 import OSLog
-#if canImport(CoreSpotlight)
+#if os(iOS) || os(macOS)
 import CoreSpotlight
-#elseif canImport(WidgetKit)
 import WidgetKit
 #endif
 
@@ -62,9 +61,8 @@ class Persistence: ObservableObject {
         container.viewContext.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
         
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                logger.error("The container could not be loaded: \(error.localizedDescription)")
-                debugPrint(error)
+            if error != nil {
+                Logger.logPersistence.error("The container could not be loaded.")
             }
         })
         
@@ -96,7 +94,6 @@ extension Persistence {
             let qrEntity = QREntity(context: viewContext)
             qrEntity.id = UUID()
             qrEntity.created = Date()
-            qrEntity.viewed = Date()
             qrEntity.title = "QR Code \(i)"
             qrEntity.design = try? design.asData()
             qrEntity.builder = try? BuilderModel().asData()
@@ -106,12 +103,11 @@ extension Persistence {
             templateEntity.id = UUID()
             templateEntity.title = "Template \(i)"
             templateEntity.created = Date()
-            templateEntity.viewed = Date()
             templateEntity.logo = nil
             templateEntity.design = try? design.asData()
         }
         do {
-            try viewContext.save()
+            try viewContext.atomicSave()
         } catch {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
@@ -122,51 +118,33 @@ extension Persistence {
 
 // MARK: - Save Functions
 
-extension Persistence {
+extension NSManagedObjectContext {
     
-    /// Save any changes to the context.
-    /// - Parameter sender: A String identifier for logging purposes.
-    func saveQREntity(sender: String = "unspecified") -> Bool {
-        guard save(sender) else { return false }
-        
-#if canImport(AppIntent)
-        QRPopShortcuts.updateAppShortcutParameters()
-#endif
-#if canImport(WidgetCenter)
-        WidgetCenter.shared.reloadTimelines(ofKind: "ArchiveWidget")
-#endif
-        return true
-    }
-    
-    /// Save any changes to the context.
-    /// - Parameter sender: A String identifier for logging purposes.
+    /// Attempts to commit unsaved changes to registered objects to the context’s parent store
+    /// then informs interested parties that the context was changed.
     ///
-    /// This function commits **all** changes made to the context, not just those impacting `TemplateEntities`.
-    func saveTemplateEntity(sender: String = "unspecified") -> Bool {
-        guard save(sender) else { return false }
-        
-        // Do something after saving
-        
-        return true
-    }
-    
-    private func save(_ sender: String) -> Bool {
-        if self.container.viewContext.hasChanges {
-            do {
-                try self.container.viewContext.save()
-                return true
-            } catch {
-                logger.warning("Database changes called by \"\(sender, privacy: .public)\" could not be saved.")
-                return false
+    /// Unlike `save()`, this function guarantees that there are uncommitted changes before running.
+    /// The following additional functions are called after save:
+    /// - Shortcuts are updated.
+    /// - Widgets are reloaded.
+    /// If the save fails, these additional functions are not called and an error is thrown.
+    func atomicSave() throws {
+        Task { @MainActor [weak self] in
+            if self?.hasChanges ?? false {
+                try self?.save()
+#if canImport(AppIntent)
+                QRPopShortcuts.updateAppShortcutParameters()
+#endif
+#if os(iOS) || os(macOS)
+                WidgetCenter.shared.reloadAllTimelines()
+#endif
             }
-        } else {
-            return false
         }
     }
 }
 
 // MARK: - Delete Functions
-
+#if !CLOUDEXT
 extension Persistence {
     
     /// Delete all entities, essentially wiping the database.
@@ -186,7 +164,44 @@ extension Persistence {
         try container.viewContext.execute(deleteRequest)
     }
     
+    /// Delete an array of entities of a known `UUID` and ``EntityType``.
+    /// - Warning: All entities must be of the same type.
+    /// - Parameters:
+    ///   - entities: The entities to delete, as ``Entity``.
+    ///   - type: The type of entity to delete.
+    func deleteEntities(_ entities: [any Entity], of type: EntityType) throws {
+        for entity in entities {
+            try deleteEntity(entity, of: type)
+        }
+    }
+    
+    /// Delete an entity of a known 'UUID' and ``EntityType``.
+    /// - Parameters:
+    ///   - entity: The entity to delete, as ``Entity``.
+    ///   - type: The type of entity to delete.
+    func deleteEntity(_ entity: any Entity, of type: EntityType) throws {
+        switch type {
+        case .archive:
+            let fetchedEntity = try getQREntityWithUUID(entity.id)
+            container.viewContext.delete(fetchedEntity)
+            try container.viewContext.atomicSave()
+        case .template:
+            let fetchedEntity = try getTemplateEntityWithUUID(entity.id)
+            container.viewContext.delete(fetchedEntity)
+            try container.viewContext.atomicSave()
+        }
+    }
+    
+    /// The type of entity associated with the otherwise type-erased ``Entity``.
+    enum EntityType: String {
+        /// Represents `TemplateEntity`.
+        case template = "TemplateEntity"
+        /// Represents `QREntity`.
+        case archive = "QREntity"
+    }
+    
 }
+#endif
 
 // MARK: - Fetch Functions
 
@@ -195,7 +210,7 @@ extension Persistence {
     /// Fetch a single `QREntity` with the URI representation of its Managed Object ID.
     /// - Parameter uri: The URI representation of an NSManagedObjectID.
     /// - Returns: A `QREntity`, if one is found, else `nil`.
-    func getQrEntityWithURI(_ uri: URL) -> QREntity? {
+    func getQREntityWithURI(_ uri: URL) -> QREntity? {
         guard let objectID = container.viewContext
             .persistentStoreCoordinator?
             .managedObjectID(forURIRepresentation: uri)
@@ -223,7 +238,7 @@ extension Persistence {
     /// - Returns: A `QREntity` matching the `id`.
     func getQREntityWithUUID(_ identifier: UUID?) throws -> QREntity {
         guard let identifier = identifier else {
-            logger.notice("A QREntity was requested using an invalid UUID.")
+            Logger.logPersistence.notice("A QREntity was requested using an invalid UUID.")
             throw PersistenceError.invalidUUID
         }
         
@@ -232,7 +247,7 @@ extension Persistence {
         let items = try container.viewContext.fetch(request)
         
         guard let item = items.first else {
-            logger.warning("No QREntity was found with provided UUID.")
+            Logger.logPersistence.notice("No QREntity was found with UUID provided to getQREntityWithUUID().")
             throw PersistenceError.noEntityFound
         }
         return item
@@ -243,7 +258,7 @@ extension Persistence {
     /// - Returns: A `TemplateEntity` matching the `id`.
     func getTemplateEntityWithUUID(_ identifier: UUID?) throws -> TemplateEntity {
         guard let identifier = identifier else {
-            logger.notice("A TemplateEntity was requested using an invalid UUID.")
+            Logger.logPersistence.notice("A TemplateEntity was requested using an invalid UUID.")
             throw PersistenceError.invalidUUID
         }
         
@@ -252,7 +267,7 @@ extension Persistence {
         let items = try container.viewContext.fetch(request)
         
         guard let item = items.first else {
-            logger.warning("No TemplateEntity was entity found with provided UUID.")
+            Logger.logPersistence.notice("No TemplateEntity was found with UUID provided to getTemplateEntityWithUUID().")
             throw PersistenceError.noEntityFound
         }
         return item
@@ -308,11 +323,11 @@ extension Persistence {
     
     /// Fetch the `k` most recent `QREntity` objects stored in the database.
     ///   - k: The number of entities to fetch. Default is `1`.
-    ///   - recency: An enum representing whether to fetch entities by their `created` data or `viewed` date. Default is `created`.
+    ///   - recency: An enum representing whether to fetch entities by their `created` date.
     /// - Returns: All matching `QREntity`s.
-    func getMostRecentQREntities(_ k: Int = 1, by recency: Recency = .created) throws -> [QREntity] {
+    func getMostRecentQREntities(_ k: Int = 1) throws -> [QREntity] {
         let request = QREntity.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: recency.rawValue, ascending: false)]
+        request.sortDescriptors = [NSSortDescriptor(key: "created", ascending: false)]
         request.fetchLimit = k
         let items = try container.viewContext.fetch(request)
         return items
@@ -321,20 +336,14 @@ extension Persistence {
     /// Fetch the `k` most recent `TemplateEntity` objects stored in the database.
     /// - Parameters:
     ///   - k: The number of entities to fetch. Default is `1`.
-    ///   - recency: An enum representing whether to fetch entities by their `created` data or `viewed` date. Default is `created`.
+    ///   - recency: An enum representing whether to fetch entities by their `created` date.
     /// - Returns: All matching `TemplateEntity`s.
-    func getMostRecentTemplateEntities(_ k: Int = 1, by recency: Recency = .created) throws -> [TemplateEntity] {
+    func getMostRecentTemplateEntities(_ k: Int = 1) throws -> [TemplateEntity] {
         let request = TemplateEntity.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: recency.rawValue, ascending: false)]
+        request.sortDescriptors = [NSSortDescriptor(key: "created", ascending: false)]
         request.fetchLimit = k
         let items = try container.viewContext.fetch(request)
         return items
-    }
-    
-    /// The types of date an entity can be sorted by.
-    enum Recency: String {
-        case created = "created"
-        case viewed = "viewed"
     }
     
     /// Fetch **all** `QREntity`s stored in the database.
@@ -460,5 +469,3 @@ extension Persistence {
         }
     }
 }
-
-fileprivate let logger = Logger(subsystem: Constants.bundleIdentifier, category: "persistence")

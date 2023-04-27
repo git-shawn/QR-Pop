@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import OSLog
 import QRCode
 
 struct ScannerView: View {
@@ -109,9 +110,8 @@ extension ScannerView {
             switch result {
             case .success(let success):
                 scanFromURL(success)
-            case .failure(let failure):
-                debugPrint(failure)
-                Constants.viewLogger.notice("Failure in Scanner View file importer: \(failure)")
+            case .failure(_):
+                Logger.logView.notice("ScannerView: Could not import file.")
             }
         })
         .toolbar {
@@ -209,9 +209,8 @@ extension ScannerView {
                 }
                 model.camera.stop()
                 self.result = .success(resultString)
-            case .failure(let failure):
-                debugPrint(failure)
-                Constants.viewLogger.error("Could not access photo from photo picker in ScannerView.")
+            case .failure(_):
+                Logger.logView.error("ScannerView: Could not access photo from photo picker.")
                 sceneModel.toaster = .error(note: "Could not access photo")
             }
         })

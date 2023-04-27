@@ -36,7 +36,6 @@ extension TemplateModel {
     
 #if !EXTENSION && !CLOUDEXT
     /// Transforms a `TemplateEntity` into a `TemplateModel` containing a decoded `DesignModel`.
-    /// - Warning: Calling this initializer does **not** increment the entity's `viewed` property.
     /// - Parameter entity: A `TemplateEntity` stored in the database.
     init(entity: TemplateEntity) throws {
         self.title = entity.title ?? "Template"
@@ -44,7 +43,7 @@ extension TemplateModel {
         self.logo = entity.logo
         self.id = entity.id ?? UUID()
         guard let data = entity.design else {
-            TemplateModel.logger.warning("Template Model was initiated with invalid data provided by a CoreData entity.")
+            Logger.logModel.notice("TemplateModel: Model was initiated with invalid entity data.")
             throw TemplateModelError.invalidInput
         }
         self.design = try DesignModel(decoding: data, with: entity.logo)
@@ -76,11 +75,10 @@ extension TemplateModel {
         let entity = TemplateEntity(context: context)
         entity.id = UUID()
         entity.created = Date()
-        entity.viewed = Date()
         entity.title = self.title
         entity.logo = self.logo
         entity.design = try self.design.asData()
-        try context.save()
+        try context.atomicSave()
         return entity
     }
 #endif
@@ -127,9 +125,4 @@ extension TemplateModel {
     enum TemplateModelError: Error, LocalizedError {
         case decodingFailure, invalidInput
     }
-    
-    private static let logger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "templateModel"
-    )
 }

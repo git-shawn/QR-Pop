@@ -34,7 +34,7 @@ extension UIImage {
 
         UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
         guard let context = UIGraphicsGetCurrentContext() else {
-            UIImage.logger.error("Could not get current UIGraphicsContext to perform rotation.")
+            Logger.logModel.error("UIImage: Could not get current UIGraphicsContext to perform rotation.")
             return nil
         }
         
@@ -54,8 +54,7 @@ extension UIImage {
     /// - Returns: The image at a new size.
     func resized(to size: CGSize) throws -> UIImage {
         guard let result = self.preparingThumbnail(of: size) else {
-            debugPrint("Could not resize UIImage")
-            UIImage.logger.error("Could not resize UIImage")
+            Logger.logModel.error("UIImage: Could not prepare thumbnail for image.")
             throw PlatformImageError.drawError
         }
         return result
@@ -90,8 +89,7 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(rectOfSize, false, 0)
         self.draw(in: placementRect)
         guard let placedImage = UIGraphicsGetImageFromCurrentImageContext() else {
-            debugPrint("Could not get current image from UIGraphicsContext.")
-            UIImage.logger.error("Could not get current image from UIGraphicsContext.")
+            Logger.logModel.error("UIImage: Could not get an image from UIGraphicsContext.")
             throw PlatformImageError.drawError
         }
         UIGraphicsEndImageContext()
@@ -107,8 +105,7 @@ extension UIImage {
     func strokeEdges(by lineWidthPercentage: Double) throws -> UIImage {
         guard let coreImage = CIImage(image: self)
         else {
-            debugPrint("Could not get CIImage")
-            UIImage.logger.error("Could not create CIImage from UIImage in StrokeAndFill function.")
+            Logger.logModel.error("UIImage: Could not create CIImage.")
             throw PlatformImageError.drawError
         }
         
@@ -125,8 +122,7 @@ extension UIImage {
         let background = widenedEdges.applyingFilter("CIMaskToAlpha")
         let context = CIContext(options: nil)
         guard let cgImageRef = context.createCGImage(background, from: background.extent) else {
-            debugPrint("Could not create CGImage from CIImage.")
-            UIImage.logger.error("Could not create CGImage from CIImage in StrokeAndFill function.")
+            Logger.logModel.error("UIImge: Could not create CGImage from CIImage.")
             throw PlatformImageError.drawError
         }
         return UIImage(cgImage: cgImageRef)
@@ -135,11 +131,6 @@ extension UIImage {
     enum ClockwiseRotation {
         case clockwise, counterclockwise
     }
-    
-    private static let logger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "platformImage+Position"
-    )
 }
 
 #elseif canImport(AppKit)
@@ -243,8 +234,7 @@ extension NSImage {
     func strokeEdges(by lineWidthPercentage: Double) throws -> NSImage {
         guard let cgImage = self.cgImage
         else {
-            debugPrint("Could not get CIImage")
-            NSImage.logger.error("Could not create CGImage from NSImage in strokeEdges function.")
+            Logger.logModel.error("NSImage: NSImage does not have member CGImage.")
             throw PlatformImageError.drawError
         }
         
@@ -263,8 +253,7 @@ extension NSImage {
         let background = widenedEdges.applyingFilter("CIMaskToAlpha")
         let context = CIContext(options: nil)
         guard let cgImageRef = context.createCGImage(background, from: background.extent) else {
-            debugPrint("Could not create CGImage from CIImage.")
-            NSImage.logger.error("Could not create CGImage from CIImage in strokeEdges function.")
+            Logger.logModel.error("NSImage: CIImage could not be converted to CIImage.")
             throw PlatformImageError.drawError
         }
         return NSImage(cgImage: cgImageRef)
@@ -273,11 +262,6 @@ extension NSImage {
     enum ClockwiseRotation {
         case clockwise, counterclockwise
     }
-    
-    private static let logger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "platformImage+Position"
-    )
 }
 
 #endif

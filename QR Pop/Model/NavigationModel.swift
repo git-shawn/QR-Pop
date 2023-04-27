@@ -42,7 +42,7 @@ extension NavigationModel {
     /// - Parameter k: Number of views to remove from the path. Default 1.
     func goBack(_ k: Int = 1) throws {
         guard k > 0, k <= path.count else {
-            NavigationModel.logger.warning("`goBack` function called with a parameter that is out of bounds.")
+            Logger.logModel.notice("NavigationModel: The goBack() function was called with a parameter that is out of bounds.")
             throw NavigationError.invalidPath
         }
         path.removeLast(k)
@@ -90,13 +90,14 @@ extension NavigationModel {
     ///
     /// - Parameter url: A URL to handle.
     func handleURL(_ url: URL) throws {
-        print(url)
+        Logger.logModel.debug("NavigationModel: Incoming URL - \(url)")
+        
         if url.scheme == "qrpop" {
             try handleDeepLink(url)
         } else if url.scheme == "file" && url.pathExtension.lowercased() == "qrpt" {
             try handleIncomingTemplate(url)
         } else {
-            NavigationModel.logger.notice("No valid schemes found in incoming URL")
+            Logger.logModel.notice("NavigationModel: No valid schemes found in incoming URL.")
             throw NavigationError.invalidURL
         }
     }
@@ -105,9 +106,9 @@ extension NavigationModel {
     /// - Parameter url: A URL to handle.
     private func handleDeepLink(_ url: URL) throws {
         let components = url.pathComponents
-        print(components)
+        Logger.logModel.debug("NavigationModel: URL Components - \(components)")
         guard let primaryRoute = components[safe: 1]?.lowercased() else {
-            NavigationModel.logger.notice("No path at all found in incoming URL")
+            Logger.logModel.notice("NavigationModel: No path at all found in incoming URL.")
             throw NavigationError.invalidURL
         }
         
@@ -117,7 +118,7 @@ extension NavigationModel {
         case "template":
             guard let fileUrlString = url.query(percentEncoded: false), let fileUrl = URL(string: fileUrlString)
             else {
-                NavigationModel.logger.notice("Incoming URL passed with invalid template description.")
+                Logger.logModel.notice("NavigationModel: Incoming URL passed with invalid template description.")
                 throw NavigationError.invalidURL
             }
             try handleIncomingTemplate(fileUrl)
@@ -168,7 +169,7 @@ extension NavigationModel {
             navigate(to: .settings)
             
         default:
-            NavigationModel.logger.notice("No valid path found in incoming URL")
+            Logger.logModel.notice("NavigationModel: No valid path found in incoming URL \(url, privacy: .private).")
             throw NavigationError.invalidURL
         }
     }
@@ -191,7 +192,7 @@ extension NavigationModel {
     func handleSpotlight(_ activity: NSUserActivity) {
         if let id = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String,
            let coreDataURI = URL(string: id),
-           let entity = Persistence.shared.getQrEntityWithURI(coreDataURI),
+           let entity = Persistence.shared.getQREntityWithURI(coreDataURI),
            let model = try? QRModel(withEntity: entity)
         {
             navigate(to: .archive(code: model))
@@ -308,9 +309,4 @@ extension NavigationModel {
         case invalidURL
         case badAccess
     }
-    
-    private static let logger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "navigationModel"
-    )
 }

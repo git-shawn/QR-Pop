@@ -18,19 +18,7 @@ struct QR_PopApp: App {
             RootView()
                 .handlesExternalEvents(preferring: ["file://", "qrpop://"], allowing: ["*"])
                 .environment(\.managedObjectContext, persistence.container.viewContext)
-            
-            // MARK: - Core Data
-            /// Save any uncomitted changes when QR Pop enters the background.
-                .onChange(of: scenePhase) { phase in
-                    switch phase {
-                    case .active, .inactive:
-                        break
-                    case .background:
-                        saveContext()
-                    @unknown default:
-                        break
-                    }
-                }
+
 #if os(iOS)
             // MARK: - iOS: Listen for Non-Interactive Scenes
                 .onReceive(MirrorModel.shared.sceneWillConnectPublisher, perform: MirrorModel.shared.sceneWillConnect)
@@ -91,17 +79,5 @@ struct QR_PopApp: App {
         .defaultAppStorage(UserDefaults.appGroup)
         .defaultPosition(.center)
 #endif
-    }
-    
-    func saveContext() {
-        let moc = Persistence.shared.container.viewContext
-        if moc.hasChanges {
-            do {
-                try moc.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
     }
 }

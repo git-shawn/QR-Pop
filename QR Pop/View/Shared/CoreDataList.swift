@@ -6,27 +6,34 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct CoreDataList<FetchedEntity: Entity>: View {
     var fetchedItems: [FetchedEntity]
     @State private var filteredEntities: [FetchedEntity]
     @State private var searchQuery: String = ""
     var selectAction: (FetchedEntity) -> Void
-    var deleteAction: (FetchedEntity) -> Void
+    let entityType: Persistence.EntityType
     
     @AppStorage("dataListSortType", store: .appGroup) private var sort: SortType = .titleAscending
-    @AppStorage("dataListShowViewed", store: .appGroup) private var showViewed = false
     
     @State private var entityToRename: FetchedEntity?
     @State private var isRenamingEntity = false
     @State private var newTitle = ""
     
+    @State private var isEditing: Bool = false
+    @State private var selectedEntities: [FetchedEntity] = []
+    
     @Environment(\.managedObjectContext) var moc
     
-    init(fetchedItems: [FetchedEntity], selectAction: @escaping (FetchedEntity) -> Void, deleteAction: @escaping (FetchedEntity) -> Void) {
+    init(
+        entityType: Persistence.EntityType,
+        fetchedItems: [FetchedEntity],
+        selectAction: @escaping (FetchedEntity) -> Void)
+    {
         self.fetchedItems = fetchedItems
         self.selectAction = selectAction
-        self.deleteAction = deleteAction
+        self.entityType = entityType
         
         // Pre-sort
         let defaultSort = SortType(rawValue: UserDefaults.appGroup.integer(forKey: "dataListSortType"))
@@ -36,36 +43,60 @@ struct CoreDataList<FetchedEntity: Entity>: View {
     var body: some View {
         List {
             ForEach(filteredEntities, id: \.id) { item in
-                Button(action: {
-                    selectAction(item)
-                }, label: {
-                    VStack {
-                        HStack(spacing: 14) {
-                            if let data = item.design, let model = try? DesignModel(decoding: data, with: item.logo) {
-                                QRCodeView(qrcode: .constant(QRModel(design: model, content: BuilderModel())))
-                                    .frame(width: 52, height: 52)
-#if os(macOS)
-                                    .padding(.leading)
-#endif
-                            }
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(item.title ?? "QR Code")
-                                    .foregroundColor(.primary)
-                                Text("\((showViewed ? item.viewed : item.created ) ?? Date(), format: Date.FormatStyle(date: .numeric, time: .shortened))")
-                                    .font(.footnote)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                                .foregroundColor(.tertiaryLabel)
+                HStack(spacing: 10) {
+                    ZStack {
+                        if isEditing {
+                            Button(action: {
+                                if let index = selectedEntities.firstIndex(of: item) {
+                                    selectedEntities.remove(at: index)
+                                } else {
+                                    selectedEntities.append(item)
+                                }
+                            }, label: {
+                                ZStack {
+                                    if selectedEntities.contains(item) {
+                                        Label("Deselect", systemImage: "checkmark.circle.fill")
+                                            .foregroundColor(.accentColor)
+                                    } else {
+                                        Label("Select", systemImage: "circle")
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                .imageScale(.large)
+                                .labelStyle(.iconOnly)
+                                .buttonStyle(.plain)
+                            })
+                            .buttonStyle(.plain)
                         }
-#if os(macOS)
-                        Divider()
-#endif
                     }
-                    .contentShape(Rectangle())
-                })
-                .buttonStyle(.plain)
+                    .transition(.push(from: .leading))
+                    
+                    Button(action: {
+                        selectAction(item)
+                    }, label: {
+                        VStack {
+                            HStack(spacing: 14) {
+                                if let data = item.design, let model = try? DesignModel(decoding: data, with: item.logo) {
+                                    QRCodeView(qrcode: .constant(QRModel(design: model, content: BuilderModel())))
+                                        .frame(width: 52, height: 52)
+                                }
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(item.title ?? "QR Code")
+                                        .foregroundColor(.primary)
+                                    Text("\(item.created ?? Date(), format: Date.FormatStyle(date: .numeric, time: .shortened))")
+                                        .font(.footnote)
+                                        .foregroundColor(.secondary)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.forward")
+                                    .foregroundColor(.tertiaryLabel)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                    })
+                    .disabled(isEditing)
+                    .buttonStyle(.plain)
+                }
                 .contextMenu {
                     ImageButton("Rename", systemImage: "pencil", action: {
                         newTitle = item.title ?? "QR Code"
@@ -74,12 +105,12 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                     })
                     Divider()
                     ImageButton("Delete", systemImage: "trash", role: .destructive, action: {
-                        deleteAction(item)
+                        deleteItems([item])
                     })
                 }
                 .swipeActions {
                     ImageButton("Delete", systemImage: "trash", role: .destructive, action: {
-                        deleteAction(item)
+                        deleteItems([item])
                     })
                     
                     ImageButton("Rename", systemImage: "pencil", action: {
@@ -91,116 +122,69 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                 }
             }
         }
+#if os(iOS)
         .listStyle(.plain)
+#else
+        .listStyle(.inset(alternatesRowBackgrounds: true))
+        .environment(\.defaultMinListRowHeight, 64)
+#endif
         .onChange(of: sort) { sort in
             filteredEntities = CoreDataList.sortEntities(filteredEntities, by: sort)
         }
         .onChange(of: fetchedItems) { newItems in
+            Logger.logView.debug("CoreDataList: FetchedItems has changed, likely via CloudKit.")
             filteredEntities = CoreDataList.sortEntities(newItems, by: sort)
-        }
-        .refreshable {
-            filteredEntities = CoreDataList.sortEntities(fetchedItems, by: sort)
         }
         
         // MARK: - Toolbar
         
         .toolbar {
 #if os(iOS)
-            ToolbarItem(placement: .status) {
-                Text("\(fetchedItems.count) Entries")
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
+            ToolbarItemGroup(placement: .bottomBar) {
+                sortButton
+                Spacer()
+                if !isEditing {
+                    Text("\(fetchedItems.count) Entries")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                } else {
+                    Text("\(selectedEntities.count) Selected")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                    Button("Trash", role: .destructive, action: {
+                        withAnimation {
+                            deleteItems(selectedEntities)
+                            isEditing.toggle()
+                        }
+                    })
+                    .disabled(selectedEntities.isEmpty)
+                }
             }
-#endif
+            
             ToolbarItem(placement: .primaryAction) {
-                Menu(content: {
-                    Button(action: {
-                        if sort == .titleDescending {
-                            sort = .titleAscending
-                        } else {
-                            sort = .titleDescending
-                        }
-                    }, label: {
-                        HStack {
-                            Text("Title")
-                            if sort == .titleAscending {
-                                Image(systemName: "chevron.up")
-                            } else if sort == .titleDescending {
-                                Image(systemName: "chevron.down")
-                            }
-                        }
-                    })
-                    
-                    Button(action: {
-                        if sort == .createdLatest {
-                            sort = .createdOldest
-                        } else {
-                            sort = .createdLatest
-                        }
-                    }, label: {
-                        HStack {
-                            Text("Date Created")
-                            if sort == .createdLatest {
-                                Image(systemName: "chevron.up")
-                            } else if sort == .createdOldest {
-                                Image(systemName: "chevron.down")
-                            }
-                        }
-                    })
-                    
-                    Button(action: {
-                        if sort == .viewedLatest {
-                            sort = .viewedOldest
-                        } else {
-                            sort = .viewedLatest
-                        }
-                    }, label: {
-                        HStack {
-                            Text("Date Viewed")
-                            if sort == .viewedLatest {
-                                Image(systemName: "chevron.up")
-                            } else if sort == .viewedOldest {
-                                Image(systemName: "chevron.down")
-                            }
-                        }
-                    })
-                    
-                    Divider()
-                    
-                    Menu("View Options") {
-                        
-                        Button(action: {
-                            showViewed = false
-                        }, label: {
-                            HStack {
-                                Text("Show Created Date")
-                                if !showViewed {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
-                        })
-                        
-                        Button(action: {
-                            showViewed = true
-                        }, label: {
-                            HStack {
-                                Text("Show Last Viewed")
-                                if showViewed {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
-                        })
-                    }
-                }, label: {
-                    Label("Sort", systemImage: "arrow.up.arrow.down.circle")
-#if os(macOS)
-                        .labelStyle(.titleOnly)
-#endif
-                })
-#if os(macOS)
-                .help("Change the item sorting as well as whether to show the \"Created\" date or \"Last Viewed\" date.")
-#endif
+                editButton
             }
+#else
+            ToolbarItemGroup(placement: .primaryAction) {
+                sortButton
+                editButton
+            }
+            
+            ToolbarItemGroup(placement: .optionsBar) {
+                if isEditing {
+                    ImageButton("Trash", systemImage: "trash", role: .destructive, action: {
+                        withAnimation {
+                            deleteItems(selectedEntities)
+                            isEditing.toggle()
+                        }
+                    })
+                    .labelStyle(.titleAndIcon)
+                    .disabled(selectedEntities.isEmpty)
+                }
+            }
+#endif
         }
         
         // MARK: - Searchable
@@ -223,13 +207,88 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                 do {
                     entityToRename?.title = newTitle
                     newTitle = ""
-                    try moc.save()
+                    try moc.atomicSave()
                 } catch let error {
                     debugPrint(error)
                 }
             })
             .disabled(newTitle.isEmpty)
         })
+    }
+    
+    // MARK: - Sort Button
+    
+    var sortButton: some View {
+        Menu(content: {
+            
+            Menu(content: {
+                Button("Alphabetically", action: {
+                    sort = .titleAscending
+                })
+                
+                Button("Reversed", action: {
+                    sort = .titleDescending
+                })
+            }, label: {
+                Label("By Title", systemImage: "checkmark")
+                    .labelStyle(SelectedLabelStyle(sort == .titleAscending || sort == .titleDescending))
+            })
+            
+            Menu(content: {
+                Button("Newest", action: {
+                    sort = .createdLatest
+                })
+                Button("Oldest", action: {
+                    sort = .createdOldest
+                })
+            }, label: {
+                Label("By Created", systemImage: "checkmark")
+                    .labelStyle(SelectedLabelStyle(sort == .createdLatest || sort == .createdOldest))
+            })
+        }, label: {
+            Text("Sort")
+        })
+        .environment(\.menuOrder, .fixed)
+#if os(macOS)
+        .help("Sort this list either alphabetically or by date created.")
+#endif
+    }
+    
+    // MARK: - Edit Button
+    
+    var editButton: some View {
+        
+        Button(action: {
+            withAnimation {
+                isEditing.toggle()
+                if !isEditing {
+                    selectedEntities = []
+                }
+            }
+        }, label: {
+            ZStack {
+                if isEditing {
+                    Text("Cancel")
+                        .bold()
+                } else {
+                    Text("Edit")
+                }
+            }
+            .transaction { $0.animation = nil }
+        })
+    }
+}
+
+// MARK: - Delete Fetched Items
+
+extension CoreDataList {
+    
+    func deleteItems(_ items: [FetchedEntity]) {
+        do {
+            try Persistence.shared.deleteEntities(items, of: entityType)
+        } catch {
+            Logger.logView.error("CoreDataList: Failed to delete \(items.count, privacy: .public) \(entityType.rawValue, privacy: .public) items from from the database.")
+        }
     }
 }
 
@@ -243,10 +302,6 @@ extension CoreDataList {
             return filteredEntities.sorted(by: { $0.created ?? Date() > $1.created ?? Date() })
         case .createdOldest:
             return filteredEntities.sorted(by: { $0.created ?? Date() < $1.created ?? Date() })
-        case .viewedLatest:
-            return filteredEntities.sorted(by: { $0.viewed ?? Date() > $1.viewed ?? Date() })
-        case .viewedOldest:
-            return filteredEntities.sorted(by: { $0.viewed ?? Date() < $1.viewed ?? Date() })
         case .titleAscending:
             return filteredEntities.sorted(by: { ($0.title ?? "QR Code").localizedStandardCompare($1.title ?? "QR Code") == .orderedAscending })
         case .titleDescending:
@@ -255,7 +310,7 @@ extension CoreDataList {
     }
     
     enum SortType: Int {
-        case createdLatest, createdOldest, viewedLatest, viewedOldest, titleAscending, titleDescending
+        case createdLatest, createdOldest, titleAscending, titleDescending
     }
 }
 
@@ -270,14 +325,46 @@ struct CoreDataList_Previews: PreviewProvider {
         
         var body: some View {
             NavigationStack {
-                CoreDataList(fetchedItems: fetchedItems, selectAction: { entity in
-                    print("\(entity.title ?? "No title?") selected!")
-                }, deleteAction: { entity in
-                    fetchedItems.removeAll(where: {$0.id == entity.id})
-                })
+                CoreDataList(
+                    entityType: .archive,
+                    fetchedItems: fetchedItems,
+                    selectAction: { entity in
+                        print("\(entity.title ?? "No title?") selected!")
+                    })
                 .navigationTitle("My List")
             }
         }
         
     }
 }
+
+// MARK: - Selected Button Modifier
+
+struct SelectedLabelStyle: LabelStyle {
+    var isSelected: Bool
+    
+    init(_ isSelected: Bool) {
+        self.isSelected = isSelected
+    }
+    
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+#if os(iOS)
+            if isSelected {
+                configuration.icon
+            }
+#endif
+            configuration.title
+        }
+    }
+}
+
+
+#if os(macOS)
+// MARK: - Secondary Toolbar Row
+
+extension ToolbarItemPlacement {
+    static let optionsBar = ToolbarItemPlacement(id: "shwndvs.coreDataSheetEditingOptions")
+}
+
+#endif

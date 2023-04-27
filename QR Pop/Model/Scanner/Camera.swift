@@ -65,7 +65,7 @@ class Camera: NSObject {
     private var captureDevice: AVCaptureDevice? {
         didSet {
             guard let captureDevice = captureDevice else { return }
-            logger.debug("Using capture device: \(captureDevice.localizedName) located at \(captureDevice.position.rawValue)")
+            Logger.logModel.debug("Camera: Using capture device: \(captureDevice.localizedName)")
             sessionQueue.async {
                 self.updateSessionForCaptureDevice(captureDevice)
             }
@@ -133,7 +133,7 @@ class Camera: NSObject {
             let captureDevice = captureDevice,
             let deviceInput = try? AVCaptureDeviceInput(device: captureDevice)
         else {
-            logger.error("Failed to obtain video input.")
+            Logger.logModel.error("Camera: Failed to obtain video input.")
             return
         }
         
@@ -142,12 +142,12 @@ class Camera: NSObject {
         videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "VideoDataOutputQueue"))
         
         guard captureSession.canAddInput(deviceInput) else {
-            logger.error("Unable to add device input to capture session.")
+            Logger.logModel.error("Camera: Unable to add device input to capture session.")
             return
         }
         
         guard captureSession.canAddOutput(videoOutput) else {
-            logger.error("Unable to add video output to capture session.")
+            Logger.logModel.error("Camera: Unable to add video output to capture session.")
             return
         }
         
@@ -173,19 +173,19 @@ class Camera: NSObject {
     private func checkAuthorization() async -> Bool {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            logger.debug("Camera access authorized.")
+            Logger.logModel.debug("Camera: amera access authorized.")
             return true
         case .notDetermined:
-            logger.debug("Camera access not determined.")
+            Logger.logModel.debug("Camera: Camera access not determined.")
             sessionQueue.suspend()
             let status = await AVCaptureDevice.requestAccess(for: .video)
             sessionQueue.resume()
             return status
         case .denied:
-            logger.debug("Camera access denied.")
+            Logger.logModel.debug("Camera: Camera access denied.")
             return false
         case .restricted:
-            logger.debug("Camera library access restricted.")
+            Logger.logModel.debug("Camera: Camera library access restricted.")
             return false
         @unknown default:
             return false
@@ -197,7 +197,7 @@ class Camera: NSObject {
         do {
             return try AVCaptureDeviceInput(device: validDevice)
         } catch let error {
-            logger.error("Error getting capture device input: \(error.localizedDescription)")
+            Logger.logModel.error("Camera: Error getting capture device input: \(error.localizedDescription)")
             return nil
         }
     }
@@ -248,7 +248,7 @@ class Camera: NSObject {
                 captureDevice.unlockForConfiguration()
                 isTorchOn.toggle()
             } catch {
-                logger.error("Could not toggle torch.")
+                Logger.logModel.error("Camera: Could not toggle torch.")
             }
         }
     }
@@ -256,8 +256,8 @@ class Camera: NSObject {
     func start() async {
         let authorized = await checkAuthorization()
         guard authorized else {
+            Logger.logModel.error("Camera: Camera access was not authorized.")
             scanResult = .failure(.notAuthorized)
-            logger.error("Camera access was not authorized.")
             return
         }
         
@@ -324,7 +324,7 @@ class Camera: NSObject {
     
     private func observationHandler(payload: String?) {
         if let payload = payload, !payload.isEmpty {
-            print(payload)
+            Logger.logModel.debug("Camera: Incoming payload from Vision framework: \(payload)")
             self.scanResult = .success(payload)
         } else {
             self.scanResult = .failure(.noResult)
@@ -395,7 +395,7 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
             try imageRequestHandler.perform([detectBarcodeRequest])
         } catch {
             scanResult = .failure(.initFailure)
-            logger.error("Could not connect buffer to Vision.")
+            Logger.logModel.error("Camear: Could not connect buffer to Vision.")
         }
         
         addToPreviewStream?(CIImage(cvPixelBuffer: pixelBuffer))
@@ -421,5 +421,3 @@ fileprivate extension UIScreen {
     }
 }
 #endif
-
-fileprivate let logger = Logger(subsystem: Constants.bundleIdentifier, category: "camera")

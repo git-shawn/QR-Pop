@@ -296,16 +296,6 @@ extension WidgetViews {
 }
 
 #endif
-
-// MARK: - Logger
-
-extension WidgetViews {
-    
-    var WidgetLog: Logger {
-        Logger(subsystem: Constants.bundleIdentifier, category: "widget-timeline")
-    }
-}
-
 struct WidgetViews_Previews: PreviewProvider {
     static var previews: some View {
         WidgetViews(entry: ArchiveEntry(kind: .snapshot))

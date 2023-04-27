@@ -40,17 +40,13 @@ struct Provider: IntentTimelineProvider {
         guard let qrcode = configuration.qrcode,
               let entityURIString = qrcode.identifier,
               let entityURI = URL(string: entityURIString),
-              let entity = Persistence.shared.getQrEntityWithURI(entityURI),
+              let entity = Persistence.shared.getQREntityWithURI(entityURI),
               let model = try? QRModel(withEntity: entity)
         else {
-            WidgetLog.warning("Unable to create QRModel from TimelineConfigurationIntent.")
+            Logger.logExtension.fault("Widget: Unable to create QRModel from Intent.")
             return nil
         }
         return model
-    }
-    
-    var WidgetLog: Logger {
-        Logger(subsystem: Constants.bundleIdentifier, category: "widget-timeline")
     }
 }
 

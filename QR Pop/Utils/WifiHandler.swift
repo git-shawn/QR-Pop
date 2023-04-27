@@ -28,8 +28,6 @@ class WifiHandler {
         let ssid = components[1].removePrefix("S:")
         let passphrase = components[2].removePrefix("P:")
         
-        print(components)
-        
         return WifiBundle(ssid: ssid,
                           passphrase: passphrase,
                           isWEP: isWEP)

@@ -26,7 +26,7 @@ struct BuilderCommands: Commands {
             })
             .disabled(navigationModel == nil)
             
-            if let recentlyArchived = try? Persistence.shared.getMostRecentQREntities(5, by: .created) {
+            if let recentlyArchived = try? Persistence.shared.getMostRecentQREntities(5) {
                 Menu("Open Recent Archive...", content: {
                     ForEach(recentlyArchived) { archive in
                         if let model = try? QRModel(withEntity: archive) {

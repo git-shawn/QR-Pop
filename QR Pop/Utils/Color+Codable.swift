@@ -27,7 +27,7 @@ fileprivate extension Color {
         PlatformColor(self).getRed(&r, green: &g, blue: &b, alpha: &a)
 #else
         guard PlatformColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else {
-            Color.logger.error("Could not find RGBA values for Color to encode.")
+            Logger.logModel.error("Color: Could not find RGBA values to encode.")
             return nil
         }
 #endif
@@ -52,7 +52,7 @@ extension Color: Codable {
     
     public func encode(to encoder: Encoder) throws {
         guard let colorComponents = self.colorComponents else {
-            Color.logger.error("Color could not be encoded.")
+            Logger.logModel.error("Color: Color could not be encoded: \(self.description, privacy: .public)")
             return
         }
         
@@ -62,9 +62,4 @@ extension Color: Codable {
         try container.encode(colorComponents.green, forKey: .green)
         try container.encode(colorComponents.blue, forKey: .blue)
     }
-    
-    private static let logger = Logger(
-        subsystem: Constants.bundleIdentifier,
-        category: "color+codable"
-    )
 }

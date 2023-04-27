@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 import QRCode
+import OSLog
 
 struct DesignView: View {
     @Binding var model: DesignModel
@@ -281,9 +282,8 @@ extension DesignView {
                         
                         try model.setLogo(data)
                     }
-                case .failure(let failure):
-                    debugPrint(failure)
-                    Constants.viewLogger.error("Could not import file in Design Panel.")
+                case .failure(_):
+                    Logger.logView.error("DesignView: Could not import file.")
                     sceneModel.toaster = .error(note: "Could not import file")
                 }
             })

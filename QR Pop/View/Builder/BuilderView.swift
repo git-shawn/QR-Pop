@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PagerTabStripView
+import OSLog
 
 struct BuilderView: View {
     @State var model: QRModel = QRModel()
@@ -278,13 +279,12 @@ extension BuilderView {
                             entity?.builder = try model.content.asData()
                             entity?.design = try model.design.asData()
                             entity?.logo = model.design.logo
-                            try moc.save()
+                            try moc.atomicSave()
 
                             hasMadeChanges = false
                             sceneModel.toaster = .saved(note: "Change saved")
-                        } catch let error {
-                            debugPrint(error)
-                            Constants.viewLogger.error("Could not save changes to entity in BuilderView.")
+                        } catch {
+                            Logger.logView.error("BuilderView: Could not save changes to entity in BuilderView.")
                             sceneModel.toaster = .error(note: "Changes not saved")
                         }
                     })
@@ -354,11 +354,10 @@ extension BuilderView {
                             note: "Code added to archive")
                     } else {
                         entity?.title = newArchiveTitle.isEmpty ? "My QR Code" : newArchiveTitle
-                        try moc.save()
+                        try moc.atomicSave()
                     }
-                } catch let error {
-                    debugPrint(error)
-                    Constants.viewLogger.error("Could not rename Core Data Entity in BuilderView.")
+                } catch {
+                    Logger.logView.error("BuilderView: Could not rename Core Data Entity.")
                     sceneModel.toaster = .error(note: "Could not save")
                 }
             })
