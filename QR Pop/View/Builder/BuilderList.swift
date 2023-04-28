@@ -17,7 +17,6 @@ struct BuilderList: View {
     //MARK: - View
     var body: some View {
         GridList(showingGrid: $showingGrid, gridContent: {
-            
             ForEach(filterBuildersByQuery(), id: \.rawValue, content: { kind in
                 NavigationLink(value: createNavigationDestination(for: kind), label: {
                     VStack(alignment: .center, spacing: 0) {
@@ -74,15 +73,13 @@ struct BuilderList: View {
 #endif
         .searchable(text: $searchQuery, prompt: "Search")
         .toolbar {
-            ToolbarItem {
+            ToolbarItem(placement: .primaryAction) {
                 Button(action: {
                     showingGrid.toggle()
                 }, label: {
                     Label("Toggle View", systemImage: showingGrid ? "list.bullet" : "square.grid.3x3")
                 })
-                #if os(macOS)
                 .help("Switch between a list style view and a grid style view.")
-                #endif
             }
         }
         .navigationTitle("Builder")

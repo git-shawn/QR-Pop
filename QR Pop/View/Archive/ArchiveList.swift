@@ -6,11 +6,9 @@
 //
 
 import SwiftUI
-import AppIntents
 
 struct ArchiveList: View {
     @FetchRequest(sortDescriptors: []) var archive: FetchedResults<QREntity>
-    @AppStorage("showArchiveSiriTip", store: .appGroup) var showArchiveSiriTip: Bool = true
     @EnvironmentObject var sceneModel: SceneModel
     @EnvironmentObject var navigationModel: NavigationModel
     @Environment(\.managedObjectContext) var moc
@@ -45,21 +43,6 @@ struct ArchiveList: View {
             }
         }
         .navigationTitle("Archive")
-#if os(iOS)
-        .safeAreaInset(edge: .bottom, content: {
-            if !archive.isEmpty {
-                SiriTipView(
-                    intent: ViewArchiveIntent(),
-                    isVisible: $showArchiveSiriTip)
-                .scenePadding()
-                .background (
-                    Rectangle()
-                        .fill(.ultraThinMaterial)
-                        .ignoresSafeArea()
-                )
-            }
-        })
-#endif
     }
 }
 

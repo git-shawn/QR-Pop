@@ -18,15 +18,15 @@ class WifiHandler {
     ///
     /// WIFI:T:WPA;S:202 Ida;P:Sunshin3;;
     static func parseWifiInfo(_ string: String) throws -> WifiBundle {
-        let contentString = string.removePrefix("WIFI:")
+        let contentString = string.removingPrefix("WIFI:")
         let components = contentString.components(separatedBy: ";")
         
         let isWEP = components[0].contains("WEP")
         // QR Pop only supports WEP or WPA networks.
         guard isWEP || components[0].contains("WPA") else { throw WifiHandlerError.invalidData }
         
-        let ssid = components[1].removePrefix("S:")
-        let passphrase = components[2].removePrefix("P:")
+        let ssid = components[1].removingPrefix("S:")
+        let passphrase = components[2].removingPrefix("P:")
         
         return WifiBundle(ssid: ssid,
                           passphrase: passphrase,

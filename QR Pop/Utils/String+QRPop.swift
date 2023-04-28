@@ -15,9 +15,21 @@ extension String {
     /// Returns this `String` with a specified `String` prefix removed.
     /// - Parameter prefix: The prefix to remove.
     /// - Returns: This string, sans the prefix.
-    func removePrefix(_ prefix: String) -> String {
+    func removingPrefix(_ prefix: String) -> String {
         if self.hasPrefix(prefix) {
             return String(self.dropFirst(prefix.count))
+        } else {
+            return self
+        }
+    }
+    
+    /// Modifies this `String` by removing a specified `String` prefix.
+    /// - Parameter prefix: The prefix to remove.
+    /// - Returns: The string, sans the prefix. This is discardable.
+    @discardableResult mutating func removePrefix(_ prefix: String) -> String {
+        if self.hasPrefix(prefix) {
+            self = String(self.dropFirst(prefix.count))
+            return self
         } else {
             return self
         }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppIntents
 
 struct ArchiveView: View {
     var model: QRModel
@@ -13,6 +14,7 @@ struct ArchiveView: View {
     @Environment(\.openWindow) var openWindow
     @EnvironmentObject var sceneModel: SceneModel
     @EnvironmentObject var navigationModel: NavigationModel
+    @AppStorage("showSiriTips", store: .appGroup) var showArchiveSiriTip: Bool = true
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -36,6 +38,17 @@ struct ArchiveView: View {
         .toolbarBackground(.visible, for: .bottomBar, .navigationBar, .tabBar)
         .toolbar(isFullscreen ? .hidden : .visible, for: .navigationBar, .tabBar)
         .navigationBarTitleDisplayMode(.inline)
+        .safeAreaInset(edge: .bottom) {
+            if !isFullscreen {
+                SiriTipView(
+                    intent: ViewArchiveIntent(for: model),
+                    isVisible: $showArchiveSiriTip)
+                .scenePadding()
+            }
+        }
+        .onAppear {
+            IntentDonationManager.shared.donate(intent: ViewArchiveIntent(for: model))
+        }
 #endif
         .mirrorable(.constant(model))
         .navigationTitle(model.title ?? "QR Code")

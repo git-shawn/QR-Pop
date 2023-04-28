@@ -10,6 +10,14 @@ import AppIntents
 import OSLog
 
 struct ViewArchiveIntent: AppIntent, PredictableIntent {
+    
+    init() { }
+    
+    init(for model: QRModel) {
+        if let id = model.id, let name = model.title {
+            self.code = .init(id: id, name: name)
+        }
+    }
 
     static var title: LocalizedStringResource = "View My Archive"
     static var description = IntentDescription("View a QR code saved within your Archive")
@@ -22,7 +30,7 @@ struct ViewArchiveIntent: AppIntent, PredictableIntent {
     var code: ArchiveIntentEntity
     
     static var parameterSummary: some ParameterSummary {
-        Summary("View \(\.$code) from my Archive.")
+        Summary("View \(\.$code) from my Archive")
     }
     
     // This may or may not work. It's not clear how to test this.
@@ -71,7 +79,7 @@ private struct ArchiveOptionsProvider: DynamicOptionsProvider {
                 guard let id = $0.id, let title = $0.title
                 else {
                     // This should never happen. It would indicate a database corruption of some kind.
-                    logger.fault("An entity was discovered in the CoreData store without an ID or Title.")
+                    Logger.logIntent.fault("An entity was discovered in the CoreData store without an ID or Title.")
                     fatalError("Unexpectedly found nil when accessing a QREntity value.")
                 }
                 
@@ -107,7 +115,7 @@ struct ArchiveQuery: EntityStringQuery {
                 guard let id = $0.id, let title = $0.title
                 else {
                     // This should never happen. It would indicate a database corruption of some kind.
-                    logger.fault("An entity was discovered in the CoreData store without an ID or Title.")
+                    Logger.logIntent.fault("An entity was discovered in the CoreData store without an ID or Title.")
                     fatalError("Unexpectedly found nil when accessing a QREntity value.")
                 }
                 
@@ -121,7 +129,7 @@ struct ArchiveQuery: EntityStringQuery {
                 guard let id = $0.id, let title = $0.title
                 else {
                     // This should never happen. It would indicate a database corruption of some kind.
-                    logger.fault("An entity was discovered in the CoreData store without an ID or Title.")
+                    Logger.logIntent.fault("An entity was discovered in the CoreData store without an ID or Title.")
                     fatalError("Unexpectedly found nil when accessing a QREntity value.")
                 }
                 
@@ -131,4 +139,3 @@ struct ArchiveQuery: EntityStringQuery {
 }
 
 fileprivate var persistence = Persistence.shared
-fileprivate var logger = Logger(subsystem: Constants.bundleIdentifier, category: "archive-intent")

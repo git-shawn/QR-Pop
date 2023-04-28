@@ -14,4 +14,5 @@ extension Logger {
     static let logModel = Logger(subsystem: "group.shwndvs.qr-pop", category: "Model")
     static let logPersistence = Logger(subsystem: "group.shwndvs.qr-pop", category: "Persistence")
     static let logExtension = Logger(subsystem: "group.shwndvs.qr-pop", category: "Extension")
+    static let logIntent = Logger(subsystem: "group.shwndvs.qr-pop", category: "Intents")
 }

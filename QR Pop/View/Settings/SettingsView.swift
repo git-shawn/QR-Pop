@@ -17,12 +17,10 @@ struct SettingsView: View {
     @AppStorage("enhancedMirroringEnabled", store: .appGroup) private var enhancedMirroringEnabled: Bool = true
     @AppStorage("lastMajorVersion", store: .appGroup) var lastMajorVersion: Double = 0.0
     @AppStorage("isMenuBarActive", store: .appGroup) var isMenuBarActive: Bool = false
+    @AppStorage("showSiriTips", store: .appGroup) var showSiriTips: Bool = true
+    
     @State private var erasingData = false
     @Environment(\.openURL) var openURL
-    
-    #if DEBUG
-    @AppStorage("showArchiveSiriTip", store: .appGroup) var showArchiveSiriTip: Bool = true
-    #endif
     
     var body: some View {
         Form {
@@ -65,7 +63,13 @@ struct SettingsView: View {
             }, header: {
                 Text("Mirroring")
             }, footer: {
-                Text("When enabled, QR Pop will present an enhanced experience to connected displays instead of mirroring your screen.")
+                Text("When enabled, QR Pop will present an enhanced experience to connected displays instead of mirroring your display.")
+            })
+            
+            Section(content: {
+                Toggle("Show Siri Tips", isOn: $showSiriTips)
+            }, header: {
+                Text("Siri & Shortcuts")
             })
 #else
             Section(content: {
@@ -265,10 +269,6 @@ struct SettingsView: View {
                 ImageButton("Reset Version Counter", systemImage: "clock.badge.xmark", action: {
                     lastMajorVersion = 0.0
                     sceneModel.toaster = .success(note: "Whats New Reset")
-                })
-                
-                ImageButton("Reset Siri Tips", systemImage: "mic.badge.xmark", action: {
-                    showArchiveSiriTip = true
                 })
                 
                 ImageButton("Wipe Core Data", systemImage: "externaldrive.badge.xmark", action: {

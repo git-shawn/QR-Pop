@@ -9,6 +9,7 @@ import SwiftUI
 import QRCode
 import CoreData
 import OSLog
+import AppIntents
 
 /// Accepts and interprets data submitted to DesignView.
 struct DesignModel: Hashable, Equatable {
@@ -170,7 +171,7 @@ extension DesignModel {
 
 extension DesignModel {
     
-    enum EyeShape: String, CaseIterable, Codable, Equatable {
+    enum EyeShape: String, CaseIterable, Codable, Equatable, AppEnum {
         case square, circle, squircle, roundedOuter, shield, roundedPointingOut, roundedPointingIn, leaf, barsHorizontal, barsVertical
         
         /// An SF Symbol visualizing the eye shape as an `Image`.
@@ -212,6 +213,20 @@ extension DesignModel {
         static func == (lhs: EyeShape, rhs: EyeShape) -> Bool {
             lhs.rawValue == rhs.rawValue
         }
+        
+        static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Eye Shape")
+        static var caseDisplayRepresentations: [Self : DisplayRepresentation] = [
+            .square : "Square",
+            .circle : "Circle",
+            .squircle : "Squircle",
+            .roundedOuter : "Rounded Outer",
+            .shield : "Shield",
+            .roundedPointingOut : "Rounded Pointing Out",
+            .roundedPointingIn : "Rounded Pointing In",
+            .leaf : "Leaf",
+            .barsHorizontal : "Horizontal Bars",
+            .barsVertical : "Vertical Bars",
+        ]
     }
 }
 
@@ -219,7 +234,7 @@ extension DesignModel {
 
 extension DesignModel {
     
-    enum PixelShape: String, CaseIterable, Codable, Equatable {
+    enum PixelShape: String, CaseIterable, Codable, Equatable, AppEnum {
         case square, circle, squircle, pixel, diamond, star, flower, sharpPixel, horizontal, vertical, roundedPath, curvedPixel, sharp, insetRound
         
         /// An SF Symbol visualizing the pixel shape as an `Image`.
@@ -284,6 +299,24 @@ extension DesignModel {
         static func == (lhs: PixelShape, rhs: PixelShape) -> Bool {
             lhs.rawValue == rhs.rawValue
         }
+        
+        static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "Pixel Shape")
+        static var caseDisplayRepresentations: [Self : DisplayRepresentation] = [
+            .square : "Square Path",
+            .circle : "Circles",
+            .squircle : "Squircles",
+            .pixel : "Pixels",
+            .diamond : "Diamonds",
+            .star : "Stars",
+            .flower : "Flowers",
+            .sharpPixel : "Spikes",
+            .horizontal : "Rows",
+            .vertical : "Columns",
+            .roundedPath : "Rounded Path",
+            .curvedPixel : "Curved Pixel Path",
+            .sharp : "Sharp Path",
+            .insetRound : "Indented Path"
+        ]
     }
 }
 
