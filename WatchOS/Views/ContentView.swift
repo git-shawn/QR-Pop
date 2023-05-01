@@ -63,10 +63,9 @@ struct ContentView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            #warning("Placeholder URL used")
             VStack(spacing: 10) {
                 QRCodeViewUI(
-                    content: "https://www.fromshawn.dev/qrpop/watchhelp",
+                    content: "https://www.fromshawn.dev/support/qrpop-watch-help",
                     pixelStyle: DesignModel.PixelShape.roundedPath.generator,
                     eyeStyle: DesignModel.EyeShape.squircle.generator)
                 .scaledToFit()

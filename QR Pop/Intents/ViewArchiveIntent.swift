@@ -18,14 +18,17 @@ struct ViewArchiveIntent: AppIntent, PredictableIntent {
             self.code = .init(id: id, name: name)
         }
     }
-
+    
     static var title: LocalizedStringResource = "View My Archive"
-    static var description = IntentDescription("View a QR code saved within your Archive")
+    static var description = IntentDescription("View a QR code saved within your Archive.",
+                                               categoryName: "Archive",
+                                               searchKeywords: ["QR", "Code", "Pop", "Archive"])
     static var authenticationPolicy: IntentAuthenticationPolicy = .requiresAuthentication
     
     @Parameter(
         title: "QR Code",
-        requestValueDialog: "Which code would you like to view?",
+        description: "A QR code that exists within your QR Pop Archive.",
+        requestValueDialog: IntentDialog("Which code would you like to view?"),
         optionsProvider: ArchiveOptionsProvider())
     var code: ArchiveIntentEntity
     
@@ -42,12 +45,18 @@ struct ViewArchiveIntent: AppIntent, PredictableIntent {
     }
     
     func perform() async throws -> some ShowsSnippetView & ProvidesDialog {
-        let entity = try persistence.getQREntityWithUUID(code.id)
-        let model = try QRModel(withEntity: entity)
-        
-        return .result(
-            dialog: "Here's \"\(model.title ?? "My QR Code")\" from your Archive.",
-            view: ArchiveSnippetView(model: model))
+        do {
+            let entity = try persistence.getQREntityWithUUID(code.id)
+            let model = try QRModel(withEntity: entity)
+            
+            return .result(
+                dialog: "Here's \"\(model.title ?? "My QR Code")\" from your Archive.",
+                view: ArchiveSnippetView(model: model))
+        } catch {
+            // Intercept all errors and throw a "Needs Value Error," to give the user a chance to try again.
+            Logger.logIntent.notice("ViewArchiveIntent: The user requested a QR code that was unreachable or that does not exist.")
+            throw $code.needsValueError(IntentDialog(""))
+        }
     }
 }
 
@@ -72,7 +81,6 @@ private struct ArchiveSnippetView: View {
 
 private struct ArchiveOptionsProvider: DynamicOptionsProvider {
     
-    
     func results() async throws -> [ArchiveIntentEntity] {
         try persistence.getAllQREntities()
             .map {
@@ -96,17 +104,27 @@ struct ArchiveIntentEntity: Equatable, Hashable, AppEntity {
     static var defaultQuery: ArchiveQuery = ArchiveQuery()
     
     static var typeDisplayRepresentation = TypeDisplayRepresentation(name: "QR Code")
+    
     var displayRepresentation: DisplayRepresentation {
-        DisplayRepresentation(title: .init(stringLiteral: name))
+        if let entity = try? persistence.getQREntityWithUUID(id),
+           let model = try? QRModel(withEntity: entity),
+           let imgData = try? model.jpegData(for: 256) {
+            return DisplayRepresentation(
+                title: .init(stringLiteral: name),
+                subtitle: .init(stringLiteral: model.content.builder.title),
+                image: .init(data: imgData))
+        } else {
+            return DisplayRepresentation(stringLiteral: name)
+        }
     }
     
-    let id: UUID
-    let name: String
+    var id: UUID
+    var name: String
 }
 
 // MARK: - Archive Entity Query
 
-struct ArchiveQuery: EntityStringQuery {
+struct ArchiveQuery: EntityQuery, EntityStringQuery {
     typealias Entity = ArchiveIntentEntity
     
     func entities(matching string: String) async throws -> [ArchiveIntentEntity] {
@@ -125,6 +143,20 @@ struct ArchiveQuery: EntityStringQuery {
     
     func entities(for identifiers: [UUID]) async throws -> [ArchiveIntentEntity] {
         persistence.getQREntitiesWithUUIDs(identifiers)
+            .map {
+                guard let id = $0.id, let title = $0.title
+                else {
+                    // This should never happen. It would indicate a database corruption of some kind.
+                    Logger.logIntent.fault("An entity was discovered in the CoreData store without an ID or Title.")
+                    fatalError("Unexpectedly found nil when accessing a QREntity value.")
+                }
+                
+                return ArchiveIntentEntity(id: id, name: title)
+            }
+    }
+    
+    func suggestedEntities() async throws -> [ArchiveIntentEntity] {
+        try persistence.getAllQREntities()
             .map {
                 guard let id = $0.id, let title = $0.title
                 else {

@@ -74,6 +74,10 @@ class Persistence: ObservableObject {
         self.toggleSpotlightIndexing(enabled: true)
 #endif
         
+#if canImport(AppIntent)
+        QRPopShortcuts.updateAppShortcutParameters()
+#endif
+        
         return container
     }
 }

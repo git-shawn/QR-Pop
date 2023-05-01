@@ -24,24 +24,36 @@ struct ArchiveView: View {
                 .id("code")
                 .padding()
                 .drawingGroup()
+            if isFullscreen {
+                VStack {
+                    HStack {
+                        Spacer()
+                        ImageButton("Toggle Fullscreen", systemImage: "arrow.down.right.and.arrow.up.left.circle.fill", action: {
+                            isFullscreen = false
+                        })
+                        .zIndex(2)
+                        .foregroundColor(model.design.backgroundColor)
+                        .font(.largeTitle)
+                        .symbolRenderingMode(.hierarchical)
+                        .labelStyle(.iconOnly)
+                        .padding()
+                    }
+                    Spacer()
+                }
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .background(isFullscreen ? model.design.pixelColor : Color.groupedBackground, ignoresSafeAreaEdges: .all)
 #if os(iOS)
-        .onTapGesture {
-            if isFullscreen {
-                isFullscreen.toggle()
-            }
-        }
         .statusBarHidden(isFullscreen)
         .animation(.easeIn, value: isFullscreen)
-        .toolbarBackground(.visible, for: .bottomBar, .navigationBar, .tabBar)
-        .toolbar(isFullscreen ? .hidden : .visible, for: .navigationBar, .tabBar)
+        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbar(isFullscreen ? .hidden : .visible, for: .navigationBar, .tabBar, .bottomBar)
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
-            if !isFullscreen {
+            HStack {
                 SiriTipView(
-                    intent: ViewArchiveIntent(for: model),
+                    intent: ViewArchiveIntent(),
                     isVisible: $showArchiveSiriTip)
                 .scenePadding()
             }
@@ -56,20 +68,10 @@ struct ArchiveView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 ImageButton("Edit", systemImage: "slider.horizontal.3") {
-                    DispatchQueue.main.async {
-                        withAnimation {
-                            navigationModel.navigateWithoutBack(to: .builder(code: model))
-                        }
+                    withAnimation {
+                        navigationModel.navigateWithoutBack(to: .builder(code: model))
                     }
                 }
-            }
-            
-            ToolbarItem(placement: .primaryAction) {
-                NavigationLink(destination: {
-                    BuilderView(model: model)
-                }, label: {
-                    Label("Edit", systemImage: "slider.horizontal.3")
-                })
             }
             
             ToolbarItem(placement: .primaryAction) {
@@ -77,11 +79,6 @@ struct ArchiveView: View {
 #if os(iOS)
                     DispatchQueue.main.async {
                         isFullscreen = true
-                        sceneModel.toaster = .custom(
-                            image: Image(systemName: "arrow.down.forward.and.arrow.up.backward"),
-                            imageColor: .secondary,
-                            title: "Fullscreen",
-                            note: "Tap anywhere to dismiss")
                     }
 #else
                     openWindow(id: "codePresentation", value: model)

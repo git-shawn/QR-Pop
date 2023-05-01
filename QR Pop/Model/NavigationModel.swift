@@ -9,6 +9,7 @@ import SwiftUI
 import CoreSpotlight
 import OSLog
 
+@MainActor
 /// Provides a single point-of-truth for the Navigation Stack.
 class NavigationModel: ObservableObject {
     @Published var incomingTemplate: TemplateModel?
@@ -57,9 +58,7 @@ extension NavigationModel {
     /// Navigate to a given ``Destination`` without allowing the user return to this point on the ``path``.
     /// - Parameter destination: The destination to navigate to.
     func navigateWithoutBack(to destination: Destination) {
-        Task { @MainActor in
-            path = [destination]
-        }
+        path = [destination]
     }
 }
 

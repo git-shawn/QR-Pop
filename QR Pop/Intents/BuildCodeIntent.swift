@@ -14,7 +14,10 @@ import OSLog
 struct BuildCodeIntent: AppIntent {
     
     static var title: LocalizedStringResource = "Build a QR Code"
-    static var description = IntentDescription("Build a QR Code using design elements from QR Pop.")
+    static var description = IntentDescription("Build a QR Code using design elements from QR Pop.",
+    categoryName: "Builder",
+    searchKeywords: ["QR", "Code", "Pop", "Build", "Generate"])
+    
     static var authenticationPolicy: IntentAuthenticationPolicy = .alwaysAllowed
     
     @Parameter(

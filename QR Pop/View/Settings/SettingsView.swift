@@ -62,7 +62,7 @@ struct SettingsView: View {
             })
             
             Section(content: {
-                Toggle("Show Siri Tips", isOn: $showSiriTips)
+                Toggle("Show Siri Suggestions", isOn: $showSiriTips)
             }, header: {
                 Text("Siri & Shortcuts")
             })
@@ -81,7 +81,7 @@ struct SettingsView: View {
             // MARK: - "Fine Print" Links
             
             Section("General") {
-                Link(destination: URL(string: "https://www.fromshawn.dev/support?qrpop")!, label: {
+                Link(destination: URL(string: "https://www.fromshawn.dev/support?tag=qrpop")!, label: {
                     Label("Support", systemImage: "lifepreserver")
                 })
 #if os(macOS)

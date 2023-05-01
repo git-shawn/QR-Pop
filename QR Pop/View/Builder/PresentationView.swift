@@ -107,7 +107,7 @@ struct PresentationViewModifier: ViewModifier {
                                 model.presentedModel = presenting
                             }, label: {
                                 if mirroring {
-                                    Label("Update Presented Code", systemImage: "sparkles.tv")
+                                    Label("Refresh Code", systemImage: "sparkles.tv")
                                 } else {
                                     Label("Present QR Code", systemImage: "play.tv")
                                 }
