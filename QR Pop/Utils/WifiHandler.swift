@@ -11,7 +11,6 @@ import CoreWLAN
 #endif
 
 class WifiHandler {
-    
     /// Determines if a `String` represents a wireless network and, if it does, returns that information extracted as a `WifiBundle`
     /// - Parameter string: The `String` to inspect for WiFi information.
     /// - Returns: A `WifiBundle` if information is found.

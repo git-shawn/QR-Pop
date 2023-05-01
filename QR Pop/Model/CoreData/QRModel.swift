@@ -227,6 +227,12 @@ extension QRModel: Transferable {
     }
 }
 
+// MARK: - Conform to Codable
+
+extension QRModel: Codable {
+    
+}
+
 // MARK: - Scene Focusable
 
 struct FocusedQRModelKey: FocusedValueKey {

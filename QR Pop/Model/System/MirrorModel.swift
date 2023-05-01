@@ -7,21 +7,27 @@
 
 #if canImport(UIKit)
 import UIKit
-#endif
 import SwiftUI
 import Combine
 
 class MirrorModel: ObservableObject {
     static var shared = MirrorModel()
-    @Published var presentedModel: QRModel?
-    @Published var isMirroring: Bool = false
-    @Published var showModelDetails: Bool = false
-    @AppStorage("enhancedMirroringEnabled", store: .appGroup) private var enhancedMirroringEnabled: Bool = true
     
-    private init() { }
+    @Published var presentedModel: QRModel? = nil
+    @Published var showDetails: Bool = false
+    @Published private(set) var nonInteractiveExternalDisplayIsConnected: Bool = false
+    @AppStorage("hideInterfaceDuringMirroring", store: .appGroup) private var hideInterfaceDuringMirroring: Bool = true
     
-#if os(iOS)
-    var window: UIWindow? = nil
+    private var window: UIWindow? = nil
+    private var subscribers: Set<AnyCancellable> = []
+    
+    
+    private init() {
+        $presentedModel.sink { [weak self] model in
+            self?.conncetMirroredScene(with: model)
+        }
+        .store(in: &subscribers)
+    }
     
     // Listen for new scenes to appear
     var sceneWillConnectPublisher: AnyPublisher<UIScene, Never> {
@@ -41,17 +47,17 @@ class MirrorModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    /// When a scene connects, determine if it is `non-interactive`. If so, present ``PresentationView`` on it.
+    /// When a scene connects, determine if it is `non-interactive`. If so, present ``CodePresentationView`` on it.
     func sceneWillConnect(_ scene: UIScene) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        if scene.session.role == .windowExternalDisplayNonInteractive && enhancedMirroringEnabled {
+        if scene.session.role == .windowExternalDisplayNonInteractive {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: PresentationView())
-            window.rootViewController?.loadViewIfNeeded()
-            window.makeKeyAndVisible()
             self.window = window
-            isMirroring = true
+            if hideInterfaceDuringMirroring {
+                conncetMirroredScene(with: nil)
+            }
+            nonInteractiveExternalDisplayIsConnected = true
         }
     }
     
@@ -59,8 +65,23 @@ class MirrorModel: ObservableObject {
     func sceneDidDisconnect(_ scene: UIScene) {
         if scene.session.role == .windowExternalDisplayNonInteractive {
             self.window = nil
-            isMirroring = false
+            nonInteractiveExternalDisplayIsConnected = false
         }
     }
-#endif
+    
+    func conncetMirroredScene(with model: QRModel?) {
+        window?.rootViewController = UIHostingController(rootView: PresentationView(model: .constant(model)))
+        window?.rootViewController?.loadViewIfNeeded()
+        window?.makeKeyAndVisible()
+    }
+    
+    /// Removes the projected view from the window. If `conncetMirroredScene` is `true` the view will not be removed, but its model will be set to `nil`.
+    func disconnectMirroredScene() {
+        if hideInterfaceDuringMirroring {
+            presentedModel = nil
+        } else {
+            window?.rootViewController = nil
+        }
+    }
 }
+#endif

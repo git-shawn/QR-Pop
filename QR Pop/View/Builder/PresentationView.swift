@@ -8,144 +8,144 @@
 import SwiftUI
 
 struct PresentationView: View {
-    @ObservedObject var model = MirrorModel.shared
-    @AppStorage("enhancedMirroringEnabled", store: .appGroup) private var enhancedMirroringEnabled: Bool = true
+    /**
+     On macOS this view is created via `openWindow`. However, on iOS and iPadOS this view is created in the background on non-interactive displays.
+     Therefore, the view should be passed *explicitly* on macOS via a binding and *implicitly* via the scene's `FocusedBinding`.
+     */
+    @Binding var model: QRModel?
     @Environment(\.dismiss) var dismiss
+#if os(iOS)
+    @ObservedObject var mirrorModel = MirrorModel.shared
+#endif
     
     var body: some View {
-        Group {
-            if let presentedModel = model.presentedModel, model.isMirroring {
-                GeometryReader { proxy in
-                    let minProxySize = min(proxy.size.width, proxy.size.height)
-                    HStack(spacing: proxy.size.width*0.025) {
-                        Spacer()
+        if let model = model {
+            GeometryReader { proxy in
+                let minSize = min(proxy.size.width, proxy.size.height)
+                HStack(spacing: proxy.size.width/40) {
+                    Spacer()
+                    QRCodeView(qrcode: $model.withDefault(QRModel()), interactivity: .view)
+                        .equatable()
+                        .padding()
+                        .drawingGroup()
+#if os(iOS)
+                    if mirrorModel.showDetails {
                         
-                        QRCodeView(qrcode: .constant(presentedModel), interactivity: .view)
-                            .equatable()
-                            .padding()
-                            .drawingGroup()
-                        
-                        if model.showModelDetails {
-                            
-                            RoundedRectangle(cornerRadius: minProxySize*0.05)
-                                .fill(.ultraThickMaterial)
-                                .frame(width: proxy.size.width*0.35, height: proxy.size.height*0.4)
-                                .overlay(
-                                    VStack(alignment: .leading, spacing: 10) {
-                                        Text("\(presentedModel.title ?? "My QR Code")")
-                                            .font(.system(size: minProxySize*0.05))
-                                            .bold()
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .lineLimit(2)
-                                        Text("\(presentedModel.content.builder.icon) \(presentedModel.content.builder.title) QR Code")
-                                            .font(.system(size: minProxySize*0.035))
-                                            .foregroundColor(.secondary)
-                                    }
-                                        .padding(proxy.size.width*0.03)
-                                )
-                            Spacer()
-                        } else {
-                            Spacer()
-                        }
+                        RoundedRectangle(cornerRadius: minSize/20)
+                            .fill(.thickMaterial)
+                            .frame(width: proxy.size.width/3, height: proxy.size.height/2.5)
+                            .overlay {
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text(model.title ?? "QR Code")
+                                        .font(.system(size: minSize/20))
+                                        .bold()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .lineLimit(2)
+                                    Text("\(model.content.builder.icon) \(model.content.builder.title) QR Code")
+                                        .font(.system(size: minSize/30))
+                                        .foregroundColor(.secondary)
+                                }
+                                .padding(minSize/30)
+                            }
                     }
-                    .transition(.move(edge: .trailing))
-                    .animation(.spring(), value: model.showModelDetails)
-                    .ignoresSafeArea()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(presentedModel.design.backgroundColor, ignoresSafeAreaEdges: .all)
-                }
-            } else {
-                VStack(spacing: 20) {
-                    Image("LaunchIcon")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 150, height: 150)
-#if os(macOS)
-                        .onAppear {
-                            model.isMirroring = false
-                            dismiss()
-                        }
 #endif
+                    
+                    Spacer()
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.black, ignoresSafeAreaEdges: .all)
             }
-        }
-        .transition(.opacity)
-        .animation(.default, value: model.presentedModel)
-        .preferredColorScheme(.dark)
-    }
-}
-
-// MARK: - MacOS Commands
-
-#if os(macOS)
-
-struct PresentationCommands: Commands {
-    @ObservedObject private var model = MirrorModel.shared
-    @Environment(\.openWindow) var openWindow
-    
-    var body: some Commands {
-        CommandGroup(after: .windowArrangement, addition: {
-            Button("View Code in New Window", action: {
-                model.isMirroring = true
-                openWindow(id: "presentationWindow")
-            })
-            .disabled(model.presentedModel == nil)
-            .keyboardShortcut("w", modifiers: [.control,.command])
-            
-            Toggle("Show Details", isOn: $model.showModelDetails)
-                .disabled(!model.isMirroring)
-        })
-    }
-}
-
+#if os(iOS)
+            .transition(.move(edge: .trailing))
+            .animation(.spring(), value: mirrorModel.showDetails)
 #endif
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(model.design.backgroundColor, ignoresSafeAreaEdges: .all)
+            .preferredColorScheme(.dark)
+        } else {
+            VStack(spacing: 20) {
+                Image("LaunchIcon")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.black, ignoresSafeAreaEdges: .all)
+            .preferredColorScheme(.dark)
+        }
+    }
+}
 
+#if os(iOS)
 // MARK: - View Modifier
 
 struct PresentationViewModifier: ViewModifier {
-    @AppStorage("enhancedMirroringEnabled", store: .appGroup) private var enhancedMirroringEnabled: Bool = true
     @ObservedObject var model = MirrorModel.shared
     @Binding var presenting: QRModel
     
     func body(content: Content) -> some View {
         content
-            .onAppear {
-                model.presentedModel = presenting
-            }
-            .onChange(of: presenting, debounce: 1) { qrModel in
-                model.presentedModel = qrModel
-            }
-            .onDisappear {
-                model.presentedModel = nil
-            }
-#if os(iOS)
             .toolbar {
-                if model.isMirroring {
-                    ToolbarItemGroup(placement: .bottomBar, content: {
-                        Text("\(Image(systemName: "exclamationmark.shield")) This code is being mirrored")
-                            .foregroundColor(.secondary)
-                            .font(.footnote)
-                        Toggle(isOn: $model.showModelDetails, label: {
-                            Label("Toggle Mirroring Details", systemImage: "tv")
+                ToolbarItemGroup(placement: .bottomBar) {
+                    let mirroring = (model.presentedModel != nil)
+                    
+                    if model.nonInteractiveExternalDisplayIsConnected {
+                        Group {
+                            if mirroring {
+                                if model.presentedModel == presenting {
+                                    Text("\(Image(systemName: "bolt.shield")) This code is being mirrored")
+                                } else {
+                                    Text("\(Image(systemName: "xmark.shield")) Another code is being mirrored")
+                                }
+                            } else {
+                                Text("\(Image(systemName: "exclamationmark.shield")) Your display is being mirrored")
+                            }
+                        }
+                        .foregroundColor(.secondary)
+                        .font(.footnote)
+                        
+                        Menu(content: {
+                            Button(action: {
+                                model.presentedModel = presenting
+                            }, label: {
+                                if mirroring {
+                                    Label("Update Presented Code", systemImage: "sparkles.tv")
+                                } else {
+                                    Label("Present QR Code", systemImage: "play.tv")
+                                }
+                            })
+                            
+                            Divider()
+                            
+                            Button(action: {
+                                model.disconnectMirroredScene()
+                            }, label: {
+                                Label("Stop Presenting Code", systemImage: "stop.circle")
+                            })
+                            .disabled(!mirroring)
+                            
+                            Toggle(isOn: $model.showDetails, label: {
+                                Label("Toggle Details Card", systemImage: "list.bullet.rectangle")
+                            })
+                            .disabled(!mirroring)
+                        }, label: {
+                            Label("Mirroring Options", systemImage: "tv")
                         })
                         .tint(.blue)
-                    })
-                    
+                    }
                 }
+                
             }
-#endif
     }
 }
 
 // MARK: - Mirrorable View Extension
 
 extension View {
-    func mirrorable(_ presenting: Binding<QRModel>) -> some View {
+    func mirroring(_ presenting: Binding<QRModel>) -> some View {
         modifier(PresentationViewModifier(presenting: presenting))
     }
 }
+
+#endif
 
 struct PresentationView_Previews: PreviewProvider {
     static var previews: some View {
@@ -153,13 +153,13 @@ struct PresentationView_Previews: PreviewProvider {
     }
     
     struct PresentationWrapper: View {
-        init() {
-            MirrorModel.shared.presentedModel = QRModel()
-            MirrorModel.shared.presentedModel?.design.backgroundColor = Color.random
-            MirrorModel.shared.showModelDetails = true
-        }
+        @State var model: QRModel? = QRModel()
+        
         var body: some View {
-            PresentationView()
+            PresentationView(model: $model)
+                .previewDisplayName("CodePresentationView")
+            PresentationView(model: .constant(nil))
+                .previewDisplayName("Nil CodePresentationView")
         }
     }
 }

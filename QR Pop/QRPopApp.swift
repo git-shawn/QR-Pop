@@ -34,7 +34,6 @@ struct QR_PopApp: App {
         .commands {
 #if os(macOS)
             SettingsCommands()
-            PresentationCommands()
 #endif
             SidebarCommands()
             BuilderCommands()
@@ -43,8 +42,8 @@ struct QR_PopApp: App {
         
         // MARK: - MacOS QR Code Presentation
         
-        Window("QR Code", id: "presentationWindow", content: {
-            PresentationView()
+        WindowGroup("QR Code", id: "codePresentation", for: QRModel.self, content: { model in
+            PresentationView(model: model)
         })
         .defaultSize(CGSize(width: 500, height: 500))
         .windowStyle(.hiddenTitleBar)

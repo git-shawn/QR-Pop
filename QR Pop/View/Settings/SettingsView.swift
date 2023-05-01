@@ -14,7 +14,7 @@ import SafariServices
 struct SettingsView: View {
     
     @EnvironmentObject var sceneModel: SceneModel
-    @AppStorage("enhancedMirroringEnabled", store: .appGroup) private var enhancedMirroringEnabled: Bool = true
+    @AppStorage("hideInterfaceDuringMirroring", store: .appGroup) private var hideInterfaceDuringMirroring: Bool = true
     @AppStorage("lastMajorVersion", store: .appGroup) var lastMajorVersion: Double = 0.0
     @AppStorage("isMenuBarActive", store: .appGroup) var isMenuBarActive: Bool = false
     @AppStorage("showSiriTips", store: .appGroup) var showSiriTips: Bool = true
@@ -51,19 +51,14 @@ struct SettingsView: View {
             // MARK: - Airplay Mirroring
             
             Section(content: {
-                Toggle("Enhance Mirroring", isOn: $enhancedMirroringEnabled)
-                    .onChange(of: enhancedMirroringEnabled) { _ in
-                        sceneModel.toaster = .custom(
-                            image: Image(systemName: "airplayvideo.badge.exclamationmark"),
-                            imageColor: .blue,
-                            title: "Preferences Changed",
-                            note: "New preferences will take effect during the next mirroring session"
-                        )
+                Toggle("Hide Interface When Mirroring", isOn: $hideInterfaceDuringMirroring)
+                    .onChange(of: hideInterfaceDuringMirroring) { _ in
+                        MirrorModel.shared.disconnectMirroredScene()
                     }
             }, header: {
                 Text("Mirroring")
             }, footer: {
-                Text("When enabled, QR Pop will present an enhanced experience to connected displays instead of mirroring your display.")
+                Text("When enabled, QR Pop will project a placeholder image instead of your screen during mirroring sessions.")
             })
             
             Section(content: {
@@ -86,7 +81,7 @@ struct SettingsView: View {
             // MARK: - "Fine Print" Links
             
             Section("General") {
-                Link(destination: URL(string: "https://www.fromshawn.dev/qrpop/help")!, label: {
+                Link(destination: URL(string: "https://www.fromshawn.dev/support?qrpop")!, label: {
                     Label("Support", systemImage: "lifepreserver")
                 })
 #if os(macOS)

@@ -39,8 +39,8 @@ struct BuilderView: View {
         .navigationTitle(model.title ?? model.content.builder.title)
 #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
+        .mirroring($model)
 #endif
-        .mirrorable($model)
         .toolbar {
             ToolbarItem(id: "buildControls", placement: .primaryAction) {
                 toolbarItems

@@ -49,19 +49,22 @@ struct ArchiveView: View {
         .onAppear {
             IntentDonationManager.shared.donate(intent: ViewArchiveIntent(for: model))
         }
+        .mirroring(.constant(model))
 #endif
-        .mirrorable(.constant(model))
         .navigationTitle(model.title ?? "QR Code")
         .animation(.default, value: isFullscreen)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                ImageButton("Edit", systemImage: "slider.horizontal.3", action: {
+                ImageButton("Edit", systemImage: "slider.horizontal.3") {
                     DispatchQueue.main.async {
                         withAnimation {
                             navigationModel.navigateWithoutBack(to: .builder(code: model))
                         }
                     }
-                })
+                }
+            }
+            
+            ToolbarItem(placement: .primaryAction) {
                 NavigationLink(destination: {
                     BuilderView(model: model)
                 }, label: {
@@ -70,7 +73,7 @@ struct ArchiveView: View {
             }
             
             ToolbarItem(placement: .primaryAction) {
-                ImageButton("View Fullscreen", systemImage: "arrow.up.backward.and.arrow.down.forward", action: {
+                ImageButton("View Fullscreen", systemImage: "arrow.up.backward.and.arrow.down.forward") {
 #if os(iOS)
                     DispatchQueue.main.async {
                         isFullscreen = true
@@ -81,10 +84,9 @@ struct ArchiveView: View {
                             note: "Tap anywhere to dismiss")
                     }
 #else
-                    MirrorModel.shared.isMirroring = true
-                    openWindow(id: "presentationWindow")
+                    openWindow(id: "codePresentation", value: model)
 #endif
-                })
+                }
             }
         }
     }

@@ -10,7 +10,7 @@ import SwiftUI
 struct WhatsNewSheet: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.openURL) var openURL
-    let learnMoreURL = URL(string: "https://www.fromshawn.dev/qrpop/whatsnew")!
+    let learnMoreURL = URL(string: "https://www.fromshawn.dev/support/qrpop-version-3")!
     
     var body: some View {
         ZStack(alignment: .bottom) {

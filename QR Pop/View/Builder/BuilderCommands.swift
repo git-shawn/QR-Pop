@@ -13,6 +13,7 @@ struct BuilderCommands: Commands {
     @FocusedBinding(\.archiving) var isArchiving
     @FocusedObject var sceneModel: SceneModel?
     @FocusedObject var navigationModel: NavigationModel?
+    @Environment(\.openWindow) var openWindow
     
     var body: some Commands {
         // MARK: New Item
@@ -70,6 +71,20 @@ struct BuilderCommands: Commands {
             .keyboardShortcut(.init("P"), modifiers: .command)
             .disabled(model == nil)
         })
+        
+        // MARK: - Present Item
+        
+        CommandGroup(after: .windowArrangement, addition: {
+            Button("View Code in New Window", action: {
+                if let model = model {
+                    openWindow(id: "codePresentation", value: model)
+                }
+            })
+            .disabled(model == nil)
+            .keyboardShortcut("w", modifiers: [.control,.command])
+        })
+        
+        // MARK: - Export Item
         
         CommandGroup(after: .newItem, addition: {
             Divider()
