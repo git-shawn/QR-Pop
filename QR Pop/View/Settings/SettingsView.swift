@@ -103,7 +103,7 @@ struct SettingsView: View {
                     Label("Privacy Policy", systemImage: "hand.raised")
                 })
                 
-                ImageButton("Open Privacy Settings", systemImage: "gear", action: {
+                ImageButton("Privacy Settings", systemImage: "gear", action: {
                     openURL(URL(string: UIApplication.openSettingsURLString)!)
                 })
                 .buttonStyle(OutboundLinkButtonStyle())
