@@ -130,12 +130,12 @@ struct CoreDataList<FetchedEntity: Entity>: View {
         .listStyle(.inset)
         .environment(\.defaultMinListRowHeight, 64)
 #endif
-        .onChange(of: sort) { sort in
+        .task(id: sort) {
             filteredEntities = CoreDataList.sortEntities(filteredEntities, by: sort)
         }
-        .onChange(of: fetchedItems) { newItems in
+        .task(id: fetchedItems) {
             Logger.logView.debug("CoreDataList: FetchedItems has changed, likely via CloudKit.")
-            filteredEntities = CoreDataList.sortEntities(newItems, by: sort)
+            filteredEntities = CoreDataList.sortEntities(fetchedItems, by: sort)
         }
         
         // MARK: - Toolbar

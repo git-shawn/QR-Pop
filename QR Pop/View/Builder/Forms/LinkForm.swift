@@ -9,17 +9,26 @@ import SwiftUI
 
 struct LinkForm: View {
     @Binding var model: BuilderModel
+    @StateObject var engine: FormStateEngine
     
-    /// TextField focus information
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case url
     }
     
-    @FocusState private var focusedField: Field?
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: [""]))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         VStack(spacing: 20) {
-            TextField("Enter URL", text: $model.responses[0])
+            TextField("Enter URL", text: $engine.inputs[0])
                 .textFieldStyle(FormTextFieldStyle())
                 .autocorrectionDisabled(true)
                 .focused($focusedField, equals: .url)
@@ -35,10 +44,25 @@ struct LinkForm: View {
                 }
 #endif
         }
-        .onChange(of: model.responses, debounce: 1) { _ in
-            model.result = model.responses[0]
+        .onReceive(engine.$outputs) {
+            if model.responses != $0 {
+                determineResult(for: $0)
+            }
         }
     }
+}
+
+// MARK: - Form Calculation
+
+extension LinkForm: BuilderForm {
+    func determineResult(for outputs: [String]) {
+        print("Result determined")
+        self.model = .init(
+            responses: outputs,
+            result: outputs[0],
+            builder: .link)
+    }
+    
 }
 
 struct LinkForm_Previews: PreviewProvider {

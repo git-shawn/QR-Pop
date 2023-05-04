@@ -19,9 +19,17 @@ import AppKit
 class Camera: NSObject {
     private let captureSession = AVCaptureSession()
     private var isCaptureSessionConfigured = false
-    private var deviceInput: AVCaptureDeviceInput?
-    private var videoOutput: AVCaptureVideoDataOutput?
+    weak private var deviceInput: AVCaptureDeviceInput?
+    weak private var videoOutput: AVCaptureVideoDataOutput?
     private var sessionQueue: DispatchQueue!
+    
+    deinit {
+        Logger.logModel.debug("!----CAMERA-DEINIT----!")
+    }
+    
+    static func == (lhs: Camera, rhs: Camera) -> Bool {
+        lhs.captureDevice == rhs.captureDevice
+    }
     
     private var allCaptureDevices: [AVCaptureDevice] {
 #if os(iOS)
@@ -90,10 +98,15 @@ class Camera: NSObject {
     
     var isPreviewPaused = false
     
-    lazy var previewStream: AsyncStream<CIImage> = {
+    lazy var previewStream: AsyncStream<CIImage> = { [weak self] in
         AsyncStream { continuation in
-            addToPreviewStream = { ciImage in
-                if !self.isPreviewPaused {
+            self?.addToPreviewStream = { ciImage in
+                if let request = self?.detectBarcodeRequest {
+                    let imageRequestHandler = VNImageRequestHandler(ciImage: ciImage)
+                    try? imageRequestHandler.perform([request])
+                }
+                
+                if !(self?.isPreviewPaused ?? true) {
                     continuation.yield(ciImage)
                 }
             }
@@ -109,15 +122,6 @@ class Camera: NSObject {
         sessionQueue = DispatchQueue(label: "Capture Session Queue")
         
         captureDevice = availableCaptureDevices.first ?? AVCaptureDevice.default(for: .video)
-        
-#if os(iOS)
-        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(updateForDeviceOrientation),
-            name: UIDevice.orientationDidChangeNotification,
-            object: nil)
-#endif
     }
     
     private func configureCaptureSession(completionHandler: (_ success: Bool) -> Void) {
@@ -263,17 +267,17 @@ class Camera: NSObject {
         
         if isCaptureSessionConfigured {
             if !captureSession.isRunning {
-                sessionQueue.async { [self] in
-                    self.captureSession.startRunning()
+                sessionQueue.async { [weak self] in
+                    self?.captureSession.startRunning()
                 }
             }
             return
         }
         
-        sessionQueue.async { [self] in
-            self.configureCaptureSession { success in
+        sessionQueue.async { [weak self] in
+            self?.configureCaptureSession { success in
                 guard success else { return }
-                self.captureSession.startRunning()
+                self?.captureSession.startRunning()
             }
         }
     }
@@ -282,9 +286,9 @@ class Camera: NSObject {
         guard isCaptureSessionConfigured else { return }
         
         if captureSession.isRunning {
-            sessionQueue.async {
-                self.scanResult = nil
-                self.captureSession.stopRunning()
+            sessionQueue.async { [weak self] in
+                self?.scanResult = nil
+                self?.captureSession.stopRunning()
             }
         }
     }
@@ -297,26 +301,26 @@ class Camera: NSObject {
         case notAuthorized
     }
     
-    lazy private var detectBarcodeRequest = VNDetectBarcodesRequest { request, error in
+    lazy private var detectBarcodeRequest = VNDetectBarcodesRequest { [weak self] request, error in
         if let error = error {
-            self.scanResult = .failure(.initFailure)
+            self?.scanResult = .failure(.initFailure)
             return
         } else {
-            self.processClassification(request)
+            self?.processClassification(request)
         }
     }
     
     private func processClassification(_ request: VNRequest) {
         guard let barcodes = request.results else { return }
-        DispatchQueue.main.async { [self] in
-            if captureSession.isRunning {
+        DispatchQueue.main.async { [weak self] in
+            if ((self?.captureSession.isRunning) ?? false) {
                 for barcode in barcodes {
                     guard
                         let potentialQRCode = barcode as? VNBarcodeObservation,
                         potentialQRCode.symbology == .qr,
                         potentialQRCode.confidence > 0.9
                     else { return }
-                    observationHandler(payload: potentialQRCode.payloadStringValue)
+                    self?.observationHandler(payload: potentialQRCode.payloadStringValue)
                 }
             }
         }
@@ -358,9 +362,6 @@ class Camera: NSObject {
         return orientation
     }
     
-    @objc
-    func updateForDeviceOrientation() { }
-    
     private func videoOrientationFor(_ deviceOrientation: UIDeviceOrientation) -> AVCaptureVideoOrientation? {
         switch deviceOrientation {
         case .portrait: return AVCaptureVideoOrientation.portrait
@@ -386,17 +387,6 @@ extension Camera: AVCaptureVideoDataOutputSampleBufferDelegate {
             connection.videoOrientation = videoOrientation
         }
 #endif
-        
-        let imageRequestHandler = VNImageRequestHandler(
-            cvPixelBuffer: pixelBuffer,
-            orientation: .up)
-        
-        do {
-            try imageRequestHandler.perform([detectBarcodeRequest])
-        } catch {
-            scanResult = .failure(.initFailure)
-            Logger.logModel.error("Camear: Could not connect buffer to Vision.")
-        }
         
         addToPreviewStream?(CIImage(cvPixelBuffer: pixelBuffer))
     }

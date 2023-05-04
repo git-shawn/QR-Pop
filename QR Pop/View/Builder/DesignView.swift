@@ -312,7 +312,7 @@ extension DesignView {
                         withAnimation(.spring()) {
                             photoPicked = nil
                         }
-                        model.invalidateLogo()
+                        model.logo = nil
                     }, label: {
                         Label("Delete", systemImage: "trash")
                     })

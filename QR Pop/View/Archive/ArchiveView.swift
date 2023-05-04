@@ -47,15 +47,21 @@ struct ArchiveView: View {
 #if os(iOS)
         .statusBarHidden(isFullscreen)
         .animation(.easeIn, value: isFullscreen)
-        .toolbar(isFullscreen ? .hidden : .visible, for: .navigationBar, .tabBar)
+        .toolbar(isFullscreen ? .hidden : .visible, for: .navigationBar, .tabBar, .bottomBar)
         .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .bottom) {
-                SiriTipView(
-                    intent: ViewArchiveIntent(),
-                    isVisible: $showArchiveSiriTip)
+        .safeAreaInset(edge: .top) {
+            if !isFullscreen && showArchiveSiriTip {
+                HStack {
+                    SiriTipView(
+                        intent: ViewArchiveIntent(),
+                        isVisible: $showArchiveSiriTip)
+                }
                 .scenePadding()
+                .background(.ultraThinMaterial)
+                .transition(.move(edge: .top))
+            }
         }
-        .onAppear {
+        .task {
             IntentDonationManager.shared.donate(intent: ViewArchiveIntent(for: model))
         }
         .mirroring(.constant(model))

@@ -178,6 +178,22 @@ extension NavigationModel {
     private func handleIncomingTemplate(_ url: URL) throws {
         guard url.startAccessingSecurityScopedResource() else { throw NavigationError.badAccess }
         
+        if !FileManager.default.fileExists(atPath: url.path()) {
+            var error: NSError?
+            
+            Logger.logModel.notice("NavigationModel: A Template file URL has appeared that could not be found. Attempting to locate within iCloud.")
+            
+            // Calling NSFileCoordinator will forcibly download any iCloud files opened-in-place.
+            NSFileCoordinator().coordinate(readingItemAt: url, options: .forUploading, error: &error) { coordinatedURL in
+                do {
+                    let _ = try (url as NSURL).resourceValues(forKeys: [.fileSizeKey])
+                } catch let error {
+                    Logger.logModel.debug("\(error)")
+                    Logger.logModel.error("NavigationModel: Unable to access template URL that may be stored on iCloud.")
+                }
+            }
+        }
+        
         let data = try Data(contentsOf: url)
         let model = try TemplateModel(fromData: data)
         

@@ -12,7 +12,7 @@ import OSLog
 import UniformTypeIdentifiers
 
 /// Bridges QR Pop with Core Data's `QREntity` while maintaing reactive design.
-struct QRModel: Hashable {
+struct QRModel: Hashable, Equatable {
     var title: String?
     var created: Date?
     var design: DesignModel

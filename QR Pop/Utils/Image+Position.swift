@@ -21,9 +21,9 @@ extension UIImage {
     func rotate(by clockwiseRotation: ClockwiseRotation) -> UIImage? {
         var angle: Angle {
             if clockwiseRotation == .clockwise {
-                return Angle(degrees: 270)
-            } else {
                 return Angle(degrees: 90)
+            } else {
+                return Angle(degrees: 270)
             }
         }
         

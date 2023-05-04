@@ -9,18 +9,28 @@ import SwiftUI
 
 struct SMSForm: View {
     @Binding var model: BuilderModel
+    @StateObject var engine: FormStateEngine
     
-    /// TextField focus information
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case phone
         case message
     }
-    @FocusState private var focusedField: Field?
+    
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: ["", ""]))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         ScrollViewReader { proxy in
             VStack(spacing: 20) {
-                TextField("Phone Number", text: $model.responses[0])
+                TextField("Phone Number", text: $engine.inputs[0])
                     .autocorrectionDisabled(true)
                     .textFieldStyle(FormTextFieldStyle())
                     .focused($focusedField, equals: .phone)
@@ -32,16 +42,18 @@ struct SMSForm: View {
                         focusedField = .message
                     }
 #endif
-                TextField("Message", text: $model.responses[1], axis: .vertical)
+                TextField("Message", text: $engine.inputs[1], axis: .vertical)
                     .lineLimit(6, reservesSpace: true)
                     .textFieldStyle(FormTextFieldStyle())
                     .focused($focusedField, equals: .message)
                     .submitLabel(.done)
-                    .limitInputLength(value: $model.responses[1], length: 160)
+                    .limitInputLength(value: $engine.inputs[1], length: 160)
                     .id(Field.message)
             }
-            .onChange(of: model.responses, debounce: 1) { _ in
-                determineResults()
+            .onReceive(engine.$outputs) {
+                if model.responses != $0 {
+                    determineResult(for: $0)
+                }
             }
 #if os(iOS)
             .onChange(of: focusedField) { field in
@@ -55,7 +67,7 @@ struct SMSForm: View {
                 ToolbarItemGroup(placement: .keyboard, content: {
                     if focusedField == .message {
                         Spacer()
-                        Text("\(model.responses[1].count)/160")
+                        Text("\(engine.inputs[1].count)/160")
                     }
                     Spacer()
                     Button("Done", action: {focusedField = nil})
@@ -68,11 +80,14 @@ struct SMSForm: View {
 
 // MARK: - Form Calculation
 
-extension SMSForm {
-    
-    func determineResults() {
-        model.result = "smsto:\(model.responses[0]):\(model.responses[1])"
+extension SMSForm: BuilderForm {
+    func determineResult(for outputs: [String]) {
+        self.model = .init(
+            responses: outputs,
+            result: "smsto:\(outputs[0]):\(outputs[1])",
+            builder: .sms)
     }
+    
 }
 
 struct SMSForm_Previews: PreviewProvider {

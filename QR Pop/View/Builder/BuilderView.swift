@@ -12,6 +12,9 @@ import OSLog
 struct BuilderView: View {
     @State var model: QRModel = QRModel()
     @State var entity: QREntity? = nil
+    private var formView: some View {
+        model.content.builder.getView(model: $model.content)
+    }
     @EnvironmentObject var sceneModel: SceneModel
     @State private var currentPagerTab = "form"
     @State private var showingPrintSetup = false
@@ -55,6 +58,9 @@ struct BuilderView: View {
                         .presentationDetents([.medium])
                 }
             }
+#if os(macOS)
+            .frame(width: 500, height: 350)
+#endif
         })
         .userActivity(Constants.builderHandoffActivity, element: model) { model, activity in
             if let designData = try? model.design.asData(),
@@ -93,7 +99,7 @@ extension BuilderView {
             PagerTabStripView(selection: $currentPagerTab, content: {
                 
                 ScrollView {
-                    model.content.builder.getView(model: $model.content)
+                    formView
                         .padding()
                 }
                 .pagerTabItem(tag: "form") {
@@ -141,7 +147,7 @@ extension BuilderView {
                         .frame(maxHeight: 400)
                     Divider()
                     ScrollView {
-                        model.content.builder.getView(model: $model.content)
+                        formView
                             .padding()
                     }
                 }
@@ -170,7 +176,7 @@ extension BuilderView {
                     }
                     .onChange(of: geo.size.width) { width in
                         let maxWidth = width-275
-                        Task {
+                        Task { @MainActor in
                             if designPanelWidth > maxWidth {
                                 designPanelWidth = maxWidth
                             } else if designPanelWidth < 275 {
@@ -327,7 +333,6 @@ extension BuilderView {
                 
                 ImageButton("Reset", systemImage: "trash", role: .destructive, action: {
                     model.reset()
-                    hasMadeChanges = false
                 })
             }
         }, label: {

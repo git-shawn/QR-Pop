@@ -9,27 +9,37 @@ import SwiftUI
 
 struct TwitterForm: View {
     @Binding var model: BuilderModel
+    @StateObject var engine: FormStateEngine
     
-    /// TextField focus information
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case account
         case tweet
     }
-    @FocusState private var focusedField: Field?
+    
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: ["","",""]))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         ScrollViewReader { proxy in
             VStack(spacing: 20) {
 #if os(iOS)
                 Menu {
-                    Picker(selection: $model.responses[0], label: EmptyView(), content: {
+                    Picker(selection: $engine.inputs[0], label: EmptyView(), content: {
                         Text("Follow").tag("")
                         Text("Tweet").tag("t")
                     })
                     .pickerStyle(.automatic)
                 } label: {
                     HStack {
-                        Text(model.responses[0] == "" ? "Follow Account" : "Post Tweet")
+                        Text(engine.inputs[0] == "" ? "Follow Account" : "Post Tweet")
                         Spacer()
                         Image(systemName: "chevron.up.chevron.down")
                             .tint(.accentColor)
@@ -40,7 +50,7 @@ struct TwitterForm: View {
                     .cornerRadius(10)
                 }
 #else
-                Picker(selection: $model.responses[0], content: {
+                Picker(selection: $engine.inputs[0], content: {
                     Text("Follow").tag("")
                     Text("Tweet").tag("t")
                 }, label: {
@@ -52,8 +62,8 @@ struct TwitterForm: View {
                 .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
 #endif
                 
-                if(model.responses[0].isEmpty) {
-                    TextField("Account Name", text: $model.responses[1])
+                if(engine.inputs[0].isEmpty) {
+                    TextField("Account Name", text: $engine.inputs[1])
                         .autocorrectionDisabled(true)
                         .textFieldStyle(FormTextFieldStyle())
                         .focused($focusedField, equals: .account)
@@ -63,7 +73,7 @@ struct TwitterForm: View {
                         .keyboardType(.twitter)
 #endif
                 } else {
-                    TextField("Tweet", text: $model.responses[1], axis: .vertical)
+                    TextField("Tweet", text: $engine.inputs[1], axis: .vertical)
                         .lineLimit(6, reservesSpace: true)
                         .textFieldStyle(FormTextFieldStyle())
                         .focused($focusedField, equals: .tweet)
@@ -71,16 +81,14 @@ struct TwitterForm: View {
 #if os(iOS)
                         .keyboardType(.twitter)
 #endif
-                        .limitInputLength(value: $model.responses[1], length: 280)
+                        .limitInputLength(value: $engine.inputs[1], length: 280)
                         .id(Field.tweet)
                 }
             }
-            // Reset the TextField when the type of Twitter URL changes
-            .onChange(of: model.responses[0]) { _ in
-                model.responses[1] = ""
-            }
-            .onChange(of: model.responses, debounce: 1) { _ in
-                determineResult()
+            .onReceive(engine.$outputs) {
+                if model.responses != $0 {
+                    determineResult(for: $0)
+                }
             }
 #if os(iOS)
             .onChange(of: focusedField) { field in
@@ -94,7 +102,7 @@ struct TwitterForm: View {
                 ToolbarItemGroup(placement: .keyboard, content: {
                     if focusedField == .tweet {
                         Spacer()
-                        Text("\(model.responses[1].count)/280")
+                        Text("\(engine.inputs[1].count)/280")
                     }
                     Spacer()
                     Button("Done", action: {focusedField = nil})
@@ -107,16 +115,20 @@ struct TwitterForm: View {
 
 //MARK: - Form Calculation
 
-extension TwitterForm {
-    
-    func determineResult() {
-        if model.responses[0].isEmpty {
-            model.responses[1] = model.responses[1].replacingOccurrences(of: "@", with: "")
-            model.result = "https://twitter.com/intent/user?screen_name=\(model.responses[1])"
-        } else {
-            let sanitizedTweet = model.responses[2].replacingOccurrences(of: " ", with: "%20")
-            model.result = "https://twitter.com/intent/tweet?text=\(sanitizedTweet)"
+extension TwitterForm: BuilderForm {
+    func determineResult(for outputs: [String]) {
+        var result: String {
+            if outputs[0].isEmpty {
+                return "https://twitter.com/intent/user?screen_name=\(outputs[1])"
+            } else {
+                return "https://twitter.com/intent/tweet?text=\(outputs[2].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+            }
         }
+        
+        self.model = .init(
+            responses: outputs,
+            result: result,
+            builder: .twitter)
     }
 }
 

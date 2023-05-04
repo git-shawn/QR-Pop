@@ -22,7 +22,7 @@ struct DesignModel: Hashable, Equatable {
     var offPixels: PixelShape?
     var errorCorrection: QRCode.ErrorCorrection
     var logoPlacement: PlacementPosition = .center
-    private(set) var logo: Data?
+    var logo: Data?
 }
 
 //MARK: - Init
@@ -100,17 +100,12 @@ extension DesignModel {
               let platformImage = PlatformImage(data: data),
               let scaledImage = try? platformImage.resized(to: CGSize(width: 256, height: 256))
         else {
-            invalidateLogo()
+            self.logo = nil
             Logger.logModel.notice("DesignModel: Attempted to set invalid data as logo.")
             throw DesignModelError.logoFailure
         }
         
         self.logo = scaledImage.pngData()
-    }
-    
-    /// Remove the logo, if any, from this design.
-    mutating func invalidateLogo() {
-        self.logo = nil
     }
     
     /// Rotate the logo, if set, a certain direction.
@@ -138,7 +133,7 @@ extension DesignModel {
         design.style.eye = self.eyeColor.fillStyleGenerator
         design.style.pupil = self.pupilColor.fillStyleGenerator
         design.style.onPixels = self.pixelColor.fillStyleGenerator
-        design.style.offPixels = self.pixelColor.fillStyleGenerator(withAlpha: 0.3)
+        design.style.offPixels = self.pixelColor.fillStyleGenerator(withAlpha: 0.2)
         
         return design
     }

@@ -9,25 +9,35 @@ import SwiftUI
 
 struct FacetimeForm: View {
     @Binding var model: BuilderModel
+    @StateObject var engine: FormStateEngine
     
-    /// TextField focus information
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case phone
     }
-    @FocusState private var focusedField: Field?
+    
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: ["",""]))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         VStack(spacing: 20) {
 #if os(iOS)
             Menu {
-                Picker(selection: $model.responses[0], label: EmptyView(), content: {
+                Picker(selection: $engine.inputs[0], label: EmptyView(), content: {
                     Text("Video").tag("")
                     Text("Audio").tag("a")
                 })
                 .pickerStyle(.automatic)
             } label: {
                 HStack {
-                    Text(model.responses[0] == "" ? "Facetime Video" : "Facetime Audio")
+                    Text(engine.inputs[0] == "" ? "Facetime Video" : "Facetime Audio")
                     Spacer()
                     Image(systemName: "chevron.up.chevron.down")
                         .tint(.accentColor)
@@ -38,7 +48,7 @@ struct FacetimeForm: View {
                 .cornerRadius(10)
             }
 #else
-            Picker(selection: $model.responses[0], content: {
+            Picker(selection: $engine.inputs[0], content: {
                 Text("Video").tag("")
                 Text("Audio").tag("a")
             }, label: {
@@ -50,7 +60,7 @@ struct FacetimeForm: View {
             .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
 #endif
             
-            TextField("Phone Number", text: $model.responses[1])
+            TextField("Phone Number", text: $engine.inputs[1])
 #if os(iOS)
                 .keyboardType(.phonePad)
                 .submitLabel(.done)
@@ -60,8 +70,10 @@ struct FacetimeForm: View {
                 .textFieldStyle(FormTextFieldStyle())
                 .focused($focusedField, equals: .phone)
         }
-        .onChange(of: model.responses, debounce: 1) { _ in
-            determineResult()
+        .onReceive(engine.$outputs) {
+            if model.responses != $0 {
+                determineResult(for: $0)
+            }
         }
 #if os(iOS)
         .toolbar {
@@ -76,14 +88,21 @@ struct FacetimeForm: View {
 
 // MARK: - Form Calculation
 
-extension FacetimeForm {
+extension FacetimeForm: BuilderForm {
     
-    func determineResult() {
-        if (model.responses[0] == "") {
-            model.result = "facetime-audio:\(model.responses[1])"
-        } else {
-            model.result = "facetime:\(model.responses[1])"
+    func determineResult(for outputs: [String]) {
+        var result: String {
+            if outputs[0].isEmpty {
+                return "facetime:\(outputs[1])"
+            } else {
+                return "facetime-audio:\(outputs[1])"
+            }
         }
+        
+        self.model = .init(
+            responses: outputs,
+            result: result,
+            builder: .facetime)
     }
 }
 

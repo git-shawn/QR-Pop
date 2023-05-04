@@ -260,6 +260,9 @@
 		CD9DAB6129F464DE008B3C1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD9DAB6029F464DE008B3C1F /* Assets.xcassets */; };
 		CD9DAB6229F46A2C008B3C1F /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00629ECC8DF00976328 /* QRCodeView.swift */; };
 		CDA4BFFD29F34646008A7E7B /* SuccessThumbOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA4BFFC29F34646008A7E7B /* SuccessThumbOverlay.swift */; };
+		CDB0BDA02A01F18000566FB8 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
+		CDB0BDA12A01F18000566FB8 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
+		CDB0BDAB2A02908900566FB8 /* FormStateEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB0BDAA2A02908900566FB8 /* FormStateEngine.swift */; };
 		CDBAC04A29ECC8DF00976328 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBABFEE29ECC8DF00976328 /* SettingsView.swift */; };
 		CDBAC04B29ECC8DF00976328 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBABFEF29ECC8DF00976328 /* AboutAppView.swift */; };
 		CDBAC04C29ECC8DF00976328 /* SettingsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBABFF029ECC8DF00976328 /* SettingsMenu.swift */; };
@@ -334,7 +337,6 @@
 		CDBAC1CF29ED935500976328 /* TextField+LimitLength.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03A29ECC8DF00976328 /* TextField+LimitLength.swift */; };
 		CDBAC1D029ED935500976328 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02F29ECC8DF00976328 /* Constants.swift */; };
 		CDBAC1D129ED935500976328 /* Color+QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03B29ECC8DF00976328 /* Color+QRCode.swift */; };
-		CDBAC1D229ED935500976328 /* View+Debounce.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03529ECC8DF00976328 /* View+Debounce.swift */; };
 		CDBAC1D329ED935500976328 /* CGSize+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03929ECC8DF00976328 /* CGSize+QRPop.swift */; };
 		CDBAC1D429ED935500976328 /* Color+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03129ECC8DF00976328 /* Color+Codable.swift */; };
 		CDBAC1D529ED935500976328 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03229ECC8DF00976328 /* Platform.swift */; };
@@ -389,6 +391,8 @@
 		CDC8C8EE29FAD1FC004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
 		CDC8C8EF29FAD1FD004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
 		CDC8C8F029FAD1FD004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDE6CA6C2A0313F30097D2AB /* StringDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE6CA6B2A0313F30097D2AB /* StringDatePicker.swift */; };
+		CDE6CA6E2A0358350097D2AB /* CIImage+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE6CA6D2A0358350097D2AB /* CIImage+Image.swift */; };
 		CDFE670729F4DA7B0086BF7A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE670629F4DA7B0086BF7A /* ContentView.swift */; };
 		CDFE670929F5AAB80086BF7A /* Image+QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE670829F5AAB80086BF7A /* Image+QRCode.swift */; };
 		CDFE670F29F6BA120086BF7A /* BuilderCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE670E29F6BA120086BF7A /* BuilderCommands.swift */; };
@@ -399,7 +403,6 @@
 		CDFE671E29F784990086BF7A /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE671D29F784990086BF7A /* AppIconView.swift */; };
 		CDFE672029F786BD0086BF7A /* WhatsNewSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE671F29F786BD0086BF7A /* WhatsNewSheet.swift */; };
 		CDFE672329F8119E0086BF7A /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE672229F8119E0086BF7A /* Camera.swift */; };
-		CDFE672529F816870086BF7A /* CameraModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE672429F816870086BF7A /* CameraModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -588,6 +591,7 @@
 		CD9DAB5E29F4604A008B3C1F /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		CD9DAB6029F464DE008B3C1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CDA4BFFC29F34646008A7E7B /* SuccessThumbOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessThumbOverlay.swift; sourceTree = "<group>"; };
+		CDB0BDAA2A02908900566FB8 /* FormStateEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStateEngine.swift; sourceTree = "<group>"; };
 		CDBABFEE29ECC8DF00976328 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CDBABFEF29ECC8DF00976328 /* AboutAppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		CDBABFF029ECC8DF00976328 /* SettingsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMenu.swift; sourceTree = "<group>"; };
@@ -650,7 +654,6 @@
 		CDBAC03229ECC8DF00976328 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		CDBAC03329ECC8DF00976328 /* Haptics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
 		CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+GeometryProxy.swift"; sourceTree = "<group>"; };
-		CDBAC03529ECC8DF00976328 /* View+Debounce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Debounce.swift"; sourceTree = "<group>"; };
 		CDBAC03629ECC8DF00976328 /* Binding+Default.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Binding+Default.swift"; sourceTree = "<group>"; };
 		CDBAC03729ECC8DF00976328 /* UserDefaults+QRPop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+QRPop.swift"; sourceTree = "<group>"; };
 		CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityProtocol.swift; sourceTree = "<group>"; };
@@ -695,6 +698,8 @@
 		CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+QRPop.swift"; sourceTree = "<group>"; };
 		CDCFA8DD29D7E1E900452895 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
 		CDD5C72C29D8B38100AF1C37 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		CDE6CA6B2A0313F30097D2AB /* StringDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringDatePicker.swift; sourceTree = "<group>"; };
+		CDE6CA6D2A0358350097D2AB /* CIImage+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIImage+Image.swift"; sourceTree = "<group>"; };
 		CDFE670629F4DA7B0086BF7A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CDFE670829F5AAB80086BF7A /* Image+QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+QRCode.swift"; sourceTree = "<group>"; };
 		CDFE670E29F6BA120086BF7A /* BuilderCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuilderCommands.swift; sourceTree = "<group>"; };
@@ -704,7 +709,6 @@
 		CDFE671D29F784990086BF7A /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
 		CDFE671F29F786BD0086BF7A /* WhatsNewSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhatsNewSheet.swift; sourceTree = "<group>"; };
 		CDFE672229F8119E0086BF7A /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
-		CDFE672429F816870086BF7A /* CameraModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1102,6 +1106,7 @@
 				CDBAC1D729ED94AB00976328 /* TipButton.swift */,
 				CDBAC00129ECC8DF00976328 /* ToastOverlay.swift */,
 				CDFE671F29F786BD0086BF7A /* WhatsNewSheet.swift */,
+				CDE6CA6B2A0313F30097D2AB /* StringDatePicker.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1157,6 +1162,7 @@
 				CDBAC03629ECC8DF00976328 /* Binding+Default.swift */,
 				CDBAC02B29ECC8DF00976328 /* CGColor+QRPop.swift */,
 				CDBAC03929ECC8DF00976328 /* CGSize+QRPop.swift */,
+				CDE6CA6D2A0358350097D2AB /* CIImage+Image.swift */,
 				CD21703229F2F85300A18F17 /* Collection+Optional.swift */,
 				CDBAC03129ECC8DF00976328 /* Color+Codable.swift */,
 				CD8EB98329FB49C300E28A3F /* Color+Hex.swift */,
@@ -1178,7 +1184,6 @@
 				CDBAC02A29ECC8DF00976328 /* String+QRPop.swift */,
 				CDBAC03A29ECC8DF00976328 /* TextField+LimitLength.swift */,
 				CDBAC03729ECC8DF00976328 /* UserDefaults+QRPop.swift */,
-				CDBAC03529ECC8DF00976328 /* View+Debounce.swift */,
 				CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */,
 				CD4F20A929F4B8D30037082F /* WifiHandler.swift */,
 			);
@@ -1224,6 +1229,7 @@
 			children = (
 				CDBAC04729ECC8DF00976328 /* BuilderModel.swift */,
 				CDBAC04829ECC8DF00976328 /* DesignModel.swift */,
+				CDB0BDAA2A02908900566FB8 /* FormStateEngine.swift */,
 			);
 			path = Builder;
 			sourceTree = "<group>";
@@ -1318,7 +1324,6 @@
 			isa = PBXGroup;
 			children = (
 				CDFE672229F8119E0086BF7A /* Camera.swift */,
-				CDFE672429F816870086BF7A /* CameraModel.swift */,
 			);
 			path = Scanner;
 			sourceTree = "<group>";
@@ -1887,7 +1892,6 @@
 				CDBAC04F29ECC8DF00976328 /* ArchiveView.swift in Sources */,
 				CDBAC1BF29ED933E00976328 /* QRModel.swift in Sources */,
 				CDFE672029F786BD0086BF7A /* WhatsNewSheet.swift in Sources */,
-				CDFE672529F816870086BF7A /* CameraModel.swift in Sources */,
 				CDBAC04C29ECC8DF00976328 /* SettingsMenu.swift in Sources */,
 				CDBAC04B29ECC8DF00976328 /* AboutAppView.swift in Sources */,
 				CD46D68F29F41DC6003501E3 /* TimelineIntentHandler.swift in Sources */,
@@ -1912,12 +1916,14 @@
 				CDBAC05A29ECC8DF00976328 /* ToastOverlay.swift in Sources */,
 				CDBAC05429ECC8DF00976328 /* LabelStyles.swift in Sources */,
 				CDBAC06229ECC8DF00976328 /* PlaceFinder.swift in Sources */,
+				CDE6CA6C2A0313F30097D2AB /* StringDatePicker.swift in Sources */,
 				CDFE671A29F7811E0086BF7A /* AppIconModel.swift in Sources */,
 				CDBAC09129ECC8DF00976328 /* NavigationModel.swift in Sources */,
 				CD4F20A829F4B7E40037082F /* MenuBarScanResultsView.swift in Sources */,
 				CDFE670F29F6BA120086BF7A /* BuilderCommands.swift in Sources */,
 				CDBAC06829ECC8DF00976328 /* TwitterForm.swift in Sources */,
 				CD8EB98029FB2D8E00E28A3F /* BuildCodeIntent.swift in Sources */,
+				CDE6CA6E2A0358350097D2AB /* CIImage+Image.swift in Sources */,
 				CDBAC1D129ED935500976328 /* Color+QRCode.swift in Sources */,
 				CDBAC1C329ED935500976328 /* QRCode+Codable.swift in Sources */,
 				CDBAC1C229ED935500976328 /* LinearGradient+QRPop.swift in Sources */,
@@ -1928,8 +1934,8 @@
 				CDBAC05F29ECC8DF00976328 /* QRCodeView.swift in Sources */,
 				CDBAC1DE29EDA73800976328 /* ScannerErrorView.swift in Sources */,
 				CD8EB98429FB49C300E28A3F /* Color+Hex.swift in Sources */,
-				CDBAC1D229ED935500976328 /* View+Debounce.swift in Sources */,
 				CDBAC1C929ED935500976328 /* CGColor+QRPop.swift in Sources */,
+				CDB0BDAB2A02908900566FB8 /* FormStateEngine.swift in Sources */,
 				CD03E1D929F188F500302011 /* NewTemplateView.swift in Sources */,
 				CDBAC07529ECC8DF00976328 /* TemplateCarousel.swift in Sources */,
 				CDBAC07029ECC8DF00976328 /* CryptoForm.swift in Sources */,
@@ -2134,6 +2140,7 @@
 				CD53D66A29F481FD004DAC9A /* FileDocument+QRPop.swift in Sources */,
 				CDC8C8E629FAD1F9004C239C /* OSLog+QRPop.swift in Sources */,
 				CD9DAB5629F45F81008B3C1F /* Constants.swift in Sources */,
+				CDB0BDA02A01F18000566FB8 /* View+GeometryProxy.swift in Sources */,
 				CD9DAAEF29F45EE7008B3C1F /* ShareViewController.swift in Sources */,
 				CD9DAB3529F45F46008B3C1F /* CGColor+QRPop.swift in Sources */,
 				CD9DAB4929F45F68008B3C1F /* Published+UserDefaults.swift in Sources */,
@@ -2168,6 +2175,7 @@
 				CD9DAB2A29F45F35008B3C1F /* Database.xcdatamodeld in Sources */,
 				CDC8C8E529FAD1F9004C239C /* OSLog+QRPop.swift in Sources */,
 				CD9DAB5529F45F80008B3C1F /* Constants.swift in Sources */,
+				CDB0BDA12A01F18000566FB8 /* View+GeometryProxy.swift in Sources */,
 				CD9DAB0329F45EF2008B3C1F /* ShareViewController.swift in Sources */,
 				CD9DAB3629F45F46008B3C1F /* CGColor+QRPop.swift in Sources */,
 				CD9DAB4A29F45F69008B3C1F /* Published+UserDefaults.swift in Sources */,

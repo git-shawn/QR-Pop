@@ -9,21 +9,30 @@ import SwiftUI
 
 struct MailForm: View {
     @Binding var model: BuilderModel
+    @StateObject var engine: FormStateEngine
+    @State private var writeFullScreen: Bool = false
     
-    /// TextField focus information
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case email
         case subject
         case body
     }
-    @FocusState private var focusedField: Field?
     
-    @State private var writeFullScreen: Bool = false
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: ["","", ""]))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         ScrollViewReader { proxy in
             VStack(spacing: 20) {
-                TextField("Email Address", text: $model.responses[0])
+                TextField("Email Address", text: $engine.inputs[0])
                     .autocorrectionDisabled(true)
                     .textFieldStyle(FormTextFieldStyle())
                     .focused($focusedField, equals: .email)
@@ -35,7 +44,7 @@ struct MailForm: View {
                         focusedField = .subject
                     }
 #endif
-                TextField("Subject", text: $model.responses[1])
+                TextField("Subject", text: $engine.inputs[1])
                     .textFieldStyle(FormTextFieldStyle())
                     .focused($focusedField, equals: .subject)
                     .autocorrectionDisabled(true)
@@ -46,17 +55,19 @@ struct MailForm: View {
                         focusedField = .body
                     }
 #endif
-                TextField("Message", text: $model.responses[2], axis: .vertical)
+                TextField("Message", text: $engine.inputs[2], axis: .vertical)
                     .lineLimit(6, reservesSpace: true)
                     .textFieldStyle(FormTextFieldStyle())
                     .focused($focusedField, equals: .body)
-                    .limitInputLength(value: $model.responses[2], length: 1500)
+                    .limitInputLength(value: $engine.inputs[2], length: 1500)
                     .submitLabel(.return)
-                    .textEditor("Email Body", text: $model.responses[2], isPresented: $writeFullScreen)
+                    .textEditor("Email Body", text: $engine.inputs[2], isPresented: $writeFullScreen)
                     .id(Field.body)
             }
-            .onChange(of: model.responses, debounce: 1) {_ in
-                determineResult()
+            .onReceive(engine.$outputs) {
+                if model.responses != $0 {
+                    determineResult(for: $0)
+                }
             }
 #if os(iOS)
             .onChange(of: focusedField) { field in
@@ -86,10 +97,13 @@ struct MailForm: View {
 
 // MARK: - Form Calculation
 
-extension MailForm {
+extension MailForm: BuilderForm {
     
-    func determineResult() {
-        model.result = "mailto:\(model.responses[0])?subject=\(model.responses[1])&body=\(model.responses[2])"
+    func determineResult(for outputs: [String]) {
+        self.model = .init(
+            responses: outputs,
+            result: "mailto:\(outputs[0])?subject=\(outputs[1])&body=\(outputs[2])",
+            builder: .email)
     }
 }
 

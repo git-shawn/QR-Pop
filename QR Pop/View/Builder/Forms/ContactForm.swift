@@ -7,16 +7,28 @@
 
 import SwiftUI
 import Contacts
-import QRCode
+import OSLog
 
 struct ContactForm: View {
     @Binding var model: BuilderModel
+    @EnvironmentObject var sceneModel: SceneModel
+    @StateObject var engine: FormStateEngine
     
     @State private var presentingContacts: Bool = false
     @State private var presentingContactBuilder: Bool = false
     @State private var contact: CNContact?
     
     let contactsPermissions = CNContactStore.authorizationStatus(for: .contacts)
+    
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: [String](repeating: "", count: 7)))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         VStack(spacing: 20) {
@@ -26,7 +38,7 @@ struct ContactForm: View {
             .buttonStyle(FormButtonStyle())
             .disabled(contactsPermissions == .denied || contactsPermissions == .restricted)
             
-            Button(model.responses.allSatisfy({ $0 == "" }) ? "Create a Contact" : "Edit Contact", action: {
+            Button(engine.inputs.allSatisfy({ $0.isEmpty }) ? "Create a Contact" : "Edit Contact", action: {
                 presentingContactBuilder.toggle()
             })
             .buttonStyle(FormButtonStyle())
@@ -37,14 +49,20 @@ struct ContactForm: View {
                 .frame(minWidth: 350, minHeight: 250)
 #endif
         }
-        .onChange(of: contact) { _ in
-            guard let contact = contact else { return }
-            presentingContacts = false
-            parseCNContact(contact: contact)
+        .onReceive(engine.$outputs) {
+            if model.responses != $0 {
+                determineResult(for: $0)
+            }
+        }
+        .task(id: contact) {
+            if let contact = contact {
+                presentingContacts = false
+                parseCNContact(contact: contact)
+            }
         }
         .sheet(isPresented: $presentingContactBuilder) {
             NavigationStack {
-                ContactBuilder(formStates: $model.responses, isPresented: $presentingContactBuilder)
+                ContactBuilder(formStates: $engine.inputs, isPresented: $presentingContactBuilder)
                     .navigationTitle("New Contact")
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
@@ -56,8 +74,6 @@ struct ContactForm: View {
                         ToolbarItem(placement: .confirmationAction) {
                             Button("Submit", action: {
                                 presentingContactBuilder.toggle()
-                                model.result = "BEGIN:VCARD\nVERSION:3.0\nN:\(model.responses[1]);\(model.responses[0]);;;\nFN:\(model.responses[0]) \(model.responses[1])\nORG:\(model.responses[2])\nTEL;CELL:\(model.responses[3])\nADR;TYPE#HOME:;;\(model.responses[5])\nEMAIL:\(model.responses[4])\nURL:\(model.responses[6])\nEND:VCARD"
-                                
                             })
                             .foregroundColor(.accentColor)
                         }
@@ -68,33 +84,6 @@ struct ContactForm: View {
 #endif
         }
     }
-    
-    /// Generate a vCard from a Contact.
-    /// - Parameter contact: The contact to transform into a vCard.
-    /// - Returns: The vCard data as a String. If error, returns nil.
-    private func parseCNContact(contact: CNContact) {
-        let contactStore = CNContactStore()
-        var fetchedContact = contact
-        
-        do {
-            try fetchedContact = contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactVCardSerialization.descriptorForRequiredKeys()])
-        } catch let error {
-            debugPrint(error)
-            return
-        }
-        
-        model.responses[0] = fetchedContact.givenName
-        model.responses[1] = fetchedContact.familyName
-        model.responses[2] = fetchedContact.organizationName
-        model.responses[3] = fetchedContact.phoneNumbers.first?.value.stringValue ?? ""
-        model.responses[4] = fetchedContact.emailAddresses.first?.value as? String ?? ""
-        if let postalAddress = fetchedContact.postalAddresses.first?.value {
-            model.responses[5] = "\(postalAddress.street), \(postalAddress.city), \(postalAddress.state) \(postalAddress.postalCode)"
-        }
-        model.responses[6] = fetchedContact.urlAddresses.first?.value as? String ?? ""
-        
-        model.result = "BEGIN:VCARD\nVERSION:3.0\nN:\(model.responses[1]);\(model.responses[0]);;;\nFN:\(model.responses[0]) \(model.responses[1])\nORG:\(model.responses[2])\nTEL;CELL:\(model.responses[3])\nADR;TYPE#HOME:;;\(model.responses[5])\nEMAIL:\(model.responses[4])\nURL:\(model.responses[6])\nEND:VCARD"
-    }
 }
 
 //MARK: - Contact Builder Sheet
@@ -103,7 +92,7 @@ private struct ContactBuilder: View {
     @Binding var formStates: [String]
     @Binding var isPresented: Bool
     
-    /// TextField focus information
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case firstName
         case lastName
@@ -113,8 +102,6 @@ private struct ContactBuilder: View {
         case address
         case website
     }
-    
-    @FocusState private var focusedField: Field?
     
     var body: some View {
         ScrollView {
@@ -212,6 +199,48 @@ private struct ContactBuilder: View {
         }
 #endif
     }
+}
+
+
+// MARK: - Form Calculation
+
+extension ContactForm: BuilderForm {
+    
+    func determineResult(for outputs: [String]) {
+        let result = "BEGIN:VCARD\nVERSION:3.0\nN:\(outputs[1]);\(outputs[0]);;;\nFN:\(outputs[0]) \(outputs[1])\nORG:\(outputs[2])\nTEL;CELL:\(outputs[3])\nADR;TYPE#HOME:;;\(outputs[5])\nEMAIL:\(outputs[4])\nURL:\(outputs[6])\nEND:VCARD"
+        
+        self.model = .init(
+            responses: outputs,
+            result: result,
+            builder: .contact)
+    }
+    
+    /// Generate a vCard from a Contact.
+    /// - Parameter contact: The contact to transform into a vCard.
+    /// - Returns: The vCard data as a String. If error, returns nil.
+    private func parseCNContact(contact: CNContact) {
+        let contactStore = CNContactStore()
+        var fetchedContact = contact
+        
+        do {
+            try fetchedContact = contactStore.unifiedContact(withIdentifier: contact.identifier, keysToFetch: [CNContactVCardSerialization.descriptorForRequiredKeys()])
+        } catch {
+            Logger.logView.error("ContactForm: Unable to fetch user selected contact.")
+            sceneModel.toaster = .error(note: "Could not find contact")
+            return
+        }
+        
+        engine.inputs[0] = fetchedContact.givenName
+        engine.inputs[1] = fetchedContact.familyName
+        engine.inputs[2] = fetchedContact.organizationName
+        engine.inputs[3] = fetchedContact.phoneNumbers.first?.value.stringValue ?? ""
+        engine.inputs[4] = fetchedContact.emailAddresses.first?.value as? String ?? ""
+        if let postalAddress = fetchedContact.postalAddresses.first?.value {
+            engine.inputs[5] = "\(postalAddress.street), \(postalAddress.city), \(postalAddress.state) \(postalAddress.postalCode)"
+        }
+        engine.inputs[6] = fetchedContact.urlAddresses.first?.value as? String ?? ""
+    }
+    
 }
 
 struct ContactForm_Preview: PreviewProvider {

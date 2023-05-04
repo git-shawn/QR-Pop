@@ -9,16 +9,26 @@ import SwiftUI
 
 struct PhoneForm: View {
     @Binding var model: BuilderModel
+    @StateObject var engine: FormStateEngine
     
-    /// TextField focus information
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case phone
     }
-    @FocusState private var focusedField: Field?
+    
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: [""]))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         VStack(spacing: 20) {
-            TextField("Phone Number", text: $model.responses[0])
+            TextField("Phone Number", text: $engine.inputs[0])
 #if os(iOS)
                 .keyboardType(.phonePad)
                 .textInputAutocapitalization(.never)
@@ -28,8 +38,10 @@ struct PhoneForm: View {
                 .textFieldStyle(FormTextFieldStyle())
                 .focused($focusedField, equals: .phone)
         }
-        .onChange(of: model.responses, debounce: 1) { val in
-            model.result = model.responses[0]
+        .onReceive(engine.$outputs) {
+            if model.responses != $0 {
+                determineResult(for: $0)
+            }
         }
 #if os(iOS)
         .toolbar {
@@ -39,6 +51,18 @@ struct PhoneForm: View {
             })
         }
 #endif
+    }
+}
+
+// MARK: - Form Calculation
+
+extension PhoneForm: BuilderForm {
+    
+    func determineResult(for outputs: [String]) {
+        self.model = .init(
+            responses: outputs,
+            result: outputs[0],
+            builder: .phone)
     }
 }
 

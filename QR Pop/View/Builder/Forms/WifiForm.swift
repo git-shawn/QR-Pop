@@ -9,32 +9,41 @@ import SwiftUI
 
 struct WifiForm: View {
     @Binding var model: BuilderModel
+    @StateObject var engine: FormStateEngine
     
-    /// TextField focus information
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case ssid
         case password
     }
-    @FocusState private var focusedField: Field?
+    
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: ["WPA", "", ""]))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         VStack(spacing: 20) {
 #if os(macOS)
-            GetWifiButton(builderModel: $model)
+            GetWifiButton(inputs: $engine.inputs)
                 .buttonStyle(FormButtonStyle())
 #endif
 #if os(iOS)
             Menu {
-                Picker(selection: $model.responses[0], label: EmptyView(), content: {
+                Picker(selection: $engine.inputs[0], label: EmptyView(), content: {
                     Text("WPA").tag("WPA")
                     Text("WEP").tag("WEP")
-                    Text("None").tag("nopass")
+                    Text("None").tag("")
                 })
                 .help("Select the encryption method your Wifi network uses. The majority of homes use WPA.")
                 .pickerStyle(.automatic)
             } label: {
                 HStack {
-                    Text(model.responses[0] == "nopass" ? "Unsecured Network" : model.responses[0])
+                    Text(engine.inputs[0].isEmpty ? "Unsecured Network" : engine.inputs[0])
                     Spacer()
                     Image(systemName: "chevron.up.chevron.down")
                         .tint(.accentColor)
@@ -45,7 +54,7 @@ struct WifiForm: View {
                 .cornerRadius(10)
             }
 #else
-            Picker(selection: $model.responses[0], label: EmptyView(), content: {
+            Picker(selection: $engine.inputs[0], label: EmptyView(), content: {
                 Text("WPA").tag("WPA")
                 Text("WEP").tag("WEP")
                 Text("None").tag("nopass")
@@ -53,7 +62,7 @@ struct WifiForm: View {
             .help("Select the encryption method your Wifi network uses. The majority of homes use WPA.")
             .pickerStyle(.segmented)
 #endif
-            TextField("Wifi SSID", text: $model.responses[1])
+            TextField("Wifi SSID", text: $engine.inputs[1])
                 .autocorrectionDisabled(true)
 #if os(iOS)
                 .textInputAutocapitalization(.never)
@@ -65,8 +74,8 @@ struct WifiForm: View {
                 .textFieldStyle(FormTextFieldStyle())
                 .focused($focusedField, equals: .ssid)
             
-            if (model.responses[0] != "nopass") {
-                SecureField("Wifi Password", text: $model.responses[2])
+            if (engine.inputs[0] != "nopass") {
+                SecureField("Wifi Password", text: $engine.inputs[2])
                     .autocorrectionDisabled(true)
 #if os(iOS)
                     .textInputAutocapitalization(.never)
@@ -76,11 +85,10 @@ struct WifiForm: View {
                     .focused($focusedField, equals: .password)
             }
         }
-        .onChange(of: model.responses, debounce: 1) { _ in
-            determineResult()
-        }
-        .onAppear {
-            model.responses[0] = "WPA"
+        .onReceive(engine.$outputs) {
+            if model.responses != $0 {
+                determineResult(for: $0)
+            }
         }
         .toolbar {
             ToolbarItemGroup(placement: .keyboard, content: {
@@ -91,15 +99,15 @@ struct WifiForm: View {
     }
 }
 
-//MARK: - Form Calculation
+//MARK: - Form Calculations
 
-extension WifiForm {
+extension WifiForm: BuilderForm {
     
-    func determineResult() {
-        if model.responses[0].isEmpty {
-            model.responses[0] = "WPA"
-        }
-        model.result = "WIFI:T:\(model.responses[0]);S:\(model.responses[1]);P:\(model.responses[2]);;"
+    func determineResult(for outputs: [String]) {
+        self.model = .init(
+            responses: outputs,
+            result: "WIFI:T:\(outputs[0]);S:\(outputs[1]);P:\(outputs[2]);;",
+            builder: .wifi)
     }
 }
 
@@ -109,13 +117,13 @@ extension WifiForm {
 import CoreWLAN
 
 fileprivate struct GetWifiButton: View {
-    @Binding var model: BuilderModel
+    @Binding var inputs: [String]
     @EnvironmentObject var sceneModel: SceneModel
     
     var isWifiActive: Bool = false
     
-    init(builderModel: Binding<BuilderModel>) {
-        self._model = builderModel
+    init(inputs: Binding<[String]>) {
+        self._inputs = inputs
         isWifiActive = self.isWIFIActive()
     }
     
@@ -185,9 +193,9 @@ fileprivate struct GetWifiButton: View {
             guard let wifiPassword = responseData as? String else {failureAlert(); return}
             
             //Generate code from SSID and Password
-            model.responses[0] = authMethod
-            model.responses[1] = ssidString
-            model.responses[2] = wifiPassword
+            inputs[0] = authMethod
+            inputs[1] = ssidString
+            inputs[2] = wifiPassword
         } else {
             failureAlert()
         }
@@ -218,9 +226,13 @@ fileprivate struct GetWifiButton: View {
     
     var body: some View {
         if isWifiActive {
-            Button(action: getWifiDetails) {
+            Button(action: {
+                Task {
+                    getWifiDetails()
+                }
+            }, label: {
                 Label("Autofill Wifi Information", systemImage: "wifi")
-            }
+            })
         }
     }
 }

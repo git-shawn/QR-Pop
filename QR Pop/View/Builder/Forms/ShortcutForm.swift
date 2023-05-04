@@ -9,28 +9,38 @@ import SwiftUI
 
 struct ShortcutForm: View {
     @Binding var model: BuilderModel
+    @StateObject var engine: FormStateEngine
     
-    /// TextField focus information
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case name
         case input
     }
-    @FocusState private var focusedField: Field?
+    
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: ["", "", ""]))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         ScrollViewReader { proxy in
             VStack(spacing: 20) {
 #if os(iOS)
                 Menu {
-                    Picker(selection: $model.responses[0], label: EmptyView(), content: {
+                    Picker(selection: $engine.inputs[0], label: EmptyView(), content: {
                         Text("None").tag("")
                         Text("Text").tag("text")
-                        Text("Pasteboard]").tag("clipboard")
+                        Text("Pasteboard").tag("clipboard")
                     })
                     .pickerStyle(.automatic)
                 } label: {
                     HStack {
-                        Text(model.responses[0] == "" ? "No Input" : (model.responses[0] == "text" ? "Predefined Input" : "Input from Pasteboard"))
+                        Text(engine.inputs[0].isEmpty ? "No Input" : (engine.inputs[0] == "text" ? "Predefined Input" : "Input from Pasteboard"))
                         Spacer()
                         Image(systemName: "chevron.up.chevron.down")
                             .tint(.accentColor)
@@ -44,7 +54,7 @@ struct ShortcutForm: View {
                 HStack {
                     Text("Shortcut Input")
                     Spacer()
-                    Picker(selection: $model.responses[0], content: {
+                    Picker(selection: $engine.inputs[0], content: {
                         Text("No Input").tag("")
                         Text("Text").tag("text")
                         Text("Pasteboard").tag("clipboard")
@@ -59,31 +69,33 @@ struct ShortcutForm: View {
                 .background(.regularMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 #endif
-                TextField("Shortcut Name", text: $model.responses[1])
+                TextField("Shortcut Name", text: $engine.inputs[1])
                     .autocorrectionDisabled(true)
                     .textFieldStyle(FormTextFieldStyle())
                     .focused($focusedField, equals: .name)
 #if os(iOS)
                     .textInputAutocapitalization(.never)
-                    .submitLabel(model.responses[0] == "text" ? .next : .done)
+                    .submitLabel(engine.inputs[0] == "text" ? .next : .done)
                     .onSubmit {
-                        if (model.responses[0] == "text") {
+                        if (engine.inputs[0] == "text") {
                             focusedField = .input
                         }
                     }
 #endif
-                if (model.responses[0] == "text") {
-                    TextField("Shortcut Input", text: $model.responses[2], axis: .vertical)
+                if (engine.inputs[0] == "text") {
+                    TextField("Shortcut Input", text: $engine.inputs[2], axis: .vertical)
                         .lineLimit(6, reservesSpace: true)
                         .textFieldStyle(FormTextFieldStyle())
                         .focused($focusedField, equals: .input)
                         .submitLabel(.done)
-                        .limitInputLength(value: $model.responses[2], length: 1000)
+                        .limitInputLength(value: $engine.inputs[2], length: 1000)
                         .id(Field.input)
                 }
             }
-            .onChange(of: model.responses, debounce: 1) { _ in
-                determineResult()
+            .onReceive(engine.$outputs) {
+                if model.responses != $0 {
+                    determineResult(for: $0)
+                }
             }
 #if os(iOS)
             .onChange(of: focusedField, perform: {field in
@@ -106,18 +118,25 @@ struct ShortcutForm: View {
 
 // MARK: - Form Calculation
 
-extension ShortcutForm {
-    
-    func determineResult() {
-        let formattedName = model.responses[1].replacingOccurrences(of: " ", with: "%20")
-        
-        if (model.responses[0].isEmpty) {
-            model.result = "shortcuts://run-shortcut?name=\(formattedName)"
-        } else if (model.responses[0] == "clipboard") {
-            model.result = "shortcuts://run-shortcut?name=\(formattedName)&input=clipboard"
-        } else {
-            model.result = "shortcuts://run-shortcut?name=\(formattedName)&input=\(model.responses[2])"
+extension ShortcutForm: BuilderForm {
+    func determineResult(for outputs: [String]) {
+        var result: String {
+            let base = "shortcuts://run-shortcut?name=\(outputs[1].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+            
+            switch outputs[0] {
+            case "clipboard":
+                return base+"&input=clipboard"
+            case "text":
+                return base+"&input=\(outputs[2].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+            default:
+                return base
+            }
         }
+        
+        self.model = .init(
+            responses: outputs,
+            result: result,
+            builder: .shortcut)
     }
 }
 

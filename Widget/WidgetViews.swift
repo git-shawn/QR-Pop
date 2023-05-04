@@ -296,6 +296,10 @@ extension WidgetViews {
 }
 
 #endif
+
+/**
+ These previews do not seem to work on any target.
+ */
 struct WidgetViews_Previews: PreviewProvider {
     static var previews: some View {
         WidgetViews(entry: ArchiveEntry(kind: .snapshot))

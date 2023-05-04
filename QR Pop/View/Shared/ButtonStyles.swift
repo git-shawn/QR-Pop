@@ -79,12 +79,12 @@ struct OutboundLinkButtonStyle: ButtonStyle {
     }
 }
 
-struct SettingsFormButtonStyle: ButtonStyle {
+struct DatePickerButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding(.horizontal)
             .padding(.vertical, 10)
-            .background(Color.accentColor.opacity(0.1), in: RoundedRectangle(cornerRadius: 10))
+            .background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
             .opacity(configuration.isPressed ? 0.5 : 1)
     }
 }

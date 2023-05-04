@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import OSLog
 
 struct BuilderCommands: Commands {
     @FocusedBinding(\.qrModel) var model
@@ -27,6 +28,7 @@ struct BuilderCommands: Commands {
             })
             .disabled(navigationModel == nil)
             
+#if os(macOS)
             if let recentlyArchived = try? Persistence.shared.getMostRecentQREntities(5) {
                 Menu("Open Recent Archive...", content: {
                     ForEach(recentlyArchived) { archive in
@@ -51,6 +53,7 @@ struct BuilderCommands: Commands {
                     })
                 })
             }
+#endif
         })
         
         
@@ -73,7 +76,7 @@ struct BuilderCommands: Commands {
         })
         
         // MARK: - Present Item
-        
+#if os(macOS)
         CommandGroup(after: .windowArrangement, addition: {
             Button("View Code in New Window", action: {
                 if let model = model {
@@ -83,6 +86,7 @@ struct BuilderCommands: Commands {
             .disabled(model == nil)
             .keyboardShortcut("w", modifiers: [.control,.command])
         })
+#endif
         
         // MARK: - Export Item
         
@@ -93,8 +97,8 @@ struct BuilderCommands: Commands {
                 do {
                     try model?.addToPhotoLibrary(for: 512)
                     sceneModel?.toaster = .saved(note: "Image saved")
-                } catch let error {
-                    debugPrint(error)
+                } catch {
+                    Logger.logView.error("BuilderCommands: Could not add image to photo library.")
                     sceneModel?.toaster = .error(note: "Could not save photo")
                 }
             })
@@ -138,7 +142,9 @@ struct BuilderCommands: Commands {
                 })
             })
             .disabled(model == nil)
+            
             Divider()
+            
             Button("Reset QR Code", action: {
                 model?.reset()
             })
@@ -147,7 +153,9 @@ struct BuilderCommands: Commands {
         })
         
         CommandGroup(after: .pasteboard, addition: {
+            
             Divider()
+            
             Button("Copy QR Code Image", action: {
                 model?.addToPasteboard(for: 512)
                 sceneModel?.toaster = .copied(note: "Image copied")

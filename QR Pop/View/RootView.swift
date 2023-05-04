@@ -56,7 +56,7 @@ struct RootView: View {
             do {
                 try navigationModel.handleURL(url)
             } catch let error {
-                debugPrint(error)
+                Logger.logView.error("Root: Unable to import file: \(error.localizedDescription)")
                 sceneModel.toaster = .error(note: "Something went wrong")
             }
         }

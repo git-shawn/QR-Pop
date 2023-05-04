@@ -13,13 +13,11 @@ import OSLog
 struct QRCodeView: View, Equatable {
     @Binding var design: DesignModel
     @Binding var builder: BuilderModel
+    @State private var size: CGFloat = 0
 #if !CLOUDEXT
     @EnvironmentObject var sceneModel: SceneModel
 #endif
     @State private var isTargetedForDrop: Bool = false
-    var logoImage: Image? {
-        return design.resolvingLogo()
-    }
     
     let interactivity: Interactivity
     
@@ -58,60 +56,86 @@ struct QRCodeView: View, Equatable {
 extension QRCodeView {
     
     var code: some View {
-        GeometryReader { geo in
-            let cornerRadius = (geo.size.width * 0.08)
-            let baseShape = QRCodeShape(text: builder.result, errorCorrection: design.errorCorrection)
+        
+        Canvas(rendersAsynchronously: false) { context, size in
+            let rectDimension = min(size.width, size.height)
+            let rect = CGRect(
+                origin: .zero,
+                size: CGSize(width: rectDimension, height: rectDimension))
             
-            ZStack(alignment: design.logoPlacement == .center ? .center : .bottomTrailing) {
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(design.backgroundColor)
-                    .padding(geo.size.width*0.01)
+            context.drawLayer { context in
+                context.scaleBy(x: 0.98, y: 0.98)
+                context.translateBy(x: rectDimension*0.01, y: rectDimension*0.01)
+                let border: Path = .init(roundedRect: rect, cornerRadius: (rectDimension*0.08), style: .continuous)
+
+                context.fill(border, with: .color(design.backgroundColor))
+                context.stroke(
+                    border,
+                    with: .color(design.pixelColor),
+                    lineWidth: rectDimension*0.02)
+            }
+            
+
+            if let baseShape = QRCodeShape(text: builder.result, errorCorrection: design.errorCorrection) {
                 
-                Group {
+                context.drawLayer(content: { context in
+                    context.scaleBy(x: 0.9, y: 0.9)
+                    context.translateBy(x: rectDimension*0.05, y: rectDimension*0.05)
+                    
                     if let offPixelShape = design.offPixels {
-                        baseShape?
-                            .components(.offPixels)
-                            .offPixelShape(offPixelShape.generator)
-                            .logoTemplate(design.getLogoTemplate())
-                            .fill(design.pixelColor.opacity(0.3))
+                        context.fill(
+                            baseShape
+                                .components(.offPixels)
+                                .offPixelShape(offPixelShape.generator)
+                                .logoTemplate(design.getLogoTemplate())
+                                .path(in: rect),
+                            with: .color(design.pixelColor.opacity(0.2)),
+                            style: .init(eoFill: true, antialiased: false)
+                        )
                     }
                     
-                    baseShape?
-                        .components(.onPixels)
-                        .onPixelShape(design.pixelShape.generator)
-                        .logoTemplate(design.getLogoTemplate())
-                        .fill(design.pixelColor)
+                    context.fill(
+                        (baseShape
+                            .components(.onPixels)
+                            .onPixelShape(design.pixelShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(design.pixelColor),
+                        style: .init(eoFill: true, antialiased: false))
                     
-                    baseShape?
-                        .components(.eyeOuter)
-                        .eyeShape(design.eyeShape.generator)
-                        .fill(design.eyeColor)
+                    context.fill(
+                        (baseShape
+                            .components(.eyeOuter)
+                            .eyeShape(design.eyeShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(design.eyeColor),
+                        style: .init(eoFill: true, antialiased: false))
                     
-                    baseShape?
-                        .components(.eyePupil)
-                        .eyeShape(design.eyeShape.generator)
-                        .fill(design.pupilColor)
+                    context.fill(
+                        (baseShape
+                            .components(.eyePupil)
+                            .eyeShape(design.eyeShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(design.pupilColor),
+                        style: .init(eoFill: true, antialiased: false))
                     
-                    logoImage?
-                        .resizable()
-                        .scaledToFit()
-                }
-                .padding(min(geo.size.width, geo.size.height)*0.05)
-                
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .strokeBorder(design.pixelColor, lineWidth: (geo.size.width * 0.02))
+                    context.draw(
+                        .init(platformImage: PlatformImage(cgImage: design.getLogoTemplate().image)),
+                        in: rect)
+                    
+                })
             }
-            .mask {
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-            }
-            .aspectRatio(1, contentMode: .fit)
-            .animation(.default, value: design)
-            .contentShape(.dragPreview, RoundedRectangle(cornerRadius: cornerRadius))
-#if os(iOS)
-            .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: cornerRadius))
-#endif
         }
+#if os(iOS)
+        .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: (size * 0.084), style: .continuous))
+#endif
+        .contentShape(.dragPreview, RoundedRectangle(cornerRadius: (size * 0.084), style: .continuous))
         .aspectRatio(1, contentMode: .fit)
+        .readSize() { size in
+            self.size = min(size.width,size.height)
+        }
     }
 }
 
@@ -224,8 +248,100 @@ extension QRCodeView {
     }
 }
 
+#if targetEnvironment(simulator)
 struct QRCodeView_Previews: PreviewProvider {
     static var previews: some View {
         QRCodeView(qrcode: .constant(QRModel()), interactivity: .view)
+            .previewDisplayName("Simple Code")
+        QRCodeView(qrcode: .constant(QRModel(design: DesignModel(eyeShape: .shield, pixelShape: .insetRound, eyeColor: .indigo, pupilColor: .indigo, pixelColor: .indigo, backgroundColor: .mint, offPixels: nil, errorCorrection: .high, logoPlacement: .center, logo: nil), content: BuilderModel(text: "Lorem ipsum"))), interactivity: .view)
+            .previewDisplayName("Complex Code")
+        QRCodeTechncialPreview()
+            .previewDisplayName("Technical Preview")
     }
 }
+
+struct QRCodeTechncialPreview: View {
+    let design = DesignModel()
+    let builder = BuilderModel(text: "Preserve unimpaired the natural and cultural resources and values of the National Park System for the enjoyment, education, and inspiration of this and future generations")
+    
+    var body: some View {
+        Canvas { context, size in
+            let rectDimension = min(size.width, size.height)
+            let rect = CGRect(
+                origin: .zero,
+                size: CGSize(width: rectDimension, height: rectDimension))
+            
+            if let baseShape = QRCodeShape(text: builder.result, errorCorrection: design.errorCorrection) {
+                
+                context.drawLayer(content: { context in
+                    context.scaleBy(x: 0.9, y: 0.9)
+                    context.translateBy(x: rectDimension*0.05, y: rectDimension*0.05)
+                    
+                    context.stroke(
+                        (baseShape
+                            .components(.offPixels)
+                            .eyeShape(design.eyeShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(.red),
+                        lineWidth: 1)
+                    
+                    context.stroke(
+                        (baseShape
+                            .components(.onPixels)
+                            .onPixelShape(design.pixelShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(.blue),
+                        lineWidth: 1)
+                    
+                    context.fill(
+                        (baseShape
+                            .components(.onPixels)
+                            .onPixelShape(design.pixelShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(.blue.opacity(0.2)))
+                    
+                    context.stroke(
+                        (baseShape
+                            .components(.eyeOuter)
+                            .eyeShape(design.eyeShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(.orange),
+                        lineWidth: 1)
+                    
+                    context.fill(
+                        (baseShape
+                            .components(.eyeOuter)
+                            .eyeShape(design.eyeShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(.orange.opacity(0.2)))
+                    
+                    context.stroke(
+                        (baseShape
+                            .components(.eyePupil)
+                            .eyeShape(design.eyeShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(.green),
+                        lineWidth: 1)
+                    
+                    context.fill(
+                        (baseShape
+                            .components(.eyePupil)
+                            .eyeShape(design.eyeShape.generator)
+                            .logoTemplate(design.getLogoTemplate())
+                            .path(in: rect)),
+                        with: .color(.green.opacity(0.2)))
+                    
+                })
+            }
+        }
+        .drawingGroup()
+    }
+}
+
+#endif

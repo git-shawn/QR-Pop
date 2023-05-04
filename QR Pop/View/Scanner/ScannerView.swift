@@ -10,12 +10,12 @@ import PhotosUI
 import OSLog
 import QRCode
 
-struct ScannerView: View {
+struct ScannerView: View, Equatable {
     @EnvironmentObject var sceneModel: SceneModel
     @EnvironmentObject var navigationModel: NavigationModel
-    @StateObject private var model = CameraModel()
+    @State var viewfinder: Image? = nil
+    let camera: Camera = Camera()
     
-    @State private var viewfinderScale = 1.0
     @State private var photoToScan: PhotosPickerItem? = nil
     @State private var isPickingPhoto: Bool = false
     @State private var isPickingFile: Bool = false
@@ -55,6 +55,10 @@ struct ScannerView: View {
         .toolbar(.visible, for: .tabBar, .navigationBar)
 #endif
     }
+    
+    static func == (lhs: ScannerView, rhs: ScannerView) -> Bool {
+        lhs.camera == rhs.camera
+    }
 }
 
 // MARK: - Scanner View
@@ -63,7 +67,7 @@ extension ScannerView {
     
     var scanner: some View {
         GeometryReader { proxy in
-            model.viewfinderImage?
+            viewfinder?
                 .resizable()
                 .scaledToFill()
                 .frame(width: proxy.size.width, height: proxy.size.height)
@@ -78,15 +82,24 @@ extension ScannerView {
                 .clipped()
         }
         .task {
-            await model.camera.start()
-            result = model.camera.scanResult
+            await camera.start()
+            result = camera.scanResult
+            
+            let imageStream = camera.previewStream.compactMap({ $0.image })
+            for await image in imageStream {
+                self.viewfinder = image
+            }
         }
-        .onReceive(model.camera.scanResult.publisher) { result in
+        .onReceive(camera.scanResult.publisher) { result in
             self.result = result
-            model.camera.stop()
+            Task {
+                camera.stop()
+            }
         }
         .onDisappear {
-            model.camera.stop()
+            Task {
+                camera.stop()
+            }
         }
         .background(Color.black, ignoresSafeAreaEdges: .all)
 #if os(iOS)
@@ -118,10 +131,10 @@ extension ScannerView {
 #if os(iOS)
             ToolbarItem(placement: .primaryAction) {
                 ImageButton("Switch Cameras", systemImage: "arrow.triangle.2.circlepath", action: {
-                    model.camera.switchCaptureDevice()
+                    camera.switchCaptureDevice()
                 })
                 .tint(.primary)
-                .disabled(!model.camera.hasMultipleCaptureDevices)
+                .disabled(camera.hasMultipleCaptureDevices)
             }
             
             ToolbarItem(placement: .primaryAction) {
@@ -141,9 +154,9 @@ extension ScannerView {
             }
             
             ToolbarItem(placement: .navigationBarLeading) {
-                if model.camera.isTorchAvailable {
-                    ImageButton("Toggle Flash", systemImage: model.camera.isTorchOn ? "bolt.circle.fill" : "bolt.slash.circle") {
-                        model.camera.toggleTorch()
+                if camera.isTorchAvailable {
+                    ImageButton("Toggle Flash", systemImage: camera.isTorchOn ? "bolt.circle.fill" : "bolt.slash.circle") {
+                        camera.toggleTorch()
                     }
                     .tint(.primary)
                 }
@@ -181,11 +194,11 @@ extension ScannerView {
                   let resultString = result.messageString
             else {
                 url.stopAccessingSecurityScopedResource()
-                model.camera.stop()
+                camera.stop()
                 self.result = .failure(.noResult)
                 return
             }
-            model.camera.stop()
+            camera.stop()
             url.stopAccessingSecurityScopedResource()
             self.result = .success(resultString)
         } else {
@@ -203,11 +216,11 @@ extension ScannerView {
                       let result = resultsArray.first,
                       let resultString = result.messageString
                 else {
-                    model.camera.stop()
+                    camera.stop()
                     self.result = .failure(.noResult)
                     return
                 }
-                model.camera.stop()
+                camera.stop()
                 self.result = .success(resultString)
             case .failure(_):
                 Logger.logView.error("ScannerView: Could not access photo from photo picker.")

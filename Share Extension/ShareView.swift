@@ -62,7 +62,7 @@ struct ShareView: View {
                 }
             }
         }
-        .task { @MainActor in
+        .task(id: sharedItem) { @MainActor in
             handleInput()
         }
     }
@@ -203,7 +203,7 @@ extension ShareView {
                     }
                     url.stopAccessingSecurityScopedResource()
                     extensionItemType = .template(model: templateModel)
-
+                    
                 } else {
                     Logger.logExtension.notice("ShareExtension: Invalid URL passed to QR Pop Share Extension. Likely a file.")
                     extensionItemType = .error
@@ -334,16 +334,33 @@ extension ShareView {
             Spacer()
             VStack(spacing: 20) {
                 QRCodeView(design: .constant(model.design), builder: .constant(BuilderModel()))
-                VStack(spacing: 10) {
+                    .padding(.horizontal)
+                    .frame(minHeight: 0, maxHeight: 400)
+                    .aspectRatio(1, contentMode: .fit)
+                    .shadow(color: .black.opacity(0.3), radius: 10)
+                
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("\(Image(systemName: "plus.app")) New Template Details")
+                    Divider()
                     Text(model.title)
                         .font(.title2)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(3)
-                    Text(model.created, style: .date)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(1)
-                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2, reservesSpace: true)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Created")
+                            .font(.caption)
+                        Text(model.created, style: .date)
+                    }
+                    .foregroundStyle(.secondary)
                 }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(.ultraThinMaterial)
+                )
+                .padding(.horizontal)
+                
             }
 #if os(macOS)
             .padding(40)
@@ -362,15 +379,20 @@ extension ShareView {
                 }
                 
             }, label: {
-                Text("Add Template")
 #if os(iOS)
+                Text("\(Image(systemName: "plus")) New Template Details")
+                    .bold()
+                    .foregroundColor(.antiPrimary)
                     .padding(10)
                     .frame(maxWidth: .infinity)
+#else
+                Text("Add Template")
 #endif
             })
 #if os(iOS)
+            .padding()
             .tint(.primary)
-            .buttonStyle(.bordered)
+            .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
 #else
             .modifier(FooterModifier(dismiss: dismiss))
@@ -382,12 +404,12 @@ extension ShareView {
         .toast($toast)
         .background(
             ZStack {
-                model.preview(for: 16)?
-                    .resizable()
+                Rectangle()
+                    .fill(model.design.backgroundColor.gradient)
                 Rectangle()
                     .fill(.ultraThinMaterial)
             }
-                .ignoresSafeArea()
+                .ignoresSafeArea(.all)
         )
     }
 }

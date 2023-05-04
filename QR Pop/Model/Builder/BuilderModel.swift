@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// Accepts and interprets data submitted to BuilderView.
-struct BuilderModel: Hashable {
+struct BuilderModel: Hashable, Equatable {
     var responses: [String]
     var result: String
     var builder: Kind
@@ -20,7 +20,7 @@ extension BuilderModel {
     
     init() {
         self.init(
-            responses: [String](repeating: "", count: 7),
+            responses: [],
             result: "",
             builder: .link)
     }
@@ -29,15 +29,13 @@ extension BuilderModel {
     /// - Parameter kind: The ``Kind`` of Builder to be used.
     init(for kind: Kind) {
         self.init(
-            responses: [String](repeating: "", count: 7),
+            responses: [],
             result: "",
             builder: kind)
     }
     
     init(text: String) {
-        var responses = [String](repeating: "", count: 7)
-        responses[0] = text
-        self.responses = responses
+        self.responses = [text]
         self.result = text
         self.builder = .text
     }
@@ -49,7 +47,7 @@ extension BuilderModel {
     
     /// Erase all data within the model excluding the ``builder`` property.
     mutating func resetData() {
-        self.responses = [String](repeating: "", count: 7)
+        self.responses = []
         self.result = ""
     }
 }

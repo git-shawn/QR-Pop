@@ -31,18 +31,27 @@ struct NewTemplateView: View {
                 .aspectRatio(1, contentMode: .fit)
                 .shadow(color: .black.opacity(0.3), radius: 10)
 
-                VStack(spacing: 6) {
+                Spacer()
+                
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("\(Image(systemName: "plus.app")) New Template Details")
+                    Divider()
                     Text(model.title)
                         .font(.title2)
-                    Text(model.created, style: .date)
-                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2, reservesSpace: true)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("Created")
+                            .font(.caption)
+                        Text(model.created, style: .date)
+                    }
+                    .foregroundStyle(.secondary)
                 }
-                .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(Material.thin)
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(.thinMaterial)
                 )
                 .padding(.horizontal)
                 
@@ -62,13 +71,14 @@ struct NewTemplateView: View {
                     toast = .error(note: "Template could not be added")
                 }
             }, label: {
-                Text("Add to Templates")
+                Label("Add to Templates", systemImage: "plus")
+                    .foregroundColor(.antiPrimary)
                     .bold()
                     .frame(maxWidth: .infinity)
                     .padding(.vertical)
             })
             .padding()
-            .buttonStyle(.bordered)
+            .buttonStyle(.borderedProminent)
             .tint(.primary)
             .buttonBorderShape(.capsule)
 #endif
@@ -121,8 +131,8 @@ extension NewTemplateView {
     
     var blurredBackground: some View {
         ZStack {
-            model.preview(for: 12)?
-                .resizable()
+            Rectangle()
+                .fill(model.design.backgroundColor.gradient)
             Rectangle()
                 .fill(.ultraThinMaterial)
         }
@@ -140,7 +150,7 @@ struct NewTemplateView_Previews: PreviewProvider {
         .frame(width: 500, height: 500)
         .sheet(isPresented: .constant(true), content: {
             NavigationStack {
-                NewTemplateView(model: TemplateModel(title: "My Template", created: Date(), design: DesignModel(eyeShape: .circle, pixelShape: .roundedPath, eyeColor: Color(red: 0.6, green: 0.8, blue: 0.2), pupilColor: Color(red: 0.6, green: 0.8, blue: 0.2), pixelColor: Color(red: 0.8, green: 0.8, blue: 0.2), backgroundColor: Color(red: 0.2, green: 0.2, blue: 0.2), errorCorrection: .low), id: UUID()))
+                NewTemplateView(model: TemplateModel(title: "My Template", created: Date(), design: DesignModel(eyeShape: .circle, pixelShape: .roundedPath, eyeColor: Color(red: 0.6, green: 0.8, blue: 0.2), pupilColor: Color(red: 0.6, green: 0.8, blue: 0.2), pixelColor: Color(red: 0.8, green: 0.8, blue: 0.2), backgroundColor: Color(red: 0, green: 0, blue: 0.2), errorCorrection: .low), id: UUID()))
             }
         })
     }

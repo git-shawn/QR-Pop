@@ -9,18 +9,29 @@ import SwiftUI
 
 struct CryptoForm: View {
     @Binding var model: BuilderModel
+    @StateObject var engine: FormStateEngine
     
+    @FocusState private var focusedField: Field?
     private enum Field: Hashable {
         case address
         case amount
     }
-    @FocusState private var focusedField: Field?
+    
+    init(model: Binding<BuilderModel>) {
+        self._model = model
+        
+        if model.wrappedValue.responses.isEmpty {
+            self._engine = .init(wrappedValue: .init(initial: ["","",""]))
+        } else {
+            self._engine = .init(wrappedValue: .init(initial: model.wrappedValue.responses))
+        }
+    }
     
     var body: some View {
         VStack(spacing: 20) {
 #if os(iOS)
             Menu {
-                Picker(selection: $model.responses[0], label: EmptyView(), content: {
+                Picker(selection: $engine.inputs[0], label: EmptyView(), content: {
                     Text("Bitcoin").tag("")
                     Text("Ethereum").tag("ethereum")
                     Text("Bitcoin Cash").tag("bitcoincash")
@@ -29,7 +40,7 @@ struct CryptoForm: View {
                 .pickerStyle(.automatic)
             } label: {
                 HStack {
-                    switch model.responses[0] {
+                    switch engine.inputs[0] {
                     case "ethereum":
                         Text("Ethereum")
                     case "bitcoincash":
@@ -52,7 +63,7 @@ struct CryptoForm: View {
             HStack {
                 Text("Currency")
                 Spacer()
-                Picker(selection: $model.responses[0], content: {
+                Picker(selection: $engine.inputs[0], content: {
                     Text("Bitcoin").tag("")
                     Text("Ethereum").tag("ethereum")
                     Text("Bitcoin Cash").tag("bitcoincash")
@@ -69,7 +80,7 @@ struct CryptoForm: View {
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
 #endif
             
-            TextField("Public Wallet Address", text: $model.responses[1])
+            TextField("Public Wallet Address", text: $engine.inputs[1])
                 .textFieldStyle(FormTextFieldStyle())
                 .focused($focusedField, equals: .address)
                 .autocorrectionDisabled(true)
@@ -82,7 +93,7 @@ struct CryptoForm: View {
                 }
 #endif
             
-            TextField("Amount", text: $model.responses[2])
+            TextField("Amount", text: $engine.inputs[2])
                 .textFieldStyle(FormTextFieldStyle())
                 .focused($focusedField, equals: .amount)
                 .submitLabel(.done)
@@ -90,8 +101,10 @@ struct CryptoForm: View {
                 .keyboardType(.decimalPad)
 #endif
         }
-        .onChange(of: model.responses, debounce: 1) {_ in
-            determineResult()
+        .onReceive(engine.$outputs) {
+            if model.responses != $0 {
+                determineResult(for: $0)
+            }
         }
 #if os(iOS)
         .toolbar {
@@ -106,10 +119,19 @@ struct CryptoForm: View {
 
 // MARK: - Form Calculation
 
-extension CryptoForm {
+extension CryptoForm: BuilderForm {
     
-    func determineResult() {
-        model.result = "\(model.responses[0].isEmpty ? "bitcoin" : model.responses[0]):\(model.responses[1])\(model.responses[2].isEmpty ? "" : "?amount\(model.responses[2])")"
+    func determineResult(for outputs: [String]) {
+        var result: String {
+            let scheme = "\(outputs[0].isEmpty ? "bitcoin" : outputs[0])"
+            let query = "\(outputs[2].isEmpty ? "" : "?amount\\"+outputs[2] )"
+            return scheme+outputs[1]+query
+        }
+        
+        self.model = .init(
+            responses: outputs,
+            result: result,
+            builder: .crypto)
     }
 }
 

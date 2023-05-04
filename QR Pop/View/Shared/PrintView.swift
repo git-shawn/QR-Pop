@@ -21,11 +21,14 @@ struct PrintView: View {
         layout {
             VStack {
                 createPrintedPage(image: printing, repeating: Int(numberToPrint), center: shouldCenter)
+                    .padding(20)
                     .background(
                         Color.white
                             .shadow(color: Color.black.opacity(0.15), radius: 6, x: 0, y: 2)
                     )
-                    .frame(width: 170, height: 220)
+                    .aspectRatio((170/220), contentMode: .fit)
+                    .frame(maxHeight: 400)
+                    .padding()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
@@ -92,7 +95,6 @@ struct PrintView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: center ? .center : .topLeading)
-            .padding(10)
         }
     }
     
