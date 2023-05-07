@@ -234,8 +234,8 @@ extension BuilderView {
                         do {
                             try model.addToPhotoLibrary(for: 512)
                             sceneModel.toaster = .saved(note: "Image saved")
-                        } catch let error {
-                            debugPrint(error)
+                        } catch {
+                            Logger.logView.error("BuilderView: Could not write QR code to photos app.")
                             sceneModel.toaster = .error(note: "Could not save photo")
                         }
                     })
@@ -244,8 +244,8 @@ extension BuilderView {
                         do {
                             let data = try model.pngData(for: 512)
                             sceneModel.exportData(data, type: .png, named: "QR Code")
-                        } catch let error {
-                            debugPrint(error)
+                        } catch {
+                            Logger.logView.error("BuilderView: Could not create PNG data for QR code.")
                             sceneModel.toaster = .error(note: "Could not save file")
                         }
                     })
@@ -259,7 +259,7 @@ extension BuilderView {
                         let data = try model.pngData(for: 512)
                         sceneModel.exportData(data, type: .png, named: model.title ?? "QR Code")
                     } catch let error {
-                        debugPrint(error)
+                        Logger.logView.error("BuilderView: Could not create PNG data for QR code.")
                         sceneModel.toaster = .error(note: "Could not save file")
                     }
                 })
@@ -307,8 +307,8 @@ extension BuilderView {
                     do {
                         let data = try model.pdfData()
                         sceneModel.exportData(data, type: .pdf, named: model.title ?? "QR Code")
-                    } catch let error {
-                        debugPrint(error)
+                    } catch {
+                        Logger.logView.error("BuilderView: Could not create PDF data for QR code.")
                         sceneModel.toaster = .error(note: "Could not save file")
                     }
                 })
@@ -317,8 +317,8 @@ extension BuilderView {
                     do {
                         let data = try model.svgData()
                         sceneModel.exportData(data, type: .svg, named: model.title ?? "QR Code")
-                    } catch let error {
-                        debugPrint(error)
+                    } catch {
+                        Logger.logView.error("BuilderView: Could not create SVG data for QR code.")
                         sceneModel.toaster = .error(note: "Could not save file")
                     }
                 })

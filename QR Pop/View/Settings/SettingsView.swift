@@ -205,9 +205,8 @@ struct SettingsView: View {
                         do {
                             try Persistence.shared.deleteEntity("TemplateEntity")
                             sceneModel.toaster = .custom(image: Image(systemName: "trash"), imageColor: .accentColor, title: "Erased", note: "Templates erased")
-                        } catch let error {
+                        } catch {
                             Logger.logView.error("Settings: Could not delete all `TemplateEntities` from the database.")
-                            debugPrint(error)
                             sceneModel.toaster = .error(note: "Templates not erased")
                         }
                     })

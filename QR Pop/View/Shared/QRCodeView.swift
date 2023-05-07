@@ -121,9 +121,11 @@ extension QRCodeView {
                         with: .color(design.pupilColor),
                         style: .init(eoFill: true, antialiased: false))
                     
-                    context.draw(
-                        .init(platformImage: PlatformImage(cgImage: design.getLogoTemplate().image)),
-                        in: rect)
+                    if (design.logo != nil) {
+                        context.draw(
+                            .init(platformImage: PlatformImage(cgImage: design.getLogoTemplate().image)),
+                            in: rect)
+                    }
                     
                 })
             }
@@ -154,8 +156,8 @@ extension QRCodeView {
                 ImageButton("Save to Photos", systemImage: "square.and.arrow.down", action: {
                     do {
                         try QRModel(design: design, content: builder).addToPhotoLibrary(for: 512)
-                    } catch let error {
-                        debugPrint(error)
+                    } catch {
+                        Logger.logView.error("QRCodeView: Could not write QR code to photos app.")
                         sceneModel.toaster = .error(note: "Could not save photo")
                     }
                 })
@@ -165,8 +167,8 @@ extension QRCodeView {
                     do {
                         let data = try QRModel(design: design, content: builder).pngData(for: 512)
                         sceneModel.exportData(data, type: .png, named: "QR Code")
-                    } catch let error {
-                        debugPrint(error)
+                    } catch {
+                        Logger.logView.error("QRCodeView: Could not create PNG data for QR code.")
                         sceneModel.toaster = .error(note: "Could not save file")
                     }
                 })
@@ -213,6 +215,7 @@ extension QRCodeView {
                     return false
                 } else {
                     do {
+                        Logger.logView.debug("QRCodeView: Attempting Drop")
                         try design.setLogo(item)
                         return true
                     } catch {

@@ -40,7 +40,8 @@ extension QRModel {
         qrModel.content = try decoder.decode(BuilderModel.self, from: builderData)
         qrModel.design = try decoder.decode(DesignModel.self, from: designData)
 #if canImport(CoreImage)
-        if (entity.logo != nil) {
+        if (entity.logo != nil && !(entity.logo?.isEmpty ?? true)) {
+            assert(entity.logo != nil)
             try qrModel.design.setLogo(entity.logo)
         }
 #endif
@@ -214,6 +215,17 @@ extension QRModel {
     }
 }
 
+#endif
+
+// MARK: - Conform to EntityConvertible
+
+#if !EXTENSION && !CLOUDEXT
+extension QRModel: EntityConvertible {
+    
+    var viewRepresentation: QRCodeView {
+        QRCodeView(qrcode: .constant(self))
+    }
+}
 #endif
 
 // MARK: - Conform to Transferable

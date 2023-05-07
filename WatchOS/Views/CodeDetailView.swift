@@ -24,9 +24,8 @@ struct CodeDetailView: View {
         
         do {
             self.model = try QRModel(withEntity: entity)
-        } catch let error {
-            debugPrint(error)
-            Logger(subsystem: Constants.bundleIdentifier, category: "watch").error("Could not convert entity to model in CodeDetailView.")
+        } catch {
+            Logger.logView.error("CodeDetailView: Could not convert entity to model.")
             self.model = QRModel()
         }
     }

@@ -47,7 +47,7 @@ struct ViewArchiveIntent: AppIntent, PredictableIntent {
     func perform() async throws -> some ShowsSnippetView & ProvidesDialog {
         do {
             let entity = try persistence.getQREntityWithUUID(code.id)
-            let model = try QRModel(withEntity: entity)
+            let model = try entity.asModel()
             
             return .result(
                 dialog: "Here's \"\(model.title ?? "My QR Code")\" from your Archive.",
@@ -107,7 +107,7 @@ struct ArchiveIntentEntity: Equatable, Hashable, AppEntity {
     
     var displayRepresentation: DisplayRepresentation {
         if let entity = try? persistence.getQREntityWithUUID(id),
-           let model = try? QRModel(withEntity: entity),
+           let model = try? entity.asModel(),
            let imgData = try? model.jpegData(for: 256) {
             return DisplayRepresentation(
                 title: .init(stringLiteral: name),

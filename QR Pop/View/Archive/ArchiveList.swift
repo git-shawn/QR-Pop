@@ -34,7 +34,7 @@ struct ArchiveList: View {
                     fetchedItems: Array(archive),
                     selectAction: { entity in
                         do {
-                            let model = try QRModel(withEntity: entity)
+                            let model = try entity.asModel()
                             navigationModel.navigate(to: .archive(code: model))
                         } catch {
                             sceneModel.toaster = .error(note: "Could not open")

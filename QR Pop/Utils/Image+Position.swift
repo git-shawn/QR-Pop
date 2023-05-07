@@ -28,7 +28,6 @@ extension UIImage {
         }
         
         var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(angle.radians))).size
-        debugPrint(newSize)
         newSize.width = floor(newSize.width)
         newSize.height = floor(newSize.height)
 

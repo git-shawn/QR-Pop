@@ -23,6 +23,8 @@ struct CoreDataList<FetchedEntity: Entity>: View {
     
     @State private var isEditing: Bool = false
     @State private var selectedEntities: [FetchedEntity] = []
+    @State private var toast: SceneModel.Toast? = nil
+    @State private var exporter: SceneModel.ExportableFile? = nil
     
     @Environment(\.managedObjectContext) var moc
     
@@ -74,6 +76,7 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                                 QRCodeView(qrcode: .constant(QRModel(design: model, content: BuilderModel())))
                                     .frame(width: 52, height: 52)
                             }
+                            
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(item.title ?? "QR Code")
                                     .foregroundColor(.primary)
@@ -99,17 +102,32 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                     }
                 )
                 .contextMenu {
+                    if let modelRep = try? item.asModel() {
+                        ShareLink(
+                            "Share...",
+                            item: modelRep,
+                            preview: SharePreview(
+                                item.title ?? "QR Code",
+                                image: modelRep))
+                        
+                        ImageButton("Save to Files", systemImage: "square.and.arrow.down", action: {
+                            exporter = try? item.asExportable()
+                        })
+                    }
+                    
                     ImageButton("Rename", systemImage: "pencil", action: {
                         newTitle = item.title ?? "QR Code"
                         entityToRename = item
                         isRenamingEntity = true
                     })
+                    
                     Divider()
                     ImageButton("Delete", systemImage: "trash", role: .destructive, action: {
                         deleteItems([item])
                     })
                 }
-                .swipeActions {
+                .swipeActions(edge: .trailing) {
+                    
                     ImageButton("Delete", systemImage: "trash", role: .destructive, action: {
                         deleteItems([item])
                     })
@@ -119,10 +137,27 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                         entityToRename = item
                         isRenamingEntity = true
                     })
-                    .tint(.indigo)
+                    .tint(.orange)
+                }
+                .swipeActions(edge: .leading) {
+                    if let modelRep = try? item.asModel() {
+                        ShareLink(
+                            "Share",
+                            item: modelRep,
+                            preview: SharePreview(
+                                item.title ?? "QR Code",
+                                image: modelRep))
+                        .tint(.blue)
+                        
+                        ImageButton("Save", systemImage: "square.and.arrow.down", action: {
+                            exporter = try? item.asExportable()
+                        })
+                        .tint(.indigo)
+                    }
                 }
             }
         }
+        .fileExporter($exporter)
 #if os(iOS)
         .listStyle(.plain)
         .toolbar(.visible, for: .bottomBar)
@@ -227,8 +262,8 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                     entityToRename?.title = newTitle
                     newTitle = ""
                     try moc.atomicSave()
-                } catch let error {
-                    debugPrint(error)
+                } catch {
+                    Logger.logView.error("CoreDataList: Could not save rename action.")
                 }
             })
             .disabled(newTitle.isEmpty)

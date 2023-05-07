@@ -32,7 +32,7 @@ struct BuilderCommands: Commands {
             if let recentlyArchived = try? Persistence.shared.getMostRecentQREntities(5) {
                 Menu("Open Recent Archive...", content: {
                     ForEach(recentlyArchived) { archive in
-                        if let model = try? QRModel(withEntity: archive) {
+                        if let model = try? archive.asModel() {
                             Button(action: {
                                 navigationModel?.navigate(to: .archive(code: model))
                             }, label: {

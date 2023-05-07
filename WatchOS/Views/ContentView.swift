@@ -8,6 +8,7 @@
 import SwiftUI
 import CloudKit
 import QRCode
+import OSLog
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) var moc
@@ -40,8 +41,8 @@ struct ContentView: View {
                     } else {
                         isCloudBlocked = true
                     }
-                } catch let error {
-                    debugPrint(error)
+                } catch {
+                    Logger.logView.error("ContentView: Could not determine iCloud account status.")
                 }
 #endif
             }

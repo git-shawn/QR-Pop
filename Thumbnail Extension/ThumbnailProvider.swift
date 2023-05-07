@@ -34,7 +34,7 @@ class ThumbnailProvider: QLThumbnailProvider {
             
             uiImage.draw(in: CGRect(origin: .zero, size: maximumSize))
             
-            debugPrint("Image drawn successfully!")
+            Logger.logView.debug("ThumbnailProvider: Thumbnail rendered successfully.")
             
             return true
             

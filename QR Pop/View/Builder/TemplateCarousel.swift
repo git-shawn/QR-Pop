@@ -44,7 +44,7 @@ extension TemplateCarousel {
             addTemplateButton
             
             ForEach(templates.prefix(5)) { template in
-                if let model = try? TemplateModel(entity: template) {
+                if let model = try? template.asModel() {
                     Button(action: {
                         assignTemplate(model: model, template: template)
                     }, label: {
@@ -62,7 +62,7 @@ extension TemplateCarousel {
         .sheet(isPresented: $viewingAllTemplates) {
             allTempaltesSheet
 #if os(macOS)
-                .frame(minWidth: 350, minHeight: 250)
+                .frame(minWidth: 450, minHeight: 400)
 #endif
         }
     }
@@ -110,8 +110,8 @@ extension TemplateCarousel {
                     templateTitle = ""
                     entityToRename = nil
                     try moc.atomicSave()
-                } catch let error {
-                    debugPrint(error)
+                } catch {
+                    Logger.logView.error("TemplateCarousel: Could not rename Template.")
                 }
             })
             .disabled(templateTitle.isEmpty)
@@ -264,11 +264,11 @@ extension TemplateCarousel {
                       )
             )
             #else
-            if let data = model.asData() {
-                Button("Save Template", action: {
+            Button("Save Template", action: {
+                if let data = model.asData() {
                     sceneModel.exporter = .init(document: DataFileDocument(initialData: data), UTType: .qrpt, defaultName: model.title)
-                })
-            }
+                }
+            })
             #endif
             
             Divider()

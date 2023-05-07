@@ -25,19 +25,22 @@ extension TemplateModel {
     
     /// Loads a `TemplateModel` from `Data`.
     /// - Parameter data: Some  `.JSON` or `.QRPT` data representing a `TemplateModel`.
-    init(fromData data: Data) throws {
+    init(fromData data: Data, logo: Data? = nil) throws {
         let decoder = JSONDecoder()
         var model = try decoder.decode(TemplateModel.self, from: data)
 #if canImport(CoreImage)
-        try? model.design.setLogo(model.logo)
+        if (logo != nil) {
+            assert(logo != nil)
+            try model.design.setLogo(logo)
+        }
 #endif
         self = model
     }
     
 #if !EXTENSION && !CLOUDEXT
     /// Transforms a `TemplateEntity` into a `TemplateModel` containing a decoded `DesignModel`.
-    /// - Parameter entity: A `TemplateEntity` stored in the database.
-    init(entity: TemplateEntity) throws {
+    /// - Parameter withEntity: A `TemplateEntity` stored in the database.
+    init(withEntity entity: TemplateEntity) throws {
         self.title = entity.title ?? "Template"
         self.created = entity.created ?? Date()
         self.logo = entity.logo
@@ -83,6 +86,17 @@ extension TemplateModel {
     }
 #endif
 }
+
+// MARK: - Conform to EntityConvertible
+
+#if !EXTENSION && !CLOUDEXT
+extension TemplateModel: EntityConvertible {
+    
+    var viewRepresentation: QRCodeView {
+        QRCodeView(design: .constant(self.design), builder: .constant(BuilderModel(text: "")))
+    }
+}
+#endif
 
 // MARK: - Conform to Codable
 

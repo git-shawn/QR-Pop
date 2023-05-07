@@ -35,6 +35,15 @@
         "revision" : "5ca09b6a2ad190f94aa3d6ddef45b187f8c0343b",
         "version" : "1.0.3"
       }
+    },
+    {
+      "identity" : "swiftui-scankit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/git-shawn/SwiftUI-ScanKit",
+      "state" : {
+        "branch" : "main",
+        "revision" : "bd732d6e3c11d22c4ff1a4fc5e73a3a529963a3a"
+      }
     }
   ],
   "version" : 2

@@ -42,6 +42,7 @@ struct SidebarNavigation: View {
                     .navigationDestination(for: NavigationModel.Destination.self, destination: {
                         $0.view
                     })
+                    .toolbarRole(.editor)
             })
 #if os(macOS)
             .navigationSplitViewColumnWidth(min: 575, ideal: 600)

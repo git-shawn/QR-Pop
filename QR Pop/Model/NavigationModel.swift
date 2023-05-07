@@ -75,7 +75,7 @@ extension NavigationModel {
     /// A URL beginning with the `file://` scheme must also end with `.qrpt` and represent a ``TemplateModel``. If both of these conditions are true, ``NewTemplateView`` will be presented with this file.
     ///
     /// A URL beginning with the `qrpop://` scheme interacts directly with the ``NavigationModel``.  All incoming URLs should include a third `/` to act as the URL's "host." The following combinations are allowed:
-    /// - `qrpop:///scanner` - Presents ``ScannerView``
+    /// - `qrpop:///scanner` - Presents ``CodeScannerView``
     /// - `qrpop:///archive` - Presents ``ArchiveList``
     /// - `qrpop:///builder` - Presents ``BuilderList``
     /// - `qrpop:///settings` - Presents ``SettingsView``
@@ -138,7 +138,7 @@ extension NavigationModel {
             guard let libraryId = components[safe: 2],
                   let libraryUUID = UUID(uuidString: libraryId),
                   let entity = try? Persistence.shared.getQREntityWithUUID(libraryUUID),
-                  let model = try? QRModel(withEntity: entity)
+                  let model = try? entity.asModel()
             else {
                 navigate(to: .archive(code: nil))
                 return
@@ -208,7 +208,7 @@ extension NavigationModel {
         if let id = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String,
            let coreDataURI = URL(string: id),
            let entity = Persistence.shared.getQREntityWithURI(coreDataURI),
-           let model = try? QRModel(withEntity: entity)
+           let model = try? entity.asModel()
         {
             navigate(to: .archive(code: model))
         }
@@ -300,7 +300,7 @@ extension NavigationModel {
         var view: some View {
             switch self {
             case .scanner:
-                ScannerView()
+                CodeScannerView()
             case .settings:
                 SettingsView()
             case .builder(code: nil):

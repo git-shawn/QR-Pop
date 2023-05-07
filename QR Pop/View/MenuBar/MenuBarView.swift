@@ -7,6 +7,7 @@
 #if os(macOS)
 
 import SwiftUI
+import OSLog
 
 struct MenuBarView: View {
     var model = MenuBarModel()
@@ -23,7 +24,7 @@ struct MenuBarView: View {
                         openWindow(id: "menuBarResults", value: results)
                         dismiss()
                     } catch let error {
-                        debugPrint(error)
+                        Logger.logView.error("MenuBarView: Could not capture region of display.")
                         let alert = NSAlert(error: error)
                         alert.alertStyle = .critical
                         alert.runModal()
@@ -40,7 +41,7 @@ struct MenuBarView: View {
                         openWindow(id: "menuBarResults", value: results)
                         dismiss()
                     } catch let error {
-                        debugPrint(error)
+                        Logger.logView.error("MenuBarView: Could not capture entire display.")
                         let alert = NSAlert(error: error)
                         alert.alertStyle = .critical
                         alert.runModal()

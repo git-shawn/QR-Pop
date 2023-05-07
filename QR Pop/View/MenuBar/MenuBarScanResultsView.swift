@@ -7,6 +7,7 @@
 
 #if os(macOS)
 import SwiftUI
+import OSLog
 
 struct MenuBarScanResultsView: View {
     var results: [String]
@@ -56,8 +57,8 @@ struct MenuBarScanResultsView: View {
                                     imageColor: .secondary,
                                     title: "Connected",
                                     note: "Network joined")
-                            } catch let error {
-                                debugPrint(error)
+                            } catch {
+                                Logger.logView.error("MenuBarScanResultsView: Could not connect to wireless network.")
                                 sceneModel.toaster = .custom(
                                     image: Image(systemName: "wifi.slash"),
                                     imageColor: .secondary,

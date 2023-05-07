@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 import Combine
+import OSLog
 
 // MARK: Place Finder Button
 struct PlaceFinder: View {
@@ -138,7 +139,7 @@ fileprivate class MapSearch : NSObject, ObservableObject {
             })
             .sink(receiveCompletion: { (completion) in
                 if case let .failure(error) = completion {
-                    debugPrint(error)
+                    Logger.logModel.error("MapSearch: Could not determine location results - \(error.localizedDescription).")
                 }
             }, receiveValue: { (results) in
                 self.locationResults = results
