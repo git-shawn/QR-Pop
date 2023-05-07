@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WidgetKit
+import QRCode
 import OSLog
 
 struct WidgetViews: View {
@@ -22,7 +23,7 @@ struct WidgetViews: View {
             
         case .systemMedium, .systemExtraLarge:
             rectangularWidget
-#if os(iOS)
+#if os(iOS) || os(watchOS)
         case .accessoryCircular:
             accessoryCircular
             
@@ -31,6 +32,10 @@ struct WidgetViews: View {
             
         case .accessoryInline:
             accessoryInline
+#endif
+#if os(watchOS)
+        case .accessoryCorner:
+            accessoryCircular
 #endif
         @unknown default:
             fatalError("Unsupported widget size requested")
@@ -88,7 +93,9 @@ extension WidgetViews {
         ZStack {
             if entry.kind == .timeline, let model = entry.model {
                 ContainerRelativeShape()
+#if !os(watchOS)
                     .fill(.ultraThinMaterial)
+#endif
                     .background(
                         model.image(for: 16)?
                             .resizable()
@@ -133,7 +140,9 @@ extension WidgetViews {
                 
             } else if entry.kind == .snapshot {
                 ContainerRelativeShape()
+#if !os(watchOS)
                     .fill(.ultraThinMaterial)
+#endif
                     .background(
                         ZStack {
                             Color("AccentColor")
@@ -195,7 +204,7 @@ extension WidgetViews {
     }
 }
 
-#if os(iOS)
+#if os(iOS) || os(watchOS)
 
 // MARK: - Circular Widget
 
@@ -203,29 +212,45 @@ extension WidgetViews {
     
     var accessoryCircular: some View {
         ZStack(alignment: .center) {
-            if let model = entry.model {
-                Group {
-                    Circle()
-                        .fill(.regularMaterial)
-                        .scaledToFill()
-                    model.content.builder.icon
-                        .symbolRenderingMode(.hierarchical)
+            GeometryReader { proxy in
+                if let model = entry.model {
+                    Image(systemName: "rays")
                         .resizable()
                         .scaledToFit()
-                        .padding()
-                        .widgetAccentable()
+#if os(iOS)
+                        .foregroundStyle(.regularMaterial)
+#else
+                        .foregroundStyle(.primary.opacity(0.25))
+#endif
+                        .overlay(
+                            model.content.builder.icon
+                                .resizable()
+                                .scaledToFit()
+                                .bold()
+                                .frame(maxWidth: proxy.size.width * 0.3)
+                                .widgetAccentable()
+                        )
+                        .widgetURL(URL(string: "qrpop:///archive/\(model.id?.uuidString ?? "")"))
+                    
+                } else {
+                    
+                    Image(systemName: "rays")
+                        .resizable()
+                        .scaledToFit()
+#if os(iOS)
+                        .foregroundStyle(.regularMaterial)
+#else
+                        .foregroundStyle(.primary.opacity(0.25))
+#endif
+                        .overlay(
+                            Image(systemName: "qrcode")
+                                .resizable()
+                                .scaledToFit()
+                                .bold()
+                                .frame(maxWidth: proxy.size.width * 0.3)
+                                .widgetAccentable(true)
+                        )
                 }
-                .widgetURL(URL(string: "qrpop:///archive/\(model.id?.uuidString ?? "")"))
-                
-            } else {
-                Circle()
-                    .fill(.regularMaterial)
-                    .scaledToFill()
-                Image(systemName: "qrcode")
-                    .resizable()
-                    .scaledToFill()
-                    .padding()
-                    .widgetAccentable()
             }
         }
     }
@@ -236,19 +261,22 @@ extension WidgetViews {
 extension WidgetViews {
     
     var accessoryRectangular: some View {
-        HStack(alignment: .center, spacing: 6) {
+        HStack(alignment: .center, spacing: 10) {
             if let model = entry.model {
                 Group {
                     model.content.builder.icon
-                        .imageScale(.large)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 24)
                         .widgetAccentable()
                     VStack(alignment: .leading) {
                         Text(model.title ?? "QR Code")
-                            .bold()
+                            .font(.headline)
                             .widgetAccentable()
+                            .lineLimit(1)
                         Text("\(model.content.builder.title)")
                             .font(.footnote)
-                            .opacity(0.7)
+                            .opacity(0.5)
                             .widgetAccentable()
                     }
                 }
@@ -256,18 +284,22 @@ extension WidgetViews {
                 
             } else {
                 Image(systemName: "qrcode")
-                    .imageScale(.large)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 24)
                     .widgetAccentable()
                 VStack(alignment: .leading) {
                     Text("QR Code")
-                        .bold()
+                        .font(.headline)
                         .widgetAccentable()
+                        .lineLimit(1)
                     Text("Select a saved code")
                         .font(.footnote)
-                        .opacity(0.7)
+                        .opacity(0.5)
                         .widgetAccentable()
                 }
             }
+            Spacer()
         }
     }
 }
@@ -289,6 +321,7 @@ extension WidgetViews {
                 
             } else {
                 Label("QR Code", systemImage: "qrcode")
+                    .lineLimit(1)
                     .widgetAccentable()
             }
         }
@@ -302,9 +335,14 @@ extension WidgetViews {
  */
 struct WidgetViews_Previews: PreviewProvider {
     static var previews: some View {
+#if !os(watchOS)
         WidgetViews(entry: ArchiveEntry(kind: .snapshot))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
         WidgetViews(entry: ArchiveEntry(kind: .snapshot))
             .previewContext(WidgetPreviewContext(family: .systemMedium))
+#else
+        WidgetViews(entry: ArchiveEntry(kind: .snapshot))
+            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+#endif
     }
 }

@@ -13,7 +13,7 @@ struct QRPopWatchApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
                 .environment(\.managedObjectContext, persistence.container.viewContext)
                 .defaultAppStorage(.appGroup)
 #if targetEnvironment(simulator)

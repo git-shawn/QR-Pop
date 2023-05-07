@@ -56,7 +56,6 @@ struct LinkForm: View {
 
 extension LinkForm: BuilderForm {
     func determineResult(for outputs: [String]) {
-        print("Result determined")
         self.model = .init(
             responses: outputs,
             result: outputs[0],

@@ -369,30 +369,6 @@ extension CoreDataList {
     }
 }
 
-struct CoreDataList_Previews: PreviewProvider {
-    static var previews: some View {
-        PreviewWrapper()
-            .environment(\.managedObjectContext, Persistence.shared.container.viewContext)
-    }
-    
-    struct PreviewWrapper: View {
-        @State private var fetchedItems = try! Persistence.shared.getAllQREntities()
-        
-        var body: some View {
-            NavigationStack {
-                CoreDataList(
-                    entityType: .archive,
-                    fetchedItems: fetchedItems,
-                    selectAction: { entity in
-                        print("\(entity.title ?? "No title?") selected!")
-                    })
-                .navigationTitle("My List")
-            }
-        }
-        
-    }
-}
-
 // MARK: - Selected Button Modifier
 
 struct SelectedLabelStyle: LabelStyle {
@@ -423,3 +399,27 @@ extension ToolbarItemPlacement {
 }
 
 #endif
+
+struct CoreDataList_Previews: PreviewProvider {
+    static var previews: some View {
+        PreviewWrapper()
+            .environment(\.managedObjectContext, Persistence.shared.container.viewContext)
+    }
+    
+    struct PreviewWrapper: View {
+        @State private var fetchedItems = try! Persistence.shared.getAllQREntities()
+        
+        var body: some View {
+            NavigationStack {
+                CoreDataList(
+                    entityType: .archive,
+                    fetchedItems: fetchedItems,
+                    selectAction: { entity in
+                        print("\(entity.title ?? "No title?") selected!")
+                    })
+                .navigationTitle("My List")
+            }
+        }
+        
+    }
+}

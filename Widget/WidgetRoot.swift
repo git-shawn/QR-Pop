@@ -48,6 +48,21 @@ struct Provider: IntentTimelineProvider {
         }
         return model
     }
+    
+    func recommendations() -> [IntentRecommendation<TimelineConfigurationIntent>] {
+        do {
+            return try Persistence.shared.getMostRecentQREntities(5).map { entity in
+                let intent = TimelineConfigurationIntent()
+                intent.qrcode = .init(
+                    identifier: entity.objectID.uriRepresentation().absoluteString,
+                    display: entity.title ?? "QR Code")
+                return IntentRecommendation(intent: intent, description: Text(entity.title ?? "QR Code"))
+            }
+        } catch {
+            Logger.logView.error("Widget: Unable to generate widget recommendations.")
+            return []
+        }
+    }
 }
 
 struct ArchiveEntry: TimelineEntry {
@@ -70,8 +85,10 @@ struct QRPop_Widget: Widget {
         }
 #if os(iOS)
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryRectangular, .accessoryInline, .accessoryCircular])
-#else
+#elseif os(macOS)
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+#elseif os(watchOS)
+        .supportedFamilies([.accessoryCircular,.accessoryInline,.accessoryRectangular])
 #endif
         .configurationDisplayName("QR Pop Archive")
         .description("Display a code from your QR Pop Archive.")

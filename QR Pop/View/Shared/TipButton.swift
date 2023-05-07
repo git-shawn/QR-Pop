@@ -11,10 +11,12 @@ import StoreKit
 
 struct TipButton: View {
     @EnvironmentObject var sceneModel: SceneModel
+    @State private var isTipping: Bool = false
     
     var body: some View {
         Button(action: {
             Task {
+                isTipping = true
                 await purchase()
             }
         }, label: {
@@ -22,10 +24,23 @@ struct TipButton: View {
                 Text("Buy Me a Coffee")
                     .foregroundColor(.primary)
             }, icon: {
-                Image("coffee.heart")
-                    .foregroundColor(.accentColor)
+                if isTipping {
+                    Image("coffee.heart")
+                        .foregroundColor(.clear)
+                        .overlay(
+                            ProgressView()
+                            #if os(macOS)
+                                .controlSize(.small)
+                            #endif
+                        )
+                } else {
+                    Image("coffee.heart")
+                        .foregroundColor(.accentColor)
+                }
             })
         })
+        .disabled(isTipping)
+        .animation(.default, value: isTipping)
     }
     
     @MainActor
@@ -38,13 +53,16 @@ struct TipButton: View {
                 switch verification {
                 case .verified(let transaction):
                     await transaction.finish()
+                    isTipping = false
                     sceneModel.toaster = .custom(image: Image(systemName: "party.popper"), imageColor: .pink, title: "Thank You!", note: "I really appreciate your support")
                 case .unverified(_,_):
                     Logger.logView.notice("TipButton: A purcahse returned unverified.")
                 }
             case .userCancelled, .pending:
+                isTipping = false
                 break
             default:
+                isTipping = false
                 break
             }
         } catch {

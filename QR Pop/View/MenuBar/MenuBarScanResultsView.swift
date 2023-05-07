@@ -130,7 +130,7 @@ struct MenuBarScanResultsView: View {
 #if targetEnvironment(simulator)
 struct MenuBarScanResultsView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuBarScanResultsView(results: ["Test1", "Test2", "https://www.theverge.com", "WIFI:T:WPA;S:202 Ida;P:Sunshin3;;", Constants.loremIpsum])
+        MenuBarScanResultsView(results: ["Test1", "Test2", "https://www.theverge.com", "https://www.nps.gov", Constants.loremIpsum])
         MenuBarScanResultsView(results: [])
     }
 }

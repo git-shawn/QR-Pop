@@ -31,28 +31,34 @@ struct CodeScannerView: View {
                 scannerView
             case .notAuthorized:
                 notAuthorizedView
-            case .noResult:
-                noResultView
-                    .toolbar {
-                        ToolbarItem(placement: .navigation) {
-                            ImageButton("Scan Again", systemImage: "chevron.backward", action: {
-                                self.scanStatus = .scanning
-                            })
-                        }
-                    }
             case .failed:
                 errorView
             case .result(let payload):
-                BuilderView(model: QRModel(title: "Scan Results", design: DesignModel(), content: BuilderModel(text: payload)))
-                    .toolbar {
-                        ToolbarItem(placement: .navigation) {
-                            ImageButton("Scan Again", systemImage: "chevron.backward", action: {
-                                self.scanStatus = .scanning
-                            })
+                if !payload.isEmpty {
+                    BuilderView(model: QRModel(title: "Scan Results", design: DesignModel(), content: BuilderModel(text: payload)))
+                        .transition(.slide)
+                        .toolbar {
+                            ToolbarItem(placement: .navigation) {
+                                ImageButton("Scan Again", systemImage: "chevron.backward", action: {
+                                    self.scanStatus = .scanning
+                                })
+                            }
                         }
-                    }
+                } else {
+                    noResultView
+                        .transition(.slide)
+                        .toolbar {
+                            ToolbarItem(placement: .navigation) {
+                                ImageButton("Scan Again", systemImage: "chevron.backward", action: {
+                                    self.scanStatus = .scanning
+                                })
+                            }
+                        }
+                }
+                
             }
         }
+        .animation(.default, value: scanStatus)
         .photosPicker(isPresented: $isPickingPhoto, selection: $photoToScan, matching: .images)
         .onChange(of: photoToScan) { photo in
             if let photo = photo {
@@ -74,11 +80,10 @@ struct CodeScannerView: View {
 
 extension CodeScannerView {
     
-    enum ScanStatus {
+    enum ScanStatus: Equatable {
         case scanning
         case result(String)
         case notAuthorized
-        case noResult
         case failed
     }
 }
@@ -160,6 +165,16 @@ extension CodeScannerView {
             .preferredColorScheme((UIDevice.current.userInterfaceIdiom == .pad) ? .dark : .none)
             .toolbarBackground(.black, for: .tabBar)
             .padding(UIDevice.current.userInterfaceIdiom == .pad ? 20 : 0)
+            .onDisappear {
+                // The view doesn't disappear from the hierarchy when using TabView,
+                // so stop isn't automatically called.
+                camera.stop()
+            }
+            .task {
+                if !camera.isCapturing {
+                    await camera.start()
+                }
+            }
 #endif
         }
         .background(Color.black)
@@ -168,7 +183,6 @@ extension CodeScannerView {
             camera.symbology = .qr
             do {
                 for try await result in camera.resultsStream {
-                    print(result)
                     self.scanStatus = .result(result)
                 }
             } catch let error {

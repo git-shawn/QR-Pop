@@ -32,8 +32,16 @@ struct CodeDetailView: View {
     
 #if targetEnvironment(simulator)
     init() {
+        var design = DesignModel()
+        design.backgroundColor = Color.random
         self.entity = QREntity(context: Persistence.shared.container.viewContext)
-        self.model = QRModel()
+        self.model = QRModel(
+            design: design,
+            content: BuilderModel(text: """
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius purus ac diam commodo auctor. Curabitur pellentesque tellus non neque facilisis luctus ut efficitur augue. Sed ullamcorper lacus augue, ac tempus enim imperdiet quis. Vivamus euismod nisi vel enim suscipit, sit amet rutrum tellus commodo. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam viverra dictum sem, sed lobortis nibh egestas vel.
+"""
+                                 ))
+        self.entity.title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
     }
 #endif
     
@@ -54,6 +62,7 @@ struct CodeDetailView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text(title)
+                            .lineLimit(2)
                             .truncationMode(.tail)
                             .foregroundColor(.accentColor)
                             .padding(.leading)
@@ -62,7 +71,7 @@ struct CodeDetailView: View {
                     }
                     
                     Group {
-                        Text("\(model.content.builder.icon) \(model.content.builder.title) QR Code")
+                        Text("\(model.content.builder.icon) \(model.content.builder.title)")
                         
                         Text("Created ") +
                         Text(model.created ?? Date(), style: .date)
@@ -119,29 +128,55 @@ struct CodeDetailView: View {
     
     var code: some View {
         ZStack(alignment: .center) {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(model.design.backgroundColor)
                 .zIndex(0)
                 .brightness(brightenCode ? 1 : 0)
-            ZStack {
-                QRCodeShape(text: model.content.result)?
-                    .components(.eyeOuter)
-                    .fill(brightenCode ? .black : model.design.eyeColor)
-                    .zIndex(0)
-                QRCodeShape(text: model.content.result)?
-                    .components(.eyePupil)
-                    .fill(brightenCode ? .black : model.design.pupilColor)
-                    .zIndex(1)
-                QRCodeShape(text: model.content.result)?
-                    .components(.onPixels)
-                    .fill(brightenCode ? .black : model.design.pixelColor)
-                    .zIndex(2)
+            
+            Canvas { context, size in
+                let rect = CGRect(origin: .zero, size: size)
+                if let baseShape = QRCodeShape(text: model.content.result, errorCorrection: model.design.errorCorrection) {
+                        
+                    if let offPixelShape = model.design.offPixels {
+                            context.fill(
+                                baseShape
+                                    .components(.offPixels)
+                                    .offPixelShape(offPixelShape.generator)
+                                    .path(in: rect),
+                                with: .color(model.design.pixelColor.opacity(0.2)),
+                                style: .init(eoFill: true, antialiased: false)
+                            )
+                        }
+                        
+                        context.fill(
+                            (baseShape
+                                .components(.onPixels)
+                                .onPixelShape(model.design.pixelShape.generator)
+                                .path(in: rect)),
+                            with: .color(model.design.pixelColor),
+                            style: .init(eoFill: true, antialiased: false))
+                        
+                        context.fill(
+                            (baseShape
+                                .components(.eyeOuter)
+                                .eyeShape(model.design.eyeShape.generator)
+                                .path(in: rect)),
+                            with: .color(model.design.eyeColor),
+                            style: .init(eoFill: true, antialiased: false))
+                        
+                        context.fill(
+                            (baseShape
+                                .components(.eyePupil)
+                                .eyeShape(model.design.eyeShape.generator)
+                                .path(in: rect)),
+                            with: .color(model.design.pupilColor),
+                            style: .init(eoFill: true, antialiased: false))
+                }
             }
             .zIndex(1)
-            .padding(10)
+            .padding(16)
         }
-        .aspectRatio(1, contentMode: .fit)
-        .padding(.top)
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 

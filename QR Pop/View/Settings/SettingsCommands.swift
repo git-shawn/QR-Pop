@@ -25,7 +25,7 @@ struct SettingsCommands: Commands {
             })
             
             CommandGroup(replacing: .help, addition: {
-                Link("Help", destination: URL(string: "https://www.fromshawn.dev/qrpop/help")!)
+                Link("Help", destination: URL(string: "https://www.fromshawn.dev/support?tag=qrpop")!)
                 
                 Divider()
                 
