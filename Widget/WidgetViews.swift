@@ -272,12 +272,12 @@ extension WidgetViews {
                     VStack(alignment: .leading) {
                         Text(model.title ?? "QR Code")
                             .font(.headline)
-                            .widgetAccentable()
-                            .lineLimit(1)
+                            .foregroundColor(.white)
+                            .lineLimit(2)
                         Text("\(model.content.builder.title)")
-                            .font(.footnote)
+                            .foregroundColor(.white)
                             .opacity(0.5)
-                            .widgetAccentable()
+                            .font(.footnote)
                     }
                 }
                 .widgetURL(URL(string: "qrpop:///archive/\(model.id?.uuidString ?? "")"))
@@ -291,12 +291,12 @@ extension WidgetViews {
                 VStack(alignment: .leading) {
                     Text("QR Code")
                         .font(.headline)
-                        .widgetAccentable()
-                        .lineLimit(1)
+                        .foregroundColor(.white)
+                        .lineLimit(2)
                     Text("Select a saved code")
-                        .font(.footnote)
+                        .foregroundColor(.white)
                         .opacity(0.5)
-                        .widgetAccentable()
+                        .font(.footnote)
                 }
             }
             Spacer()
@@ -342,7 +342,7 @@ struct WidgetViews_Previews: PreviewProvider {
             .previewContext(WidgetPreviewContext(family: .systemMedium))
 #else
         WidgetViews(entry: ArchiveEntry(kind: .snapshot))
-            .previewContext(WidgetPreviewContext(family: .accessoryCircular))
+            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
 #endif
     }
 }

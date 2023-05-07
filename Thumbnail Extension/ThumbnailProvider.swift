@@ -21,7 +21,7 @@ class ThumbnailProvider: QLThumbnailProvider {
             guard let data = try? Data(contentsOf: request.fileURL),
                   let template = try? TemplateModel(fromData: data)
             else {
-                Logger(subsystem: Constants.bundleIdentifier, category: "thumbnail").error("Failed to load template model from file URL.")
+                Logger.logExtension.error("ThumbnailProvider: Failed to load template model from file URL.")
                 return false
             }
             
@@ -34,7 +34,7 @@ class ThumbnailProvider: QLThumbnailProvider {
             
             uiImage.draw(in: CGRect(origin: .zero, size: maximumSize))
             
-            Logger.logView.debug("ThumbnailProvider: Thumbnail rendered successfully.")
+            Logger.logExtension.debug("ThumbnailProvider: Thumbnail rendered successfully.")
             
             return true
             

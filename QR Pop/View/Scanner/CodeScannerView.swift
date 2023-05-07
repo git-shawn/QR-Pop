@@ -238,12 +238,13 @@ extension CodeScannerView {
                   let resultString = result.messageString
             else {
                 url.stopAccessingSecurityScopedResource()
+                sceneModel.toaster = .error(note: "Could not scan file")
                 return
             }
             url.stopAccessingSecurityScopedResource()
             self.scanStatus = .result(resultString)
         } else {
-            sceneModel.toaster = .error(note: "Could not access file")
+            sceneModel.toaster = .error(note: "Could not scan file")
         }
     }
     
@@ -257,12 +258,13 @@ extension CodeScannerView {
                       let result = resultsArray.first,
                       let resultString = result.messageString
                 else {
+                    sceneModel.toaster = .error(note: "Could not scan photo")
                     return
                 }
                 self.scanStatus = .result(resultString)
             case .failure(_):
                 Logger.logView.error("CodeScannerView: Could not access photo from photo picker.")
-                sceneModel.toaster = .error(note: "Could not access photo")
+                sceneModel.toaster = .error(note: "Could not scan photo")
             }
         })
     }

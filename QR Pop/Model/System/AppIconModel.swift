@@ -34,8 +34,7 @@ class AppIconModel: ObservableObject {
             do {
                 try await UIApplication.shared.setAlternateIconName(icon.value)
             } catch {
-                Logger(subsystem: Constants.bundleIdentifier, category: "appIconModel")
-                    .error("Updating icon to \(icon.rawValue) failed")
+                Logger.logModel.error("AppIconModel: Updating icon failed.")
                 selectedAppIcon = previousAppIcon
             }
         }

@@ -386,8 +386,7 @@ public extension URL {
     /// Returns a URL for the given app group and database pointing to the sqlite database.
     static func storeURL(for appGroup: String, databaseName: String) -> URL {
         guard let fileContainer = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
-            Logger(subsystem: Constants.bundleIdentifier, category: "persistence+url")
-                .critical("The shared file container could not be created.")
+            Logger.logPersistence.fault("The shared file container could not be created.")
             fatalError("Shared file container could not be created.")
         }
         

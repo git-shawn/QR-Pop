@@ -51,7 +51,7 @@ struct WhatsNewSheet: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("A Home for Your Codes")
                                     .font(.headline)
-                                Text("Save QR codes you've made to the brand-new archive for quick access later. Archived codes are available in Spotlight and as Widgets.")
+                                Text("Save QR codes you've made to the brand-new Archive for quick access later. Archived codes are available in Spotlight and as Widgets.")
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -66,7 +66,7 @@ struct WhatsNewSheet: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("iCloud Backup")
                                     .font(.headline)
-                                Text("View your archive or use templates you've created across all your supported devices with iCloud.")
+                                Text("View your Archive or use Templates you've created across all your supported devices with iCloud.")
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -81,7 +81,22 @@ struct WhatsNewSheet: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("Apple Watch Support")
                                     .font(.headline)
-                                Text("Browse the archive from your wrist with the new Apple Watch app. QR Pop for Apple Watch requires iCloud.")
+                                Text("Browse the Archive from your wrist with the new Apple Watch app. QR Pop for Apple Watch requires iCloud.")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        
+                        GridRow(alignment: .center) {
+                            Image(systemName: "square.2.layers.3d")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 36)
+                                .gridColumnAlignment(.center)
+                                .foregroundColor(.accentColor)
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("Siri and Shortcuts")
+                                    .font(.headline)
+                                Text("Ask Siri to help you view a code in your Archive or build the code entirely using Shortcuts.")
                                     .foregroundColor(.secondary)
                             }
                         }

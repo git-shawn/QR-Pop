@@ -115,7 +115,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius purus ac d
         .confirmationDialog("Delete Code from Library?", isPresented: $showDeleteDialog, actions: {
             Button("Delete", role: .destructive, action: {
                 moc.delete(entity)
-                try? moc.atomicSave()
+                do {
+                    try moc.atomicSave()
+                } catch {
+                    Logger.logView.error("CodeDetailView: Entity could not be deleted.")
+                }
                 dismiss()
             })
             Button("Cancel", role: .cancel, action: {})
@@ -129,48 +133,36 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius purus ac d
     var code: some View {
         ZStack(alignment: .center) {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(model.design.backgroundColor)
+                .fill(brightenCode ? .white : model.design.backgroundColor)
                 .zIndex(0)
-                .brightness(brightenCode ? 1 : 0)
             
             Canvas { context, size in
                 let rect = CGRect(origin: .zero, size: size)
                 if let baseShape = QRCodeShape(text: model.content.result, errorCorrection: model.design.errorCorrection) {
-                        
-                    if let offPixelShape = model.design.offPixels {
-                            context.fill(
-                                baseShape
-                                    .components(.offPixels)
-                                    .offPixelShape(offPixelShape.generator)
-                                    .path(in: rect),
-                                with: .color(model.design.pixelColor.opacity(0.2)),
-                                style: .init(eoFill: true, antialiased: false)
-                            )
-                        }
-                        
-                        context.fill(
-                            (baseShape
-                                .components(.onPixels)
-                                .onPixelShape(model.design.pixelShape.generator)
-                                .path(in: rect)),
-                            with: .color(model.design.pixelColor),
-                            style: .init(eoFill: true, antialiased: false))
-                        
-                        context.fill(
-                            (baseShape
-                                .components(.eyeOuter)
-                                .eyeShape(model.design.eyeShape.generator)
-                                .path(in: rect)),
-                            with: .color(model.design.eyeColor),
-                            style: .init(eoFill: true, antialiased: false))
-                        
-                        context.fill(
-                            (baseShape
-                                .components(.eyePupil)
-                                .eyeShape(model.design.eyeShape.generator)
-                                .path(in: rect)),
-                            with: .color(model.design.pupilColor),
-                            style: .init(eoFill: true, antialiased: false))
+                    
+                    context.fill(
+                        (baseShape
+                            .components(.onPixels)
+                            .onPixelShape(brightenCode ? QRCode.PixelShape.Square() : model.design.pixelShape.generator)
+                            .path(in: rect)),
+                        with: .color(brightenCode ? .black : model.design.pixelColor),
+                        style: .init(eoFill: true, antialiased: false))
+                    
+                    context.fill(
+                        (baseShape
+                            .components(.eyeOuter)
+                            .eyeShape(brightenCode ? QRCode.EyeShape.Square() : model.design.eyeShape.generator)
+                            .path(in: rect)),
+                        with: .color(brightenCode ? .black : model.design.eyeColor),
+                        style: .init(eoFill: true, antialiased: false))
+                    
+                    context.fill(
+                        (baseShape
+                            .components(.eyePupil)
+                            .eyeShape(brightenCode ? QRCode.EyeShape.Square() : model.design.eyeShape.generator)
+                            .path(in: rect)),
+                        with: .color(brightenCode ? .black : model.design.pupilColor),
+                        style: .init(eoFill: true, antialiased: false))
                 }
             }
             .zIndex(1)
