@@ -232,7 +232,8 @@ extension CodeScannerView {
     
     func scanFromURL(_ url: URL) {
         if url.startAccessingSecurityScopedResource() {
-            guard let image = PlatformImage(contentsOfFile: url.absoluteString),
+            guard let data = try? Data(contentsOf: url),
+                  let image = PlatformImage(data: data),
                   let resultsArray = QRCode.DetectQRCodes(in: image),
                   let result = resultsArray.first,
                   let resultString = result.messageString

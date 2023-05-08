@@ -258,7 +258,7 @@ extension BuilderView {
                     do {
                         let data = try model.pngData(for: 512)
                         sceneModel.exportData(data, type: .png, named: model.title ?? "QR Code")
-                    } catch let error {
+                    } catch {
                         Logger.logView.error("BuilderView: Could not create PNG data for QR code.")
                         sceneModel.toaster = .error(note: "Could not save file")
                     }

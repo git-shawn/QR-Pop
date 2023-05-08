@@ -173,7 +173,7 @@ extension QRCodeView {
                     }
                 })
                 
-                ImageButton("Add to Pasteboard", systemImage: "doc.on.clipboard", action: {
+                ImageButton("Copy Image", systemImage: "doc.on.clipboard", action: {
                     QRModel(design: design, content: builder).addToPasteboard(for: 512)
                     sceneModel.toaster = .copied(note: "Image copied")
                 })
