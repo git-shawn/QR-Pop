@@ -21,6 +21,7 @@ struct BuilderView: View {
     @State private var isNamingArchivedModel = false
     @State private var newArchiveTitle = ""
     @State private var hasMadeChanges: Bool = false
+    @State private var viewingRawData: Bool = false
     @Environment(\.horizontalSizeClass) var hSizeClass
     @Environment(\.verticalSizeClass) var vSizeClass
     @Environment(\.managedObjectContext) var moc
@@ -330,6 +331,11 @@ extension BuilderView {
             
             Group {
                 Divider()
+                ImageButton("View Raw Data", systemImage: "rectangle.and.text.magnifyingglass", action: {
+                    viewingRawData = true
+                })
+                
+                Divider()
                 
                 ImageButton("Reset", systemImage: "trash", role: .destructive, action: {
                     model.reset()
@@ -342,6 +348,12 @@ extension BuilderView {
             newArchiveTitle = model.title ?? "My QR Code"
             isNamingArchivedModel = true
         }
+        .sheet(isPresented: $viewingRawData, content: {
+            RawDataView(data: model.content.result)
+#if os(macOS)
+                .frame(width: 400, height: 450)
+#endif
+        })
         .alert((Text(entity == nil ? "Add to Archive" : "Rename")),
                isPresented: $isNamingArchivedModel,
                actions: {
@@ -372,8 +384,10 @@ extension BuilderView {
 
 struct BuilderView_Previews: PreviewProvider {
     static var previews: some View {
-        BuilderView()
-            .environmentObject(SceneModel())
-            .environment(\.managedObjectContext, Persistence.shared.container.viewContext)
+        NavigationStack {
+            BuilderView()
+                .environmentObject(SceneModel())
+                .environment(\.managedObjectContext, Persistence.shared.container.viewContext)
+        }
     }
 }

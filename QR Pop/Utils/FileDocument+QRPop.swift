@@ -10,8 +10,8 @@ import UniformTypeIdentifiers
 import OSLog
 
 struct DataFileDocument: FileDocument {
-    static var readableContentTypes = [UTType.pdf, UTType.svg, UTType.png, UTType.qrpt]
-    static var writableContentTypes = [UTType.pdf, UTType.svg, UTType.png, UTType.qrpt]
+    static var readableContentTypes = [UTType.pdf, UTType.svg, UTType.png, UTType.qrpt, UTType.plainText]
+    static var writableContentTypes = [UTType.pdf, UTType.svg, UTType.png, UTType.qrpt, UTType.plainText]
     
     var contentData = Data()
     
