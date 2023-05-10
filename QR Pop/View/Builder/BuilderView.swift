@@ -20,7 +20,6 @@ struct BuilderView: View {
     @State private var showingPrintSetup = false
     @State private var isNamingArchivedModel = false
     @State private var newArchiveTitle = ""
-    @State private var hasMadeChanges: Bool = false
     @State private var viewingRawData: Bool = false
     @Environment(\.horizontalSizeClass) var hSizeClass
     @Environment(\.verticalSizeClass) var vSizeClass
@@ -74,9 +73,6 @@ struct BuilderView: View {
         .focusedSceneValue(\.qrModel, $model)
         .focusedSceneValue(\.printing, $showingPrintSetup)
         .focusedSceneValue(\.archiving, $isNamingArchivedModel)
-        .onChange(of: model) { _ in
-            hasMadeChanges = true
-        }
         .task {
             if model.id != nil {
                 self.entity = try? Persistence.shared.getQREntityWithUUID(model.id)
@@ -279,7 +275,6 @@ extension BuilderView {
                     ImageButton("Add to Archive", systemImage: "archivebox", action: {
                         isNamingArchivedModel = true
                     })
-                    .disabled(!hasMadeChanges)
                 } else {
                     ImageButton("Save Changes", systemImage: "archivebox", action: {
                         do {
@@ -287,15 +282,12 @@ extension BuilderView {
                             entity?.design = try model.design.asData()
                             entity?.logo = model.design.logo
                             try moc.atomicSave()
-
-                            hasMadeChanges = false
                             sceneModel.toaster = .saved(note: "Change saved")
                         } catch {
                             Logger.logView.error("BuilderView: Could not save changes to entity in BuilderView.")
                             sceneModel.toaster = .error(note: "Changes not saved")
                         }
                     })
-                    .disabled(!hasMadeChanges)
                     
                     RenameButton()
                 }
@@ -331,9 +323,13 @@ extension BuilderView {
             
             Group {
                 Divider()
-                ImageButton("View Raw Data", systemImage: "rectangle.and.text.magnifyingglass", action: {
-                    viewingRawData = true
-                })
+                ImageButton(
+                    "View Raw Data",
+                    systemImage: "doc.text.magnifyingglass",
+                    action: {
+                        viewingRawData = true
+                    })
+                .disabled(model.content.result.isEmpty)
                 
                 Divider()
                 
@@ -352,6 +348,9 @@ extension BuilderView {
             RawDataView(data: model.content.result)
 #if os(macOS)
                 .frame(width: 400, height: 450)
+#else
+                .presentationDetents([.medium,.large])
+                .presentationDragIndicator(.visible)
 #endif
         })
         .alert((Text(entity == nil ? "Add to Archive" : "Rename")),
