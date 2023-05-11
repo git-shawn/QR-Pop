@@ -51,6 +51,13 @@ extension String {
 extension LocalizedStringKey.StringInterpolation {
     
     /// A String Interpolation extension that displays a certain string only on an array of supported platforms.
+    ///
+    ///   ```
+    ///   Text("Save\(" to Files", platforms: [.iOS])")
+    ///   ```
+    ///   In the above example, " to Files" will only be visible on iOS devices.
+    ///   On macOS, for instance, the text will only say "Save."
+    ///
     /// - Parameters:
     ///   - value: The String to conditonally show.
     ///   - platforms: The platforms the string is visible on.

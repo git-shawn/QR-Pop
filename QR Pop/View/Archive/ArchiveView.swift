@@ -141,13 +141,15 @@ struct ArchiveView: View {
                     Group {
                         Divider()
                         
-                        ImageButton("Create Notification", systemImage: "bell") {
-                            // This button should be changed to "modify notification" if a notification exists.
-                            // The status of whether or not a notification exists should be saved to AppStorage, not CoreData.
+                        if UIDevice.current.userInterfaceIdiom == .phone {
+                            ImageButton("Create Notification", systemImage: "bell") {
+                                // This button should be changed to "modify notification" if a notification exists.
+                                // The status of whether or not a notification exists should be saved to AppStorage, not CoreData.
 #warning("Location notify not implemented")
-                            print("notify location")
+                                print("notify location")
+                            }
+                            .disabled(true)
                         }
-                        .disabled(true)
                         
                         ImageButton("Change Symbol", systemImage: "rays") {
                             // Change the symbol that appears on most widgets.
