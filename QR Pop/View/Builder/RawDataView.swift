@@ -35,7 +35,7 @@ struct RawDataView: View {
                     toastable = .copied(note: "Raw data copied")
                 })
                 
-                ImageButton("Save Data to Files", systemImage: "square.and.arrow.down", action: {
+                ImageButton("Save Data\(" to Files", platforms: [.iOS])", systemImage: "square.and.arrow.down", action: {
                     exportableFile = .init(
                         document: DataFileDocument(initialData: data.data(using: .utf8) ?? Data()),
                         UTType: .plainText,

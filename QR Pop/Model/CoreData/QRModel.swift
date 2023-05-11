@@ -236,10 +236,6 @@ extension QRModel: Transferable {
         DataRepresentation(exportedContentType: .png) { model in
             try model.pngData(for: 512)
         }
-        
-        DataRepresentation(exportedContentType: .jpeg) { model in
-            try model.jpegData(for: 512)
-        }
     }
 }
 

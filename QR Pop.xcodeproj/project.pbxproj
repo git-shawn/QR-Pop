@@ -118,6 +118,10 @@
 		CD53D66A29F481FD004DAC9A /* FileDocument+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02E29ECC8DF00976328 /* FileDocument+QRPop.swift */; };
 		CD53D66B29F481FD004DAC9A /* FileDocument+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02E29ECC8DF00976328 /* FileDocument+QRPop.swift */; };
 		CD611F1B29F8C584008F6B4B /* QR Pop.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CD9DAB1329F45EFF008B3C1F /* QR Pop.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD69CE712A0D3BFF000D0474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
+		CD69CE722A0D3BFF000D0474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
+		CD69CE732A0D3C01000D0474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
+		CD69CE752A0D41D9000D0474 /* MenuControlGroupConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69CE742A0D41D9000D0474 /* MenuControlGroupConvertible.swift */; };
 		CD788D9C29C381F8003B5965 /* PagerTabStripView in Frameworks */ = {isa = PBXBuildFile; productRef = CD788D9B29C381F8003B5965 /* PagerTabStripView */; };
 		CD788DB229C4C2D3003B5965 /* Connections in Frameworks */ = {isa = PBXBuildFile; productRef = CD788DB129C4C2D3003B5965 /* Connections */; };
 		CD788DE229C66597003B5965 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD788DE129C66597003B5965 /* StoreKit.framework */; };
@@ -651,6 +655,7 @@
 		CD4F20AC29F4CC5E0037082F /* CodeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeDetailView.swift; sourceTree = "<group>"; };
 		CD4F4B9629C8BFA6001CEB95 /* StoreConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreConfiguration.storekit; sourceTree = "<group>"; };
 		CD53D66C29F4829D004DAC9A /* Share Extension iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Share Extension iOS.entitlements"; sourceTree = "<group>"; };
+		CD69CE742A0D41D9000D0474 /* MenuControlGroupConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuControlGroupConvertible.swift; sourceTree = "<group>"; };
 		CD6E42F429CBFE1F008B9DAF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		CD6E42F629CBFE1F008B9DAF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		CD6E431629CC018B008B9DAF /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
@@ -1230,6 +1235,7 @@
 				CDBAC00129ECC8DF00976328 /* ToastOverlay.swift */,
 				CDFE671F29F786BD0086BF7A /* WhatsNewSheet.swift */,
 				CDE6CA6B2A0313F30097D2AB /* StringDatePicker.swift */,
+				CD69CE742A0D41D9000D0474 /* MenuControlGroupConvertible.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1937,6 +1943,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD69CE712A0D3BFF000D0474 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1944,6 +1951,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD69CE722A0D3BFF000D0474 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2023,6 +2031,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD69CE732A0D3C01000D0474 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2159,6 +2168,7 @@
 				CDBAC06A29ECC8DF00976328 /* SMSForm.swift in Sources */,
 				CD21703329F2F85300A18F17 /* Collection+Optional.swift in Sources */,
 				CDBAC07629ECC8DF00976328 /* BuilderList.swift in Sources */,
+				CD69CE752A0D41D9000D0474 /* MenuControlGroupConvertible.swift in Sources */,
 				CDBAC1D429ED935500976328 /* Color+Codable.swift in Sources */,
 				CDBAC05229ECC8DF00976328 /* SidebarNavigation.swift in Sources */,
 				CDBAC05929ECC8DF00976328 /* ImageButton.swift in Sources */,

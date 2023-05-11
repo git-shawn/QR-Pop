@@ -67,7 +67,7 @@ extension QRCodeView {
                 context.scaleBy(x: 0.98, y: 0.98)
                 context.translateBy(x: rectDimension*0.01, y: rectDimension*0.01)
                 let border: Path = .init(roundedRect: rect, cornerRadius: (rectDimension*0.08), style: .continuous)
-
+                
                 context.fill(border, with: .color(design.backgroundColor))
                 context.stroke(
                     border,
@@ -75,7 +75,7 @@ extension QRCodeView {
                     lineWidth: rectDimension*0.02)
             }
             
-
+            
             if let baseShape = QRCodeShape(text: builder.result, errorCorrection: design.errorCorrection) {
                 
                 context.drawLayer(content: { context in
@@ -151,26 +151,51 @@ extension QRCodeView {
         code
             .contextMenu {
                 ShareLink(item: QRModel(design: design, content: builder), preview: SharePreview("QR Code", image: QRModel(design: design, content: builder)))
-                
+                Menu(content: {
 #if os(iOS)
-                ImageButton("Save to Photos", systemImage: "square.and.arrow.down", action: {
-                    do {
-                        try QRModel(design: design, content: builder).addToPhotoLibrary(for: 512)
-                    } catch {
-                        Logger.logView.error("QRCodeView: Could not write QR code to photos app.")
-                        sceneModel.toaster = .error(note: "Could not save photo")
+                    ImageButton("Image to Photos", systemImage: "photo") {
+                        do {
+                            try QRModel(design: design, content: builder).addToPhotoLibrary(for: 512)
+                        } catch {
+                            Logger.logView.error("QRCodeView: Could not write QR code to photos app.")
+                            sceneModel.toaster = .error(note: "Could not save photo")
+                        }
                     }
-                })
 #endif
-                
-                ImageButton("Save to Files", systemImage: "plus.rectangle.on.folder", action: {
-                    do {
-                        let data = try QRModel(design: design, content: builder).pngData(for: 512)
-                        sceneModel.exportData(data, type: .png, named: "QR Code")
-                    } catch {
-                        Logger.logView.error("QRCodeView: Could not create PNG data for QR code.")
-                        sceneModel.toaster = .error(note: "Could not save file")
+                    
+                    ImageButton("Image\(" to Files", platforms: [.iOS])", systemImage: "folder") {
+                        do {
+                            let data = try QRModel(design: design, content: builder).pngData(for: 512)
+                            sceneModel.exportData(data, type: .png, named: "QR Code")
+                        } catch {
+                            Logger.logView.error("QRCodeView: Could not create PNG data for QR code.")
+                            sceneModel.toaster = .error(note: "Could not save file")
+                        }
                     }
+                    
+                    MenuControlGroupConvertible {
+                        ImageButton("PDF\(" to Files", platforms: [.iOS])", image: "pdf", action: {
+                            do {
+                                let data = try QRModel(design: design, content: builder).pdfData()
+                                sceneModel.exportData(data, type: .pdf, named: "QR Code")
+                            } catch {
+                                Logger.logView.error("ArchiveView: Could not create PDF data for QR code.")
+                                sceneModel.toaster = .error(note: "Could not save file")
+                            }
+                        })
+                        
+                        ImageButton("SVG\(" to Files", platforms: [.iOS])", image: "svg", action: {
+                            do {
+                                let data = try QRModel(design: design, content: builder).svgData()
+                                sceneModel.exportData(data, type: .svg, named: "QR Code")
+                            } catch {
+                                Logger.logView.error("ArchiveView: Could not create SVG data for QR code.")
+                                sceneModel.toaster = .error(note: "Could not save file")
+                            }
+                        })
+                    }
+                }, label: {
+                    Label("Save...", systemImage: "square.and.arrow.down")
                 })
                 
                 ImageButton("Copy Image", systemImage: "doc.on.clipboard", action: {

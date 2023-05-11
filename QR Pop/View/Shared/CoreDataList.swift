@@ -110,7 +110,7 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                                 item.title ?? "QR Code",
                                 image: modelRep))
                         
-                        ImageButton("Save to Files", systemImage: "square.and.arrow.down", action: {
+                        ImageButton("Save\(" to Files", platforms: [.iOS])", systemImage: "square.and.arrow.down", action: {
                             exporter = try? item.asExportable()
                         })
                     }

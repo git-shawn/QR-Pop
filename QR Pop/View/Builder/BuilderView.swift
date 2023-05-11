@@ -225,9 +225,9 @@ extension BuilderView {
                     )
                 }
                 
-#if os(iOS)
                 Menu(content: {
-                    ImageButton("Photos App", systemImage: "photo", action: {
+#if os(iOS)
+                    ImageButton("Image to Photos", systemImage: "photo", action: {
                         do {
                             try model.addToPhotoLibrary(for: 512)
                             sceneModel.toaster = .saved(note: "Image saved")
@@ -236,8 +236,9 @@ extension BuilderView {
                             sceneModel.toaster = .error(note: "Could not save photo")
                         }
                     })
+#endif
                     
-                    ImageButton("Files App", systemImage: "folder", action: {
+                    ImageButton("Image\(" to Files", platforms: [.iOS])", systemImage: "folder", action: {
                         do {
                             let data = try model.pngData(for: 512)
                             sceneModel.exportData(data, type: .png, named: "QR Code")
@@ -247,24 +248,39 @@ extension BuilderView {
                         }
                     })
                     
-                }, label: {
-                    Label("Save Image to...", systemImage: "square.and.arrow.down")
-                })
-#else
-                ImageButton("Save Image...", systemImage: "square.and.arrow.down", action: {
-                    do {
-                        let data = try model.pngData(for: 512)
-                        sceneModel.exportData(data, type: .png, named: model.title ?? "QR Code")
-                    } catch {
-                        Logger.logView.error("BuilderView: Could not create PNG data for QR code.")
-                        sceneModel.toaster = .error(note: "Could not save file")
+                    MenuControlGroupConvertible {
+                        ImageButton("PDF\(" to Files", platforms: [.iOS])", image: "pdf", action: {
+                            do {
+                                let data = try model.pdfData()
+                                sceneModel.exportData(data, type: .pdf, named: model.title ?? "QR Code")
+                            } catch {
+                                Logger.logView.error("BuilderView: Could not create PDF data for QR code.")
+                                sceneModel.toaster = .error(note: "Could not save file")
+                            }
+                        })
+                        
+                        ImageButton("SVG\(" to Files", platforms: [.iOS])", image: "svg", action: {
+                            do {
+                                let data = try model.svgData()
+                                sceneModel.exportData(data, type: .svg, named: model.title ?? "QR Code")
+                            } catch {
+                                Logger.logView.error("BuilderView: Could not create SVG data for QR code.")
+                                sceneModel.toaster = .error(note: "Could not save file")
+                            }
+                        })
                     }
+                    
+                }, label: {
+                    Label("Save...", systemImage: "square.and.arrow.down")
                 })
-#endif
                 
-                ImageButton("Copy Image", systemImage: "doc.on.clipboard", action: {
+                ImageButton("Copy Image", systemImage: "doc.on.doc", action: {
                     model.addToPasteboard(for: 512)
                     sceneModel.toaster = .copied(note: "Image copied")
+                })
+                
+                ImageButton("Print", systemImage: "printer", action: {
+                    showingPrintSetup = true
                 })
             }
             
@@ -291,34 +307,6 @@ extension BuilderView {
                     
                     RenameButton()
                 }
-            }
-            
-            Group {
-                Divider()
-                
-                ImageButton("Save as PDF", image: "pdf", action: {
-                    do {
-                        let data = try model.pdfData()
-                        sceneModel.exportData(data, type: .pdf, named: model.title ?? "QR Code")
-                    } catch {
-                        Logger.logView.error("BuilderView: Could not create PDF data for QR code.")
-                        sceneModel.toaster = .error(note: "Could not save file")
-                    }
-                })
-                
-                ImageButton("Save as SVG", image: "svg", action: {
-                    do {
-                        let data = try model.svgData()
-                        sceneModel.exportData(data, type: .svg, named: model.title ?? "QR Code")
-                    } catch {
-                        Logger.logView.error("BuilderView: Could not create SVG data for QR code.")
-                        sceneModel.toaster = .error(note: "Could not save file")
-                    }
-                })
-                
-                ImageButton("Print", systemImage: "printer", action: {
-                    showingPrintSetup = true
-                })
             }
             
             Group {
