@@ -191,7 +191,7 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                         .foregroundColor(.secondary)
                     Spacer()
                     Button("Trash", role: .destructive, action: {
-                        withAnimation {
+                        withAnimation(.easeInOut(duration: 0.25)) {
                             deleteItems(selectedEntities)
                             isEditing.toggle()
                         }
@@ -229,7 +229,7 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                     Divider()
                     
                     ImageButton("Trash", systemImage: "trash", role: .destructive, action: {
-                        withAnimation {
+                        withAnimation(.easeInOut(duration: 0.25)) {
                             deleteItems(selectedEntities)
                             isEditing.toggle()
                         }
@@ -314,7 +314,7 @@ struct CoreDataList<FetchedEntity: Entity>: View {
     var editButton: some View {
         
         Button(action: {
-            withAnimation {
+            withAnimation(.easeInOut(duration: 0.25)) {
                 isEditing.toggle()
                 if !isEditing {
                     selectedEntities = []

@@ -61,11 +61,6 @@ struct SettingsView: View {
                 Text("When enabled, QR Pop will project a placeholder image instead of your screen during mirroring sessions.")
             })
             
-            Section(content: {
-                Toggle("Show Siri Suggestions", isOn: $showSiriTips)
-            }, header: {
-                Text("Siri & Shortcuts")
-            })
 #else
             Section(content: {
                 Toggle("Show Scanner in Menu Bar", isOn: $isMenuBarActive)
@@ -121,6 +116,65 @@ struct SettingsView: View {
 #endif
             }
             
+            // MARK: - Core Data
+            
+            Section(content: {
+                
+                Toggle("Show Siri Suggestions", isOn: $showSiriTips)
+#if os(macOS)
+                LabeledContent("Erase Saved Data", content: {
+                    Button("Erase", role: .destructive, action: {
+                        erasingData = true
+                    })
+                    .buttonStyle(.borderedProminent)
+                    .tint(.red)
+                })
+#else
+                Button("Erase Data", role: .destructive, action: {
+                    erasingData = true
+                })
+#endif
+            }, header: {
+                Text("Data")
+            }, footer: {
+                Text("Data will be permanently erased from your device as well as iCloud, if it is enabled. This cannot be undone.")
+#if os(macOS)
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+#endif
+            })
+            .confirmationDialog(
+                "Erase Data",
+                isPresented: $erasingData,
+                titleVisibility: .automatic,
+                actions: {
+                    Button("Erase Archive", role: .destructive, action: {
+                        do {
+                            try Persistence.shared.deleteEntity("QREntity")
+                            sceneModel.toaster = .custom(image: Image(systemName: "trash"), imageColor: .accentColor, title: "Erased", note: "Archive erased")
+                        } catch {
+                            Logger.logView.error("Settings: Could not delete all `QREntities` from the database.")
+                            sceneModel.toaster = .error(note: "Archive not erased")
+                        }
+                    })
+                    
+                    Button("Erase Templates", role: .destructive, action: {
+                        do {
+                            try Persistence.shared.deleteEntity("TemplateEntity")
+                            sceneModel.toaster = .custom(image: Image(systemName: "trash"), imageColor: .accentColor, title: "Erased", note: "Templates erased")
+                        } catch {
+                            Logger.logView.error("Settings: Could not delete all `TemplateEntities` from the database.")
+                            sceneModel.toaster = .error(note: "Templates not erased")
+                        }
+                    })
+                    
+                    Button("Cancel", role: .cancel, action: {
+                        erasingData = false
+                    })
+                }, message: {
+                    Text("Data will be permanently erased from your device as well as iCloud, if it is enabled. This cannot be undone.")
+                })
+            
             // MARK: - Developer Links & Tip
             
             Section("Developer") {
@@ -161,62 +215,6 @@ struct SettingsView: View {
                 TipButton()
                     .tint(.primary)
             }
-            
-            // MARK: - Core Data
-            
-            Section(content: {
-                
-#if os(macOS)
-                LabeledContent("Erase Saved Data", content: {
-                    Button("Erase", role: .destructive, action: {
-                        erasingData = true
-                    })
-                    .buttonStyle(.borderedProminent)
-                    .tint(.red)
-                })
-#else
-                Button("Erase Data", role: .destructive, action: {
-                    erasingData = true
-                })
-#endif
-            }, footer: {
-                Text("Data will be permanently erased from your device as well as iCloud, if it is enabled. This cannot be undone.")
-#if os(macOS)
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
-#endif
-            })
-            .confirmationDialog(
-                "Erase Data",
-                isPresented: $erasingData,
-                titleVisibility: .automatic,
-                actions: {
-                    Button("Erase Archive", role: .destructive, action: {
-                        do {
-                            try Persistence.shared.deleteEntity("QREntity")
-                            sceneModel.toaster = .custom(image: Image(systemName: "trash"), imageColor: .accentColor, title: "Erased", note: "Archive erased")
-                        } catch {
-                            Logger.logView.error("Settings: Could not delete all `QREntities` from the database.")
-                            sceneModel.toaster = .error(note: "Archive not erased")
-                        }
-                    })
-                    
-                    Button("Erase Templates", role: .destructive, action: {
-                        do {
-                            try Persistence.shared.deleteEntity("TemplateEntity")
-                            sceneModel.toaster = .custom(image: Image(systemName: "trash"), imageColor: .accentColor, title: "Erased", note: "Templates erased")
-                        } catch {
-                            Logger.logView.error("Settings: Could not delete all `TemplateEntities` from the database.")
-                            sceneModel.toaster = .error(note: "Templates not erased")
-                        }
-                    })
-                    
-                    Button("Cancel", role: .cancel, action: {
-                        erasingData = false
-                    })
-                }, message: {
-                    Text("Data will be permanently erased from your device as well as iCloud, if it is enabled. This cannot be undone.")
-                })
             
             Section(content: {}, footer: {
                 Text("**QR Code** is a registered trademark of [DENSO WAVE](https://www.qrcode.com/en/)\nMade with \(Image(systemName:"heart")) in Southern Illinois")

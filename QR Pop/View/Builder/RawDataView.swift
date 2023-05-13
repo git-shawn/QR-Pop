@@ -71,8 +71,10 @@ fileprivate struct RawDataGroupBoxStyle: GroupBoxStyle {
     }
 }
 
+#if DEBUG
 struct RawDataView_Previews: PreviewProvider {
     static var previews: some View {
         RawDataView(data: Constants.loremIpsum)
     }
 }
+#endif

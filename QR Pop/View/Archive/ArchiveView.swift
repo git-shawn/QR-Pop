@@ -12,7 +12,11 @@ import OSLog
 struct ArchiveView: View {
     var model: QRModel
     @State private var isFullscreen: Bool = false
+    @State private var showingPrintSetup: Bool = false
+    @State private var newEntityName: String = ""
+    @State private var isRenaming: Bool = false
     @Environment(\.openWindow) var openWindow
+    @Environment(\.managedObjectContext) var moc
     @EnvironmentObject var sceneModel: SceneModel
     @EnvironmentObject var navigationModel: NavigationModel
     @AppStorage("showSiriTips", store: .appGroup) var showArchiveSiriTip: Bool = true
@@ -45,6 +49,19 @@ struct ArchiveView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .background(isFullscreen ? model.design.pixelColor : Color.groupedBackground, ignoresSafeAreaEdges: .all)
+        .sheet(isPresented: $showingPrintSetup, content: {
+            NavigationStack {
+                if let image = model.image(for: 512) {
+                    PrintView(printing: image)
+                } else {
+                    ErrorView(errorDescription: "Unable to setup printing panel.")
+                        .presentationDetents([.medium])
+                }
+            }
+#if os(macOS)
+            .frame(width: 500, height: 350)
+#endif
+        })
 #if os(iOS)
         .statusBarHidden(isFullscreen)
         .animation(.easeIn, value: isFullscreen)
@@ -132,9 +149,8 @@ struct ArchiveView: View {
                         })
                         
                         ImageButton("Print", systemImage: "printer", action: {
-#warning("Printing not implemented")
+                            showingPrintSetup = true
                         })
-                        .disabled(true)
                     }
                     
                     // Archive functions
@@ -172,15 +188,34 @@ struct ArchiveView: View {
                         
                         ImageButton("Rename", systemImage: "pencil") {
 #warning("Rename not implemented")
+                            guard let id = model.id,
+                                  let entity = try? Persistence.shared.getQREntityWithUUID(id)
+                            else {
+                                Logger.logView.error("ArchiveView: Could not fetch code from Database.")
+                                sceneModel.toaster = .error(note: "Could not find code")
+                                return
+                            }
+                            
                             print("rename code")
                         }
                         .disabled(true)
                         
                         ImageButton("Delete", systemImage: "trash", role: .destructive) {
-#warning("Delete not implemented")
-                            print("rename code")
+                            guard let id = model.id,
+                                  let entity = try? Persistence.shared.getQREntityWithUUID(id)
+                            else {
+                                Logger.logView.error("ArchiveView: Could not fetch code from Database.")
+                                sceneModel.toaster = .error(note: "Could not find code")
+                                return
+                            }
+                            do {
+                                moc.delete(entity)
+                                try moc.atomicSave()
+                            } catch {
+                                Logger.logView.error("ArchiveView: Could not delete code from Database.")
+                                sceneModel.toaster = .error(note: "Could not delete code")
+                            }
                         }
-                        .disabled(true)
                     }
                 }, label: {
                     Label("Options", systemImage: "ellipsis.circle")

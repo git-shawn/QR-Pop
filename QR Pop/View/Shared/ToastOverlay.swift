@@ -22,7 +22,7 @@ struct ToastOverlayModifier: ViewModifier {
                     .transition(.move(edge: .top))
             }
         }
-        .animation(.easeOut, value: toast)
+        .animation(.easeIn, value: toast)
         .onChange(of: toast, perform: { toast in
             if (toast != nil) {
                 

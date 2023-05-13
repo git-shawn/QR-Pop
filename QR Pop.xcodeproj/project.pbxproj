@@ -122,6 +122,10 @@
 		CD69CE722A0D3BFF000D0474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
 		CD69CE732A0D3C01000D0474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
 		CD69CE752A0D41D9000D0474 /* MenuControlGroupConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69CE742A0D41D9000D0474 /* MenuControlGroupConvertible.swift */; };
+		CD708FD92A0E784D0079CF86 /* LocationActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD708FD82A0E784D0079CF86 /* LocationActivityModel.swift */; };
+		CD708FDB2A0E7E1E0079CF86 /* RegionBasedActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD708FDA2A0E7E1E0079CF86 /* RegionBasedActivity.swift */; };
+		CD708FDC2A0E88F90079CF86 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00629ECC8DF00976328 /* QRCodeView.swift */; };
+		CD708FDD2A0E89320079CF86 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
 		CD788D9C29C381F8003B5965 /* PagerTabStripView in Frameworks */ = {isa = PBXBuildFile; productRef = CD788D9B29C381F8003B5965 /* PagerTabStripView */; };
 		CD788DB229C4C2D3003B5965 /* Connections in Frameworks */ = {isa = PBXBuildFile; productRef = CD788DB129C4C2D3003B5965 /* Connections */; };
 		CD788DE229C66597003B5965 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD788DE129C66597003B5965 /* StoreKit.framework */; };
@@ -659,6 +663,8 @@
 		CD6E42F429CBFE1F008B9DAF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		CD6E42F629CBFE1F008B9DAF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		CD6E431629CC018B008B9DAF /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		CD708FD82A0E784D0079CF86 /* LocationActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationActivityModel.swift; sourceTree = "<group>"; };
+		CD708FDA2A0E7E1E0079CF86 /* RegionBasedActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionBasedActivity.swift; sourceTree = "<group>"; };
 		CD788DE129C66597003B5965 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CD788DE729C69709003B5965 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		CD78A19729F4891600EF2C6F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
@@ -1043,14 +1049,15 @@
 		CD1FF4F829F378F9006E6832 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
-				CDF793242A080EEB00B1FA50 /* watchOS */,
-				CD1FF50B29F37A4B006E6832 /* iOS */,
-				CD1FF50A29F37A46006E6832 /* macOS */,
+				CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */,
+				CD708FDA2A0E7E1E0079CF86 /* RegionBasedActivity.swift */,
+				CD7A3F9829F37E0D00D23D54 /* TimelineIntentHandler.swift */,
 				CD1FF50829F379E5006E6832 /* WidgetRoot.swift */,
 				CD7A3FA129F38A1C00D23D54 /* WidgetViews.swift */,
-				CD7A3F9829F37E0D00D23D54 /* TimelineIntentHandler.swift */,
-				CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */,
 				CD1FF4FC29F378FA006E6832 /* Assets.xcassets */,
+				CD1FF50B29F37A4B006E6832 /* iOS */,
+				CD1FF50A29F37A46006E6832 /* macOS */,
+				CDF793242A080EEB00B1FA50 /* watchOS */,
 			);
 			path = Widget;
 			sourceTree = "<group>";
@@ -1183,11 +1190,11 @@
 			children = (
 				CDBABFEF29ECC8DF00976328 /* AboutAppView.swift */,
 				CDBAC1D929ED996500976328 /* AcknowledgementsView.swift */,
+				CDFE671D29F784990086BF7A /* AppIconView.swift */,
 				CDBABFF229ECC8DF00976328 /* PrivacyPolicyView.swift */,
 				CDBABFF129ECC8DF00976328 /* SettingsCommands.swift */,
 				CDBABFF029ECC8DF00976328 /* SettingsMenu.swift */,
 				CDBABFEE29ECC8DF00976328 /* SettingsView.swift */,
-				CDFE671D29F784990086BF7A /* AppIconView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1222,11 +1229,13 @@
 				CDBABFFF29ECC8DF00976328 /* GridList.swift */,
 				CDBAC00029ECC8DF00976328 /* ImageButton.swift */,
 				CDBABFFB29ECC8DF00976328 /* LabelStyles.swift */,
+				CD69CE742A0D41D9000D0474 /* MenuControlGroupConvertible.swift */,
 				CDBAC00929ECC8DF00976328 /* PlaceFinder.swift */,
 				CDBAC00A29ECC8DF00976328 /* PrintView.swift */,
 				CDBAC00629ECC8DF00976328 /* QRCodeView.swift */,
 				CDBAC00729ECC8DF00976328 /* QRLogoOverlay.swift */,
 				CDBABFFD29ECC8DF00976328 /* SpringyDisclosureStyle.swift */,
+				CDE6CA6B2A0313F30097D2AB /* StringDatePicker.swift */,
 				CDA4BFFC29F34646008A7E7B /* SuccessThumbOverlay.swift */,
 				CDBABFFE29ECC8DF00976328 /* TextEditorSheet.swift */,
 				CDBAC00529ECC8DF00976328 /* TextFieldButtonStyle.swift */,
@@ -1234,8 +1243,6 @@
 				CDBAC1D729ED94AB00976328 /* TipButton.swift */,
 				CDBAC00129ECC8DF00976328 /* ToastOverlay.swift */,
 				CDFE671F29F786BD0086BF7A /* WhatsNewSheet.swift */,
-				CDE6CA6B2A0313F30097D2AB /* StringDatePicker.swift */,
-				CD69CE742A0D41D9000D0474 /* MenuControlGroupConvertible.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -1350,6 +1357,7 @@
 				CD4F20A529F4B4EE0037082F /* MenuBarModel.swift */,
 				CDBAC04529ECC8DF00976328 /* MirrorModel.swift */,
 				CDFE671929F7811E0086BF7A /* AppIconModel.swift */,
+				CD708FD82A0E784D0079CF86 /* LocationActivityModel.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -2141,6 +2149,7 @@
 				CDBAC09129ECC8DF00976328 /* NavigationModel.swift in Sources */,
 				CD4F20A829F4B7E40037082F /* MenuBarScanResultsView.swift in Sources */,
 				CDFE670F29F6BA120086BF7A /* BuilderCommands.swift in Sources */,
+				CD708FD92A0E784D0079CF86 /* LocationActivityModel.swift in Sources */,
 				CDBAC06829ECC8DF00976328 /* TwitterForm.swift in Sources */,
 				CD8EB98029FB2D8E00E28A3F /* BuildCodeIntent.swift in Sources */,
 				CDE6CA6E2A0358350097D2AB /* CIImage+Image.swift in Sources */,
@@ -2238,14 +2247,17 @@
 				CD1FF51729F37A79006E6832 /* CGColor+QRPop.swift in Sources */,
 				CD1FF52329F37A97006E6832 /* String+QRPop.swift in Sources */,
 				CD1FF50C29F37A6E006E6832 /* DesignModel.swift in Sources */,
+				CD708FDD2A0E89320079CF86 /* View+GeometryProxy.swift in Sources */,
 				CD1FF50F29F37A6E006E6832 /* TemplateModel.swift in Sources */,
 				CD1FF50E29F37A6E006E6832 /* Persistence.swift in Sources */,
 				CD7A3FA929F38DA500D23D54 /* UserDefaults+QRPop.swift in Sources */,
 				CD1FF51629F37A79006E6832 /* CGSize+QRPop.swift in Sources */,
 				CD1FF51B29F37A86006E6832 /* Color+QRCode.swift in Sources */,
+				CD708FDC2A0E88F90079CF86 /* QRCodeView.swift in Sources */,
 				CD1FF51F29F37A8D006E6832 /* Image+Position.swift in Sources */,
 				CD1FF50D29F37A6E006E6832 /* BuilderModel.swift in Sources */,
 				CD1FF51029F37A6E006E6832 /* QRModel.swift in Sources */,
+				CD708FDB2A0E7E1E0079CF86 /* RegionBasedActivity.swift in Sources */,
 				CD1FF51A29F37A86006E6832 /* Color+Codable.swift in Sources */,
 				CD7A3FA629F38CB700D23D54 /* WidgetViews.swift in Sources */,
 				CD7A3FA429F38CB700D23D54 /* WidgetRoot.swift in Sources */,

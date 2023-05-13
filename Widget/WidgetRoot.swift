@@ -75,8 +75,7 @@ struct ArchiveEntry: TimelineEntry {
     }
 }
 
-@main
-struct QRPop_Widget: Widget {
+struct QRPopWidget: Widget {
     let kind: String = "ArchiveWidget"
     
     var body: some WidgetConfiguration {
@@ -93,4 +92,14 @@ struct QRPop_Widget: Widget {
         .configurationDisplayName("QR Pop Archive")
         .description("Display a code from your QR Pop Archive.")
     }
+}
+
+@main
+struct Widgets: WidgetBundle {
+   var body: some Widget {
+#if os(iOS)
+       RegionBasedActivity()
+#endif
+       QRPopWidget()
+   }
 }
