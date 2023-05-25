@@ -28,7 +28,6 @@ struct ArchiveView: View {
                 .zIndex(1)
                 .id("code")
                 .padding()
-                .drawingGroup()
             if isFullscreen {
                 VStack {
                     HStack {
@@ -48,7 +47,7 @@ struct ArchiveView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-        .background(isFullscreen ? model.design.pixelColor : Color.groupedBackground, ignoresSafeAreaEdges: .all)
+        .drawingGroup()
         .sheet(isPresented: $showingPrintSetup, content: {
             NavigationStack {
                 if let image = model.image(for: 512) {
@@ -86,6 +85,7 @@ struct ArchiveView: View {
 #endif
         .navigationTitle(model.title ?? "QR Code")
         .animation(.default, value: isFullscreen)
+        .background(isFullscreen ? model.design.pixelColor : Color.groupedBackground, ignoresSafeAreaEdges: .all)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu(content: {

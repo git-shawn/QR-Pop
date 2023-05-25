@@ -230,7 +230,7 @@ extension DesignModel {
 extension DesignModel {
     
     enum PixelShape: String, CaseIterable, Codable, Equatable, AppEnum {
-        case square, circle, squircle, pixel, diamond, star, flower, sharpPixel, horizontal, vertical, roundedPath, curvedPixel, sharp, insetRound
+        case square, circle, squircle, pixel, diamond, star, sparkle, flower, sharpPixel, horizontal, vertical, roundedPath, curvedPixel, sharp, insetRound
         
         /// An SF Symbol visualizing the pixel shape as an `Image`.
         var symbol: Image {
@@ -246,6 +246,7 @@ extension DesignModel {
             case .pixel: return "Pixels"
             case .diamond: return "Diamonds"
             case .star: return "Stars"
+            case .sparkle: return "Sparkles"
             case .flower: return "Flowers"
             case .sharpPixel: return "Spikes"
             case .horizontal: return "Rows"
@@ -286,6 +287,8 @@ extension DesignModel {
                 return QRCode.PixelShape.Star(insetFraction: 0.15)
             case .flower:
                 return QRCode.PixelShape.Flower(insetFraction: 0.15)
+            case .sparkle:
+                return QRCode.PixelShape.Shiny()
             case .insetRound:
                 return QRCode.PixelShape.RoundedEndIndent(cornerRadiusFraction: 0.5)
             }
@@ -303,6 +306,7 @@ extension DesignModel {
             .pixel : "Pixels",
             .diamond : "Diamonds",
             .star : "Stars",
+            .sparkle : "Sparkles",
             .flower : "Flowers",
             .sharpPixel : "Spikes",
             .horizontal : "Rows",
