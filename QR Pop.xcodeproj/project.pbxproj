@@ -266,6 +266,9 @@
 		CD9DAB6129F464DE008B3C1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD9DAB6029F464DE008B3C1F /* Assets.xcassets */; };
 		CD9DAB6229F46A2C008B3C1F /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00629ECC8DF00976328 /* QRCodeView.swift */; };
 		CDA4BFFD29F34646008A7E7B /* SuccessThumbOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA4BFFC29F34646008A7E7B /* SuccessThumbOverlay.swift */; };
+		CDA631102A21017E007E5667 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CDA6310F2A21017E007E5667 /* LaunchScreen.storyboard */; };
+		CDA631122A2103DF007E5667 /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA631112A2103DF007E5667 /* ArchiveView.swift */; };
+		CDA631162A21044A007E5667 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA631152A21044A007E5667 /* SearchView.swift */; };
 		CDB0BDA02A01F18000566FB8 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
 		CDB0BDA12A01F18000566FB8 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
 		CDB0BDAB2A02908900566FB8 /* FormStateEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB0BDAA2A02908900566FB8 /* FormStateEngine.swift */; };
@@ -721,6 +724,9 @@
 		CD9DAB5E29F4604A008B3C1F /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		CD9DAB6029F464DE008B3C1F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CDA4BFFC29F34646008A7E7B /* SuccessThumbOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessThumbOverlay.swift; sourceTree = "<group>"; };
+		CDA6310F2A21017E007E5667 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CDA631112A2103DF007E5667 /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
+		CDA631152A21044A007E5667 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		CDB0BDAA2A02908900566FB8 /* FormStateEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStateEngine.swift; sourceTree = "<group>"; };
 		CDBABFEE29ECC8DF00976328 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CDBABFEF29ECC8DF00976328 /* AboutAppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
@@ -1487,9 +1493,11 @@
 		CDDA69C72A1F9DF7008629AC /* tvOS */ = {
 			isa = PBXGroup;
 			children = (
-				CDDA69F42A20E3C8008629AC /* DetailView.swift */,
 				CDDA69C82A1F9DF7008629AC /* QR_Pop_TVApp.swift */,
 				CDDA69CA2A1F9DF7008629AC /* RootView.swift */,
+				CDA631112A2103DF007E5667 /* ArchiveView.swift */,
+				CDA631152A21044A007E5667 /* SearchView.swift */,
+				CDDA69F42A20E3C8008629AC /* DetailView.swift */,
 				CDDA69CE2A1F9DF8008629AC /* Preview Content */,
 				CDDA69F82A20F20B008629AC /* Resources */,
 			);
@@ -1507,6 +1515,7 @@
 		CDDA69F82A20F20B008629AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CDA6310F2A21017E007E5667 /* LaunchScreen.storyboard */,
 				CDDA69ED2A20DCB7008629AC /* QR Pop TV.entitlements */,
 				CDDA69EE2A20DCCD008629AC /* QR-Pop-TV-Info.plist */,
 				CDDA69CC2A1F9DF8008629AC /* Assets.xcassets */,
@@ -2132,6 +2141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDA631102A21017E007E5667 /* LaunchScreen.storyboard in Resources */,
 				CDDA69D02A1F9DF8008629AC /* Preview Assets.xcassets in Resources */,
 				CDDA69CD2A1F9DF8008629AC /* Assets.xcassets in Resources */,
 			);
@@ -2613,7 +2623,9 @@
 				CDDA69EF2A20DD68008629AC /* View+GeometryProxy.swift in Sources */,
 				CDDA69DC2A20DC54008629AC /* CGColor+QRPop.swift in Sources */,
 				CDDA69E52A20DC78008629AC /* OSLog+QRPop.swift in Sources */,
+				CDA631162A21044A007E5667 /* SearchView.swift in Sources */,
 				CDDA69EA2A20DC8B008629AC /* UserDefaults+QRPop.swift in Sources */,
+				CDA631122A2103DF007E5667 /* ArchiveView.swift in Sources */,
 				CDDA69E92A20DC86008629AC /* String+QRPop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3814,6 +3826,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "QR Pop";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3847,6 +3860,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "QR Pop";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
