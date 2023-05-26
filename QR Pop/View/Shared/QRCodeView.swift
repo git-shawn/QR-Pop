@@ -131,8 +131,9 @@ extension QRCodeView {
         )
 #if os(iOS)
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: (size * 0.084), style: .continuous))
-#endif
+#elseif os(macOS)
         .contentShape(.dragPreview, RoundedRectangle(cornerRadius: (size * 0.084), style: .continuous))
+#endif
         .aspectRatio(1, contentMode: .fit)
         .readSize() { size in
             self.size = min(size.width,size.height)

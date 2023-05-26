@@ -396,6 +396,35 @@
 		CDC8C8EE29FAD1FC004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
 		CDC8C8EF29FAD1FD004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
 		CDC8C8F029FAD1FD004C239C /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDDA69C92A1F9DF7008629AC /* QR_Pop_TVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA69C82A1F9DF7008629AC /* QR_Pop_TVApp.swift */; };
+		CDDA69CB2A1F9DF7008629AC /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA69CA2A1F9DF7008629AC /* RootView.swift */; };
+		CDDA69CD2A1F9DF8008629AC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CDDA69CC2A1F9DF8008629AC /* Assets.xcassets */; };
+		CDDA69D02A1F9DF8008629AC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CDDA69CF2A1F9DF8008629AC /* Preview Assets.xcassets */; };
+		CDDA69D52A20DC25008629AC /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = CDDA69D42A20DC25008629AC /* QRCode */; };
+		CDDA69D62A20DC37008629AC /* BuilderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04729ECC8DF00976328 /* BuilderModel.swift */; };
+		CDDA69D72A20DC3D008629AC /* DesignModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04829ECC8DF00976328 /* DesignModel.swift */; };
+		CDDA69D82A20DC45008629AC /* TemplateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04129ECC8DF00976328 /* TemplateModel.swift */; };
+		CDDA69D92A20DC45008629AC /* QRModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03F29ECC8DF00976328 /* QRModel.swift */; };
+		CDDA69DA2A20DC45008629AC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04029ECC8DF00976328 /* Persistence.swift */; };
+		CDDA69DB2A20DC48008629AC /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04229ECC8DF00976328 /* Database.xcdatamodeld */; };
+		CDDA69DC2A20DC54008629AC /* CGColor+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02B29ECC8DF00976328 /* CGColor+QRPop.swift */; };
+		CDDA69DD2A20DC57008629AC /* CGSize+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03929ECC8DF00976328 /* CGSize+QRPop.swift */; };
+		CDDA69DE2A20DC5D008629AC /* Collection+Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD21703229F2F85300A18F17 /* Collection+Optional.swift */; };
+		CDDA69DF2A20DC60008629AC /* Color+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03129ECC8DF00976328 /* Color+Codable.swift */; };
+		CDDA69E02A20DC65008629AC /* Color+QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03B29ECC8DF00976328 /* Color+QRCode.swift */; };
+		CDDA69E12A20DC6A008629AC /* Color+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02C29ECC8DF00976328 /* Color+Random.swift */; };
+		CDDA69E22A20DC6A008629AC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02F29ECC8DF00976328 /* Constants.swift */; };
+		CDDA69E32A20DC6D008629AC /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
+		CDDA69E42A20DC73008629AC /* Image+Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03029ECC8DF00976328 /* Image+Position.swift */; };
+		CDDA69E52A20DC78008629AC /* OSLog+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */; };
+		CDDA69E62A20DC7C008629AC /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03229ECC8DF00976328 /* Platform.swift */; };
+		CDDA69E72A20DC7E008629AC /* Published+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02829ECC8DF00976328 /* Published+UserDefaults.swift */; };
+		CDDA69E82A20DC81008629AC /* QRCode+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02729ECC8DF00976328 /* QRCode+Codable.swift */; };
+		CDDA69E92A20DC86008629AC /* String+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02A29ECC8DF00976328 /* String+QRPop.swift */; };
+		CDDA69EA2A20DC8B008629AC /* UserDefaults+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03729ECC8DF00976328 /* UserDefaults+QRPop.swift */; };
+		CDDA69EC2A20DC9E008629AC /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00629ECC8DF00976328 /* QRCodeView.swift */; };
+		CDDA69EF2A20DD68008629AC /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
+		CDDA69F52A20E3C8008629AC /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDDA69F42A20E3C8008629AC /* DetailView.swift */; };
 		CDE11F8E2A0412560011C648 /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
 		CDE11F8F2A0412560011C648 /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
 		CDE11F902A0412570011C648 /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03829ECC8DF00976328 /* EntityProtocol.swift */; };
@@ -798,6 +827,14 @@
 		CDC8C8E329FACE4E004C239C /* OSLog+QRPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OSLog+QRPop.swift"; sourceTree = "<group>"; };
 		CDCFA8DD29D7E1E900452895 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
 		CDD5C72C29D8B38100AF1C37 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		CDDA69C62A1F9DF7008629AC /* QR Pop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "QR Pop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDDA69C82A1F9DF7008629AC /* QR_Pop_TVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QR_Pop_TVApp.swift; sourceTree = "<group>"; };
+		CDDA69CA2A1F9DF7008629AC /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		CDDA69CC2A1F9DF8008629AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CDDA69CF2A1F9DF8008629AC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CDDA69ED2A20DCB7008629AC /* QR Pop TV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QR Pop TV.entitlements"; sourceTree = "<group>"; };
+		CDDA69EE2A20DCCD008629AC /* QR-Pop-TV-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QR-Pop-TV-Info.plist"; path = "QR Pop TV/Resources/QR-Pop-TV-Info.plist"; sourceTree = SOURCE_ROOT; };
+		CDDA69F42A20E3C8008629AC /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		CDE11F922A0433730011C648 /* QRPop+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QRPop+Error.swift"; sourceTree = "<group>"; };
 		CDE20C142A0A7E6E00EFD605 /* RawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataView.swift; sourceTree = "<group>"; };
 		CDE20C162A0A834900EFD605 /* String+Pasteboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Pasteboard.swift"; sourceTree = "<group>"; };
@@ -936,6 +973,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDDA69C32A1F9DF7008629AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDDA69D52A20DC25008629AC /* QRCode in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CDF7930E2A080EAF00B1FA50 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -974,6 +1019,7 @@
 			children = (
 				CD06303829BCD64C007ECEC2 /* QR Pop */,
 				CD9DAB1429F45EFF008B3C1F /* WatchOS */,
+				CDDA69C72A1F9DF7008629AC /* tvOS */,
 				CDBAC1E429EF263400976328 /* Safari Extension */,
 				CD03E1B329F187B900302011 /* Quicklook Extension */,
 				CD1FF4BA29F36F92006E6832 /* Thumbnail Extension */,
@@ -1002,6 +1048,7 @@
 				CD9DAB1329F45EFF008B3C1F /* QR Pop.app */,
 				CDF793112A080EAF00B1FA50 /* Widget watchOS.appex */,
 				CDF793322A080F6000B1FA50 /* IntentHandler watchOS.appex */,
+				CDDA69C62A1F9DF7008629AC /* QR Pop.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1437,6 +1484,36 @@
 			path = Intents;
 			sourceTree = "<group>";
 		};
+		CDDA69C72A1F9DF7008629AC /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				CDDA69F42A20E3C8008629AC /* DetailView.swift */,
+				CDDA69C82A1F9DF7008629AC /* QR_Pop_TVApp.swift */,
+				CDDA69CA2A1F9DF7008629AC /* RootView.swift */,
+				CDDA69CE2A1F9DF8008629AC /* Preview Content */,
+				CDDA69F82A20F20B008629AC /* Resources */,
+			);
+			path = tvOS;
+			sourceTree = "<group>";
+		};
+		CDDA69CE2A1F9DF8008629AC /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				CDDA69CF2A1F9DF8008629AC /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CDDA69F82A20F20B008629AC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CDDA69ED2A20DCB7008629AC /* QR Pop TV.entitlements */,
+				CDDA69EE2A20DCCD008629AC /* QR-Pop-TV-Info.plist */,
+				CDDA69CC2A1F9DF8008629AC /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		CDF793082A080C6400B1FA50 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1761,6 +1838,26 @@
 			productReference = CDBAC20429EF265000976328 /* Safari Extension iOS.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		CDDA69C52A1F9DF7008629AC /* QR Pop TV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDDA69D32A1F9DF8008629AC /* Build configuration list for PBXNativeTarget "QR Pop TV" */;
+			buildPhases = (
+				CDDA69C22A1F9DF7008629AC /* Sources */,
+				CDDA69C32A1F9DF7008629AC /* Frameworks */,
+				CDDA69C42A1F9DF7008629AC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "QR Pop TV";
+			packageProductDependencies = (
+				CDDA69D42A20DC25008629AC /* QRCode */,
+			);
+			productName = "QR Pop TV";
+			productReference = CDDA69C62A1F9DF7008629AC /* QR Pop.app */;
+			productType = "com.apple.product-type.application";
+		};
 		CDF793102A080EAF00B1FA50 /* Widget watchOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CDF793202A080EB000B1FA50 /* Build configuration list for PBXNativeTarget "Widget watchOS" */;
@@ -1850,6 +1947,9 @@
 					CDBAC20329EF265000976328 = {
 						CreatedOnToolsVersion = 14.3;
 					};
+					CDDA69C52A1F9DF7008629AC = {
+						CreatedOnToolsVersion = 14.3;
+					};
 					CDF793102A080EAF00B1FA50 = {
 						CreatedOnToolsVersion = 14.3;
 					};
@@ -1879,6 +1979,7 @@
 			targets = (
 				CD06303529BCD64C007ECEC2 /* QR Pop */,
 				CD9DAB1229F45EFF008B3C1F /* QR Pop Watch App */,
+				CDDA69C52A1F9DF7008629AC /* QR Pop TV */,
 				CDBAC1E229EF263400976328 /* Safari Extension Mac */,
 				CDBAC20329EF265000976328 /* Safari Extension iOS */,
 				CD03E1B029F187B900302011 /* Quicklook iOS */,
@@ -2024,6 +2125,15 @@
 				CDFE671429F6FDE50086BF7A /* chevronupdown-dark.svg in Resources */,
 				CDBAC31129EF2AA800976328 /* options.js in Resources */,
 				CDBAC31329EF2AA800976328 /* options.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDDA69C42A1F9DF7008629AC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDDA69D02A1F9DF8008629AC /* Preview Assets.xcassets in Resources */,
+				CDDA69CD2A1F9DF8008629AC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2472,6 +2582,39 @@
 			files = (
 				CDBAC2A729EF292300976328 /* SafariWebExtensionHandler.swift in Sources */,
 				CDC8C8EE29FAD1FC004C239C /* OSLog+QRPop.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDDA69C22A1F9DF7008629AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDDA69E12A20DC6A008629AC /* Color+Random.swift in Sources */,
+				CDDA69D92A20DC45008629AC /* QRModel.swift in Sources */,
+				CDDA69D82A20DC45008629AC /* TemplateModel.swift in Sources */,
+				CDDA69E62A20DC7C008629AC /* Platform.swift in Sources */,
+				CDDA69DB2A20DC48008629AC /* Database.xcdatamodeld in Sources */,
+				CDDA69E72A20DC7E008629AC /* Published+UserDefaults.swift in Sources */,
+				CDDA69D62A20DC37008629AC /* BuilderModel.swift in Sources */,
+				CDDA69F52A20E3C8008629AC /* DetailView.swift in Sources */,
+				CDDA69E82A20DC81008629AC /* QRCode+Codable.swift in Sources */,
+				CDDA69E22A20DC6A008629AC /* Constants.swift in Sources */,
+				CDDA69DA2A20DC45008629AC /* Persistence.swift in Sources */,
+				CDDA69DE2A20DC5D008629AC /* Collection+Optional.swift in Sources */,
+				CDDA69DD2A20DC57008629AC /* CGSize+QRPop.swift in Sources */,
+				CDDA69EC2A20DC9E008629AC /* QRCodeView.swift in Sources */,
+				CDDA69E02A20DC65008629AC /* Color+QRCode.swift in Sources */,
+				CDDA69CB2A1F9DF7008629AC /* RootView.swift in Sources */,
+				CDDA69C92A1F9DF7008629AC /* QR_Pop_TVApp.swift in Sources */,
+				CDDA69E42A20DC73008629AC /* Image+Position.swift in Sources */,
+				CDDA69D72A20DC3D008629AC /* DesignModel.swift in Sources */,
+				CDDA69DF2A20DC60008629AC /* Color+Codable.swift in Sources */,
+				CDDA69E32A20DC6D008629AC /* EntityProtocol.swift in Sources */,
+				CDDA69EF2A20DD68008629AC /* View+GeometryProxy.swift in Sources */,
+				CDDA69DC2A20DC54008629AC /* CGColor+QRPop.swift in Sources */,
+				CDDA69E52A20DC78008629AC /* OSLog+QRPop.swift in Sources */,
+				CDDA69EA2A20DC8B008629AC /* UserDefaults+QRPop.swift in Sources */,
+				CDDA69E92A20DC86008629AC /* String+QRPop.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3655,6 +3798,73 @@
 			};
 			name = Release;
 		};
+		CDDA69D12A1F9DF8008629AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "tvOS/Resources/QR Pop TV.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 105;
+				DEVELOPMENT_ASSET_PATHS = "\"tvOS/Preview Content\"";
+				DEVELOPMENT_TEAM = QK557BC776;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "tvOS/Resources/QR-Pop-TV-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "QR Pop";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 3.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.fromshawn.QR-Pop-TV";
+				PRODUCT_NAME = "QR Pop";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG CLOUDEXT";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.1;
+			};
+			name = Debug;
+		};
+		CDDA69D22A1F9DF8008629AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "tvOS/Resources/QR Pop TV.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 105;
+				DEVELOPMENT_ASSET_PATHS = "\"tvOS/Preview Content\"";
+				DEVELOPMENT_TEAM = QK557BC776;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "tvOS/Resources/QR-Pop-TV-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "QR Pop";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 3.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "dev.fromshawn.QR-Pop-TV";
+				PRODUCT_NAME = "QR Pop";
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = CLOUDEXT;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 16.1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		CDF793212A080EB000B1FA50 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3910,6 +4120,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		CDDA69D32A1F9DF8008629AC /* Build configuration list for PBXNativeTarget "QR Pop TV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDDA69D12A1F9DF8008629AC /* Debug */,
+				CDDA69D22A1F9DF8008629AC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CDF793202A080EB000B1FA50 /* Build configuration list for PBXNativeTarget "Widget watchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -4027,6 +4246,11 @@
 			productName = QRCode;
 		};
 		CD9DAB5C29F46013008B3C1F /* QRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CD06305829BCE03E007ECEC2 /* XCRemoteSwiftPackageReference "QRCode" */;
+			productName = QRCode;
+		};
+		CDDA69D42A20DC25008629AC /* QRCode */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CD06305829BCE03E007ECEC2 /* XCRemoteSwiftPackageReference "QRCode" */;
 			productName = QRCode;
