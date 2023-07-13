@@ -93,7 +93,7 @@ private struct LocationPickerSearchForm: View {
             .animation(.easeIn, value: mapSearch.locationResults)
         }
 #if os(macOS)
-        .listStyle(.insetGrouped)
+        .listStyle(.inset)
 #else
         .toolbarBackground(.hidden, for: .automatic)
         .listStyle(.grouped)
