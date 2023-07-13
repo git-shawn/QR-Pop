@@ -16,7 +16,7 @@ struct MapForm: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            PlaceFinder(geoLocation: $model.result)
+            LocationPicker(geoLocation: $model.result)
         }
     }
 }

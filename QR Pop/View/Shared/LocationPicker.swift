@@ -1,5 +1,5 @@
 //
-//  PlaceFinder.swift
+//  LocationPicker.swift
 //  QR Pop
 //
 //  Created by Shawn Davis on 4/11/23.
@@ -11,20 +11,20 @@ import Combine
 import OSLog
 
 // MARK: Place Finder Button
-struct PlaceFinder: View {
+struct LocationPicker: View {
     @State private var showingPicker: Bool = false
     @Binding var geoLocation: String
     @State private var query: String = ""
     
     var body: some View {
-        Button((query.isEmpty ? "Address" : query), action: {
+        Button((query.isEmpty ? "Location" : query), action: {
             showingPicker.toggle()
         })
         .buttonStyle(TextFieldButtonStyle(placeholder: query.isEmpty))
         .sheet(isPresented: $showingPicker, content: {
             NavigationStack {
-                SearchForm(geoLocation: $geoLocation, buttonQuery: $query)
-                    .navigationTitle("Address Search")
+                LocationPickerSearchForm(geoLocation: $geoLocation, buttonQuery: $query)
+                    .navigationTitle("Location Search")
 #if os(iOS)
                     .navigationBarTitleDisplayMode(.inline)
 #endif
@@ -51,26 +51,23 @@ struct PlaceFinder: View {
 
 //MARK: - Search Form
 
-private struct SearchForm: View {
+private struct LocationPickerSearchForm: View {
     @FocusState private var searchInFocus: Bool
-    @StateObject private var mapSearch = MapSearch()
+    @StateObject private var mapSearch = LocationSearchCompleter()
     @Binding var geoLocation: String
     @Binding var buttonQuery: String
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        Form {
-            TextField("Search", text: $mapSearch.searchTerm, prompt: Text("Address"))
-#if os(iOS)
-                .submitLabel(.search)
-                .textContentType(.fullStreetAddress)
-#else
+        List {
+            #if os(macOS)
+            TextField("Search", text: $mapSearch.searchTerm, prompt: Text("Location"))
                 .labelsHidden()
-#endif
                 .focused($searchInFocus)
                 .onAppear {
                     searchInFocus = true
                 }
+            #endif
             Section(mapSearch.locationResults.isEmpty ? "" : "Results") {
                 ForEach(mapSearch.locationResults, id: \.self) { location in
                     Button(action: {
@@ -81,9 +78,11 @@ private struct SearchForm: View {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(location.title)
                                 .foregroundColor(.primary)
-                            Text(location.subtitle)
-                                .font(.system(.caption))
-                                .foregroundColor(.secondary)
+                            if !location.subtitle.isEmpty {
+                                Text(location.subtitle)
+                                    .font(.system(.caption))
+                                    .foregroundColor(.secondary)
+                            }
                         }
                     })
 #if os(macOS)
@@ -94,7 +93,11 @@ private struct SearchForm: View {
             .animation(.easeIn, value: mapSearch.locationResults)
         }
 #if os(macOS)
-        .formStyle(.grouped)
+        .listStyle(.insetGrouped)
+#else
+        .toolbarBackground(.hidden, for: .automatic)
+        .listStyle(.grouped)
+        .searchable(text: $mapSearch.searchTerm, prompt: Text("Location"))
 #endif
     }
     
@@ -109,56 +112,8 @@ private struct SearchForm: View {
     }
 }
 
-struct PlaceFinder_Previews: PreviewProvider {
+struct LocationPicker_Previews: PreviewProvider {
     static var previews: some View {
-        PlaceFinder(geoLocation: .constant(""))
+        LocationPicker(geoLocation: .constant(""))
     }
-}
-
-//MARK: Map Search View Model
-// Credit: https://stackoverflow.com/a/67131376/20422552
-
-fileprivate class MapSearch : NSObject, ObservableObject {
-    @Published var locationResults : [MKLocalSearchCompletion] = []
-    @Published var searchTerm = ""
-    
-    private var cancellables : Set<AnyCancellable> = []
-    
-    private var searchCompleter = MKLocalSearchCompleter()
-    private var currentPromise : ((Result<[MKLocalSearchCompletion], Error>) -> Void)?
-    
-    override init() {
-        super.init()
-        searchCompleter.delegate = self
-        
-        $searchTerm
-            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
-            .removeDuplicates()
-            .flatMap({ (currentSearchTerm) in
-                self.searchTermToResults(searchTerm: currentSearchTerm)
-            })
-            .sink(receiveCompletion: { (completion) in
-                if case let .failure(error) = completion {
-                    Logger.logModel.error("MapSearch: Could not determine location results - \(error.localizedDescription).")
-                }
-            }, receiveValue: { (results) in
-                self.locationResults = results
-            })
-            .store(in: &cancellables)
-    }
-    
-    func searchTermToResults(searchTerm: String) -> Future<[MKLocalSearchCompletion], Error> {
-        Future { promise in
-            self.searchCompleter.queryFragment = searchTerm
-            self.currentPromise = promise
-        }
-    }
-}
-
-extension MapSearch : MKLocalSearchCompleterDelegate {
-    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        currentPromise?(.success(completer.results))
-    }
-    
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {}
 }

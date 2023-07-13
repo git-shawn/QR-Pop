@@ -43,6 +43,8 @@ struct DetailView: View {
                 .transition(.move(edge: .trailing))
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(model.design.pixelColor, ignoresSafeAreaEdges: .all)
     }
 }
 

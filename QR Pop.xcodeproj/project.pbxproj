@@ -269,6 +269,8 @@
 		CDA631102A21017E007E5667 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CDA6310F2A21017E007E5667 /* LaunchScreen.storyboard */; };
 		CDA631122A2103DF007E5667 /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA631112A2103DF007E5667 /* ArchiveView.swift */; };
 		CDA631162A21044A007E5667 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA631152A21044A007E5667 /* SearchView.swift */; };
+		CDA631182A222FA5007E5667 /* MapRegionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA631172A222FA5007E5667 /* MapRegionPicker.swift */; };
+		CDA6311A2A22421B007E5667 /* LocationSearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA631192A22421B007E5667 /* LocationSearchModel.swift */; };
 		CDB0BDA02A01F18000566FB8 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
 		CDB0BDA12A01F18000566FB8 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
 		CDB0BDAB2A02908900566FB8 /* FormStateEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB0BDAA2A02908900566FB8 /* FormStateEngine.swift */; };
@@ -296,7 +298,7 @@
 		CDBAC05F29ECC8DF00976328 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00629ECC8DF00976328 /* QRCodeView.swift */; };
 		CDBAC06029ECC8DF00976328 /* QRLogoOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00729ECC8DF00976328 /* QRLogoOverlay.swift */; };
 		CDBAC06129ECC8DF00976328 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00829ECC8DF00976328 /* CarouselView.swift */; };
-		CDBAC06229ECC8DF00976328 /* PlaceFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00929ECC8DF00976328 /* PlaceFinder.swift */; };
+		CDBAC06229ECC8DF00976328 /* LocationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00929ECC8DF00976328 /* LocationPicker.swift */; };
 		CDBAC06329ECC8DF00976328 /* PrintView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00A29ECC8DF00976328 /* PrintView.swift */; };
 		CDBAC06429ECC8DF00976328 /* ContactsPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00B29ECC8DF00976328 /* ContactsPicker.swift */; };
 		CDBAC06529ECC8DF00976328 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00C29ECC8DF00976328 /* ErrorView.swift */; };
@@ -727,6 +729,8 @@
 		CDA6310F2A21017E007E5667 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CDA631112A2103DF007E5667 /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
 		CDA631152A21044A007E5667 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		CDA631172A222FA5007E5667 /* MapRegionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRegionPicker.swift; sourceTree = "<group>"; };
+		CDA631192A22421B007E5667 /* LocationSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchModel.swift; sourceTree = "<group>"; };
 		CDB0BDAA2A02908900566FB8 /* FormStateEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStateEngine.swift; sourceTree = "<group>"; };
 		CDBABFEE29ECC8DF00976328 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CDBABFEF29ECC8DF00976328 /* AboutAppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
@@ -752,7 +756,7 @@
 		CDBAC00629ECC8DF00976328 /* QRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeView.swift; sourceTree = "<group>"; };
 		CDBAC00729ECC8DF00976328 /* QRLogoOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRLogoOverlay.swift; sourceTree = "<group>"; };
 		CDBAC00829ECC8DF00976328 /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
-		CDBAC00929ECC8DF00976328 /* PlaceFinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceFinder.swift; sourceTree = "<group>"; };
+		CDBAC00929ECC8DF00976328 /* LocationPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationPicker.swift; sourceTree = "<group>"; };
 		CDBAC00A29ECC8DF00976328 /* PrintView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintView.swift; sourceTree = "<group>"; };
 		CDBAC00B29ECC8DF00976328 /* ContactsPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsPicker.swift; sourceTree = "<group>"; };
 		CDBAC00C29ECC8DF00976328 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -1282,8 +1286,9 @@
 				CDBABFFF29ECC8DF00976328 /* GridList.swift */,
 				CDBAC00029ECC8DF00976328 /* ImageButton.swift */,
 				CDBABFFB29ECC8DF00976328 /* LabelStyles.swift */,
+				CDBAC00929ECC8DF00976328 /* LocationPicker.swift */,
+				CDA631172A222FA5007E5667 /* MapRegionPicker.swift */,
 				CD69CE742A0D41D9000D0474 /* MenuControlGroupConvertible.swift */,
-				CDBAC00929ECC8DF00976328 /* PlaceFinder.swift */,
 				CDBAC00A29ECC8DF00976328 /* PrintView.swift */,
 				CDBAC00629ECC8DF00976328 /* QRCodeView.swift */,
 				CDBAC00729ECC8DF00976328 /* QRLogoOverlay.swift */,
@@ -1411,6 +1416,7 @@
 				CDBAC04529ECC8DF00976328 /* MirrorModel.swift */,
 				CDFE671929F7811E0086BF7A /* AppIconModel.swift */,
 				CD708FD82A0E784D0079CF86 /* LocationActivityModel.swift */,
+				CDA631192A22421B007E5667 /* LocationSearchModel.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -2263,7 +2269,8 @@
 				CDBAC06429ECC8DF00976328 /* ContactsPicker.swift in Sources */,
 				CDBAC05A29ECC8DF00976328 /* ToastOverlay.swift in Sources */,
 				CDBAC05429ECC8DF00976328 /* LabelStyles.swift in Sources */,
-				CDBAC06229ECC8DF00976328 /* PlaceFinder.swift in Sources */,
+				CDA631182A222FA5007E5667 /* MapRegionPicker.swift in Sources */,
+				CDBAC06229ECC8DF00976328 /* LocationPicker.swift in Sources */,
 				CDE6CA6C2A0313F30097D2AB /* StringDatePicker.swift in Sources */,
 				CDFE671A29F7811E0086BF7A /* AppIconModel.swift in Sources */,
 				CDBAC09129ECC8DF00976328 /* NavigationModel.swift in Sources */,
@@ -2299,6 +2306,7 @@
 				CDBAC07629ECC8DF00976328 /* BuilderList.swift in Sources */,
 				CD69CE752A0D41D9000D0474 /* MenuControlGroupConvertible.swift in Sources */,
 				CDBAC1D429ED935500976328 /* Color+Codable.swift in Sources */,
+				CDA6311A2A22421B007E5667 /* LocationSearchModel.swift in Sources */,
 				CDBAC05229ECC8DF00976328 /* SidebarNavigation.swift in Sources */,
 				CDBAC05929ECC8DF00976328 /* ImageButton.swift in Sources */,
 				CDBAC05629ECC8DF00976328 /* SpringyDisclosureStyle.swift in Sources */,
