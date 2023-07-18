@@ -253,6 +253,9 @@ extension WidgetViews {
                 }
             }
         }
+#if os(watchOS)
+        .unredacted()
+#endif
     }
 }
 
@@ -301,6 +304,9 @@ extension WidgetViews {
             }
             Spacer()
         }
+#if os(watchOS)
+        .unredacted()
+#endif
     }
 }
 
@@ -325,6 +331,9 @@ extension WidgetViews {
                     .widgetAccentable()
             }
         }
+#if os(watchOS)
+        .unredacted()
+#endif
     }
 }
 

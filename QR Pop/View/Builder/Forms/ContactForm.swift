@@ -134,7 +134,7 @@ private struct ContactBuilder: View {
                     }
                 }
                 
-                TextField("Organization", text: $formStates[2])
+                TextField("Company", text: $formStates[2])
                     .textFieldStyle(FormTextFieldStyle())
                     .focused($focusedField, equals: .org)
 #if os(iOS)

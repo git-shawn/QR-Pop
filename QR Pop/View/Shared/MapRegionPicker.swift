@@ -10,13 +10,7 @@ import MapKit
 
 struct MapRegionPicker: View {
     var body: some View {
-        if #available(iOS 17.0, *) {
-            Map {
-                
-            }
-        } else {
-            EmptyView()
-        }
+        EmptyView()
     }
 }
 

@@ -21,7 +21,7 @@ struct Provider: IntentTimelineProvider {
     func getSnapshot(for configuration: TimelineConfigurationIntent,
                      in context: Context,
                      completion: @escaping (ArchiveEntry) -> Void) {
-        let entry = ArchiveEntry(kind: .snapshot)
+        let entry = ArchiveEntry(model: getModel(from: configuration), kind: .timeline)
         completion(entry)
     }
     

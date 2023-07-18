@@ -10,10 +10,11 @@ import AppIntents
 import OSLog
 
 struct ArchiveView: View {
-    var model: QRModel
+    @State var model: QRModel
     @State private var isFullscreen: Bool = false
     @State private var showingPrintSetup: Bool = false
     @State private var newEntityName: String = ""
+    @State private var entityToRename: QREntity? = nil
     @State private var isRenaming: Bool = false
     @Environment(\.openWindow) var openWindow
     @Environment(\.managedObjectContext) var moc
@@ -86,6 +87,31 @@ struct ArchiveView: View {
         .navigationTitle(model.title ?? "QR Code")
         .animation(.default, value: isFullscreen)
         .background(isFullscreen ? model.design.pixelColor : Color.groupedBackground, ignoresSafeAreaEdges: .all)
+        .alert((Text("Rename")),
+               isPresented: $isRenaming,
+               actions: {
+            TextField("Title", text: $newEntityName, prompt: Text("My QR Code"))
+            Button("Cancel", role: .cancel, action: { isRenaming = false })
+            Button("Save", action: {
+                model.title = newEntityName.isEmpty ? "My QR Code" : newEntityName
+                do {
+                    if entityToRename != nil {
+                        entityToRename = try model.placeInCoreDataAndSave(context: moc)
+                        sceneModel.toaster = .custom(
+                            image: Image(systemName: "archivebox.fill"),
+                            imageColor: .secondary,
+                            title: "Saved",
+                            note: "Code added to archive")
+                    } else {
+                        Logger.logView.error("ArchiveView: Core Data Entity could not be found to be renamed.")
+                        sceneModel.toaster = .error(note: "Could not save")
+                    }
+                } catch {
+                    Logger.logView.error("ArchiveView: Could not rename Core Data Entity.")
+                    sceneModel.toaster = .error(note: "Could not save")
+                }
+            })
+        })
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Menu(content: {
@@ -156,25 +182,25 @@ struct ArchiveView: View {
                     // Archive functions
                     Group {
                         Divider()
-                        
-                        if UIDevice.current.userInterfaceIdiom == .phone {
-                            ImageButton("Create Notification", systemImage: "bell") {
-                                // This button should be changed to "modify notification" if a notification exists.
-                                // The status of whether or not a notification exists should be saved to AppStorage, not CoreData.
-#warning("Location notify not implemented")
-                                print("notify location")
-                            }
-                            .disabled(true)
-                        }
-                        
-                        ImageButton("Change Symbol", systemImage: "rays") {
-                            // Change the symbol that appears on most widgets.
-                            // Can be either an SF symbol or two uppercase characters/numbers.
-                            // This may need to be saved to CloudKit.
-#warning("Custom widget symbol not implemented")
-                        }
-                        .disabled(true)
-                        
+//
+//                        if UIDevice.current.userInterfaceIdiom == .phone {
+//                            ImageButton("Create Notification", systemImage: "bell") {
+//                                // This button should be changed to "modify notification" if a notification exists.
+//                                // The status of whether or not a notification exists should be saved to AppStorage, not CoreData.
+//#warning("Location notify not implemented")
+//                                print("notify location")
+//                            }
+//                            .disabled(true)
+//                        }
+//
+//                        ImageButton("Change Symbol", systemImage: "rays") {
+//                            // Change the symbol that appears on most widgets.
+//                            // Can be either an SF symbol or two uppercase characters/numbers.
+//                            // This may need to be saved to CloudKit.
+//#warning("Custom widget symbol not implemented")
+//                        }
+//                        .disabled(true)
+//
                         ImageButton("Edit Code", systemImage: "slider.horizontal.3") {
                             withAnimation {
                                 navigationModel.navigateWithoutBack(to: .builder(code: model))
@@ -187,7 +213,6 @@ struct ArchiveView: View {
                         Divider()
                         
                         ImageButton("Rename", systemImage: "pencil") {
-#warning("Rename not implemented")
                             guard let id = model.id,
                                   let entity = try? Persistence.shared.getQREntityWithUUID(id)
                             else {
@@ -195,10 +220,11 @@ struct ArchiveView: View {
                                 sceneModel.toaster = .error(note: "Could not find code")
                                 return
                             }
-                            
+                            newEntityName = entity.title ?? "My QR Code"
+                            entityToRename = entity
+                            isRenaming = true
                             print("rename code")
                         }
-                        .disabled(true)
                         
                         ImageButton("Delete", systemImage: "trash", role: .destructive) {
                             guard let id = model.id,

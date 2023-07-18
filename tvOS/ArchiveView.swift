@@ -29,8 +29,9 @@ struct ArchiveView: View {
                                         .font(.footnote)
                                         .foregroundColor(.secondary)
                                 }
+                                .scenePadding()
                             })
-                            .buttonStyle(.plain)
+                            .buttonStyle(.card)
                         }
                     }
                 }

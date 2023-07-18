@@ -16,6 +16,7 @@ struct DetailView: View {
             QRCodeView(qrcode: .constant(model))
                 .focusable()
                 .contextMenu(menuItems: {
+                    // This looks odd in tvOS 17, maybe be a beta bug. Worth waiting and seeing first.
                     Button(showDetails ? "Hide Details" : "Show Details", action: {
                         withAnimation {
                             showDetails.toggle()

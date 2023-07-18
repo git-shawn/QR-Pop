@@ -59,13 +59,9 @@ struct LiveActivityView: View {
     var body: some View {
         HStack(spacing: inIsland ? 20 : 10) {
             
-            if inIsland {
-                Spacer()
-            }
-            
             QRCodeView(qrcode: .constant(model))
-                .padding(inIsland ? 0 : 14)
-            
+                .padding(inIsland ? 4 : 14)
+
             VStack(alignment: .leading, spacing: 6) {
                 Text(model.title ?? "My QR Code")
                     .multilineTextAlignment(.leading)
