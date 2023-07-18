@@ -6,7 +6,7 @@
       "location" : "https://github.com/SwiftUI-Plus/Connections",
       "state" : {
         "branch" : "master",
-        "revision" : "c305864791a8987e43d2da69996f1bb9fb14b97b"
+        "revision" : "b7a67d9001bfc8c41dbffcda4111cfacb37da863"
       }
     },
     {
@@ -24,7 +24,7 @@
       "location" : "https://github.com/dagronf/QRCode",
       "state" : {
         "branch" : "main",
-        "revision" : "afdd9190b25b3b6a9abc74c8824aec13f6a02357"
+        "revision" : "3189c9e57458edd2deb0e9080336f165d893a34b"
       }
     },
     {
@@ -34,6 +34,15 @@
       "state" : {
         "revision" : "5ca09b6a2ad190f94aa3d6ddef45b187f8c0343b",
         "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "swiftimagereadwrite",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dagronf/SwiftImageReadWrite",
+      "state" : {
+        "revision" : "5596407d1cf61b953b8e658fa8636a471df3c509",
+        "version" : "1.1.6"
       }
     },
     {
