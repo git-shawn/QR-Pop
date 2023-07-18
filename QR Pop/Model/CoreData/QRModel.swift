@@ -120,7 +120,7 @@ extension QRModel {
         return data
     }
     
-#if !os(watchOS)
+#if os(iOS) || os(macOS)
     
     /// Adds an image of the QR code described by this model to the default pasteboard.
     /// - Parameter dimension: The width/height dimension for the exported image.

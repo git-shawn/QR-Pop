@@ -24,7 +24,7 @@ import WidgetKit
 class Persistence: ObservableObject {
     static let shared = Persistence()
     
-#if canImport(CoreSpotlight)
+#if !CLOUDEXT && !EXTENSION
     private(set) var spotlightIndexer: SpotlightDelegate?
 #endif
     
@@ -66,7 +66,7 @@ class Persistence: ObservableObject {
             }
         })
         
-#if canImport(CoreSpotlight)
+#if !CLOUDEXT && !EXTENSION
         let coordinator = container.persistentStoreCoordinator
         self.spotlightIndexer = SpotlightDelegate(
             forStoreWith: description,
@@ -394,7 +394,7 @@ public extension URL {
     }
 }
 
-#if canImport(CoreSpotlight)
+#if !CLOUDEXT && !EXTENSION
 // MARK: - Spotlight Delegate
 
 class SpotlightDelegate: NSCoreDataCoreSpotlightDelegate {

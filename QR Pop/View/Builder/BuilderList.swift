@@ -10,6 +10,7 @@ import SwiftUI
 struct BuilderList: View {
     @State var showingGrid = true
     @State private var searchQuery = ""
+    @EnvironmentObject var navModel: NavigationModel
 #if os(macOS)
     @State private var hovering: Bool = false
 #endif
@@ -18,7 +19,9 @@ struct BuilderList: View {
     var body: some View {
         GridList(showingGrid: $showingGrid, gridContent: {
             ForEach(filterBuildersByQuery(), id: \.rawValue, content: { kind in
-                NavigationLink(value: createNavigationDestination(for: kind), label: {
+                Button(action: {
+                    navModel.navigate(to: createNavigationDestination(for: kind))
+                }, label: {
                     VStack(alignment: .center, spacing: 0) {
                         kind.icon
                             .font(.title)
@@ -58,7 +61,9 @@ struct BuilderList: View {
             })
         }, listContent: {
             ForEach(filterBuildersByQuery(), id: \.rawValue, content: { kind in
-                NavigationLink(value: createNavigationDestination(for: kind), label: {
+                Button(action: {
+                    navModel.navigate(to: createNavigationDestination(for: kind))
+                }, label: {
                     Label(title: {
                         Text(kind.title)
                     }, icon: {

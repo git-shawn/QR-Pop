@@ -64,6 +64,7 @@ struct ContactsPicker: View {
             .navigationBarTitleDisplayMode(.inline)
 #else
             .listStyle(.inset(alternatesRowBackgrounds: true))
+            .environment(\.defaultMinListRowHeight, 36)
 #endif
             .searchable(text: $query)
             .navigationTitle("Contacts")

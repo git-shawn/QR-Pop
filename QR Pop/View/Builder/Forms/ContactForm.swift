@@ -46,7 +46,7 @@ struct ContactForm: View {
         .sheet(isPresented: $presentingContacts) {
             ContactsPicker($contact)
 #if os(macOS)
-                .frame(minWidth: 350, minHeight: 250)
+                .frame(minWidth: 400, minHeight: 450)
 #endif
         }
         .onReceive(engine.$outputs) {
@@ -80,7 +80,7 @@ struct ContactForm: View {
                     }
             }
 #if os(macOS)
-            .frame(minWidth: 350, minHeight: 250)
+            .frame(minWidth: 400, minHeight: 450)
 #endif
         }
     }
@@ -134,7 +134,7 @@ private struct ContactBuilder: View {
                     }
                 }
                 
-                TextField("Organization", text: $formStates[2])
+                TextField("Company", text: $formStates[2])
                     .textFieldStyle(FormTextFieldStyle())
                     .focused($focusedField, equals: .org)
 #if os(iOS)

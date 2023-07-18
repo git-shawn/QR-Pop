@@ -20,7 +20,7 @@ struct BuilderView: View {
     @State private var showingPrintSetup = false
     @State private var isNamingArchivedModel = false
     @State private var newArchiveTitle = ""
-    @State private var hasMadeChanges: Bool = false
+    @State private var viewingRawData: Bool = false
     @Environment(\.horizontalSizeClass) var hSizeClass
     @Environment(\.verticalSizeClass) var vSizeClass
     @Environment(\.managedObjectContext) var moc
@@ -73,9 +73,6 @@ struct BuilderView: View {
         .focusedSceneValue(\.qrModel, $model)
         .focusedSceneValue(\.printing, $showingPrintSetup)
         .focusedSceneValue(\.archiving, $isNamingArchivedModel)
-        .onChange(of: model) { _ in
-            hasMadeChanges = true
-        }
         .task {
             if model.id != nil {
                 self.entity = try? Persistence.shared.getQREntityWithUUID(model.id)
@@ -228,9 +225,9 @@ extension BuilderView {
                     )
                 }
                 
-#if os(iOS)
                 Menu(content: {
-                    ImageButton("Photos App", systemImage: "photo", action: {
+#if os(iOS)
+                    ImageButton("Image to Photos", systemImage: "photo", action: {
                         do {
                             try model.addToPhotoLibrary(for: 512)
                             sceneModel.toaster = .saved(note: "Image saved")
@@ -239,8 +236,9 @@ extension BuilderView {
                             sceneModel.toaster = .error(note: "Could not save photo")
                         }
                     })
+#endif
                     
-                    ImageButton("Files App", systemImage: "folder", action: {
+                    ImageButton("Image\(" to Files", platforms: [.iOS])", systemImage: "folder", action: {
                         do {
                             let data = try model.pngData(for: 512)
                             sceneModel.exportData(data, type: .png, named: "QR Code")
@@ -250,24 +248,39 @@ extension BuilderView {
                         }
                     })
                     
-                }, label: {
-                    Label("Save Image to...", systemImage: "square.and.arrow.down")
-                })
-#else
-                ImageButton("Save Image...", systemImage: "square.and.arrow.down", action: {
-                    do {
-                        let data = try model.pngData(for: 512)
-                        sceneModel.exportData(data, type: .png, named: model.title ?? "QR Code")
-                    } catch {
-                        Logger.logView.error("BuilderView: Could not create PNG data for QR code.")
-                        sceneModel.toaster = .error(note: "Could not save file")
+                    MenuControlGroupConvertible {
+                        ImageButton("PDF\(" to Files", platforms: [.iOS])", image: "pdf", action: {
+                            do {
+                                let data = try model.pdfData()
+                                sceneModel.exportData(data, type: .pdf, named: model.title ?? "QR Code")
+                            } catch {
+                                Logger.logView.error("BuilderView: Could not create PDF data for QR code.")
+                                sceneModel.toaster = .error(note: "Could not save file")
+                            }
+                        })
+                        
+                        ImageButton("SVG\(" to Files", platforms: [.iOS])", image: "svg", action: {
+                            do {
+                                let data = try model.svgData()
+                                sceneModel.exportData(data, type: .svg, named: model.title ?? "QR Code")
+                            } catch {
+                                Logger.logView.error("BuilderView: Could not create SVG data for QR code.")
+                                sceneModel.toaster = .error(note: "Could not save file")
+                            }
+                        })
                     }
+                    
+                }, label: {
+                    Label("Save...", systemImage: "square.and.arrow.down")
                 })
-#endif
                 
-                ImageButton("Copy Image", systemImage: "doc.on.clipboard", action: {
+                ImageButton("Copy Image", systemImage: "doc.on.doc", action: {
                     model.addToPasteboard(for: 512)
                     sceneModel.toaster = .copied(note: "Image copied")
+                })
+                
+                ImageButton("Print", systemImage: "printer", action: {
+                    showingPrintSetup = true
                 })
             }
             
@@ -278,7 +291,6 @@ extension BuilderView {
                     ImageButton("Add to Archive", systemImage: "archivebox", action: {
                         isNamingArchivedModel = true
                     })
-                    .disabled(!hasMadeChanges)
                 } else {
                     ImageButton("Save Changes", systemImage: "archivebox", action: {
                         do {
@@ -286,15 +298,12 @@ extension BuilderView {
                             entity?.design = try model.design.asData()
                             entity?.logo = model.design.logo
                             try moc.atomicSave()
-
-                            hasMadeChanges = false
                             sceneModel.toaster = .saved(note: "Change saved")
                         } catch {
                             Logger.logView.error("BuilderView: Could not save changes to entity in BuilderView.")
                             sceneModel.toaster = .error(note: "Changes not saved")
                         }
                     })
-                    .disabled(!hasMadeChanges)
                     
                     RenameButton()
                 }
@@ -302,33 +311,14 @@ extension BuilderView {
             
             Group {
                 Divider()
+                ImageButton(
+                    "View Raw Data",
+                    systemImage: "doc.text.magnifyingglass",
+                    action: {
+                        viewingRawData = true
+                    })
+                .disabled(model.content.result.isEmpty)
                 
-                ImageButton("Save as PDF", image: "pdf", action: {
-                    do {
-                        let data = try model.pdfData()
-                        sceneModel.exportData(data, type: .pdf, named: model.title ?? "QR Code")
-                    } catch {
-                        Logger.logView.error("BuilderView: Could not create PDF data for QR code.")
-                        sceneModel.toaster = .error(note: "Could not save file")
-                    }
-                })
-                
-                ImageButton("Save as SVG", image: "svg", action: {
-                    do {
-                        let data = try model.svgData()
-                        sceneModel.exportData(data, type: .svg, named: model.title ?? "QR Code")
-                    } catch {
-                        Logger.logView.error("BuilderView: Could not create SVG data for QR code.")
-                        sceneModel.toaster = .error(note: "Could not save file")
-                    }
-                })
-                
-                ImageButton("Print", systemImage: "printer", action: {
-                    showingPrintSetup = true
-                })
-            }
-            
-            Group {
                 Divider()
                 
                 ImageButton("Reset", systemImage: "trash", role: .destructive, action: {
@@ -342,6 +332,15 @@ extension BuilderView {
             newArchiveTitle = model.title ?? "My QR Code"
             isNamingArchivedModel = true
         }
+        .sheet(isPresented: $viewingRawData, content: {
+            RawDataView(data: model.content.result)
+#if os(macOS)
+                .frame(width: 400, height: 450)
+#else
+                .presentationDetents([.medium,.large])
+                .presentationDragIndicator(.visible)
+#endif
+        })
         .alert((Text(entity == nil ? "Add to Archive" : "Rename")),
                isPresented: $isNamingArchivedModel,
                actions: {
@@ -372,8 +371,10 @@ extension BuilderView {
 
 struct BuilderView_Previews: PreviewProvider {
     static var previews: some View {
-        BuilderView()
-            .environmentObject(SceneModel())
-            .environment(\.managedObjectContext, Persistence.shared.container.viewContext)
+        NavigationStack {
+            BuilderView()
+                .environmentObject(SceneModel())
+                .environment(\.managedObjectContext, Persistence.shared.container.viewContext)
+        }
     }
 }

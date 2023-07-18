@@ -5,7 +5,7 @@
 //  Created by Shawn Davis on 4/10/23.
 //
 
-import Foundation
+import SwiftUI
 
 extension String {
     
@@ -45,5 +45,41 @@ extension String {
         } else {
             return false
         }
+    }
+}
+
+extension LocalizedStringKey.StringInterpolation {
+    
+    /// A String Interpolation extension that displays a certain string only on an array of supported platforms.
+    ///
+    ///   ```
+    ///   Text("Save\(" to Files", platforms: [.iOS])")
+    ///   ```
+    ///   In the above example, " to Files" will only be visible on iOS devices.
+    ///   On macOS, for instance, the text will only say "Save."
+    ///
+    /// - Parameters:
+    ///   - value: The String to conditonally show.
+    ///   - platforms: The platforms the string is visible on.
+    mutating func appendInterpolation(_ value: String, platforms: [Platform]) {
+#if os(iOS)
+        if platforms.contains(where: {$0 == .iOS}) {
+            appendLiteral(value)
+        }
+#elseif os(macOS)
+        if platforms.contains(where: {$0 == .macOS}) {
+            appendLiteral(value)
+        }
+#elseif os(watchOS)
+        if platforms.contains(where: {$0 == .watchOS}) {
+            appendLiteral(value)
+        }
+#endif
+    }
+    
+    enum Platform {
+        case iOS
+        case macOS
+        case watchOS
     }
 }

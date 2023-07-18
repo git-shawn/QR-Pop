@@ -47,13 +47,14 @@ extension AppIconModel {
     
     enum AppIcon: String, CaseIterable, Identifiable {
         case primary = "AppIcon"
+        case mac = "AppIcon-Mac"
         case dark = "AppIcon-Dark"
         case blue = "AppIcon-Blue"
         case green = "AppIcon-Green"
-        case mac = "AppIcon-Mac"
         case purple = "AppIcon-Purple"
         case red = "AppIcon-Red"
         case white = "AppIcon-White"
+        case pride = "AppIcon-Pride"
         
         var id: String { rawValue }
         
@@ -70,20 +71,22 @@ extension AppIconModel {
             switch self {
             case .primary:
                 return "Default"
-            case .blue:
-                return "Blue"
-            case .dark:
-                return "Dark"
-            case .green:
-                return "Green"
             case .mac:
                 return "MacOS"
+            case .dark:
+                return "Dark"
+            case .blue:
+                return "Blue"
+            case .green:
+                return "Green"
             case .purple:
                 return "Purple"
             case .red:
                 return "Red"
             case .white:
                 return "White"
+            case .pride:
+                return "Rainbow"
             }
         }
         

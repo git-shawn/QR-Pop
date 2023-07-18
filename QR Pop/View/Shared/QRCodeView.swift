@@ -57,7 +57,7 @@ extension QRCodeView {
     
     var code: some View {
         
-        Canvas(rendersAsynchronously: false) { context, size in
+        Canvas { context, size in
             let rectDimension = min(size.width, size.height)
             let rect = CGRect(
                 origin: .zero,
@@ -66,16 +66,10 @@ extension QRCodeView {
             context.drawLayer { context in
                 context.scaleBy(x: 0.98, y: 0.98)
                 context.translateBy(x: rectDimension*0.01, y: rectDimension*0.01)
-                let border: Path = .init(roundedRect: rect, cornerRadius: (rectDimension*0.08), style: .continuous)
-
-                context.fill(border, with: .color(design.backgroundColor))
-                context.stroke(
-                    border,
-                    with: .color(design.pixelColor),
-                    lineWidth: rectDimension*0.02)
+                context.fill(.init(roundedRect: rect, cornerRadius: max((rectDimension*0.08),5), style: .continuous), with: .color(design.backgroundColor))
             }
             
-
+            
             if let baseShape = QRCodeShape(text: builder.result, errorCorrection: design.errorCorrection) {
                 
                 context.drawLayer(content: { context in
@@ -130,10 +124,16 @@ extension QRCodeView {
                 })
             }
         }
+        .overlay(
+            RoundedRectangle(cornerRadius: max((size * 0.084),5), style: .continuous)
+                .strokeBorder(lineWidth: max((size * 0.02),1.5), antialiased: true)
+                .foregroundColor(design.pixelColor)
+        )
 #if os(iOS)
         .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: (size * 0.084), style: .continuous))
-#endif
+#elseif os(macOS)
         .contentShape(.dragPreview, RoundedRectangle(cornerRadius: (size * 0.084), style: .continuous))
+#endif
         .aspectRatio(1, contentMode: .fit)
         .readSize() { size in
             self.size = min(size.width,size.height)
@@ -151,26 +151,51 @@ extension QRCodeView {
         code
             .contextMenu {
                 ShareLink(item: QRModel(design: design, content: builder), preview: SharePreview("QR Code", image: QRModel(design: design, content: builder)))
-                
+                Menu(content: {
 #if os(iOS)
-                ImageButton("Save to Photos", systemImage: "square.and.arrow.down", action: {
-                    do {
-                        try QRModel(design: design, content: builder).addToPhotoLibrary(for: 512)
-                    } catch {
-                        Logger.logView.error("QRCodeView: Could not write QR code to photos app.")
-                        sceneModel.toaster = .error(note: "Could not save photo")
+                    ImageButton("Image to Photos", systemImage: "photo") {
+                        do {
+                            try QRModel(design: design, content: builder).addToPhotoLibrary(for: 512)
+                        } catch {
+                            Logger.logView.error("QRCodeView: Could not write QR code to photos app.")
+                            sceneModel.toaster = .error(note: "Could not save photo")
+                        }
                     }
-                })
 #endif
-                
-                ImageButton("Save to Files", systemImage: "plus.rectangle.on.folder", action: {
-                    do {
-                        let data = try QRModel(design: design, content: builder).pngData(for: 512)
-                        sceneModel.exportData(data, type: .png, named: "QR Code")
-                    } catch {
-                        Logger.logView.error("QRCodeView: Could not create PNG data for QR code.")
-                        sceneModel.toaster = .error(note: "Could not save file")
+                    
+                    ImageButton("Image\(" to Files", platforms: [.iOS])", systemImage: "folder") {
+                        do {
+                            let data = try QRModel(design: design, content: builder).pngData(for: 512)
+                            sceneModel.exportData(data, type: .png, named: "QR Code")
+                        } catch {
+                            Logger.logView.error("QRCodeView: Could not create PNG data for QR code.")
+                            sceneModel.toaster = .error(note: "Could not save file")
+                        }
                     }
+                    
+                    MenuControlGroupConvertible {
+                        ImageButton("PDF\(" to Files", platforms: [.iOS])", image: "pdf", action: {
+                            do {
+                                let data = try QRModel(design: design, content: builder).pdfData()
+                                sceneModel.exportData(data, type: .pdf, named: "QR Code")
+                            } catch {
+                                Logger.logView.error("ArchiveView: Could not create PDF data for QR code.")
+                                sceneModel.toaster = .error(note: "Could not save file")
+                            }
+                        })
+                        
+                        ImageButton("SVG\(" to Files", platforms: [.iOS])", image: "svg", action: {
+                            do {
+                                let data = try QRModel(design: design, content: builder).svgData()
+                                sceneModel.exportData(data, type: .svg, named: "QR Code")
+                            } catch {
+                                Logger.logView.error("ArchiveView: Could not create SVG data for QR code.")
+                                sceneModel.toaster = .error(note: "Could not save file")
+                            }
+                        })
+                    }
+                }, label: {
+                    Label("Save...", systemImage: "square.and.arrow.down")
                 })
                 
                 ImageButton("Copy Image", systemImage: "doc.on.clipboard", action: {
@@ -258,6 +283,9 @@ struct QRCodeView_Previews: PreviewProvider {
             .previewDisplayName("Simple Code")
         QRCodeView(qrcode: .constant(QRModel(design: DesignModel(eyeShape: .shield, pixelShape: .insetRound, eyeColor: .indigo, pupilColor: .indigo, pixelColor: .indigo, backgroundColor: .mint, offPixels: nil, errorCorrection: .high, logoPlacement: .center, logo: nil), content: BuilderModel(text: "Lorem ipsum"))), interactivity: .view)
             .previewDisplayName("Complex Code")
+        QRCodeView(qrcode: .constant(QRModel(design: DesignModel(eyeShape: .shield, pixelShape: .insetRound, eyeColor: .indigo, pupilColor: .indigo, pixelColor: .indigo, backgroundColor: .mint, offPixels: nil, errorCorrection: .high, logoPlacement: .center, logo: nil), content: BuilderModel(text: "Lorem ipsum"))), interactivity: .view)
+            .frame(width: 100, height: 100)
+            .previewDisplayName("Tiny Code")
         QRCodeTechncialPreview()
             .previewDisplayName("Technical Preview")
     }

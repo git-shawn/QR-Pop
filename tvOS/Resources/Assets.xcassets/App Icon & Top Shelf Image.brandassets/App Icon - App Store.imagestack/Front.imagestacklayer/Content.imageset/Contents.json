@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "TV-Front@AppStore.png",
+      "idiom" : "tv"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

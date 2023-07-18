@@ -81,6 +81,7 @@ struct BuildCodeIntent: AppIntent {
             \.$eyeColor
             \.$pupilColor
             \.$backgroundColor
+            \.$errorCorrection
         }
     }
     
