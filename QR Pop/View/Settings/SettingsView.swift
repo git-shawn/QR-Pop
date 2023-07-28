@@ -202,6 +202,14 @@ struct SettingsView: View {
 #else
                     .buttonStyle(OutboundLinkButtonStyle())
 #endif
+                Link(destination: URL(string: "https://testflight.apple.com/join/pW7vfuS0")!, label: {
+                    Label("Join the Beta", systemImage: "wrench.and.screwdriver")
+                })
+#if os(macOS)
+                    .labelStyle(OutboundLinkLabelStyle())
+#else
+                    .buttonStyle(OutboundLinkButtonStyle())
+#endif
                 
                 Link(destination: URL(string: "https://apps.apple.com/us/app/qr-pop/id1587360435?action=write-review")!, label: {
                     Label("Leave a Review", systemImage: "star.bubble")
