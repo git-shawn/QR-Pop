@@ -3828,9 +3828,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "tvOS/Resources/QR Pop TV.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 105;
+				CURRENT_PROJECT_VERSION = 110;
 				DEVELOPMENT_ASSET_PATHS = "\"tvOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=appletvos*]" = QK557BC776;
@@ -3847,10 +3848,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.fromshawn.QR-Pop-TV";
+				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.TV";
 				PRODUCT_NAME = "QR Pop";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=appletvos*]" = "QR Pop TV Profile";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=appletvos*]" = "QR Pop TV";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG CLOUDEXT";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -3866,9 +3867,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "tvOS/Resources/QR Pop TV.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 105;
+				CURRENT_PROJECT_VERSION = 110;
 				DEVELOPMENT_ASSET_PATHS = "\"tvOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=appletvos*]" = QK557BC776;
@@ -3885,10 +3887,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.fromshawn.QR-Pop-TV";
+				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.TV";
 				PRODUCT_NAME = "QR Pop";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=appletvos*]" = "QR Pop TV Profile";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=appletvos*]" = "QR Pop TV";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = CLOUDEXT;
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -188,7 +188,7 @@ struct SettingsView: View {
 #endif
                 
                 Link(destination: URL(string: "mailto:contact@fromshawn.dev")!, label: {
-                    Label("Contact Me", systemImage: "envelope")
+                    Label("Email Me", systemImage: "envelope")
                 })
 #if os(macOS)
                 .labelStyle(OutboundLinkLabelStyle())
