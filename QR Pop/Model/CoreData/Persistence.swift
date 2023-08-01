@@ -90,8 +90,8 @@ extension Persistence {
     func loadPersistenceWithSimualtedData() {
         let viewContext = self.container.viewContext
         
-        for i in 0..<5_000 {
-            Logger.logModel.debug("Persistence Simulated Data: Simulating model `\(i)` of `5_000`")
+        for i in 0..<100 {
+            Logger.logModel.debug("Persistence Simulated Data: Simulating model `\(i)` of `100`")
             var design = DesignModel()
             design.backgroundColor = Color.random
             

@@ -275,7 +275,6 @@
 		CDB0BDA02A01F18000566FB8 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
 		CDB0BDA12A01F18000566FB8 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
 		CDB0BDAB2A02908900566FB8 /* FormStateEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB0BDAA2A02908900566FB8 /* FormStateEngine.swift */; };
-		CDB44B052A77024700ED10B2 /* QR-Pop-TV-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CDB44B042A77024700ED10B2 /* QR-Pop-TV-Info.plist */; };
 		CDBAC04A29ECC8DF00976328 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBABFEE29ECC8DF00976328 /* SettingsView.swift */; };
 		CDBAC04B29ECC8DF00976328 /* AboutAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBABFEF29ECC8DF00976328 /* AboutAppView.swift */; };
 		CDBAC04C29ECC8DF00976328 /* SettingsMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBABFF029ECC8DF00976328 /* SettingsMenu.swift */; };
@@ -2152,7 +2151,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDA631102A21017E007E5667 /* LaunchScreen.storyboard in Resources */,
-				CDB44B052A77024700ED10B2 /* QR-Pop-TV-Info.plist in Resources */,
 				CDDA69D02A1F9DF8008629AC /* Preview Assets.xcassets in Resources */,
 				CDDA69CD2A1F9DF8008629AC /* Assets.xcassets in Resources */,
 			);
