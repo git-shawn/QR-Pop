@@ -313,7 +313,6 @@
 		CDBAC06D29ECC8DF00976328 /* WhatsAppForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01629ECC8DF00976328 /* WhatsAppForm.swift */; };
 		CDBAC06E29ECC8DF00976328 /* LinkForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01729ECC8DF00976328 /* LinkForm.swift */; };
 		CDBAC06F29ECC8DF00976328 /* EventForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01829ECC8DF00976328 /* EventForm.swift */; };
-		CDBAC07029ECC8DF00976328 /* CryptoForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01929ECC8DF00976328 /* CryptoForm.swift */; };
 		CDBAC07129ECC8DF00976328 /* ContactForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01A29ECC8DF00976328 /* ContactForm.swift */; };
 		CDBAC07229ECC8DF00976328 /* MailForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01B29ECC8DF00976328 /* MailForm.swift */; };
 		CDBAC07329ECC8DF00976328 /* ShortcutForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01C29ECC8DF00976328 /* ShortcutForm.swift */; };
@@ -773,7 +772,6 @@
 		CDBAC01629ECC8DF00976328 /* WhatsAppForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsAppForm.swift; sourceTree = "<group>"; };
 		CDBAC01729ECC8DF00976328 /* LinkForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkForm.swift; sourceTree = "<group>"; };
 		CDBAC01829ECC8DF00976328 /* EventForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventForm.swift; sourceTree = "<group>"; };
-		CDBAC01929ECC8DF00976328 /* CryptoForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoForm.swift; sourceTree = "<group>"; };
 		CDBAC01A29ECC8DF00976328 /* ContactForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactForm.swift; sourceTree = "<group>"; };
 		CDBAC01B29ECC8DF00976328 /* MailForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailForm.swift; sourceTree = "<group>"; };
 		CDBAC01C29ECC8DF00976328 /* ShortcutForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutForm.swift; sourceTree = "<group>"; };
@@ -1327,7 +1325,6 @@
 			isa = PBXGroup;
 			children = (
 				CDBAC01A29ECC8DF00976328 /* ContactForm.swift */,
-				CDBAC01929ECC8DF00976328 /* CryptoForm.swift */,
 				CDBAC01829ECC8DF00976328 /* EventForm.swift */,
 				CDBAC01529ECC8DF00976328 /* FacetimeForm.swift */,
 				CDBAC01729ECC8DF00976328 /* LinkForm.swift */,
@@ -2297,7 +2294,6 @@
 				CDB0BDAB2A02908900566FB8 /* FormStateEngine.swift in Sources */,
 				CD03E1D929F188F500302011 /* NewTemplateView.swift in Sources */,
 				CDBAC07529ECC8DF00976328 /* TemplateCarousel.swift in Sources */,
-				CDBAC07029ECC8DF00976328 /* CryptoForm.swift in Sources */,
 				CDBAC04E29ECC8DF00976328 /* PrivacyPolicyView.swift in Sources */,
 				CDBAC06E29ECC8DF00976328 /* LinkForm.swift in Sources */,
 				CDBAC06729ECC8DF00976328 /* WifiForm.swift in Sources */,

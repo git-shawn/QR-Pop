@@ -56,7 +56,7 @@ extension BuilderModel {
 
 extension BuilderModel {
     enum Kind: String, Hashable, CaseIterable, Codable, Equatable {
-        case link, wifi, event, contact, email, phone, sms, whatsapp, facetime, twitter, location, text, shortcut, crypto
+        case link, wifi, event, contact, email, phone, sms, whatsapp, facetime, twitter, location, text, shortcut
         
         var title: String {
             switch self {
@@ -82,8 +82,6 @@ extension BuilderModel {
                 return "Location"
             case .text:
                 return "Plain Text"
-            case .crypto:
-                return "Crypto"
             case .contact:
                 return "Contact Card"
             case .whatsapp:
@@ -119,8 +117,6 @@ extension BuilderModel {
                 return Image(systemName: "square.2.layers.3d")
             case .whatsapp:
                 return Image("whatsapp.fill")
-            case .crypto:
-                return Image(systemName: "bitcoinsign.circle")
             }
         }
         
@@ -154,8 +150,6 @@ extension BuilderModel {
                 ShortcutForm(model: model)
             case .whatsapp:
                 WhatsAppForm(model: model)
-            case .crypto:
-                CryptoForm(model: model)
             }
         }
 #endif
