@@ -188,7 +188,7 @@ struct SettingsView: View {
 #endif
                 
                 Link(destination: URL(string: "mailto:contact@fromshawn.dev")!, label: {
-                    Label("Contact Me", systemImage: "envelope")
+                    Label("Email Me", systemImage: "envelope")
                 })
 #if os(macOS)
                 .labelStyle(OutboundLinkLabelStyle())
@@ -197,6 +197,14 @@ struct SettingsView: View {
 #endif
                 
                 ShareLink("Share QR Pop", item: URL(string: "https://www.fromshawn.dev/qrpop")!)
+#if os(macOS)
+                    .labelStyle(OutboundLinkLabelStyle())
+#else
+                    .buttonStyle(OutboundLinkButtonStyle())
+#endif
+                Link(destination: URL(string: "https://testflight.apple.com/join/pW7vfuS0")!, label: {
+                    Label("Join the Beta", systemImage: "wrench.and.screwdriver")
+                })
 #if os(macOS)
                     .labelStyle(OutboundLinkLabelStyle())
 #else

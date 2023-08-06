@@ -19,6 +19,9 @@ struct BuilderCommands: Commands {
     var body: some Commands {
         // MARK: New Item
         CommandGroup(replacing: .newItem, addition: {
+            Button("New Window", action: {
+                openWindow(id: "main")
+            })
             Menu("New QR Code", content: {
                 ForEach(BuilderModel.Kind.allCases, id: \.rawValue) { builderKind in
                     Button(builderKind.title, action: {
