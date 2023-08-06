@@ -54,12 +54,11 @@ struct ArchiveView: View {
                     .buttonStyle(.plain)
             }
             .sheet(isPresented: $showHelpSheet, content: {
-                #warning("Update support link with actual article")
                 VStack(alignment: .center, spacing: 30) {
                     Text("Support Article")
                         .font(.largeTitle)
                         .bold()
-                    QRCodeView(design: .constant(DesignModel()), builder: .constant(BuilderModel(text: "https://www.fromshawn.dev/support/")))
+                    QRCodeView(design: .constant(DesignModel()), builder: .constant(BuilderModel(text: "https://www.fromshawn.dev/support/qrpop-tv-help")))
                     Text("Scan for Support")
                 }
             })

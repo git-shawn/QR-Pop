@@ -313,7 +313,6 @@
 		CDBAC06D29ECC8DF00976328 /* WhatsAppForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01629ECC8DF00976328 /* WhatsAppForm.swift */; };
 		CDBAC06E29ECC8DF00976328 /* LinkForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01729ECC8DF00976328 /* LinkForm.swift */; };
 		CDBAC06F29ECC8DF00976328 /* EventForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01829ECC8DF00976328 /* EventForm.swift */; };
-		CDBAC07029ECC8DF00976328 /* CryptoForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01929ECC8DF00976328 /* CryptoForm.swift */; };
 		CDBAC07129ECC8DF00976328 /* ContactForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01A29ECC8DF00976328 /* ContactForm.swift */; };
 		CDBAC07229ECC8DF00976328 /* MailForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01B29ECC8DF00976328 /* MailForm.swift */; };
 		CDBAC07329ECC8DF00976328 /* ShortcutForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC01C29ECC8DF00976328 /* ShortcutForm.swift */; };
@@ -734,6 +733,7 @@
 		CDA631172A222FA5007E5667 /* MapRegionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRegionPicker.swift; sourceTree = "<group>"; };
 		CDA631192A22421B007E5667 /* LocationSearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchModel.swift; sourceTree = "<group>"; };
 		CDB0BDAA2A02908900566FB8 /* FormStateEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStateEngine.swift; sourceTree = "<group>"; };
+		CDB44B042A77024700ED10B2 /* QR-Pop-TV-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QR-Pop-TV-Info.plist"; sourceTree = "<group>"; };
 		CDBABFEE29ECC8DF00976328 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CDBABFEF29ECC8DF00976328 /* AboutAppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutAppView.swift; sourceTree = "<group>"; };
 		CDBABFF029ECC8DF00976328 /* SettingsMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsMenu.swift; sourceTree = "<group>"; };
@@ -772,7 +772,6 @@
 		CDBAC01629ECC8DF00976328 /* WhatsAppForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhatsAppForm.swift; sourceTree = "<group>"; };
 		CDBAC01729ECC8DF00976328 /* LinkForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkForm.swift; sourceTree = "<group>"; };
 		CDBAC01829ECC8DF00976328 /* EventForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventForm.swift; sourceTree = "<group>"; };
-		CDBAC01929ECC8DF00976328 /* CryptoForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoForm.swift; sourceTree = "<group>"; };
 		CDBAC01A29ECC8DF00976328 /* ContactForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactForm.swift; sourceTree = "<group>"; };
 		CDBAC01B29ECC8DF00976328 /* MailForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailForm.swift; sourceTree = "<group>"; };
 		CDBAC01C29ECC8DF00976328 /* ShortcutForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutForm.swift; sourceTree = "<group>"; };
@@ -845,7 +844,6 @@
 		CDDA69CC2A1F9DF8008629AC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CDDA69CF2A1F9DF8008629AC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CDDA69ED2A20DCB7008629AC /* QR Pop TV.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "QR Pop TV.entitlements"; sourceTree = "<group>"; };
-		CDDA69EE2A20DCCD008629AC /* QR-Pop-TV-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QR-Pop-TV-Info.plist"; path = "QR Pop TV/Resources/QR-Pop-TV-Info.plist"; sourceTree = SOURCE_ROOT; };
 		CDDA69F42A20E3C8008629AC /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		CDE11F922A0433730011C648 /* QRPop+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QRPop+Error.swift"; sourceTree = "<group>"; };
 		CDE20C142A0A7E6E00EFD605 /* RawDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawDataView.swift; sourceTree = "<group>"; };
@@ -1327,7 +1325,6 @@
 			isa = PBXGroup;
 			children = (
 				CDBAC01A29ECC8DF00976328 /* ContactForm.swift */,
-				CDBAC01929ECC8DF00976328 /* CryptoForm.swift */,
 				CDBAC01829ECC8DF00976328 /* EventForm.swift */,
 				CDBAC01529ECC8DF00976328 /* FacetimeForm.swift */,
 				CDBAC01729ECC8DF00976328 /* LinkForm.swift */,
@@ -1526,7 +1523,7 @@
 			children = (
 				CDA6310F2A21017E007E5667 /* LaunchScreen.storyboard */,
 				CDDA69ED2A20DCB7008629AC /* QR Pop TV.entitlements */,
-				CDDA69EE2A20DCCD008629AC /* QR-Pop-TV-Info.plist */,
+				CDB44B042A77024700ED10B2 /* QR-Pop-TV-Info.plist */,
 				CDDA69CC2A1F9DF8008629AC /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -2297,7 +2294,6 @@
 				CDB0BDAB2A02908900566FB8 /* FormStateEngine.swift in Sources */,
 				CD03E1D929F188F500302011 /* NewTemplateView.swift in Sources */,
 				CDBAC07529ECC8DF00976328 /* TemplateCarousel.swift in Sources */,
-				CDBAC07029ECC8DF00976328 /* CryptoForm.swift in Sources */,
 				CDBAC04E29ECC8DF00976328 /* PrivacyPolicyView.swift in Sources */,
 				CDBAC06E29ECC8DF00976328 /* LinkForm.swift in Sources */,
 				CDBAC06729ECC8DF00976328 /* WifiForm.swift in Sources */,
@@ -3828,10 +3824,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "tvOS/Resources/QR Pop TV.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 105;
 				DEVELOPMENT_ASSET_PATHS = "\"tvOS/Preview Content\"";
-				DEVELOPMENT_TEAM = QK557BC776;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=appletvos*]" = QK557BC776;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "tvOS/Resources/QR-Pop-TV-Info.plist";
@@ -3845,8 +3844,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.fromshawn.QR-Pop-TV";
+				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop";
 				PRODUCT_NAME = "QR Pop";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=appletvos*]" = "QR Pop TV";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG CLOUDEXT";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -3862,10 +3863,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "tvOS/Resources/QR Pop TV.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 105;
 				DEVELOPMENT_ASSET_PATHS = "\"tvOS/Preview Content\"";
-				DEVELOPMENT_TEAM = QK557BC776;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=appletvos*]" = QK557BC776;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "tvOS/Resources/QR-Pop-TV-Info.plist";
@@ -3879,8 +3883,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "dev.fromshawn.QR-Pop-TV";
+				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop";
 				PRODUCT_NAME = "QR Pop";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=appletvos*]" = "QR Pop TV";
 				SDKROOT = appletvos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = CLOUDEXT;
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -156,6 +156,7 @@ extension QRCodeView {
                     ImageButton("Image to Photos", systemImage: "photo") {
                         do {
                             try QRModel(design: design, content: builder).addToPhotoLibrary(for: 512)
+                            sceneModel.toaster = .saved(note: "Image saved")
                         } catch {
                             Logger.logView.error("QRCodeView: Could not write QR code to photos app.")
                             sceneModel.toaster = .error(note: "Could not save photo")
