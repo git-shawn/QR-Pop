@@ -197,6 +197,7 @@
 		CD7A3FF629F3983B00D23D54 /* TimelineIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */; };
 		CD7A3FF829F3984B00D23D54 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = CD7A3FF729F3984B00D23D54 /* QRCode */; };
 		CD7A3FFA29F3985400D23D54 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = CD7A3FF929F3985400D23D54 /* QRCode */; };
+		CD8859E72A801A96005B84C5 /* BuildTemplateIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8859E62A801A96005B84C5 /* BuildTemplateIntent.swift */; };
 		CD8EB98029FB2D8E00E28A3F /* BuildCodeIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8EB97F29FB2D8E00E28A3F /* BuildCodeIntent.swift */; };
 		CD8EB98429FB49C300E28A3F /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8EB98329FB49C300E28A3F /* Color+Hex.swift */; };
 		CD9DAAEF29F45EE7008B3C1F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9DAAEE29F45EE7008B3C1F /* ShareViewController.swift */; };
@@ -712,6 +713,7 @@
 		CD7A3FC229F396B300D23D54 /* IntentHandler Mac.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "IntentHandler Mac.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD7A3FC729F396B400D23D54 /* IntentInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IntentInfo.plist; sourceTree = "<group>"; };
 		CD7A3FC829F396B400D23D54 /* IntentHandler_Mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IntentHandler_Mac.entitlements; sourceTree = "<group>"; };
+		CD8859E62A801A96005B84C5 /* BuildTemplateIntent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildTemplateIntent.swift; sourceTree = "<group>"; };
 		CD8EB97F29FB2D8E00E28A3F /* BuildCodeIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildCodeIntent.swift; sourceTree = "<group>"; };
 		CD8EB98329FB49C300E28A3F /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		CD9DAAEC29F45EE7008B3C1F /* Share Extension iOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Share Extension iOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1492,6 +1494,7 @@
 		CDC8C8D629F9F5A8004C239C /* Intents */ = {
 			isa = PBXGroup;
 			children = (
+				CD8859E62A801A96005B84C5 /* BuildTemplateIntent.swift */,
 				CDC8C8D929F9F639004C239C /* IntentProvider.swift */,
 				CDC8C8DB29F9F643004C239C /* ViewArchiveIntent.swift */,
 				CD8EB97F29FB2D8E00E28A3F /* BuildCodeIntent.swift */,
@@ -2227,6 +2230,7 @@
 			files = (
 				CDBAC09829ECC8DF00976328 /* DesignModel.swift in Sources */,
 				CDBAC09629ECC8DF00976328 /* MirrorModel.swift in Sources */,
+				CD8859E72A801A96005B84C5 /* BuildTemplateIntent.swift in Sources */,
 				CDBAC06F29ECC8DF00976328 /* EventForm.swift in Sources */,
 				CDBAC06029ECC8DF00976328 /* QRLogoOverlay.swift in Sources */,
 				CDBAC04D29ECC8DF00976328 /* SettingsCommands.swift in Sources */,
@@ -2819,7 +2823,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Quicklook-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -2850,7 +2854,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Quicklook-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -2884,7 +2888,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Quicklook-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -2916,7 +2920,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Quicklook-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3084,7 +3088,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -3141,7 +3145,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -3173,7 +3177,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Thumbnail-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3204,7 +3208,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Thumbnail-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3239,7 +3243,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Widget-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3273,7 +3277,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Widget-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3309,7 +3313,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Widget-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3343,7 +3347,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Widget-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3374,7 +3378,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.IntentHandler-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3406,7 +3410,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.IntentHandler-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3440,7 +3444,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.IntentHandler-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3472,7 +3476,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.IntentHandler-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3503,7 +3507,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3535,7 +3539,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3570,7 +3574,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3603,7 +3607,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3635,7 +3639,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp";
 				PRODUCT_NAME = "QR Pop";
 				SDKROOT = watchos;
@@ -3669,7 +3673,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp";
 				PRODUCT_NAME = "QR Pop";
 				SDKROOT = watchos;
@@ -3704,7 +3708,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -3739,7 +3743,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -3772,7 +3776,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -3806,7 +3810,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -3844,7 +3848,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.fromshawn.QR-Pop-TV";
 				PRODUCT_NAME = "QR Pop";
 				SDKROOT = appletvos;
@@ -3878,7 +3882,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "dev.fromshawn.QR-Pop-TV";
 				PRODUCT_NAME = "QR Pop";
 				SDKROOT = appletvos;
@@ -3910,7 +3914,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp.Widget-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -3942,7 +3946,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp.Widget-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -3973,7 +3977,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp.IntentHandler-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -4003,7 +4007,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp.IntentHandler-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
