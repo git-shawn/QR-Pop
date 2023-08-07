@@ -34,12 +34,12 @@ struct TwitterForm: View {
                 Menu {
                     Picker(selection: $engine.inputs[0], label: EmptyView(), content: {
                         Text("Follow").tag("")
-                        Text("Tweet").tag("t")
+                        Text("Post").tag("t")
                     })
                     .pickerStyle(.automatic)
                 } label: {
                     HStack {
-                        Text(engine.inputs[0] == "" ? "Follow Account" : "Post Tweet")
+                        Text(engine.inputs[0] == "" ? "Follow Account" : "Create Post")
                         Spacer()
                         Image(systemName: "chevron.up.chevron.down")
                             .tint(.accentColor)
@@ -52,7 +52,7 @@ struct TwitterForm: View {
 #else
                 Picker(selection: $engine.inputs[0], content: {
                     Text("Follow").tag("")
-                    Text("Tweet").tag("t")
+                    Text("Post").tag("t")
                 }, label: {
                     Text("Action")
                 })
@@ -73,7 +73,7 @@ struct TwitterForm: View {
                         .keyboardType(.twitter)
 #endif
                 } else {
-                    TextField("Tweet", text: $engine.inputs[1], axis: .vertical)
+                    TextField("Post", text: $engine.inputs[1], axis: .vertical)
                         .lineLimit(6, reservesSpace: true)
                         .textFieldStyle(FormTextFieldStyle())
                         .focused($focusedField, equals: .tweet)

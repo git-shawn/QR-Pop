@@ -75,7 +75,7 @@ extension BuilderModel {
             case .facetime:
                 return "FaceTime"
             case .twitter:
-                return "Twitter"
+                return "X.com"
             case .shortcut:
                 return "Shortcut"
             case .location:
@@ -108,7 +108,7 @@ extension BuilderModel {
             case .facetime:
                 return Image(systemName: "video")
             case .twitter:
-                return Image("twitter")
+                return Image("xLogo")
             case .location:
                 return Image(systemName: "location.viewfinder")
             case .text:

@@ -20,7 +20,7 @@ struct AcknowledgementsView: View {
                     Text("Disclaimers")
                         .font(.title)
                         .bold()
-                    Text("Twitter is a registered trademark of [Twitter, Inc](https://about.twitter.com/en).")
+                    Text("X is a registered trademark of [X Corp](https://about.twitter.com/en).")
                     Text("WhatsApp is a registered trademark of [Meta](https://about.meta.com/brand/resources/).")
                     Text("QR Code is a registered trademark of [DENSO WAVE](https://www.qrcode.com/en/)")
                 }
