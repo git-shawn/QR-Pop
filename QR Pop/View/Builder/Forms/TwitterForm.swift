@@ -119,9 +119,9 @@ extension TwitterForm: BuilderForm {
     func determineResult(for outputs: [String]) {
         var result: String {
             if outputs[0].isEmpty {
-                return "https://twitter.com/intent/user?screen_name=\(outputs[1])"
+                return "https://x.com/intent/user?screen_name=\(outputs[1])"
             } else {
-                return "https://twitter.com/intent/tweet?text=\(outputs[2].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
+                return "https://x.com/intent/tweet?text=\(outputs[2].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"
             }
         }
         

@@ -137,7 +137,7 @@ struct SettingsView: View {
             }, header: {
                 Text("Data")
             }, footer: {
-                Text("Data will be permanently erased from your device as well as iCloud, if it is enabled. This cannot be undone.")
+                Text("Data will be permanently erased from your device as well as iCloud, if enabled. This cannot be undone.")
 #if os(macOS)
                     .font(.footnote)
                     .foregroundColor(.secondary)
@@ -172,7 +172,7 @@ struct SettingsView: View {
                         erasingData = false
                     })
                 }, message: {
-                    Text("Data will be permanently erased from your device as well as iCloud, if it is enabled. This cannot be undone.")
+                    Text("Data will be permanently erased from your device as well as iCloud, if enabled. This cannot be undone.")
                 })
             
             // MARK: - Developer Links & Tip

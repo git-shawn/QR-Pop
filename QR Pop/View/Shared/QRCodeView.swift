@@ -84,7 +84,7 @@ extension QRCodeView {
                                 .logoTemplate(design.getLogoTemplate())
                                 .path(in: rect),
                             with: .color(design.pixelColor.opacity(0.2)),
-                            style: .init(eoFill: true, antialiased: false)
+                            style: .init(eoFill: true, antialiased: true)
                         )
                     }
                     
@@ -95,7 +95,7 @@ extension QRCodeView {
                             .logoTemplate(design.getLogoTemplate())
                             .path(in: rect)),
                         with: .color(design.pixelColor),
-                        style: .init(eoFill: true, antialiased: false))
+                        style: .init(eoFill: true, antialiased: true))
                     
                     context.fill(
                         (baseShape
@@ -104,7 +104,7 @@ extension QRCodeView {
                             .logoTemplate(design.getLogoTemplate())
                             .path(in: rect)),
                         with: .color(design.eyeColor),
-                        style: .init(eoFill: true, antialiased: false))
+                        style: .init(eoFill: true, antialiased: true))
                     
                     context.fill(
                         (baseShape
@@ -113,7 +113,7 @@ extension QRCodeView {
                             .logoTemplate(design.getLogoTemplate())
                             .path(in: rect)),
                         with: .color(design.pupilColor),
-                        style: .init(eoFill: true, antialiased: false))
+                        style: .init(eoFill: true, antialiased: true))
                     
                     if (design.logo != nil) {
                         context.draw(

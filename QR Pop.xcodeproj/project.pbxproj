@@ -1358,6 +1358,7 @@
 				CDBAC02B29ECC8DF00976328 /* CGColor+QRPop.swift */,
 				CDBAC03929ECC8DF00976328 /* CGSize+QRPop.swift */,
 				CDE6CA6D2A0358350097D2AB /* CIImage+Image.swift */,
+				CD70409A2A661E4C005E540D /* CNContact+Identifiable.swift */,
 				CD21703229F2F85300A18F17 /* Collection+Optional.swift */,
 				CDBAC03129ECC8DF00976328 /* Color+Codable.swift */,
 				CD8EB98329FB49C300E28A3F /* Color+Hex.swift */,
@@ -1383,7 +1384,6 @@
 				CDBAC03729ECC8DF00976328 /* UserDefaults+QRPop.swift */,
 				CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */,
 				CD4F20A929F4B8D30037082F /* WifiHandler.swift */,
-				CD70409A2A661E4C005E540D /* CNContact+Identifiable.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

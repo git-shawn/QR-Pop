@@ -75,7 +75,7 @@ extension BuilderModel {
             case .facetime:
                 return "FaceTime"
             case .twitter:
-                return "X.com"
+                return "X"
             case .shortcut:
                 return "Shortcut"
             case .location:

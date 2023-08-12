@@ -146,7 +146,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius purus ac d
                             .onPixelShape(brightenCode ? QRCode.PixelShape.Square() : model.design.pixelShape.generator)
                             .path(in: rect)),
                         with: .color(brightenCode ? .black : model.design.pixelColor),
-                        style: .init(eoFill: true, antialiased: false))
+                        style: .init(eoFill: true, antialiased: true))
                     
                     context.fill(
                         (baseShape
@@ -154,7 +154,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius purus ac d
                             .eyeShape(brightenCode ? QRCode.EyeShape.Square() : model.design.eyeShape.generator)
                             .path(in: rect)),
                         with: .color(brightenCode ? .black : model.design.eyeColor),
-                        style: .init(eoFill: true, antialiased: false))
+                        style: .init(eoFill: true, antialiased: true))
                     
                     context.fill(
                         (baseShape
@@ -162,7 +162,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius purus ac d
                             .eyeShape(brightenCode ? QRCode.EyeShape.Square() : model.design.eyeShape.generator)
                             .path(in: rect)),
                         with: .color(brightenCode ? .black : model.design.pupilColor),
-                        style: .init(eoFill: true, antialiased: false))
+                        style: .init(eoFill: true, antialiased: true))
                 }
             }
             .zIndex(1)
