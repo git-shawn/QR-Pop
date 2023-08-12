@@ -103,7 +103,7 @@ extension BuilderList {
     /// - Returns: A filtered list of `BuilderModel.Kind`. If `searchQuery` is empty, returns `allCases`.
     func filterBuildersByQuery() -> [BuilderModel.Kind] {
         let result = BuilderModel.Kind.allCases.filter {
-            $0.title.contains(searchQuery)
+            $0.title.lowercased().contains(searchQuery.lowercased())
         }
         return searchQuery.isEmpty ? BuilderModel.Kind.allCases : result
     }
