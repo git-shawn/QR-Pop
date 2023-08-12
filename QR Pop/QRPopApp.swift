@@ -31,6 +31,9 @@ struct QR_PopApp: App {
         }
         .handlesExternalEvents(matching: ["*"])
         .defaultAppStorage(.appGroup)
+#if os(macOS)
+        .windowResizability(.contentSize)
+#endif
         .commands {
 #if os(macOS)
             SettingsCommands()

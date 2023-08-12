@@ -72,7 +72,7 @@ private struct LocationPickerSearchForm: View {
                 ForEach(mapSearch.locationResults, id: \.self) { location in
                     Button(action: {
                         parseCoordinates(location: location)
-                        buttonQuery = mapSearch.searchTerm
+                        buttonQuery = location.title
                         dismiss()
                     }, label: {
                         VStack(alignment: .leading, spacing: 6) {

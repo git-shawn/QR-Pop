@@ -200,6 +200,24 @@ struct CoreDataList<FetchedEntity: Entity>: View {
                 }
             }
             
+            if isEditing {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if selectedEntities.count != filteredEntities.count {
+                        Button("Select All", action: {
+                            withAnimation {
+                                selectedEntities = filteredEntities
+                            }
+                        })
+                    } else {
+                        Button("Deselect All", action: {
+                            withAnimation {
+                                selectedEntities = []
+                            }
+                        })
+                    }
+                }
+            }
+            
             ToolbarItem(placement: .primaryAction) {
                 editButton
             }

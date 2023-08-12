@@ -71,6 +71,9 @@ struct BuilderList: View {
                             .symbolRenderingMode(.hierarchical)
                     })
                 })
+#if os(macOS)
+                .buttonStyle(.plain)
+#endif
             })
         })
 #if os(iOS)
