@@ -22,7 +22,7 @@ struct AppIconView: View {
                         .scaledToFit()
                         .frame(width: 48)
                         .mask {
-                            RoundedRectangle(cornerRadius: 8)
+                            RoundedRectangle(cornerRadius: 8.42, style: .continuous)
                         }
                     Text(icon.description)
                         .foregroundColor(.primary)

@@ -21,20 +21,21 @@ struct TipButton: View {
             }
         }, label: {
             Label(title: {
-                Text("Buy Me a Coffee")
+                Text("Buy me a coffee")
                     .foregroundColor(.primary)
             }, icon: {
                 if isTipping {
-                    Image("coffee.heart")
+                    Image(systemName: "mug")
                         .foregroundColor(.clear)
                         .overlay(
                             ProgressView()
+                                .tint(.accentColor)
                             #if os(macOS)
                                 .controlSize(.small)
                             #endif
                         )
                 } else {
-                    Image("coffee.heart")
+                    Image(systemName: "mug")
                         .foregroundColor(.accentColor)
                 }
             })

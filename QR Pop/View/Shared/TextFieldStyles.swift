@@ -25,3 +25,14 @@ struct FormTextFieldStyle: TextFieldStyle {
             })
     }
 }
+
+struct ContactBuilderTextFieldStyle: TextFieldStyle {
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        VStack {
+            configuration
+#if os(macOS)
+            Divider()
+#endif
+        }
+    }
+}

@@ -10,7 +10,7 @@ import SwiftUI
 struct WhatsNewSheet: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.openURL) var openURL
-    let learnMoreURL = URL(string: "https://www.fromshawn.dev/support/qrpop-version-3")!
+    let learnMoreURL = URL(string: "https://www.fromshawn.dev/qrpop/support/v3-1")!
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -27,94 +27,66 @@ struct WhatsNewSheet: View {
                     
                     Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 30) {
                         GridRow(alignment: .center) {
-                            Image(systemName: "paintbrush")
+                            Image(systemName: "person.crop.circle.badge.checkmark")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 36)
                                 .gridColumnAlignment(.center)
                                 .foregroundColor(.accentColor)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("A Brand New Designer")
+                                Text("New Contact Builder")
                                     .font(.headline)
-                                Text("The reimagined designer brings millions of new style combinations to QR Pop. Create that perfect look, then save it for later as a Template.")
+                                Text("Add multiple emails, addresses, phone numbers, websites, and more to contacts you create in app.")
                                     .foregroundColor(.secondary)
                             }
                         }
                         
                         GridRow(alignment: .center) {
-                            Image(systemName: "archivebox")
+                            Image(systemName: "exclamationmark.bubble")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 36)
                                 .gridColumnAlignment(.center)
                                 .foregroundColor(.accentColor)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("A Home for Your Codes")
+                                Text("Easier Feedback")
                                     .font(.headline)
-                                Text("Save QR codes you've made to the brand-new Archive for quick access later. Archived codes are available in Spotlight and as Widgets.")
+                                #warning("rewrite")
+                                Text("TBD")
                                     .foregroundColor(.secondary)
                             }
                         }
                         
                         GridRow(alignment: .center) {
-                            Image(systemName: "icloud")
+                            Image("xLogo")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 36)
+                                .frame(width: 28)
                                 .gridColumnAlignment(.center)
                                 .foregroundColor(.accentColor)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("iCloud Backup")
+                                Text("X.com Builder")
                                     .font(.headline)
-                                Text("View your Archive or use Templates you've created across all your supported devices with iCloud.")
+                                Text("All references to Twitter have been replaced with X and all Twitter codes now point to **x.com**.")
                                     .foregroundColor(.secondary)
                             }
                         }
                         
                         GridRow(alignment: .center) {
-                            Image(systemName: "applewatch.side.right")
+                            Image(systemName: "bubbles.and.sparkles")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 36)
                                 .gridColumnAlignment(.center)
                                 .foregroundColor(.accentColor)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("Apple Watch Support")
+                                Text("General Housekeeping")
                                     .font(.headline)
-                                Text("Browse the Archive from your wrist with the new Apple Watch app. QR Pop for Apple Watch requires iCloud.")
+                                Text("The UI has been tweaked throughout the app to make it easier to design great codes.")
                                     .foregroundColor(.secondary)
                             }
                         }
                         
-                        GridRow(alignment: .center) {
-                            Image(systemName: "square.2.layers.3d")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 36)
-                                .gridColumnAlignment(.center)
-                                .foregroundColor(.accentColor)
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("Siri and Shortcuts")
-                                    .font(.headline)
-                                Text("Ask Siri to help you view a code in your Archive or build the code entirely using Shortcuts.")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        
-                        GridRow(alignment: .center) {
-                            Image(systemName: "puzzlepiece.extension")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 36)
-                                .gridColumnAlignment(.center)
-                                .foregroundColor(.accentColor)
-                            VStack(alignment: .leading, spacing: 5) {
-                                Text("Better Extensions")
-                                    .font(.headline)
-                                Text("Create or decode QR codes directly from Share with QR Pop's improved Share Extension.")
-                                    .foregroundColor(.secondary)
-                            }
-                        }
                     }
                     .scenePadding()
                     .symbolRenderingMode(.hierarchical)

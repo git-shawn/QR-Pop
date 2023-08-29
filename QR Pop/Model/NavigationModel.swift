@@ -112,8 +112,8 @@ extension NavigationModel {
         }
         
         switch primaryRoute {
-         
-        /// Handle a URL describing a `.qrpt` file formatted `qrpop:///template/URL`
+            
+            /// Handle a URL describing a `.qrpt` file formatted `qrpop:///template/URL`
         case "template":
             guard let fileUrlString = url.query(percentEncoded: false), let fileUrl = URL(string: fileUrlString)
             else {
@@ -121,8 +121,8 @@ extension NavigationModel {
                 throw NavigationError.invalidURL
             }
             try handleIncomingTemplate(fileUrl)
-         
-        /// Handle a URL describing a builder formatted `qrpop:///builder/BuilderModel.Kind.rawValue`
+            
+            /// Handle a URL describing a builder formatted `qrpop:///builder/BuilderModel.Kind.rawValue`
         case "builder":
             guard let builderKindString = components[safe: 2],
                   let builderKind = BuilderModel.Kind(rawValue: builderKindString)
@@ -132,8 +132,8 @@ extension NavigationModel {
             }
             let builderModel = BuilderModel(for: builderKind)
             navigate(to: .builder(code: QRModel(design: DesignModel(), content: builderModel)))
-        
-        /// Handle a URL describing a known template formatted `qrpop:///archive/UUID`
+            
+            /// Handle a URL describing a known template formatted `qrpop:///archive/UUID`
         case "archive":
             guard let libraryId = components[safe: 2],
                   let libraryUUID = UUID(uuidString: libraryId),
@@ -145,8 +145,8 @@ extension NavigationModel {
             }
             navigate(to: .archive(code: model))
             
-        /// Handle a URL describing a link builder with an initial value formatted `qrpop:///buildlink/?URL`
-        /// URL should be percent encoded.
+            /// Handle a URL describing a link builder with an initial value formatted `qrpop:///buildlink/?URL`
+            /// URL should be percent encoded.
         case "buildlink":
             guard let content = url.query(percentEncoded: false) else { throw NavigationError.invalidURL }
             var responses = [String](repeating: "", count: 7)
@@ -154,16 +154,16 @@ extension NavigationModel {
             let builderModel = BuilderModel(responses: responses, result: content, builder: .link)
             navigate(to: .builder(code: QRModel(design: DesignModel(), content: builderModel)))
             
-        /// Handle a URL describing a text builder with an initial value formatted `qrpop:///buildtext/String`
+            /// Handle a URL describing a text builder with an initial value formatted `qrpop:///buildtext/String`
         case "buildtext":
             guard let content = url.query(percentEncoded: false) else { throw NavigationError.invalidURL }
             navigate(to: .builder(code: QRModel(design: DesignModel(), content: BuilderModel(text: content))))
             
-        /// Navigate to the scanner
+            /// Navigate to the scanner
         case "scanner":
             navigate(to: .scanner)
             
-        /// Navigate to settings
+            /// Navigate to settings
         case "settings":
             navigate(to: .settings)
             
@@ -302,7 +302,11 @@ extension NavigationModel {
             case .scanner:
                 CodeScannerView()
             case .settings:
+#if os(iOS)
                 SettingsView()
+#else
+                EmptyView()
+#endif
             case .builder(code: nil):
                 BuilderList()
             case .builder(code: let code):

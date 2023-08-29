@@ -3,10 +3,10 @@
     {
       "identity" : "connections",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftUI-Plus/Connections",
+      "location" : "https://github.com/git-shawn/Connections",
       "state" : {
-        "branch" : "master",
-        "revision" : "b7a67d9001bfc8c41dbffcda4111cfacb37da863"
+        "branch" : "vcard-keysToFetch",
+        "revision" : "26172efc0c31ec4cf9f2a82b782f37672f26cf2d"
       }
     },
     {

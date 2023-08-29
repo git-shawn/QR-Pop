@@ -17,11 +17,7 @@ struct ContactsPicker: View {
     
     init(_ selectedContact: Binding<CNContact?>) {
         _contacts = FetchContactList(
-            keysToFetch: [
-                .type,
-                .givenName, .familyName,
-                .organizationName
-            ],
+            keysToFetch: [ .vcard ],
             sortOrder: .givenName
         )
         self._selectedContact = selectedContact
@@ -65,6 +61,7 @@ struct ContactsPicker: View {
 #else
             .listStyle(.inset(alternatesRowBackgrounds: true))
             .environment(\.defaultMinListRowHeight, 36)
+            .frame(width: 400, height: 350)
 #endif
             .searchable(text: $query)
             .navigationTitle("Contacts")

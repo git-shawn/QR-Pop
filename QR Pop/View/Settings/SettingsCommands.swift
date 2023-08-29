@@ -25,35 +25,13 @@ struct SettingsCommands: Commands {
             })
             
             CommandGroup(replacing: .help, addition: {
-                Link("Help", destination: URL(string: "https://www.fromshawn.dev/support?tag=qrpop")!)
+                Link("QR Pop Help", destination: URL(string: "https://www.fromshawn.dev/qrpop/support")!)
                 
                 Divider()
                 
-                NavigationLink("Privacy Policy", destination: {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Privacy Policy")
-                            .font(.largeTitle)
-                            .bold()
-                            .padding()
-                        Divider()
-                        PrivacyPolicyView()
-                    }
-                    .frame(width: 400, height: 450)
-                })
-                .presentedWindowStyle(.hiddenTitleBar)
-                
-                NavigationLink("Acknowledgements", destination: {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text("Acknowledgements")
-                            .font(.largeTitle)
-                            .bold()
-                            .padding()
-                        Divider()
-                        AcknowledgementsView()
-                    }
-                    .frame(width: 400, height: 450)
-                })
-                .presentedWindowStyle(.hiddenTitleBar)
+                Link("Privacy Policy", destination: URL(string: "https://www.fromshawn.dev/qrpop/privacy-policy")!)
+                Link("Acknowledgements", destination: URL(string: "https://www.fromshawn.dev/qrpop/support/acknowledgements")!)
+                Link("Submit Feedback", destination: URL(string: "https://forms.gle/L7aV8KRTT8EXLT2K6")!)
             })
         }
     }
