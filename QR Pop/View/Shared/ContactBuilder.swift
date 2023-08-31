@@ -671,6 +671,7 @@ private enum DynamicListFieldType: String, CaseIterable {
     
     case home = "home"
     case work = "work"
+    //case other(value: String) = "other"
     
     init?(rawValue: String) {
         if rawValue == "home" || rawValue == "homepage" { self = .home }

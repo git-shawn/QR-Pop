@@ -23,8 +23,7 @@ struct SupportSettings: View {
                 WebView(url: URL(string: "https://forms.gle/L7aV8KRTT8EXLT2K6")!)
                     .navigationTitle("Feedback")
                     .navigationBarTitleDisplayMode(.inline)
-                    .toolbarBackground(.visible, for: .navigationBar)
-                    .toolbarBackground(Color(red: 0.96, green: 0.96, blue: 0.96))
+                    .preferredColorScheme(.light)
             }, label: {
                 Label("Submit feedback", systemImage: "megaphone")
             })

@@ -64,6 +64,7 @@ struct ShakeView: View {
                     .ignoresSafeArea()
                     .navigationTitle("Feedback")
                     .navigationBarTitleDisplayMode(.inline)
+                    .preferredColorScheme(.light)
                     .toolbar {
                         Button("Done", action: {
                             dismiss()
