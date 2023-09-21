@@ -19,6 +19,7 @@ struct AboutAppView: View {
                     RoundedRectangle(cornerRadius: 30, style: .continuous)
                 }
                 .shadow(radius: 10)
+                .shadow(color: .accentColor.opacity(0.2), radius: 30)
             
             Text("QR Pop")
                 .font(.largeTitle)

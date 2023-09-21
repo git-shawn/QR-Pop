@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		294AF1DA2A9D75830009751F /* vCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294AF1D92A9D75830009751F /* vCard.swift */; };
 		294AF1DD2A9D82870009751F /* Connections in Frameworks */ = {isa = PBXBuildFile; productRef = 294AF1DC2A9D82870009751F /* Connections */; };
+		297568AF2ABCAABB0014B2D1 /* CreateCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568AE2ABCAABB0014B2D1 /* CreateCodeView.swift */; };
 		297CC2A42A892B0900D5C836 /* DataSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CC2A32A892B0900D5C836 /* DataSettings.swift */; };
 		297CC2A62A892BC900D5C836 /* AppearanceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CC2A52A892BC900D5C836 /* AppearanceSettings.swift */; };
 		297CC2A82A892C3200D5C836 /* SupportSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CC2A72A892C3200D5C836 /* SupportSettings.swift */; };
@@ -669,6 +670,7 @@
 
 /* Begin PBXFileReference section */
 		294AF1D92A9D75830009751F /* vCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vCard.swift; sourceTree = "<group>"; };
+		297568AE2ABCAABB0014B2D1 /* CreateCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCodeView.swift; sourceTree = "<group>"; };
 		297CC2A32A892B0900D5C836 /* DataSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSettings.swift; sourceTree = "<group>"; };
 		297CC2A52A892BC900D5C836 /* AppearanceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettings.swift; sourceTree = "<group>"; };
 		297CC2A72A892C3200D5C836 /* SupportSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportSettings.swift; sourceTree = "<group>"; };
@@ -1240,7 +1242,6 @@
 			children = (
 				CDF793712A082ABC00B1FA50 /* Utils */,
 				CDFE670429F4DA3D0086BF7A /* View */,
-				CDF793082A080C6400B1FA50 /* Model */,
 				CDFE670529F4DA410086BF7A /* Resources */,
 			);
 			path = WatchOS;
@@ -1561,13 +1562,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		CDF793082A080C6400B1FA50 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		CDF793242A080EEB00B1FA50 /* watchOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -1593,6 +1587,7 @@
 				CD4F20AC29F4CC5E0037082F /* CodeDetailView.swift */,
 				CDFE670629F4DA7B0086BF7A /* RootView.swift */,
 				CD9DAB1529F45EFF008B3C1F /* QRPopWatch.swift */,
+				297568AE2ABCAABB0014B2D1 /* CreateCodeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2604,6 +2599,7 @@
 				CDC8C8F029FAD1FD004C239C /* OSLog+QRPop.swift in Sources */,
 				CDE11F912A0412580011C648 /* EntityProtocol.swift in Sources */,
 				CD9DAB2D29F45F38008B3C1F /* Database.xcdatamodeld in Sources */,
+				297568AF2ABCAABB0014B2D1 /* CreateCodeView.swift in Sources */,
 				CD9DAB3D29F45F51008B3C1F /* Color+QRCode.swift in Sources */,
 				CD9DAB3929F45F4A008B3C1F /* CGSize+QRPop.swift in Sources */,
 				CD9DAB2F29F45F3D008B3C1F /* BuilderModel.swift in Sources */,

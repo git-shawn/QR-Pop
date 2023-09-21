@@ -90,6 +90,9 @@ struct ContactBuilder: View {
                         .frame(width: 96, height: 96)
                         .foregroundStyle(Color.gray.gradient)
                     Spacer()
+#if os(macOS)
+    .padding(.top)
+#endif
                 }
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
@@ -126,6 +129,7 @@ struct ContactBuilder: View {
                             })
                         })
 #if os(macOS)
+                        .padding(.top, 10)
                         .buttonStyle(.plain)
 #endif
                     } else {
@@ -157,6 +161,9 @@ struct ContactBuilder: View {
                                 }
                             })
                         }
+                        #if os(macOS)
+                        .padding(.top, 10)
+                        #endif
                     }
 #if os(macOS)
                     Divider()
@@ -188,6 +195,9 @@ struct ContactBuilder: View {
                     Divider()
 #endif
                     DynamicAddressList(fields: $addresses)
+                    #if os(macOS)
+                        .padding(.bottom)
+                    #endif
                 }
             }
 #if os(iOS)

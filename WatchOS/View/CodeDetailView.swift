@@ -71,45 +71,58 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius purus ac d
                     }
                     
                     Group {
-                        Text("\(model.content.builder.icon) \(model.content.builder.title)")
+                        Text(model.content.builder.title)
                         
                         Text("Created ") +
-                        Text(model.created ?? Date(), style: .date)
+                        Text(model.created?.formatted(.dateTime.day().month().year()) ?? "Unknown")
                     }
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .padding(.leading)
                 }
                 Spacer()
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Label("Back to Menu", systemImage: "arrowshape.turn.up.backward")
-                })
                 
-                Button(action: {
-                    brightenCode.toggle()
-                }, label: {
-                    Label(title: {
-                        Text("Brighten Code")
-                    }, icon: {
-                        if brightenCode {
-                            Image(systemName: "lightbulb.slash")
-                        } else {
-                            Image(systemName: "lightbulb")
-                        }
+                if #available(watchOS 10.0, *) {
+                    
+                } else {
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        Label("Back to Menu", systemImage: "arrowshape.turn.up.backward")
                     })
-                })
+                }
                 
-                ShareLink("Share Code", item: model, preview: SharePreview("\(title)", image: model))
-                    .tint(.blue)
-                
-                Button(role: .destructive, action: {
-                    showDeleteDialog = true
-                }, label: {
-                    Label("Delete", systemImage: "trash")
+                Toggle(isOn: $brightenCode, label: {
+                    if brightenCode {
+                        Label("Restore Code", systemImage: "dial.high")
+                    } else {
+                        Label("Simplify Code", systemImage: "dial.low")
+                    }
                 })
+                .toggleStyle(.button)
+                
+                HStack {
+                    ShareLink("", item: model, preview: SharePreview("\(title)", image: model))
+                        .tint(.blue)
+                    
+                    Button(role: .destructive, action: {
+                        showDeleteDialog = true
+                    }, label: {
+                        Image(systemName: "trash")
+                    })
+                }
                 Spacer()
+            }
+        }
+        .toolbar {
+            if #available(watchOS 10.0, *) {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }, label: {
+                        Image(systemName: "chevron.left")
+                    })
+                }
             }
         }
         .confirmationDialog("Delete Code from Library?", isPresented: $showDeleteDialog, actions: {
@@ -169,13 +182,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius purus ac d
             .padding(16)
         }
         .ignoresSafeArea(edges: .bottom)
+        .toolbar(.hidden, for: .navigationBar)
     }
 }
 
 #if targetEnvironment(simulator)
 struct CodeDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        CodeDetailView()
+        NavigationStack {
+            CodeDetailView()
+        }
     }
 }
 #endif

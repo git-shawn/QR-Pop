@@ -208,7 +208,7 @@ fileprivate struct GetWifiButton: View {
     private func unsupportedAlert() {
         sceneModel.toaster = .error(note: "Network not supported")
     }
-    
+
     private func isWIFIActive() -> Bool {
         guard let interfaceNames = CWWiFiClient.interfaceNames() else {
             return false
