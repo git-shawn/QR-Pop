@@ -25,6 +25,9 @@ struct BuilderView: View {
     @Environment(\.verticalSizeClass) var vSizeClass
     @Environment(\.managedObjectContext) var moc
     
+    @AppStorage("exportsAttempted", store: .appGroup) var exportsAttempted: Int = 0
+    @Environment(\.requestReview) var requestReview
+    
 #if os(macOS)
     @SceneStorage("designPanelWidth") var designPanelWidth: Double = 275
 #endif
@@ -231,6 +234,7 @@ extension BuilderView {
                         do {
                             try model.addToPhotoLibrary(for: 512)
                             sceneModel.toaster = .saved(note: "Image saved")
+                            noteSuccessfulExport()
                         } catch {
                             Logger.logView.error("BuilderView: Could not write QR code to photos app.")
                             sceneModel.toaster = .error(note: "Could not save photo")
@@ -356,6 +360,7 @@ extension BuilderView {
                             imageColor: .secondary,
                             title: "Saved",
                             note: "Code added to archive")
+                        noteSuccessfulExport()
                     } else {
                         entity?.title = newArchiveTitle.isEmpty ? "My QR Code" : newArchiveTitle
                         try moc.atomicSave()
@@ -366,6 +371,14 @@ extension BuilderView {
                 }
             })
         })
+    }
+    
+    func noteSuccessfulExport() {
+        if exportsAttempted < 5 {
+            exportsAttempted += 1;
+        } else if exportsAttempted == 5 {
+            requestReview()
+        }
     }
 }
 
