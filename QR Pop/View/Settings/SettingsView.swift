@@ -23,7 +23,7 @@ struct SettingsView: View {
             Section(content: {}, footer: {
                 VStack {
                     Text("QR Code is a registered trademark of [DENSO WAVE](https://www.qrcode.com/en/)")
-                    Text("Made with \(Image(systemName: "heart")) in Southern Illinois")
+                    Text("Made with \(Image(systemName: "heart")) in Colorado")
                 }
                 .frame(maxWidth: .infinity)
                 .font(.caption2)

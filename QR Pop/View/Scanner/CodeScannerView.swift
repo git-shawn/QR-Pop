@@ -36,7 +36,7 @@ struct CodeScannerView: View {
             case .result(let payload):
                 if !payload.isEmpty {
                     BuilderView(model: QRModel(title: "Scan Results", design: DesignModel(), content: BuilderModel(text: payload)))
-                        .transition(.slide)
+                        .transition(.opacity)
                         .toolbar {
                             ToolbarItem(placement: .navigation) {
                                 ImageButton("Scan Again", systemImage: "chevron.backward", action: {
@@ -46,7 +46,7 @@ struct CodeScannerView: View {
                         }
                 } else {
                     noResultView
-                        .transition(.slide)
+                        .transition(.opacity)
                         .toolbar {
                             ToolbarItem(placement: .navigation) {
                                 ImageButton("Scan Again", systemImage: "chevron.backward", action: {

@@ -170,6 +170,18 @@ extension ShareView {
                     
                     extensionItemType = .image(content: contentString)
                     
+                } else if let image = imageItem as? PlatformImage {
+                    guard let scannedContentArray = QRCode.DetectQRCodes(in: image),
+                          let scannedContent = scannedContentArray.first,
+                          let contentString = scannedContent.messageString,
+                          !contentString.isEmpty
+                    else {
+                        Logger.logExtension.notice("ShareExtension: Shared image could not be decoded. It may not have contained a QR code.")
+                        extensionItemType = .badScan
+                        return
+                    }
+                    
+                    extensionItemType = .image(content: contentString)
                 } else {
                     Logger.logExtension.error("ShareExtension: Image was shared in an unpredictable way.")
                     extensionItemType = .error

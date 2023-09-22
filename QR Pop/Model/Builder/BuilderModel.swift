@@ -116,7 +116,7 @@ extension BuilderModel {
             case .shortcut:
                 return Image(systemName: "square.2.layers.3d")
             case .whatsapp:
-                return Image("whatsapp.fill")
+                return Image("whatsapp")
             }
         }
         
