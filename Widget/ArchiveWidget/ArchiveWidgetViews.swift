@@ -28,8 +28,10 @@ struct ArchiveWidgetView: View {
                 InlineArchiveWidgetView(entry: entry)
             case .accessoryRectangular:
                 RectangularArchiveWidgetView(entry: entry)
+#if os(watchOS)
             case .accessoryCorner:
                 CornerArchiveWidgetView(entry: entry)
+#endif
             @unknown default:
                 Text("Unsupported Size")
                     .foregroundStyle(Color.white)
@@ -226,8 +228,9 @@ struct CircularArchiveWidgetView: View {
     }
 }
 
+#if os(watchOS)
 //MARK: Corner Accessory Widget
-@available(watchOS 10.0, iOS 17.0, macOS 14.0, *)
+@available(watchOS 10.0, *)
 struct CornerArchiveWidgetView: View {
     let entry: ArchivedCodeEntry
     
@@ -242,6 +245,7 @@ struct CornerArchiveWidgetView: View {
         .widgetLabel(entry.model.title ?? "My QR Code")
     }
 }
+#endif
 
 //MARK: Preview Providers
 #if os(iOS)
