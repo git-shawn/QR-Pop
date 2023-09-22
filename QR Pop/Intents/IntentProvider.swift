@@ -11,18 +11,12 @@ import AppIntents
 struct QRPopShortcuts: AppShortcutsProvider {
     static var shortcutTileColor: ShortcutTileColor = .tangerine
     
-    /**
-     Despite including `"View \(.$code) in \(.applicationName)"` as one of the available phrases,
-     it doesn't currently seem possible to actually call invoke Siri with that phrase. However, I'm leaving it in anyway
-     in case that feature does become available in later iOS versions.
-     */
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: ViewArchiveIntent(),
             phrases: [
                 "View my \(.applicationName) Archive",
-                "Show me my \(.applicationName) Archive",
-                "View \(\.$code) in \(.applicationName)"
+                "Show me my \(.applicationName) Archive"
             ],
             shortTitle: "View QR Code",
             systemImageName: "archivebox")
@@ -42,7 +36,7 @@ struct QRPopShortcuts: AppShortcutsProvider {
                 "Build a QR Code with a \(.applicationName) Template",
                 "Generate a QR Code with a \(.applicationName) Template"
             ],
-            shortTitle: "Build QR Code with Template",
+            shortTitle: "Build with Template",
             systemImageName: "qrcode")
     }
 }

@@ -244,15 +244,15 @@ struct ContactBuilder: View {
         }
         
         contact.phoneNumbers = phoneNumbers.map {
-            CNLabeledValue(label: $0.kind.rawValue, value: CNPhoneNumber(stringValue: $0.number))
+            CNLabeledValue(label: $0.kind.name, value: CNPhoneNumber(stringValue: $0.number))
         }
         
         contact.emailAddresses = emails.map {
-            CNLabeledValue(label: $0.kind.rawValue, value: $0.value as NSString)
+            CNLabeledValue(label: $0.kind.name, value: $0.value as NSString)
         }
         
         contact.urlAddresses = urls.map {
-            CNLabeledValue(label: $0.kind.rawValue, value: $0.value as NSString)
+            CNLabeledValue(label: $0.kind.name, value: $0.value as NSString)
         }
         
         contact.postalAddresses = addresses.map {
@@ -262,7 +262,7 @@ struct ContactBuilder: View {
             address.postalCode = $0.zip
             address.city = $0.city
             address.isoCountryCode = "us"
-            return CNLabeledValue(label: $0.kind.rawValue, value: address)
+            return CNLabeledValue(label: $0.kind.name, value: address)
         }
         
         return contact
@@ -319,7 +319,7 @@ private struct DynamicGenericList: View {
                                 
                             }, label: {
                                 HStack {
-                                    Text(field.kind.rawValue)
+                                    Text(field.kind.name)
 #if os(iOS)
                                     Image(systemName: "chevron.forward")
                                         .imageScale(.small)
@@ -421,7 +421,7 @@ private struct DynamicAddressList: View {
 #endif
                             }, label: {
                                 HStack {
-                                    Text(field.kind.rawValue)
+                                    Text(field.kind.name)
 #if os(iOS)
                                     Image(systemName: "chevron.forward")
                                         .imageScale(.small)
@@ -545,7 +545,7 @@ private struct DynamicPhoneList: View {
                             Menu(content: {
                                 let usedTypes = GetUsedDynamicPhoneFieldTypes(for: phones)
                                 ForEach(DynamicPhoneFieldType.allCases, id: \.self) { type in
-                                    Button(type.rawValue, action: {
+                                    Button(type.name, action: {
                                         phones[index].kind = type
                                     })
                                     .disabled(usedTypes.contains(type))
@@ -555,7 +555,7 @@ private struct DynamicPhoneList: View {
                                 }
                             }, label: {
                                 HStack {
-                                    Text(phone.kind.rawValue)
+                                    Text(phone.kind.name)
 #if os(iOS)
                                     Image(systemName: "chevron.forward")
                                         .imageScale(.small)
@@ -617,16 +617,38 @@ private struct DynamicPhoneField: Hashable {
 
 /// Acceptable vCard Paramter Values for a `TEL` as defined by IANA.
 /// [Source](https://www.iana.org/assignments/vcard-elements/vcard-elements.xhtml)
-private enum DynamicPhoneFieldType: String, CaseIterable {
-    static func < (lhs: DynamicPhoneFieldType, rhs: DynamicPhoneFieldType) -> Bool {
-        lhs.rawValue < rhs.rawValue
+private enum DynamicPhoneFieldType: CaseIterable, Equatable, Hashable {
+    static var allCases: [DynamicPhoneFieldType] {
+        [.home, .work, .fax, .cell, .voice]
     }
     
-    case home = "home"
-    case work = "work"
-    case fax = "fax"
-    case cell = "cell"
-    case voice = "voice"
+    static func < (lhs: DynamicPhoneFieldType, rhs: DynamicPhoneFieldType) -> Bool {
+        lhs.name < rhs.name
+    }
+    
+    case home
+    case work
+    case fax
+    case cell
+    case voice
+    case other(String)
+    
+    var name: String {
+        switch self {
+        case .home:
+            return "home"
+        case .work:
+            return "work"
+        case .fax:
+            return "fax"
+        case .cell:
+            return "cell"
+        case .voice:
+            return "voice"
+        case .other(let string):
+            return string
+        }
+    }
     
     init?(rawValue: String) {
         if rawValue == "home" { self = .home }
@@ -634,7 +656,7 @@ private enum DynamicPhoneFieldType: String, CaseIterable {
         else if rawValue == "fax" { self = .fax }
         else if rawValue == "cell" || rawValue == "mobile" { self = .cell}
         else if rawValue == "voice" { self = .voice }
-        else { return nil }
+        else { self = .other(rawValue) }
     }
 }
 
@@ -674,19 +696,34 @@ private struct DynamicAddressField: Hashable {
     var kind: DynamicListFieldType
 }
 
-private enum DynamicListFieldType: String, CaseIterable {
-    static func < (lhs: DynamicListFieldType, rhs: DynamicListFieldType) -> Bool {
-        lhs.rawValue < rhs.rawValue
+private enum DynamicListFieldType: CaseIterable, Hashable, Equatable {
+    static var allCases: [DynamicListFieldType] {
+        [.home, .work]
     }
     
-    case home = "home"
-    case work = "work"
-    //case other(value: String) = "other"
+    static func < (lhs: DynamicListFieldType, rhs: DynamicListFieldType) -> Bool {
+        lhs.name < rhs.name
+    }
+    
+    case home
+    case work
+    case other(String)
+    
+    var name: String {
+        switch self {
+        case .home:
+            return "home"
+        case .work:
+            return "work"
+        case .other(let string):
+            return string
+        }
+    }
     
     init?(rawValue: String) {
         if rawValue == "home" || rawValue == "homepage" { self = .home }
         else if rawValue == "work" { self = .work }
-        else { return nil }
+        else { self = .other(rawValue) }
     }
 }
 

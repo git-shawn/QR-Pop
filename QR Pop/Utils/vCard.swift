@@ -10,18 +10,18 @@ import Connections
 
 class vCard {
     
-    /// <#Description#>
-    /// - Parameter contact: <#contact description#>
-    /// - Returns: <#description#>
+    /// Convert a `CNContact` into a `String` representation of a vCard without unecessary data like images.
+    /// - Parameter contact: The `CNContact` to serialize.
+    /// - Returns: A sanitized `String` representation
     static func sanitarySerialization(of contact: CNContact) throws -> String {
         let vdata = try CNContactVCardSerialization.data(with: [contact])
         let vstring = String(decoding: vdata, as: UTF8.self)
         return sanitize(vstring)
     }
     
-    /// <#Description#>
-    /// - Parameter contact: <#contact description#>
-    /// - Returns: <#description#>
+    /// Convert a `CNMutableContact` into a `String` representation of a vCard without unecessary data like images.
+    /// - Parameter contact: The `CNMutableContact` to serialize.
+    /// - Returns: A sanitized `String` representation
     static func sanitarySerialization(of mutableContact: CNMutableContact) throws -> String {
         let vdata = try CNContactVCardSerialization.data(with: [mutableContact])
         let vstring = String(decoding: vdata, as: UTF8.self)
