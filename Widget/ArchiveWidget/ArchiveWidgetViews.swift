@@ -13,6 +13,10 @@ import QRCode
 struct ArchiveWidgetView: View {
     @Environment(\.widgetFamily) var family
     let entry: ArchivedCodeEntry
+    var launchURL: String {
+        "qrpop:///archive/\(entry.model.id?.uuidString ?? "")"
+    }
+    
     var body: some View {
         ZStack {
             switch family {
@@ -38,6 +42,7 @@ struct ArchiveWidgetView: View {
                     .containerBackground(Color.black, for: .widget)
             }
         }
+        .widgetURL(URL(string: launchURL))
     }
 }
 
@@ -233,13 +238,16 @@ struct CircularArchiveWidgetView: View {
 @available(watchOS 10.0, *)
 struct CornerArchiveWidgetView: View {
     let entry: ArchivedCodeEntry
+    @Environment(\.showsWidgetContainerBackground) var showsWidgetContainerBackground
     
     var body: some View {
-        ZStack {
-            entry.model.content.builder.icon
+        ViewThatFits {
+            Image(systemName: "qrcode")
                 .resizable()
+                .bold()
                 .scaledToFit()
                 .padding()
+                .foregroundStyle(showsWidgetContainerBackground ? entry.model.design.pixelColor : Color.white)
         }
         .containerBackground(entry.model.design.backgroundColor, for: .widget)
         .widgetLabel(entry.model.title ?? "My QR Code")
