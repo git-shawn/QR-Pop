@@ -1,6 +1,6 @@
 //
-//  WidgetViews.swift
-//  Widget Mac
+//  OldArchiveWidgetViews.swift
+//  QR Pop
 //
 //  Created by Shawn Davis on 4/21/23.
 //
@@ -11,7 +11,7 @@ import QRCode
 import OSLog
 
 struct WidgetViews: View {
-    var entry: Provider.Entry
+    var entry: OldArchiveProvider.Entry
     @Environment(\.widgetFamily) var widgetFamily
     @Environment(\.colorScheme) var colorScheme
     
@@ -338,20 +338,3 @@ extension WidgetViews {
 }
 
 #endif
-
-/**
- These previews do not seem to work on any target.
- */
-struct WidgetViews_Previews: PreviewProvider {
-    static var previews: some View {
-#if !os(watchOS)
-        WidgetViews(entry: ArchiveEntry(kind: .snapshot))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-        WidgetViews(entry: ArchiveEntry(kind: .snapshot))
-            .previewContext(WidgetPreviewContext(family: .systemMedium))
-#else
-        WidgetViews(entry: ArchiveEntry(kind: .snapshot))
-            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-#endif
-    }
-}

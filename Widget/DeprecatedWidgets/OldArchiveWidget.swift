@@ -1,8 +1,8 @@
 //
-//  Widgets.swift
-//  Widget Mac
+//  OldArchiveWidget.swift
+//  QR Pop
 //
-//  Created by Shawn Davis on 4/21/23.
+//  Created by Shawn Davis on 9/21/23.
 //
 
 import WidgetKit
@@ -11,24 +11,24 @@ import Intents
 import QRCode
 import OSLog
 
-struct Provider: IntentTimelineProvider {
+struct OldArchiveProvider: IntentTimelineProvider {
     let moc = Persistence.shared.container.viewContext
     
-    func placeholder(in context: Context) -> ArchiveEntry {
-        ArchiveEntry(kind: .placeholder)
+    func placeholder(in context: Context) -> OldArchiveEntry {
+        OldArchiveEntry(kind: .placeholder)
     }
     
     func getSnapshot(for configuration: TimelineConfigurationIntent,
                      in context: Context,
-                     completion: @escaping (ArchiveEntry) -> Void) {
-        let entry = ArchiveEntry(model: getModel(from: configuration), kind: .timeline)
+                     completion: @escaping (OldArchiveEntry) -> Void) {
+        let entry = OldArchiveEntry(model: getModel(from: configuration), kind: .timeline)
         completion(entry)
     }
     
     func getTimeline(for configuration: TimelineConfigurationIntent,
                      in context: Context,
-                     completion: @escaping (Timeline<ArchiveEntry>) -> Void) {
-        let entries = [ArchiveEntry(model: getModel(from: configuration), kind: .timeline)]
+                     completion: @escaping (Timeline<OldArchiveEntry>) -> Void) {
+        let entries = [OldArchiveEntry(model: getModel(from: configuration), kind: .timeline)]
         let timeline = Timeline(entries: entries, policy: .never)
         completion(timeline)
     }
@@ -65,7 +65,7 @@ struct Provider: IntentTimelineProvider {
     }
 }
 
-struct ArchiveEntry: TimelineEntry {
+struct OldArchiveEntry: TimelineEntry {
     let date: Date = Date()
     var model: QRModel? = nil
     var kind: PresentationKind
@@ -75,11 +75,14 @@ struct ArchiveEntry: TimelineEntry {
     }
 }
 
-struct QRPopWidget: Widget {
+struct OldArchiveWidget: Widget {
     let kind: String = "ArchiveWidget"
     
     var body: some WidgetConfiguration {
-        IntentConfiguration(kind: kind, intent: TimelineConfigurationIntent.self, provider: Provider()) { entry in
+        IntentConfiguration(
+            kind: kind,
+            intent: TimelineConfigurationIntent.self,
+            provider: OldArchiveProvider()) { entry in
             WidgetViews(entry: entry)
         }
 #if os(iOS)
@@ -89,17 +92,7 @@ struct QRPopWidget: Widget {
 #elseif os(watchOS)
         .supportedFamilies([.accessoryCircular,.accessoryInline,.accessoryRectangular])
 #endif
-        .configurationDisplayName("QR Pop Archive")
-        .description("Display a code from your QR Pop Archive.")
+        .configurationDisplayName("QR Code")
+        .description("Select a QR code saved within your QR Pop archive")
     }
-}
-
-@main
-struct Widgets: WidgetBundle {
-   var body: some Widget {
-#if os(iOS)
-       RegionBasedActivity()
-#endif
-       QRPopWidget()
-   }
 }

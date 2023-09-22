@@ -65,7 +65,6 @@ extension QRModel {
 #if canImport(CoreImage)
         doc.logoTemplate = design.getLogoTemplate()
 #endif
-        
         return doc
     }
 }
@@ -156,6 +155,38 @@ extension QRModel {
     /// - Returns: An Image.
     func image(for dimension: Int) -> Image? {
         return qrCodeDoc.imageUI(CGSize(width: dimension, height: dimension), label: Text("QR Code"))
+    }
+    
+    /// The QR code described by this model, without a background, as a SwiftUI `Image`.
+    /// - Parameter dimension: The width/height dimension for the exported image.
+    /// - Returns: An Image.
+    func transparentImage(for dimension: Int) -> Image? {
+        let doc = QRCode.Document(utf8String: content.result)
+        var transparentDesign = design
+        transparentDesign.backgroundColor = Color.white.opacity(0)
+        doc.design = transparentDesign.qrCodeDesign
+        doc.errorCorrection = design.errorCorrection
+#if canImport(CoreImage)
+        doc.logoTemplate = design.getLogoTemplate()
+#endif
+        return doc.imageUI(CGSize(width: dimension, height: dimension), label: Text("QR Code"))
+    }
+    
+    /// The QR code described by this model, without an overlay image, as a monochrome SwiftUI `Image`.
+    /// - Parameter dimension: The width/height dimension for the exported image.
+    /// - Returns: An Image.
+    func monochromeImage(for dimension: Int, foregroundColor: Color = .black, backgroundColor: Color = .white) -> Image? {
+        let doc = QRCode.Document(utf8String: content.result)
+        
+        var monoDesign = design
+        monoDesign.backgroundColor = backgroundColor
+        monoDesign.pixelColor = foregroundColor
+        monoDesign.pupilColor = foregroundColor
+        monoDesign.eyeColor = foregroundColor
+        
+        doc.design = monoDesign.qrCodeDesign
+        doc.errorCorrection = design.errorCorrection
+        return doc.imageUI(CGSize(width: dimension, height: dimension), label: Text("QR Code"))
     }
 }
 

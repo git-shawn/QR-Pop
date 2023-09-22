@@ -10,6 +10,31 @@
 		294AF1DA2A9D75830009751F /* vCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294AF1D92A9D75830009751F /* vCard.swift */; };
 		294AF1DD2A9D82870009751F /* Connections in Frameworks */ = {isa = PBXBuildFile; productRef = 294AF1DC2A9D82870009751F /* Connections */; };
 		297568AF2ABCAABB0014B2D1 /* CreateCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568AE2ABCAABB0014B2D1 /* CreateCodeView.swift */; };
+		297568CF2ABD27660014B2D1 /* WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568C92ABD270A0014B2D1 /* WidgetBundle.swift */; };
+		297568D02ABD27660014B2D1 /* WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568C92ABD270A0014B2D1 /* WidgetBundle.swift */; };
+		297568D12ABD27670014B2D1 /* WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568C92ABD270A0014B2D1 /* WidgetBundle.swift */; };
+		297568D32ABD27B10014B2D1 /* ArchiveTimelineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568D22ABD27B10014B2D1 /* ArchiveTimelineIntent.swift */; };
+		297568D42ABD27B10014B2D1 /* ArchiveTimelineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568D22ABD27B10014B2D1 /* ArchiveTimelineIntent.swift */; };
+		297568D52ABD27B10014B2D1 /* ArchiveTimelineIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568D22ABD27B10014B2D1 /* ArchiveTimelineIntent.swift */; };
+		297568D72ABD27BB0014B2D1 /* ArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568D62ABD27BB0014B2D1 /* ArchiveWidget.swift */; };
+		297568D82ABD27BB0014B2D1 /* ArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568D62ABD27BB0014B2D1 /* ArchiveWidget.swift */; };
+		297568D92ABD27BB0014B2D1 /* ArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568D62ABD27BB0014B2D1 /* ArchiveWidget.swift */; };
+		297568DB2ABD27C30014B2D1 /* ArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568DA2ABD27C30014B2D1 /* ArchiveWidgetViews.swift */; };
+		297568DC2ABD27C30014B2D1 /* ArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568DA2ABD27C30014B2D1 /* ArchiveWidgetViews.swift */; };
+		297568DD2ABD27C30014B2D1 /* ArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568DA2ABD27C30014B2D1 /* ArchiveWidgetViews.swift */; };
+		297568E02ABD3FC10014B2D1 /* OldArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */; };
+		297568E12ABD3FC10014B2D1 /* OldArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */; };
+		297568E32ABD3FC10014B2D1 /* OldArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */; };
+		297568E52ABD3FD70014B2D1 /* OldArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */; };
+		297568E62ABD3FD70014B2D1 /* OldArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */; };
+		297568E72ABD3FD70014B2D1 /* OldArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */; };
+		297568EA2ABD41720014B2D1 /* OldArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */; };
+		297568EB2ABD41730014B2D1 /* OldArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */; };
+		297568EC2ABD41730014B2D1 /* OldArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */; };
+		297568ED2ABD41770014B2D1 /* OldArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */; };
+		297568EE2ABD41770014B2D1 /* OldArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */; };
+		297568EF2ABD41790014B2D1 /* OldArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */; };
+		297568F02ABD41790014B2D1 /* OldArchiveWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */; };
 		297CC2A42A892B0900D5C836 /* DataSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CC2A32A892B0900D5C836 /* DataSettings.swift */; };
 		297CC2A62A892BC900D5C836 /* AppearanceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CC2A52A892BC900D5C836 /* AppearanceSettings.swift */; };
 		297CC2A82A892C3200D5C836 /* SupportSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CC2A72A892C3200D5C836 /* SupportSettings.swift */; };
@@ -86,7 +111,6 @@
 		CD1FF50029F378FA006E6832 /* TimelineIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */; };
 		CD1FF50129F378FA006E6832 /* TimelineIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */; };
 		CD1FF50429F378FA006E6832 /* Widget Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD1FF4F529F378F9006E6832 /* Widget Mac.appex */; platformFilters = (macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		CD1FF50929F379E5006E6832 /* WidgetRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF50829F379E5006E6832 /* WidgetRoot.swift */; };
 		CD1FF50C29F37A6E006E6832 /* DesignModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04829ECC8DF00976328 /* DesignModel.swift */; };
 		CD1FF50D29F37A6E006E6832 /* BuilderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04729ECC8DF00976328 /* BuilderModel.swift */; };
 		CD1FF50E29F37A6E006E6832 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04029ECC8DF00976328 /* Persistence.swift */; };
@@ -136,7 +160,6 @@
 		CD69CE752A0D41D9000D0474 /* MenuControlGroupConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD69CE742A0D41D9000D0474 /* MenuControlGroupConvertible.swift */; };
 		CD70409B2A661E4C005E540D /* CNContact+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD70409A2A661E4C005E540D /* CNContact+Identifiable.swift */; };
 		CD708FD92A0E784D0079CF86 /* LocationActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD708FD82A0E784D0079CF86 /* LocationActivityModel.swift */; };
-		CD708FDB2A0E7E1E0079CF86 /* RegionBasedActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD708FDA2A0E7E1E0079CF86 /* RegionBasedActivity.swift */; };
 		CD708FDC2A0E88F90079CF86 /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC00629ECC8DF00976328 /* QRCodeView.swift */; };
 		CD708FDD2A0E89320079CF86 /* View+GeometryProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03429ECC8DF00976328 /* View+GeometryProxy.swift */; };
 		CD788D9C29C381F8003B5965 /* PagerTabStripView in Frameworks */ = {isa = PBXBuildFile; productRef = CD788D9B29C381F8003B5965 /* PagerTabStripView */; };
@@ -152,11 +175,10 @@
 		CD7A3F9B29F37F2100D23D54 /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04229ECC8DF00976328 /* Database.xcdatamodeld */; };
 		CD7A3F9D29F3822400D23D54 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = CD7A3F9C29F3822400D23D54 /* QRCode */; };
 		CD7A3F9F29F3822700D23D54 /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = CD7A3F9E29F3822700D23D54 /* QRCode */; };
-		CD7A3FA229F38A1C00D23D54 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* WidgetViews.swift */; };
+		CD7A3FA229F38A1C00D23D54 /* OldArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */; };
 		CD7A3FA329F38CB700D23D54 /* TimelineIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */; };
-		CD7A3FA429F38CB700D23D54 /* WidgetRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF50829F379E5006E6832 /* WidgetRoot.swift */; };
 		CD7A3FA529F38CB700D23D54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
-		CD7A3FA629F38CB700D23D54 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* WidgetViews.swift */; };
+		CD7A3FA629F38CB700D23D54 /* OldArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */; };
 		CD7A3FA729F38CB700D23D54 /* TimelineIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3F9829F37E0D00D23D54 /* TimelineIntentHandler.swift */; };
 		CD7A3FA829F38DA500D23D54 /* UserDefaults+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03729ECC8DF00976328 /* UserDefaults+QRPop.swift */; };
 		CD7A3FA929F38DA500D23D54 /* UserDefaults+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03729ECC8DF00976328 /* UserDefaults+QRPop.swift */; };
@@ -452,8 +474,7 @@
 		CDF793122A080EAF00B1FA50 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6E42F429CBFE1F008B9DAF /* WidgetKit.framework */; };
 		CDF793132A080EAF00B1FA50 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6E42F629CBFE1F008B9DAF /* SwiftUI.framework */; };
 		CDF7931F2A080EB000B1FA50 /* Widget watchOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CDF793112A080EAF00B1FA50 /* Widget watchOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		CDF793252A080F2B00B1FA50 /* WidgetRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF50829F379E5006E6832 /* WidgetRoot.swift */; };
-		CDF793262A080F2B00B1FA50 /* WidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* WidgetViews.swift */; };
+		CDF793262A080F2B00B1FA50 /* OldArchiveWidgetViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */; };
 		CDF793272A080F2B00B1FA50 /* TimelineIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3F9829F37E0D00D23D54 /* TimelineIntentHandler.swift */; };
 		CDF793282A080F2B00B1FA50 /* TimelineIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */; };
 		CDF793292A080F2B00B1FA50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
@@ -671,6 +692,11 @@
 /* Begin PBXFileReference section */
 		294AF1D92A9D75830009751F /* vCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vCard.swift; sourceTree = "<group>"; };
 		297568AE2ABCAABB0014B2D1 /* CreateCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCodeView.swift; sourceTree = "<group>"; };
+		297568C92ABD270A0014B2D1 /* WidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBundle.swift; sourceTree = "<group>"; };
+		297568D22ABD27B10014B2D1 /* ArchiveTimelineIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveTimelineIntent.swift; sourceTree = "<group>"; };
+		297568D62ABD27BB0014B2D1 /* ArchiveWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveWidget.swift; sourceTree = "<group>"; };
+		297568DA2ABD27C30014B2D1 /* ArchiveWidgetViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveWidgetViews.swift; sourceTree = "<group>"; };
+		297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldArchiveWidget.swift; sourceTree = "<group>"; };
 		297CC2A32A892B0900D5C836 /* DataSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSettings.swift; sourceTree = "<group>"; };
 		297CC2A52A892BC900D5C836 /* AppearanceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettings.swift; sourceTree = "<group>"; };
 		297CC2A72A892C3200D5C836 /* SupportSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportSettings.swift; sourceTree = "<group>"; };
@@ -701,7 +727,6 @@
 		CD1FF4FC29F378FA006E6832 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD1FF4FE29F378FA006E6832 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD1FF4FF29F378FA006E6832 /* Widget_Mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widget_Mac.entitlements; sourceTree = "<group>"; };
-		CD1FF50829F379E5006E6832 /* WidgetRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetRoot.swift; sourceTree = "<group>"; };
 		CD2010D929D9D0E40096F3E4 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		CD21703229F2F85300A18F17 /* Collection+Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Optional.swift"; sourceTree = "<group>"; };
 		CD46D69029F42044003501E3 /* IntentHandler iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "IntentHandler iOS.entitlements"; sourceTree = "<group>"; };
@@ -719,13 +744,12 @@
 		CD6E431629CC018B008B9DAF /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		CD70409A2A661E4C005E540D /* CNContact+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CNContact+Identifiable.swift"; sourceTree = "<group>"; };
 		CD708FD82A0E784D0079CF86 /* LocationActivityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationActivityModel.swift; sourceTree = "<group>"; };
-		CD708FDA2A0E7E1E0079CF86 /* RegionBasedActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionBasedActivity.swift; sourceTree = "<group>"; };
 		CD788DE129C66597003B5965 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CD788DE729C69709003B5965 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		CD78A19729F4891600EF2C6F /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		CD7A3F9829F37E0D00D23D54 /* TimelineIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineIntentHandler.swift; sourceTree = "<group>"; };
 		CD7A3FA029F3822F00D23D54 /* Widget iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Widget iOS.entitlements"; sourceTree = "<group>"; };
-		CD7A3FA129F38A1C00D23D54 /* WidgetViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetViews.swift; sourceTree = "<group>"; };
+		CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldArchiveWidgetViews.swift; sourceTree = "<group>"; };
 		CD7A3FB229F396A900D23D54 /* IntentHandler iOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "IntentHandler iOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD7A3FB729F396A900D23D54 /* IntentInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IntentInfo.plist; sourceTree = "<group>"; };
 		CD7A3FC229F396B300D23D54 /* IntentHandler Mac.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "IntentHandler Mac.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1031,6 +1055,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		297568C82ABD26CB0014B2D1 /* ArchiveWidget */ = {
+			isa = PBXGroup;
+			children = (
+				297568D22ABD27B10014B2D1 /* ArchiveTimelineIntent.swift */,
+				297568D62ABD27BB0014B2D1 /* ArchiveWidget.swift */,
+				297568DA2ABD27C30014B2D1 /* ArchiveWidgetViews.swift */,
+			);
+			path = ArchiveWidget;
+			sourceTree = "<group>";
+		};
+		297568DE2ABD3FAE0014B2D1 /* DeprecatedWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */,
+				CD7A3F9829F37E0D00D23D54 /* TimelineIntentHandler.swift */,
+				CD7A3FA129F38A1C00D23D54 /* OldArchiveWidgetViews.swift */,
+				297568E42ABD3FD70014B2D1 /* OldArchiveWidget.swift */,
+			);
+			path = DeprecatedWidgets;
+			sourceTree = "<group>";
+		};
 		297CC2A22A892AFD00D5C836 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -1135,12 +1180,10 @@
 		CD1FF4F829F378F9006E6832 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
-				CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */,
-				CD708FDA2A0E7E1E0079CF86 /* RegionBasedActivity.swift */,
-				CD7A3F9829F37E0D00D23D54 /* TimelineIntentHandler.swift */,
-				CD1FF50829F379E5006E6832 /* WidgetRoot.swift */,
-				CD7A3FA129F38A1C00D23D54 /* WidgetViews.swift */,
 				CD1FF4FC29F378FA006E6832 /* Assets.xcassets */,
+				297568C92ABD270A0014B2D1 /* WidgetBundle.swift */,
+				297568DE2ABD3FAE0014B2D1 /* DeprecatedWidgets */,
+				297568C82ABD26CB0014B2D1 /* ArchiveWidget */,
 				CD1FF50B29F37A4B006E6832 /* iOS */,
 				CD1FF50A29F37A46006E6832 /* macOS */,
 				CDF793242A080EEB00B1FA50 /* watchOS */,
@@ -2255,6 +2298,7 @@
 				CDBAC06F29ECC8DF00976328 /* EventForm.swift in Sources */,
 				CDBAC06029ECC8DF00976328 /* QRLogoOverlay.swift in Sources */,
 				CDBAC04D29ECC8DF00976328 /* SettingsCommands.swift in Sources */,
+				297568F02ABD41790014B2D1 /* OldArchiveWidget.swift in Sources */,
 				CDC8C8DC29F9F643004C239C /* ViewArchiveIntent.swift in Sources */,
 				CDBAC1CB29ED935500976328 /* View+GeometryProxy.swift in Sources */,
 				CDBAC1C429ED935500976328 /* UserDefaults+QRPop.swift in Sources */,
@@ -2263,6 +2307,7 @@
 				CDC8C8E429FACE4E004C239C /* OSLog+QRPop.swift in Sources */,
 				CD4F20A429F4B4BF0037082F /* MenuBarView.swift in Sources */,
 				CDBAC06B29ECC8DF00976328 /* PhoneForm.swift in Sources */,
+				297568EE2ABD41770014B2D1 /* OldArchiveWidgetViews.swift in Sources */,
 				CDBAC07129ECC8DF00976328 /* ContactForm.swift in Sources */,
 				CDBAC09B29ECC8E700976328 /* QRPopApp.swift in Sources */,
 				CDA4BFFD29F34646008A7E7B /* SuccessThumbOverlay.swift in Sources */,
@@ -2401,6 +2446,7 @@
 				CD1FF52029F37A91006E6832 /* Platform.swift in Sources */,
 				CD1FF52229F37A97006E6832 /* QRCode+Codable.swift in Sources */,
 				CD1FF52629F37A9B006E6832 /* Constants.swift in Sources */,
+				297568D72ABD27BB0014B2D1 /* ArchiveWidget.swift in Sources */,
 				CD7A3FA729F38CB700D23D54 /* TimelineIntentHandler.swift in Sources */,
 				CDC8C8EA29FAD1FB004C239C /* OSLog+QRPop.swift in Sources */,
 				CD7A3FA329F38CB700D23D54 /* TimelineIntent.intentdefinition in Sources */,
@@ -2408,7 +2454,11 @@
 				CD7A3F9B29F37F2100D23D54 /* Database.xcdatamodeld in Sources */,
 				CD7A3FAC29F38EAE00D23D54 /* Published+UserDefaults.swift in Sources */,
 				CD1FF51729F37A79006E6832 /* CGColor+QRPop.swift in Sources */,
+				297568DB2ABD27C30014B2D1 /* ArchiveWidgetViews.swift in Sources */,
+				297568E52ABD3FD70014B2D1 /* OldArchiveWidget.swift in Sources */,
 				CD1FF52329F37A97006E6832 /* String+QRPop.swift in Sources */,
+				297568D12ABD27670014B2D1 /* WidgetBundle.swift in Sources */,
+				297568D32ABD27B10014B2D1 /* ArchiveTimelineIntent.swift in Sources */,
 				CD1FF50C29F37A6E006E6832 /* DesignModel.swift in Sources */,
 				CD708FDD2A0E89320079CF86 /* View+GeometryProxy.swift in Sources */,
 				CD1FF50F29F37A6E006E6832 /* TemplateModel.swift in Sources */,
@@ -2420,10 +2470,8 @@
 				CD1FF51F29F37A8D006E6832 /* Image+Position.swift in Sources */,
 				CD1FF50D29F37A6E006E6832 /* BuilderModel.swift in Sources */,
 				CD1FF51029F37A6E006E6832 /* QRModel.swift in Sources */,
-				CD708FDB2A0E7E1E0079CF86 /* RegionBasedActivity.swift in Sources */,
 				CD1FF51A29F37A86006E6832 /* Color+Codable.swift in Sources */,
-				CD7A3FA629F38CB700D23D54 /* WidgetViews.swift in Sources */,
-				CD7A3FA429F38CB700D23D54 /* WidgetRoot.swift in Sources */,
+				CD7A3FA629F38CB700D23D54 /* OldArchiveWidgetViews.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2433,24 +2481,28 @@
 			files = (
 				CD7A3FAA29F38E6500D23D54 /* Color+Random.swift in Sources */,
 				CD1FF52429F37A98006E6832 /* QRCode+Codable.swift in Sources */,
-				CD7A3FA229F38A1C00D23D54 /* WidgetViews.swift in Sources */,
+				CD7A3FA229F38A1C00D23D54 /* OldArchiveWidgetViews.swift in Sources */,
+				297568DC2ABD27C30014B2D1 /* ArchiveWidgetViews.swift in Sources */,
 				CD1FF50029F378FA006E6832 /* TimelineIntent.intentdefinition in Sources */,
+				297568D02ABD27660014B2D1 /* WidgetBundle.swift in Sources */,
 				CD1FF52529F37A98006E6832 /* String+QRPop.swift in Sources */,
 				CDC8C8E929FAD1FA004C239C /* OSLog+QRPop.swift in Sources */,
+				297568E62ABD3FD70014B2D1 /* OldArchiveWidget.swift in Sources */,
 				CD1FF52729F37A9C006E6832 /* Constants.swift in Sources */,
 				CDC8C8DE29FABFFB004C239C /* EntityProtocol.swift in Sources */,
+				297568D42ABD27B10014B2D1 /* ArchiveTimelineIntent.swift in Sources */,
 				CD7A3F9A29F37F2100D23D54 /* Database.xcdatamodeld in Sources */,
 				CD7A3FAD29F38EAE00D23D54 /* Published+UserDefaults.swift in Sources */,
 				CD1FF51229F37A6E006E6832 /* BuilderModel.swift in Sources */,
 				CD1FF51E29F37A8D006E6832 /* Image+Position.swift in Sources */,
 				CD1FF52129F37A92006E6832 /* Platform.swift in Sources */,
-				CD1FF50929F379E5006E6832 /* WidgetRoot.swift in Sources */,
 				CD1FF51D29F37A87006E6832 /* Color+QRCode.swift in Sources */,
 				CD7A3FA829F38DA500D23D54 /* UserDefaults+QRPop.swift in Sources */,
 				CD7A3F9929F37E0D00D23D54 /* TimelineIntentHandler.swift in Sources */,
 				CD1FF51529F37A6E006E6832 /* QRModel.swift in Sources */,
 				CD1FF51429F37A6E006E6832 /* TemplateModel.swift in Sources */,
 				CD1FF51129F37A6E006E6832 /* DesignModel.swift in Sources */,
+				297568D82ABD27BB0014B2D1 /* ArchiveWidget.swift in Sources */,
 				CD1FF51329F37A6E006E6832 /* Persistence.swift in Sources */,
 				CD1FF51829F37A7A006E6832 /* CGSize+QRPop.swift in Sources */,
 				CD1FF51C29F37A87006E6832 /* Color+Codable.swift in Sources */,
@@ -2468,6 +2520,8 @@
 				CD7A3FED29F3980500D23D54 /* QRCode+Codable.swift in Sources */,
 				CD7A3FDC29F397E000D23D54 /* Database.xcdatamodeld in Sources */,
 				CDC8C8E829FAD1FA004C239C /* OSLog+QRPop.swift in Sources */,
+				297568EC2ABD41730014B2D1 /* OldArchiveWidget.swift in Sources */,
+				297568E32ABD3FC10014B2D1 /* OldArchiveWidgetViews.swift in Sources */,
 				CD7A3FD229F397DC00D23D54 /* QRModel.swift in Sources */,
 				CD7A3FF529F3983A00D23D54 /* TimelineIntent.intentdefinition in Sources */,
 				CD7A3FF129F3980C00D23D54 /* UserDefaults+QRPop.swift in Sources */,
@@ -2497,6 +2551,8 @@
 				CD7A3FEE29F3980500D23D54 /* QRCode+Codable.swift in Sources */,
 				CD7A3FD729F397DD00D23D54 /* QRModel.swift in Sources */,
 				CDC8C8E729FAD1FA004C239C /* OSLog+QRPop.swift in Sources */,
+				297568EB2ABD41730014B2D1 /* OldArchiveWidget.swift in Sources */,
+				297568E12ABD3FC10014B2D1 /* OldArchiveWidgetViews.swift in Sources */,
 				CD7A3FF629F3983B00D23D54 /* TimelineIntent.intentdefinition in Sources */,
 				CD7A3FF229F3980D00D23D54 /* UserDefaults+QRPop.swift in Sources */,
 				CD9DAB2B29F45F37008B3C1F /* Database.xcdatamodeld in Sources */,
@@ -2596,12 +2652,14 @@
 				CD9DAB2229F45F2E008B3C1F /* QRModel.swift in Sources */,
 				CDF7932C2A080F5000B1FA50 /* TimelineIntent.intentdefinition in Sources */,
 				CD9DAB2129F45F2E008B3C1F /* Persistence.swift in Sources */,
+				297568EF2ABD41790014B2D1 /* OldArchiveWidget.swift in Sources */,
 				CDC8C8F029FAD1FD004C239C /* OSLog+QRPop.swift in Sources */,
 				CDE11F912A0412580011C648 /* EntityProtocol.swift in Sources */,
 				CD9DAB2D29F45F38008B3C1F /* Database.xcdatamodeld in Sources */,
 				297568AF2ABCAABB0014B2D1 /* CreateCodeView.swift in Sources */,
 				CD9DAB3D29F45F51008B3C1F /* Color+QRCode.swift in Sources */,
 				CD9DAB3929F45F4A008B3C1F /* CGSize+QRPop.swift in Sources */,
+				297568ED2ABD41770014B2D1 /* OldArchiveWidgetViews.swift in Sources */,
 				CD9DAB2F29F45F3D008B3C1F /* BuilderModel.swift in Sources */,
 				CDF7932D2A080F5200B1FA50 /* TimelineIntentHandler.swift in Sources */,
 				CD9DAB4B29F45F69008B3C1F /* Published+UserDefaults.swift in Sources */,
@@ -2681,16 +2739,19 @@
 				CDF793542A08102E00B1FA50 /* Color+Random.swift in Sources */,
 				CDF793452A080FD800B1FA50 /* TemplateModel.swift in Sources */,
 				CDF793422A080FD500B1FA50 /* QRModel.swift in Sources */,
+				297568DD2ABD27C30014B2D1 /* ArchiveWidgetViews.swift in Sources */,
 				CDF7935E2A08104800B1FA50 /* Platform.swift in Sources */,
+				297568CF2ABD27660014B2D1 /* WidgetBundle.swift in Sources */,
 				CDF7934B2A08101D00B1FA50 /* CGColor+QRPop.swift in Sources */,
 				CDF793602A08104B00B1FA50 /* Published+UserDefaults.swift in Sources */,
+				297568E72ABD3FD70014B2D1 /* OldArchiveWidget.swift in Sources */,
 				CDF7934A2A080FE000B1FA50 /* DesignModel.swift in Sources */,
 				CDF793622A08104F00B1FA50 /* QRCode+Codable.swift in Sources */,
+				297568D52ABD27B10014B2D1 /* ArchiveTimelineIntent.swift in Sources */,
 				CDF793562A08103200B1FA50 /* Constants.swift in Sources */,
 				CDF793272A080F2B00B1FA50 /* TimelineIntentHandler.swift in Sources */,
 				CDF793692A08106E00B1FA50 /* Database.xcdatamodeld in Sources */,
-				CDF793262A080F2B00B1FA50 /* WidgetViews.swift in Sources */,
-				CDF793252A080F2B00B1FA50 /* WidgetRoot.swift in Sources */,
+				CDF793262A080F2B00B1FA50 /* OldArchiveWidgetViews.swift in Sources */,
 				CDF793512A08102900B1FA50 /* Color+QRCode.swift in Sources */,
 				CDF793472A080FDC00B1FA50 /* BuilderModel.swift in Sources */,
 				CDF7934D2A08101F00B1FA50 /* CGSize+QRPop.swift in Sources */,
@@ -2698,6 +2759,7 @@
 				CDF793282A080F2B00B1FA50 /* TimelineIntent.intentdefinition in Sources */,
 				CDF7934F2A08102400B1FA50 /* Color+Codable.swift in Sources */,
 				CDF793582A08103600B1FA50 /* EntityProtocol.swift in Sources */,
+				297568D92ABD27BB0014B2D1 /* ArchiveWidget.swift in Sources */,
 				CDF793402A080FD200B1FA50 /* Persistence.swift in Sources */,
 				CDF7935C2A08104500B1FA50 /* OSLog+QRPop.swift in Sources */,
 				CDF793672A08105600B1FA50 /* UserDefaults+QRPop.swift in Sources */,
@@ -2715,6 +2777,8 @@
 				CDF7935F2A08104900B1FA50 /* Platform.swift in Sources */,
 				CDF793592A08103700B1FA50 /* EntityProtocol.swift in Sources */,
 				CDF793682A08105700B1FA50 /* UserDefaults+QRPop.swift in Sources */,
+				297568EA2ABD41720014B2D1 /* OldArchiveWidget.swift in Sources */,
+				297568E02ABD3FC10014B2D1 /* OldArchiveWidgetViews.swift in Sources */,
 				CDF793442A080FD600B1FA50 /* QRModel.swift in Sources */,
 				CDF7934E2A08102000B1FA50 /* CGSize+QRPop.swift in Sources */,
 				CDF793612A08104C00B1FA50 /* Published+UserDefaults.swift in Sources */,
