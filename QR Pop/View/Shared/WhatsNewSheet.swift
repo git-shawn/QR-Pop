@@ -10,7 +10,7 @@ import SwiftUI
 struct WhatsNewSheet: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.openURL) var openURL
-    let learnMoreURL = URL(string: "https://www.fromshawn.dev/qrpop/support/v3-1")!
+    let learnMoreURL = URL(string: "https://www.fromshawn.dev/qrpop/support/v3-2")!
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -36,7 +36,7 @@ struct WhatsNewSheet: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("New Contact Builder")
                                     .font(.headline)
-                                Text("Add multiple emails, addresses, phone numbers, websites, and more to contacts you create in app.")
+                                Text("Add multiple emails, addresses, phone numbers, websites, and more to contacts built in-app.")
                                     .foregroundColor(.secondary)
                             }
                         }
@@ -51,23 +51,22 @@ struct WhatsNewSheet: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("Easier Feedback")
                                     .font(.headline)
-                                #warning("rewrite")
-                                Text("TBD")
+                                Text("Report bugs and submit feedback from directly within QR Pop using the new feedback form.")
                                     .foregroundColor(.secondary)
                             }
                         }
                         
                         GridRow(alignment: .center) {
-                            Image("xLogo")
+                            Image(systemName: "gearshape.2")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 28)
+                                .frame(width: 36)
                                 .gridColumnAlignment(.center)
                                 .foregroundColor(.accentColor)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("X.com Builder")
+                                Text("New Template Shortcut")
                                     .font(.headline)
-                                Text("All references to Twitter have been replaced with X and all Twitter codes now point to **x.com**.")
+                                Text("Create QR codes using saved Templates directly within Shortcuts.")
                                     .foregroundColor(.secondary)
                             }
                         }
