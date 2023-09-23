@@ -66,15 +66,20 @@ p {
 }
 
 #openQRPopButton {
-    display: none;
     border: none;
-    border-radius: 1em;
-    background-color: #ffded0;
-    color: #FF7033;
-    font-family: system-ui;
-    font-size: 14px;
-    padding: 10px 24px;
+    background-color: transparent;
+    text-decoration: none;
     cursor: pointer;
+    height: 24px;
+    width: 24px;
+    background-color: #1D1D1F;
+    -webkit-mask-image: url(images/openInApp.svg);
+    mask-image: url(images/openInApp.svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
 }
 
 @media (prefers-color-scheme: dark) {
