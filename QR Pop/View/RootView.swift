@@ -16,7 +16,6 @@ struct RootView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     
 #if os(iOS)
-    @State private var showShakeSheet: Bool = false
     init(){
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor(named: "AccentColor")
     }
@@ -50,16 +49,6 @@ struct RootView: View {
             .frame(width: 350, height: 400)
 #endif
         })
-        
-// MARK: - Detect Shakes
-        #if os(iOS)
-        .onShake {
-            showShakeSheet = true
-        }
-        .sheet(isPresented: $showShakeSheet) {
-            ShakeView()
-        }
-        #endif
         
         // MARK: - Listen for incoming URLs
         

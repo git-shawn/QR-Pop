@@ -8,10 +8,6 @@
 import SwiftUI
 
 struct SupportSettings: View {
-#if os(iOS)
-    @AppStorage("detectShakes") private var detectShakes: Bool = true
-#endif
-    
     var body: some View {
         Section("Support") {
             Link(destination: URL(string: "https://www.fromshawn.dev/qrpop/support")!, label: {
@@ -36,12 +32,6 @@ struct SupportSettings: View {
             Link(destination: URL(string: "https://www.fromshawn.dev/qrpop/privacy-policy")!, label: {
                 Label("Privacy policy", systemImage: "hand.raised")
             })
-            
-#if os(iOS)
-            Toggle(isOn: $detectShakes, label: {
-                Label("Shake for feedback", systemImage: "water.waves")
-            })
-#endif
         }
 #if os(iOS)
         .buttonStyle(OutboundLinkButtonStyle())

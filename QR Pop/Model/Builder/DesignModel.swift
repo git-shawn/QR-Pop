@@ -324,7 +324,15 @@ extension DesignModel {
 extension DesignModel: Codable {
     
     private enum CodingKeys: String, CodingKey {
-        case eyeShape, pixelShape, eyeColor, pupilColor, pixelColor, backgroundColor, offPixels, errorCorrection, logoPlacement
+        case eyeShape
+        case pixelShape
+        case eyeColor
+        case pupilColor
+        case pixelColor
+        case backgroundColor
+        case offPixels
+        case errorCorrection
+        case logoPlacement
     }
     
     /// Converts this `DesignModel` to `JSON` data.

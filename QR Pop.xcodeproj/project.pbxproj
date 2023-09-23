@@ -42,8 +42,6 @@
 		297CC2AC2A89325B00D5C836 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297CC2AB2A89325B00D5C836 /* SettingsView.swift */; };
 		29F9D0632A87C4A800FC035F /* ContactBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9D0622A87C4A800FC035F /* ContactBuilder.swift */; };
 		29F9D0692A880E4800FC035F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9D0682A880E4800FC035F /* WebView.swift */; };
-		29F9D06B2A88285400FC035F /* ShakeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9D06A2A88285400FC035F /* ShakeModifier.swift */; };
-		29F9D06D2A882A1F00FC035F /* ShakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9D06C2A882A1F00FC035F /* ShakeView.swift */; };
 		CD03E1B229F187B900302011 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDD5C72C29D8B38100AF1C37 /* QuickLook.framework */; };
 		CD03E1B729F187B900302011 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD03E1B629F187B900302011 /* PreviewProvider.swift */; };
 		CD03E1BE29F187B900302011 /* Quicklook iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD03E1B129F187B900302011 /* Quicklook iOS.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -704,8 +702,6 @@
 		297CC2AB2A89325B00D5C836 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		29F9D0622A87C4A800FC035F /* ContactBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactBuilder.swift; sourceTree = "<group>"; };
 		29F9D0682A880E4800FC035F /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
-		29F9D06A2A88285400FC035F /* ShakeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeModifier.swift; sourceTree = "<group>"; };
-		29F9D06C2A882A1F00FC035F /* ShakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeView.swift; sourceTree = "<group>"; };
 		CD03E1B129F187B900302011 /* Quicklook iOS.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Quicklook iOS.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD03E1B629F187B900302011 /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		CD03E1BB29F187B900302011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1321,7 +1317,6 @@
 				CDBABFF129ECC8DF00976328 /* SettingsCommands.swift */,
 				CDBABFF029ECC8DF00976328 /* SettingsMenu.swift */,
 				297CC2AB2A89325B00D5C836 /* SettingsView.swift */,
-				29F9D06C2A882A1F00FC035F /* ShakeView.swift */,
 				297CC2A22A892AFD00D5C836 /* Categories */,
 			);
 			path = Settings;
@@ -1364,7 +1359,6 @@
 				CDBAC00A29ECC8DF00976328 /* PrintView.swift */,
 				CDBAC00629ECC8DF00976328 /* QRCodeView.swift */,
 				CDBAC00729ECC8DF00976328 /* QRLogoOverlay.swift */,
-				29F9D06A2A88285400FC035F /* ShakeModifier.swift */,
 				CDBABFFD29ECC8DF00976328 /* SpringyDisclosureStyle.swift */,
 				CDE6CA6B2A0313F30097D2AB /* StringDatePicker.swift */,
 				CDA4BFFC29F34646008A7E7B /* SuccessThumbOverlay.swift */,
@@ -2318,7 +2312,6 @@
 				CDBAC05829ECC8DF00976328 /* GridList.swift in Sources */,
 				297CC2AA2A892D4400D5C836 /* AboutSettings.swift in Sources */,
 				CDBAC1CF29ED935500976328 /* TextField+LimitLength.swift in Sources */,
-				29F9D06D2A882A1F00FC035F /* ShakeView.swift in Sources */,
 				CDBAC05D29ECC8DF00976328 /* FileExporter.swift in Sources */,
 				CDBAC04F29ECC8DF00976328 /* ArchiveView.swift in Sources */,
 				CDBAC1BF29ED933E00976328 /* QRModel.swift in Sources */,
@@ -2400,7 +2393,6 @@
 				CDBAC06629ECC8DF00976328 /* BuilderView.swift in Sources */,
 				CD4F20AA29F4B8D30037082F /* WifiHandler.swift in Sources */,
 				CDBAC07829ECC8DF00976328 /* PresentationView.swift in Sources */,
-				29F9D06B2A88285400FC035F /* ShakeModifier.swift in Sources */,
 				CDBAC06129ECC8DF00976328 /* CarouselView.swift in Sources */,
 				CDFE670929F5AAB80086BF7A /* Image+QRCode.swift in Sources */,
 				CDBAC1D029ED935500976328 /* Constants.swift in Sources */,

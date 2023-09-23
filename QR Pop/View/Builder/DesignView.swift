@@ -204,11 +204,14 @@ extension DesignView {
                 
                 Menu(content: {
                     Button("None", action: {model.offPixels = nil})
-                    ImageButton("Columns", image: "dataColumn", action: {
+                    ImageButton("Columns", image: "dataVertical", action: {
                         model.offPixels = .vertical
                     })
-                    ImageButton("Rows", image: "dataRow", action: {
+                    ImageButton("Rows", image: "dataHorizontal", action: {
                         model.offPixels = .horizontal
+                    })
+                    ImageButton("Dots", image: "dataCircle", action: {
+                        model.offPixels = .circle
                     })
                 }, label: {
                     switch model.offPixels {
@@ -252,8 +255,8 @@ extension DesignView {
                 })
             }, label: {
                 HStack {
-                    Label((model.logo == nil ) ? "Add Photo" : "Change Photo",
-                          systemImage: "photo.on.rectangle.angled")
+                    Label((model.logo == nil ) ? "Add Image" : "Change Image",
+                          systemImage: "photo.badge.plus")
                     .symbolRenderingMode(.hierarchical)
                     .padding(10)
                     .frame(maxWidth: .infinity)

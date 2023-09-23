@@ -15,6 +15,18 @@ struct DataSettings: View {
     @State private var erasingData: Bool = false
     var body: some View {
         Section("Data") {
+            
+            // Toggle iCloud
+            LabeledContent(content: {
+                if Persistence.shared.cloudAvailable {
+                    Text("Enabled")
+                } else {
+                    Text("Unavailable")
+                }
+            }, label: {
+                Label("iCloud Sync", systemImage: "icloud")
+            })
+            
             // Delete data
             Button(action: {
                 erasingData.toggle()
@@ -52,17 +64,6 @@ struct DataSettings: View {
                     
                     Button("Cancel", role: .cancel) {}
                 })
-            
-            // Toggle iCloud
-            LabeledContent(content: {
-                if Persistence.shared.cloudAvailable {
-                    Text("Enabled")
-                } else {
-                    Text("Unavailable")
-                }
-            }, label: {
-                Label("iCloud Sync", systemImage: "icloud")
-            })
         }
     }
 }

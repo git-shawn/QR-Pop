@@ -20,6 +20,7 @@ struct ArchiveView: View {
     @Environment(\.managedObjectContext) var moc
     @EnvironmentObject var sceneModel: SceneModel
     @EnvironmentObject var navigationModel: NavigationModel
+    @AppStorage("imageExportQuality", store: .appGroup) var imageExportQuality: Int = 512
     @AppStorage("showSiriTips", store: .appGroup) var showArchiveSiriTip: Bool = true
     
     var body: some View {
@@ -124,7 +125,7 @@ struct ArchiveView: View {
 #if os(iOS)
                             ImageButton("Image to Photos", systemImage: "photo", action: {
                                 do {
-                                    try model.addToPhotoLibrary(for: 512)
+                                    try model.addToPhotoLibrary(for: imageExportQuality)
                                     sceneModel.toaster = .saved(note: "Image saved")
                                 } catch {
                                     Logger.logView.error("ArchiveView: Could not write QR code to photos app.")
@@ -142,6 +143,16 @@ struct ArchiveView: View {
                                     sceneModel.toaster = .error(note: "Could not save file")
                                 }
                             })
+                            
+                            Picker("Image Quality", systemImage: "sparkle.magnifyingglass", selection: $imageExportQuality, content: {
+                                Group {
+                                    Text("Low").tag(256)
+                                    Text("Medium").tag(512)
+                                    Text("High").tag(1024)
+                                    Text("4K").tag(3840)
+                                }
+                            })
+                            .pickerStyle(.menu)
                             
                             MenuControlGroupConvertible {
                                 ImageButton("PDF\(" to Files", platforms: [.iOS])", image: "pdf", action: {
@@ -170,7 +181,7 @@ struct ArchiveView: View {
                         })
                         
                         ImageButton("Copy Image", systemImage: "doc.on.doc", action: {
-                            model.addToPasteboard(for: 512)
+                            model.addToPasteboard(for: imageExportQuality)
                             sceneModel.toaster = .copied(note: "Image copied")
                         })
                         

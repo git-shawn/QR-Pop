@@ -73,6 +73,13 @@ struct BuildCodeIntent: AppIntent {
         default: "#FFFFFF")
     var backgroundColor: String
     
+    @Parameter(
+        title: "Export Resolution",
+        description: "The quality of the exported image, in pixels. Resolution must be between 256 and 7680.",
+        default: 512,
+        inclusiveRange: (256, 7680))
+    var exportResolution: Int
+    
     static var parameterSummary: some ParameterSummary {
         Summary("Generate a QR code with \(\.$content) as a \(\.$fileType)") {
             \.$pixelShape
@@ -82,10 +89,11 @@ struct BuildCodeIntent: AppIntent {
             \.$pupilColor
             \.$backgroundColor
             \.$errorCorrection
+            \.$exportResolution
         }
     }
     
-    func perform() async throws -> some ReturnsValue<IntentFile> {
+    func perform() async throws -> some ShowsSnippetView & ReturnsValue<IntentFile> {
         let design = DesignModel(
             eyeShape: eyeShape,
             pixelShape: pixelShape,
@@ -100,13 +108,13 @@ struct BuildCodeIntent: AppIntent {
         let resultFile: IntentFile = try {
             switch fileType {
             case .pdf:
-                let data = try model.pdfData()
+                let data = try model.pdfData(for: exportResolution)
                 return IntentFile(data: data, filename: "QR Code", type: .pdf)
             case .svg:
                 let data = try model.svgData()
                 return IntentFile(data: data, filename: "QR Code", type: .svg)
             case .png:
-                let data = try model.pngData(for: 1024)
+                let data = try model.pngData(for: exportResolution)
                 return IntentFile(data: data, filename: "QR Code", type: .png)
             }
         }()
