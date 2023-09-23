@@ -182,25 +182,6 @@ struct ArchiveView: View {
                     // Archive functions
                     Group {
                         Divider()
-//
-//                        if UIDevice.current.userInterfaceIdiom == .phone {
-//                            ImageButton("Create Notification", systemImage: "bell") {
-//                                // This button should be changed to "modify notification" if a notification exists.
-//                                // The status of whether or not a notification exists should be saved to AppStorage, not CoreData.
-//#warning("Location notify not implemented")
-//                                print("notify location")
-//                            }
-//                            .disabled(true)
-//                        }
-//
-//                        ImageButton("Change Symbol", systemImage: "rays") {
-//                            // Change the symbol that appears on most widgets.
-//                            // Can be either an SF symbol or two uppercase characters/numbers.
-//                            // This may need to be saved to CloudKit.
-//#warning("Custom widget symbol not implemented")
-//                        }
-//                        .disabled(true)
-//
                         ImageButton("Edit Code", systemImage: "slider.horizontal.3") {
                             withAnimation {
                                 navigationModel.navigateWithoutBack(to: .builder(code: model))

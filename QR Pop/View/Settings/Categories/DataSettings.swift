@@ -15,12 +15,6 @@ struct DataSettings: View {
     @State private var erasingData: Bool = false
     var body: some View {
         Section("Data") {
-            // Toggle iCloud
-            Toggle(isOn: $syncToCloud, label: {
-                Label("Sync with iCloud", systemImage: "cloud")
-            })
-            .disabled(true)
-            
             // Delete data
             Button(action: {
                 erasingData.toggle()
@@ -58,6 +52,17 @@ struct DataSettings: View {
                     
                     Button("Cancel", role: .cancel) {}
                 })
+            
+            // Toggle iCloud
+            LabeledContent(content: {
+                if Persistence.shared.cloudAvailable {
+                    Text("Enabled")
+                } else {
+                    Text("Unavailable")
+                }
+            }, label: {
+                Label("iCloud Sync", systemImage: "icloud")
+            })
         }
     }
 }
