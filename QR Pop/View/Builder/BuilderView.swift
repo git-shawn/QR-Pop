@@ -254,16 +254,6 @@ extension BuilderView {
                         }
                     })
                     
-                    Picker("Image Quality", systemImage: "sparkle.magnifyingglass", selection: $imageExportQuality, content: {
-                        Group {
-                            Text("Low").tag(256)
-                            Text("Medium").tag(512)
-                            Text("High").tag(1024)
-                            Text("4K").tag(3840)
-                        }
-                    })
-                    .pickerStyle(.menu)
-                    
                     MenuControlGroupConvertible {
                         ImageButton("PDF\(" to Files", platforms: [.iOS])", image: "pdf", action: {
                             do {
@@ -294,6 +284,16 @@ extension BuilderView {
                     model.addToPasteboard(for: imageExportQuality)
                     sceneModel.toaster = .copied(note: "Image copied")
                 })
+                
+                Picker("Image Quality", systemImage: "sparkle.magnifyingglass", selection: $imageExportQuality, content: {
+                    Group {
+                        Text("Low").tag(256)
+                        Text("Medium").tag(512)
+                        Text("High").tag(1024)
+                        Text("4K").tag(3840)
+                    }
+                })
+                .pickerStyle(.menu)
                 
                 ImageButton("Print", systemImage: "printer", action: {
                     showingPrintSetup = true

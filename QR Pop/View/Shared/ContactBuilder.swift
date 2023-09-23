@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Contacts
+import CoreLocation
 import OSLog
 
 struct ContactBuilder: View {
@@ -19,6 +20,7 @@ struct ContactBuilder: View {
     @State private var emails: [DynamicListField] = []
     @State private var urls: [DynamicListField] = []
     @State private var addresses: [DynamicAddressField] = []
+    @StateObject private var mapSearch = LocationSearchCompleter()
     
     @Environment(\.dismiss) var dismiss
     @EnvironmentObject var sceneModel: SceneModel
@@ -66,7 +68,7 @@ struct ContactBuilder: View {
                 self._addresses = State(initialValue: contact?.postalAddresses.compactMap {
                     let label = CNLabeledValue<NSString>.localizedString(forLabel: $0.label ?? "").lowercased()
                     if let kind = DynamicListFieldType(rawValue: label) {
-                        return DynamicAddressField(street: $0.value.street, city: $0.value.city, state: $0.value.state, zip: $0.value.postalCode, kind: kind)
+                        return DynamicAddressField(value: CNPostalAddressFormatter.string(from: $0.value, style: .mailingAddress), postalAddress: $0.value, kind: kind)
                     } else {
                         return nil
                     }
@@ -256,13 +258,7 @@ struct ContactBuilder: View {
         }
         
         contact.postalAddresses = addresses.map {
-            let address = CNMutablePostalAddress()
-            address.street = $0.street
-            address.state = $0.state
-            address.postalCode = $0.zip
-            address.city = $0.city
-            address.isoCountryCode = "us"
-            return CNLabeledValue(label: $0.kind.name, value: address)
+            return CNLabeledValue(label: $0.kind.name, value: $0.postalAddress)
         }
         
         return contact
@@ -374,17 +370,20 @@ private struct DynamicGenericList: View {
     }
 }
 
+
 // MARK: - Address Struct
 
 private struct DynamicAddressList: View {
     @Binding var fields: [DynamicAddressField]
+    @FocusState private var isFocused: Bool
+    @EnvironmentObject var sceneModel: SceneModel
     
     var body: some View {
         Section {
             if fields.isEmpty {
                 Button(action: {
                     withAnimation(.spring()) {
-                        fields = [.init(street: "", city: "", state: "", zip: "", kind: .home)]
+                        fields = [.init(value: "", postalAddress: CNPostalAddress(), kind: .home)]
                     }
                 }, label: {
                     Label(title: {
@@ -412,6 +411,7 @@ private struct DynamicAddressList: View {
 #if os(macOS)
                                 .buttonStyle(.plain)
 #endif
+                                
                                 Button("work", action: {
                                     fields[index].kind = .work
                                 })
@@ -419,6 +419,7 @@ private struct DynamicAddressList: View {
 #if os(macOS)
                                 .buttonStyle(.plain)
 #endif
+                                
                             }, label: {
                                 HStack {
                                     Text(field.kind.name)
@@ -437,47 +438,31 @@ private struct DynamicAddressList: View {
 #else
                         .frame(maxWidth: 120)
 #endif
-                        
-                        VStack {
-                            TextField("Street", text: $fields[index].street)
-#if os(iOS)
-                                .padding(.vertical, 3)
-                                .padding(.top, 2)
-                                .textContentType(.fullStreetAddress)
-#endif
-#if os(iOS)
-                            Divider()
-#endif
-                            TextField("City", text: $fields[index].city)
-#if os(iOS)
-                                .padding(.vertical, 3)
-                                .textContentType(.addressCity)
-#endif
-#if os(iOS)
-                            Divider()
-#endif
-                            HStack {
-                                TextField("State", text: $fields[index].state)
-#if os(iOS)
-                                    .textContentType(.addressState)
-#endif
-                                Divider()
-                                TextField("ZIP", text: $fields[index].zip)
-#if os(iOS)
-                                    .keyboardType(.numberPad)
-                                    .textContentType(.postalCode)
-#endif
+                        TextField("\naddress", text: $fields[index].value, axis: .vertical)
+                            .lineLimit(3...6)
+                            .focused($isFocused)
+                            .onChange(of: isFocused) { isFocused in
+                                if !isFocused {
+                                    let geoCoder = CLGeocoder()
+                                    geoCoder.geocodeAddressString(fields[index].value) { (placemarks, error) in
+                                        guard
+                                            let placemarks = placemarks,
+                                            let address = placemarks.first?.postalAddress
+                                        else {
+                                            withAnimation {
+                                                fields[index].value = ""
+                                            }
+                                            sceneModel.toaster = .error(note: "Invalid address")
+                                            return
+                                        }
+                                        fields[index].value = CNPostalAddressFormatter.string(from: address, style: .mailingAddress)
+                                        fields[index].postalAddress = address
+                                    }
+                                }
                             }
 #if os(iOS)
-                            Divider()
+                            .textContentType(.fullStreetAddress)
 #endif
-                            TextField("Country", text: .constant("USA"))
-                                .disabled(true)
-                                .foregroundColor(.secondary)
-#if os(iOS)
-                                .padding(.vertical, 3)
-#endif
-                        }
                     }
                 }
                 .onDelete(perform: {index in
@@ -488,9 +473,9 @@ private struct DynamicAddressList: View {
                     Button(action: {
                         withAnimation(.spring()) {
                             if fields.contains(where: {$0.kind == .home}) {
-                                fields.append(.init(street: "", city: "", state: "", zip: "", kind: .work))
+                                fields.append(.init(value: "", postalAddress: CNPostalAddress(), kind: .work))
                             } else {
-                                fields.append(.init(street: "", city: "", state: "", zip: "", kind: .home))
+                                fields.append(.init(value: "", postalAddress: CNPostalAddress(), kind: .home))
                             }
                         }
                     }, label: {
@@ -689,10 +674,8 @@ private struct DynamicListField: Hashable {
 }
 
 private struct DynamicAddressField: Hashable {
-    var street: String
-    var city: String
-    var state: String
-    var zip: String
+    var value: String
+    var postalAddress: CNPostalAddress
     var kind: DynamicListFieldType
 }
 
