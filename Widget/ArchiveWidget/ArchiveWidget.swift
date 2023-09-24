@@ -33,12 +33,6 @@ struct ArchiveWidget: Widget {
 @available(watchOS 10.0, iOS 17.0, macOS 14.0, *)
 struct ArchivedCodeProvider: AppIntentTimelineProvider {
     
-    var placeholderModel: QRModel {
-        let design = DesignModel(eyeShape: .leaf, pixelShape: .roundedPath, eyeColor: Color.white, pupilColor: Color.white, pixelColor: Color.white, backgroundColor: Color(hue: 0.59, saturation: 0.62, brightness: 0.28), errorCorrection: .medium)
-        let model = QRModel(title: "Support Our Parks", design: design, content: BuilderModel(text: "https://www.nationalparks.org"))
-        return model
-    }
-    
     /// Recommend the **5** most recently archived QR codes.
     func recommendations() -> [AppIntentRecommendation<ArchiveTimelineIntent>] {
         guard let entities = try? Persistence.shared.getMostRecentQREntities(5) else {
@@ -57,7 +51,7 @@ struct ArchivedCodeProvider: AppIntentTimelineProvider {
     
     // A placeholder code to show when there is no data available.
     func placeholder(in context: Context) -> ArchivedCodeEntry {
-        return ArchivedCodeEntry(date: Date(), model: placeholderModel)
+        return ArchivedCodeEntry(date: Date(), model: QRModel())
     }
     
     // A code to show when there may be some data available.
@@ -65,7 +59,7 @@ struct ArchivedCodeProvider: AppIntentTimelineProvider {
         guard let entity = try? Persistence.shared.getQREntityWithUUID(configuration.code.id),
               let model = try? QRModel(withEntity: entity)
         else {
-            return ArchivedCodeEntry(date: Date(), model: placeholderModel)
+            return ArchivedCodeEntry(date: Date(), model: QRModel())
         }
         
         return ArchivedCodeEntry(date: Date(), model: model)

@@ -250,7 +250,7 @@ extension DesignView {
 #if os(macOS)
                     Text("Finder")
 #else
-                    Label("Files app", systemImage: "folder")
+                    Label("Files App", systemImage: "folder")
 #endif
                 })
             }, label: {

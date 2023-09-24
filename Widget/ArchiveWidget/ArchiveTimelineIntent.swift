@@ -32,16 +32,7 @@ struct ArchivedCodeEntity: AppEntity {
     
     static var typeDisplayRepresentation: TypeDisplayRepresentation = "QR Code"
     static var defaultQuery = ArchivedCodeQuery()
-    
-//    var displayRepresentation: DisplayRepresentation {
-//        if let entity = try? Persistence.shared.getQREntityWithUUID(id),
-//           let model = try? QRModel(withEntity: entity),
-//           let image = try? model.jpegData(for: 128) {
-//            DisplayRepresentation(title: "\(title)", subtitle: "\(model.created?.formatted(date: .abbreviated, time: .omitted) ?? "")", image: .init(data: image))
-//        } else {
-//            DisplayRepresentation(stringLiteral: title)
-//        }
-//    }
+
     var displayRepresentation: DisplayRepresentation {
         DisplayRepresentation(title: "\(title)")
     }

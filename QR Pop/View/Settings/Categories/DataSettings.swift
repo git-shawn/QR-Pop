@@ -63,6 +63,8 @@ struct DataSettings: View {
                     }
                     
                     Button("Cancel", role: .cancel) {}
+                }, message: {
+                    Text("Data will be permanently erased. This action cannot be undone.")
                 })
         }
     }
