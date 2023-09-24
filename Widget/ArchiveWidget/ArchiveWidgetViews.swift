@@ -63,11 +63,13 @@ struct SquareArchiveWidgetView: View {
                     .resizable()
                     .scaledToFit()
                     .padding(8)
+                    .unredacted()
             } else {
                 entry.model.monochromeImage(for: 1024, foregroundColor: .white, backgroundColor: .black.opacity(0))?
                     .resizable()
                     .scaledToFit()
                     .padding(8)
+                    .unredacted()
             }
         }
         .containerBackground(
@@ -88,6 +90,7 @@ struct MediumArchiveWidgetView: View {
             entry.model.transparentImage(for: 1024)?
                 .resizable()
                 .scaledToFit()
+                .unredacted()
             HStack {
                 VStack(alignment: .leading) {
                     Spacer()
@@ -132,6 +135,7 @@ struct XLArchiveWidgetView: View {
             entry.model.transparentImage(for: 1024)?
                 .resizable()
                 .scaledToFit()
+                .unredacted()
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
                     Spacer()
