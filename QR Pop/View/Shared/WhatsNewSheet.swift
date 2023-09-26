@@ -10,7 +10,7 @@ import SwiftUI
 struct WhatsNewSheet: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.openURL) var openURL
-    let learnMoreURL = URL(string: "https://www.fromshawn.dev/qrpop/support/v3-2")!
+    let learnMoreURL = URL(string: "https://www.fromshawn.dev/qrpop/support/v3-3")!
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -25,67 +25,68 @@ struct WhatsNewSheet: View {
                     .font(.largeTitle)
                     .bold()
                     
+                    #warning("Rewrite 'What's New' page.")
+                    
                     Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 30) {
                         GridRow(alignment: .center) {
-                            Image(systemName: "person.crop.circle.badge.checkmark")
+                            Image(systemName: "photo.badge.plus")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 36)
                                 .gridColumnAlignment(.center)
                                 .foregroundColor(.accentColor)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("New Contact Builder")
+                                Text("Improved Image Overlays")
                                     .font(.headline)
-                                Text("Add multiple emails, addresses, phone numbers, websites, and more to contacts built in-app.")
+                                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.")
                                     .foregroundColor(.secondary)
                             }
                         }
                         
                         GridRow(alignment: .center) {
-                            Image(systemName: "exclamationmark.bubble")
+                            Image(systemName: "square.dotted")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 36)
                                 .gridColumnAlignment(.center)
                                 .foregroundColor(.accentColor)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("Easier Feedback")
+                                Text("Lorem ipsum dolor ")
                                     .font(.headline)
-                                Text("Report bugs and submit feedback from directly within QR Pop using the new feedback form.")
+                                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.")
                                     .foregroundColor(.secondary)
                             }
                         }
                         
                         GridRow(alignment: .center) {
-                            Image(systemName: "gearshape.2")
+                            Image(systemName: "square.dotted")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 36)
                                 .gridColumnAlignment(.center)
                                 .foregroundColor(.accentColor)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("New Template Shortcut")
+                                Text("Lorem ipsum dolor ")
                                     .font(.headline)
-                                Text("Create QR codes using saved Templates directly within Shortcuts.")
+                                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.")
                                     .foregroundColor(.secondary)
                             }
                         }
                         
                         GridRow(alignment: .center) {
-                            Image(systemName: "bubbles.and.sparkles")
+                            Image(systemName: "square.dotted")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 36)
                                 .gridColumnAlignment(.center)
                                 .foregroundColor(.accentColor)
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("General Housekeeping")
+                                Text("Lorem ipsum dolor ")
                                     .font(.headline)
-                                Text("The UI has been tweaked throughout the app to make it easier to design great codes.")
+                                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.")
                                     .foregroundColor(.secondary)
                             }
                         }
-                        
                     }
                     .scenePadding()
                     .symbolRenderingMode(.hierarchical)
