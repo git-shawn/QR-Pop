@@ -182,7 +182,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin varius purus ac d
             .padding(16)
         }
         .ignoresSafeArea(edges: .bottom)
-        .toolbar(.hidden, for: .navigationBar)
+        .toolbar {
+            
+        }
     }
 }
 

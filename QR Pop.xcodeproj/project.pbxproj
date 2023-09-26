@@ -44,9 +44,9 @@
 		29F9D0692A880E4800FC035F /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F9D0682A880E4800FC035F /* WebView.swift */; };
 		CD03E1B229F187B900302011 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDD5C72C29D8B38100AF1C37 /* QuickLook.framework */; };
 		CD03E1B729F187B900302011 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD03E1B629F187B900302011 /* PreviewProvider.swift */; };
-		CD03E1BE29F187B900302011 /* Quicklook iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD03E1B129F187B900302011 /* Quicklook iOS.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD03E1BE29F187B900302011 /* Quicklook iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD03E1B129F187B900302011 /* Quicklook iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD03E1C729F187C400302011 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2010D929D9D0E40096F3E4 /* Quartz.framework */; };
-		CD03E1D429F187C500302011 /* Quicklook Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD03E1C629F187C400302011 /* Quicklook Mac.appex */; platformFilters = (macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD03E1D429F187C500302011 /* Quicklook Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD03E1C629F187C400302011 /* Quicklook Mac.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD03E1D929F188F500302011 /* NewTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD03E1D829F188F500302011 /* NewTemplateView.swift */; };
 		CD06304329BCD64D007ECEC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD06304229BCD64D007ECEC2 /* Assets.xcassets */; };
 		CD06304729BCD64D007ECEC2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD06304629BCD64D007ECEC2 /* Preview Assets.xcassets */; };
@@ -84,7 +84,7 @@
 		CD1FF4B129F36D2D006E6832 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD03E1B629F187B900302011 /* PreviewProvider.swift */; };
 		CD1FF4B929F36F92006E6832 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCFA8DD29D7E1E900452895 /* QuickLookThumbnailing.framework */; };
 		CD1FF4BC29F36F92006E6832 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF4BB29F36F92006E6832 /* ThumbnailProvider.swift */; };
-		CD1FF4C029F36F92006E6832 /* Thumbnail iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD1FF4B829F36F92006E6832 /* Thumbnail iOS.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD1FF4C029F36F92006E6832 /* Thumbnail iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD1FF4B829F36F92006E6832 /* Thumbnail iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD1FF4C429F36FC5006E6832 /* CGColor+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02B29ECC8DF00976328 /* CGColor+QRPop.swift */; };
 		CD1FF4C529F36FC9006E6832 /* CGSize+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03929ECC8DF00976328 /* CGSize+QRPop.swift */; };
 		CD1FF4C629F36FCE006E6832 /* Color+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03129ECC8DF00976328 /* Color+Codable.swift */; };
@@ -102,13 +102,13 @@
 		CD1FF4D629F3770C006E6832 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4D329F37703006E6832 /* Assets.xcassets */; };
 		CD1FF4DC29F378E9006E6832 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6E42F429CBFE1F008B9DAF /* WidgetKit.framework */; };
 		CD1FF4DD29F378E9006E6832 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6E42F629CBFE1F008B9DAF /* SwiftUI.framework */; };
-		CD1FF4ED29F378EA006E6832 /* Widget iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD1FF4DB29F378E9006E6832 /* Widget iOS.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD1FF4ED29F378EA006E6832 /* Widget iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD1FF4DB29F378E9006E6832 /* Widget iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD1FF4F629F378F9006E6832 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6E42F429CBFE1F008B9DAF /* WidgetKit.framework */; };
 		CD1FF4F729F378F9006E6832 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6E42F629CBFE1F008B9DAF /* SwiftUI.framework */; };
 		CD1FF4FD29F378FA006E6832 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
 		CD1FF50029F378FA006E6832 /* TimelineIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */; };
 		CD1FF50129F378FA006E6832 /* TimelineIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = CD1FF4FB29F378F9006E6832 /* TimelineIntent.intentdefinition */; };
-		CD1FF50429F378FA006E6832 /* Widget Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD1FF4F529F378F9006E6832 /* Widget Mac.appex */; platformFilters = (macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD1FF50429F378FA006E6832 /* Widget Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD1FF4F529F378F9006E6832 /* Widget Mac.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD1FF50C29F37A6E006E6832 /* DesignModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04829ECC8DF00976328 /* DesignModel.swift */; };
 		CD1FF50D29F37A6E006E6832 /* BuilderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04729ECC8DF00976328 /* BuilderModel.swift */; };
 		CD1FF50E29F37A6E006E6832 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04029ECC8DF00976328 /* Persistence.swift */; };
@@ -151,7 +151,7 @@
 		CD53D66929F481EA004DAC9A /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC03329ECC8DF00976328 /* Haptics.swift */; };
 		CD53D66A29F481FD004DAC9A /* FileDocument+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02E29ECC8DF00976328 /* FileDocument+QRPop.swift */; };
 		CD53D66B29F481FD004DAC9A /* FileDocument+QRPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02E29ECC8DF00976328 /* FileDocument+QRPop.swift */; };
-		CD611F1B29F8C584008F6B4B /* QR Pop.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CD9DAB1329F45EFF008B3C1F /* QR Pop.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD611F1B29F8C584008F6B4B /* QR Pop.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CD9DAB1329F45EFF008B3C1F /* QR Pop.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD69CE712A0D3BFF000D0474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
 		CD69CE722A0D3BFF000D0474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
 		CD69CE732A0D3C01000D0474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD1FF4FC29F378FA006E6832 /* Assets.xcassets */; };
@@ -185,9 +185,9 @@
 		CD7A3FAC29F38EAE00D23D54 /* Published+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02829ECC8DF00976328 /* Published+UserDefaults.swift */; };
 		CD7A3FAD29F38EAE00D23D54 /* Published+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02829ECC8DF00976328 /* Published+UserDefaults.swift */; };
 		CD7A3FB329F396A900D23D54 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6E431629CC018B008B9DAF /* Intents.framework */; };
-		CD7A3FBA29F396A900D23D54 /* IntentHandler iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD7A3FB229F396A900D23D54 /* IntentHandler iOS.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD7A3FBA29F396A900D23D54 /* IntentHandler iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD7A3FB229F396A900D23D54 /* IntentHandler iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD7A3FC329F396B300D23D54 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6E431629CC018B008B9DAF /* Intents.framework */; };
-		CD7A3FCB29F396B400D23D54 /* IntentHandler Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD7A3FC229F396B300D23D54 /* IntentHandler Mac.appex */; platformFilters = (macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD7A3FCB29F396B400D23D54 /* IntentHandler Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD7A3FC229F396B300D23D54 /* IntentHandler Mac.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD7A3FCF29F397CB00D23D54 /* TimelineIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3F9829F37E0D00D23D54 /* TimelineIntentHandler.swift */; };
 		CD7A3FD029F397CC00D23D54 /* TimelineIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7A3F9829F37E0D00D23D54 /* TimelineIntentHandler.swift */; };
 		CD7A3FD129F397DC00D23D54 /* TemplateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC04129ECC8DF00976328 /* TemplateModel.swift */; };
@@ -232,9 +232,9 @@
 		CD8EB98029FB2D8E00E28A3F /* BuildCodeIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8EB97F29FB2D8E00E28A3F /* BuildCodeIntent.swift */; };
 		CD8EB98429FB49C300E28A3F /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8EB98329FB49C300E28A3F /* Color+Hex.swift */; };
 		CD9DAAEF29F45EE7008B3C1F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9DAAEE29F45EE7008B3C1F /* ShareViewController.swift */; };
-		CD9DAAF629F45EE7008B3C1F /* Share Extension iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD9DAAEC29F45EE7008B3C1F /* Share Extension iOS.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD9DAAF629F45EE7008B3C1F /* Share Extension iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD9DAAEC29F45EE7008B3C1F /* Share Extension iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD9DAB0329F45EF2008B3C1F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9DAB0229F45EF2008B3C1F /* ShareViewController.swift */; };
-		CD9DAB0B29F45EF2008B3C1F /* Share Extension Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD9DAAFE29F45EF2008B3C1F /* Share Extension Mac.appex */; platformFilters = (macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD9DAB0B29F45EF2008B3C1F /* Share Extension Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CD9DAAFE29F45EF2008B3C1F /* Share Extension Mac.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD9DAB1629F45EFF008B3C1F /* QRPopWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9DAB1529F45EFF008B3C1F /* QRPopWatch.swift */; };
 		CD9DAB1A29F45F00008B3C1F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD9DAB1929F45F00008B3C1F /* Assets.xcassets */; };
 		CD9DAB1D29F45F00008B3C1F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD9DAB1C29F45F00008B3C1F /* Preview Assets.xcassets */; };
@@ -384,8 +384,8 @@
 		CDBAC1D629ED935500976328 /* Published+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC02829ECC8DF00976328 /* Published+UserDefaults.swift */; };
 		CDBAC1D829ED94AB00976328 /* TipButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC1D729ED94AB00976328 /* TipButton.swift */; };
 		CDBAC1E629EF263400976328 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC1E529EF263400976328 /* SafariWebExtensionHandler.swift */; };
-		CDBAC1FC29EF263400976328 /* Safari Extension Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CDBAC1E329EF263400976328 /* Safari Extension Mac.appex */; platformFilters = (macos, ); settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		CDBAC21C29EF265000976328 /* Safari Extension iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CDBAC20429EF265000976328 /* Safari Extension iOS.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CDBAC1FC29EF263400976328 /* Safari Extension Mac.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CDBAC1E329EF263400976328 /* Safari Extension Mac.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CDBAC21C29EF265000976328 /* Safari Extension iOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = CDBAC20429EF265000976328 /* Safari Extension iOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CDBAC2A729EF292300976328 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBAC1E529EF263400976328 /* SafariWebExtensionHandler.swift */; };
 		CDBAC31129EF2AA800976328 /* options.js in Resources */ = {isa = PBXBuildFile; fileRef = CDBAC30F29EF2AA800976328 /* options.js */; };
 		CDBAC31229EF2AA800976328 /* options.js in Resources */ = {isa = PBXBuildFile; fileRef = CDBAC30F29EF2AA800976328 /* options.js */; };
@@ -1985,7 +1985,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					CD03E1B029F187B900302011 = {
 						CreatedOnToolsVersion = 14.3;
@@ -2795,83 +2795,61 @@
 /* Begin PBXTargetDependency section */
 		CD03E1BD29F187B900302011 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = CD03E1B029F187B900302011 /* Quicklook iOS */;
 			targetProxy = CD03E1BC29F187B900302011 /* PBXContainerItemProxy */;
 		};
 		CD03E1D329F187C500302011 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilters = (
-				macos,
-			);
 			target = CD03E1C529F187C400302011 /* Quicklook Mac */;
 			targetProxy = CD03E1D229F187C500302011 /* PBXContainerItemProxy */;
 		};
 		CD1FF4BF29F36F92006E6832 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = CD1FF4B729F36F92006E6832 /* Thumbnail iOS */;
 			targetProxy = CD1FF4BE29F36F92006E6832 /* PBXContainerItemProxy */;
 		};
 		CD1FF4EC29F378EA006E6832 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = CD1FF4DA29F378E9006E6832 /* Widget iOS */;
 			targetProxy = CD1FF4EB29F378EA006E6832 /* PBXContainerItemProxy */;
 		};
 		CD1FF50329F378FA006E6832 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilters = (
-				macos,
-			);
 			target = CD1FF4F429F378F9006E6832 /* Widget Mac */;
 			targetProxy = CD1FF50229F378FA006E6832 /* PBXContainerItemProxy */;
 		};
 		CD611F1D29F8C584008F6B4B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = CD9DAB1229F45EFF008B3C1F /* QR Pop Watch App */;
 			targetProxy = CD611F1C29F8C584008F6B4B /* PBXContainerItemProxy */;
 		};
 		CD7A3FB929F396A900D23D54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = CD7A3FB129F396A900D23D54 /* IntentHandler iOS */;
 			targetProxy = CD7A3FB829F396A900D23D54 /* PBXContainerItemProxy */;
 		};
 		CD7A3FCA29F396B400D23D54 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilters = (
-				macos,
-			);
 			target = CD7A3FC129F396B300D23D54 /* IntentHandler Mac */;
 			targetProxy = CD7A3FC929F396B400D23D54 /* PBXContainerItemProxy */;
 		};
 		CD9DAAF529F45EE7008B3C1F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = CD9DAAEB29F45EE7008B3C1F /* Share Extension iOS */;
 			targetProxy = CD9DAAF429F45EE7008B3C1F /* PBXContainerItemProxy */;
 		};
 		CD9DAB0A29F45EF2008B3C1F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilters = (
-				macos,
-			);
 			target = CD9DAAFD29F45EF2008B3C1F /* Share Extension Mac */;
 			targetProxy = CD9DAB0929F45EF2008B3C1F /* PBXContainerItemProxy */;
 		};
 		CDBAC1FB29EF263400976328 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilters = (
-				macos,
-			);
 			target = CDBAC1E229EF263400976328 /* Safari Extension Mac */;
 			targetProxy = CDBAC1FA29EF263400976328 /* PBXContainerItemProxy */;
 		};
 		CDBAC21B29EF265000976328 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = CDBAC20329EF265000976328 /* Safari Extension iOS */;
 			targetProxy = CDBAC21A29EF265000976328 /* PBXContainerItemProxy */;
 		};
@@ -2907,7 +2885,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Quicklook-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -2938,7 +2916,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Quicklook-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -2972,7 +2950,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Quicklook-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3004,7 +2982,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Quicklook-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3019,6 +2997,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -3052,6 +3031,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -3079,6 +3059,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -3112,6 +3093,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -3140,7 +3122,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 151;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"QR Pop/Preview Content\"";
 				DEVELOPMENT_TEAM = QK557BC776;
@@ -3197,7 +3179,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 151;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"QR Pop/Preview Content\"";
 				DEVELOPMENT_TEAM = QK557BC776;
@@ -3261,7 +3243,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Thumbnail-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3292,7 +3274,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Thumbnail-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3327,7 +3309,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Widget-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3361,7 +3343,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Widget-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3397,7 +3379,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Widget-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3431,7 +3413,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Widget-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3462,7 +3444,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.IntentHandler-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3494,7 +3476,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.IntentHandler-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3528,7 +3510,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.IntentHandler-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3560,7 +3542,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.IntentHandler-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3591,7 +3573,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3623,7 +3605,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -3658,7 +3640,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3691,7 +3673,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.Share-Extension-Mac";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -3710,7 +3692,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WatchOS/Resources/QR Pop Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 151;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_PREVIEWS = YES;
@@ -3744,7 +3726,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "WatchOS/Resources/QR Pop Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 151;
 				DEVELOPMENT_ASSET_PATHS = "\"WatchOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = QK557BC776;
 				ENABLE_PREVIEWS = YES;
@@ -3792,7 +3774,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -3827,7 +3809,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.1;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -3860,7 +3842,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -3894,7 +3876,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -3919,7 +3901,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 151;
 				DEVELOPMENT_ASSET_PATHS = "\"tvOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=appletvos*]" = QK557BC776;
@@ -3958,7 +3940,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 151;
 				DEVELOPMENT_ASSET_PATHS = "\"tvOS/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=appletvos*]" = QK557BC776;
@@ -4008,7 +3990,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp.Widget-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -4040,7 +4022,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp.Widget-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -4071,7 +4053,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp.IntentHandler-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -4101,7 +4083,7 @@
 					"@executable_path/../../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "shwndvs.QR-Pop.watchkitapp.IntentHandler-watchOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;

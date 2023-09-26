@@ -208,11 +208,3 @@ struct CreateCodeView: View {
         }
     }
 }
-
-#Preview {
-    NavigationStack {
-        if #available(watchOS 10.0, *) {
-            CreateCodeView()
-        }
-    }
-}

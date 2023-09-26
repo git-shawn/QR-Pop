@@ -137,11 +137,9 @@ extension Image {
 #if !os(watchOS) && !os(tvOS)
 // MARK: UIColor to Color
 extension Color {
-    static var antiPrimary = Color("AntiPrimary")
     static var groupedBackground = Color(uiColor: .systemGroupedBackground)
     static var secondaryGroupedBackground = Color(uiColor: .secondarySystemGroupedBackground)
     static var placeholder = Color(uiColor: .placeholderText)
-    static var tertiaryLabel: Color { Color("TertiaryLabel") }
 }
 #endif
 #endif
