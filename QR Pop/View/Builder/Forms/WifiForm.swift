@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct WifiForm: View {
     @Binding var model: BuilderModel
@@ -119,15 +120,21 @@ import CoreWLAN
 fileprivate struct GetWifiButton: View {
     @Binding var inputs: [String]
     @EnvironmentObject var sceneModel: SceneModel
+    private let locationManager = CLLocationManager()
     
-    var isWifiActive: Bool = false
+    var isWifiActive: Bool {
+        isSSIDAvailable()
+    }
     
     init(inputs: Binding<[String]>) {
         self._inputs = inputs
-        isWifiActive = self.isWIFIActive()
     }
     
     private func getWifiDetails() {
+        if locationManager.authorizationStatus == .notDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        
         // Get current SSID
         guard let wifiInterface = CWWiFiClient.shared().interface() else {failureAlert(); return}
         guard let ssidData: Data = wifiInterface.ssidData() else {failureAlert(); return}
@@ -209,30 +216,25 @@ fileprivate struct GetWifiButton: View {
         sceneModel.toaster = .error(note: "Network not supported")
     }
 
-    private func isWIFIActive() -> Bool {
-        guard let interfaceNames = CWWiFiClient.interfaceNames() else {
+    private func isSSIDAvailable() -> Bool {
+        guard let interface = CWWiFiClient.shared().interface() else {
             return false
         }
         
-        for interfaceName in interfaceNames {
-            let interface = CWWiFiClient.shared().interface(withName: interfaceName)
-            
-            if interface?.ssid() != nil {
-                return true
-            }
-        }
-        return false
+        return true
     }
     
     var body: some View {
-        if isWifiActive {
-            Button(action: {
-                Task {
-                    getWifiDetails()
-                }
-            }, label: {
-                Label("Autofill Wifi Information", systemImage: "wifi")
-            })
+        VStack {
+            if isWifiActive {
+                Button(action: {
+                    Task {
+                        getWifiDetails()
+                    }
+                }, label: {
+                    Label("Autofill Wifi Information", systemImage: "wifi")
+                })
+            }
         }
     }
 }

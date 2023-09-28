@@ -3158,6 +3158,7 @@
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses your camera to scan, decode, and duplicate QR codes.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "This app uses your contacts to create QR codes.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to access your WiFi information when autofilling WiFi QR codes.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app uses your photo library to save QR codes you've created.";
 				INFOPLIST_KEY_NSSiriUsageDescription = "This app would like to share your QR code Archive with Siri.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -3215,6 +3216,7 @@
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses your camera to scan, decode, and duplicate QR codes.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "This app uses your contacts to create QR codes.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app uses your location to access your WiFi information when autofilling WiFi QR codes.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "This app uses your photo library to save QR codes you've created.";
 				INFOPLIST_KEY_NSSiriUsageDescription = "This app would like to share your QR code Archive with Siri.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

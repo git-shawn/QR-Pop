@@ -17,6 +17,18 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>NSAppIconActionTintColorName</key>
+			<string>ShortcutsForeground</string>
+			<key>NSAppIconComplementingColorNames</key>
+			<array>
+				<string>ShortcutsBackground</string>
+			</array>
+		</dict>
+	</dict>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -86,17 +98,5 @@
 			</dict>
 		</dict>
 	</array>
-    <key>CFBundleIcons</key>
-        <dict>
-            <key>CFBundlePrimaryIcon</key>
-            <dict>
-                <key>NSAppIconActionTintColorName</key>
-                <string>ShortcutsForeground</string>
-                <key>NSAppIconComplementingColorNames</key>
-                <array>
-                    <string>ShortcutsBackground</string>
-                </array>
-            </dict>
-        </dict>
 </dict>
 </plist>
