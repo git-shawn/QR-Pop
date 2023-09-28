@@ -174,10 +174,12 @@ struct XLArchiveWidgetView: View {
 //MARK: Inline Accessory Widget
 @available(watchOS 10.0, iOS 17.0, macOS 14.0, *)
 struct InlineArchiveWidgetView: View {
+    @Environment(\.showsWidgetContainerBackground) var showsWidgetContainerBackground
     let entry: ArchivedCodeEntry
     
     var body: some View {
         Text("\(entry.model.content.builder.icon) \(entry.model.title ?? "My QR Code")")
+            .padding(.all, showsWidgetContainerBackground ? 5 : 0)
     }
 }
 
