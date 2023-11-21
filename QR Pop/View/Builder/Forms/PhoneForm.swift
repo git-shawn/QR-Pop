@@ -61,7 +61,7 @@ extension PhoneForm: BuilderForm {
     func determineResult(for outputs: [String]) {
         self.model = .init(
             responses: outputs,
-            result: outputs[0],
+            result: "tel:\(outputs[0])",
             builder: .phone)
     }
 }

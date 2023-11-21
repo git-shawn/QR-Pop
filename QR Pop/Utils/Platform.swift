@@ -61,11 +61,9 @@ extension Image {
 
 // MARK: NSColor to Color
 extension Color {
-    static var antiPrimary = Color("AntiPrimary")
     static var groupedBackground = Color("Grouped")
     static var secondaryGroupedBackground = Color("SecondaryGrouped")
     static var placeholder = Color(nsColor: .placeholderTextColor)
-    static var tertiaryLabel: Color { Color("TertiaryLabel") }
 }
 
 // MARK: UISizeClass for macOS
@@ -137,11 +135,9 @@ extension Image {
 #if !os(watchOS) && !os(tvOS)
 // MARK: UIColor to Color
 extension Color {
-    static var antiPrimary = Color("AntiPrimary")
     static var groupedBackground = Color(uiColor: .systemGroupedBackground)
     static var secondaryGroupedBackground = Color(uiColor: .secondarySystemGroupedBackground)
     static var placeholder = Color(uiColor: .placeholderText)
-    static var tertiaryLabel: Color { Color("TertiaryLabel") }
 }
 #endif
 #endif

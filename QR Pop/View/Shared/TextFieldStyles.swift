@@ -31,7 +31,7 @@ struct ContactBuilderTextFieldStyle: TextFieldStyle {
         VStack {
             configuration
 #if os(macOS)
-            Divider()
+                .padding(.vertical, 6)
 #endif
         }
     }

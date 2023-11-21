@@ -95,9 +95,11 @@ private struct LocationPickerSearchForm: View {
 #if os(macOS)
         .listStyle(.inset)
 #else
-        .toolbarBackground(.hidden, for: .automatic)
         .listStyle(.grouped)
-        .searchable(text: $mapSearch.searchTerm, prompt: Text("Location"))
+        .searchable(
+            text: $mapSearch.searchTerm,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: Text("Location"))
 #endif
     }
     
