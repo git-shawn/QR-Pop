@@ -92,12 +92,12 @@ struct ContactBuilder: View {
                         .frame(width: 96, height: 96)
                         .foregroundStyle(Color.gray.gradient)
                     Spacer()
-#if os(macOS)
-    .padding(.top)
-#endif
                 }
                 .listRowBackground(Color.clear)
                 .listRowSeparator(.hidden)
+#if os(macOS)
+                .padding(.top)
+#endif
                 
                 Section {
                     TextField("First Name", text: $firstName)
@@ -167,16 +167,11 @@ struct ContactBuilder: View {
                         .padding(.top, 10)
                         #endif
                     }
-#if os(macOS)
-                    Divider()
-#endif
                 }
                 
                 Group {
                     DynamicPhoneList(phones: $phoneNumbers)
-#if os(macOS)
-                    Divider()
-#endif
+                    
                     DynamicGenericList(name: "Email", fields: $emails)
 #if os(iOS)
                         .autocorrectionDisabled(true)
@@ -184,18 +179,14 @@ struct ContactBuilder: View {
                         .keyboardType(.emailAddress)
                         .textContentType(.emailAddress)
 #endif
-#if os(macOS)
-                    Divider()
-#endif
+                    
                     DynamicGenericList(name: "URL", fields: $urls)
 #if os(iOS)
                         .keyboardType(.URL)
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
 #endif
-#if os(macOS)
-                    Divider()
-#endif
+
                     DynamicAddressList(fields: $addresses)
                     #if os(macOS)
                         .padding(.bottom)
@@ -210,6 +201,7 @@ struct ContactBuilder: View {
             .listStyle(.plain)
             .textFieldStyle(ContactBuilderTextFieldStyle())
             .frame(width: 400, height: 350)
+            .environment(\.defaultMinListRowHeight, 40)
 #endif
             .navigationTitle("New Contact")
             .toolbar {

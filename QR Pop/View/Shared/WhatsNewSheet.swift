@@ -24,9 +24,7 @@ struct WhatsNewSheet: View {
                     .padding(.top)
                     .font(.largeTitle)
                     .bold()
-                    
-                    #warning("Rewrite 'What's New' page.")
-                    
+                                        
                     Grid(alignment: .leading, horizontalSpacing: 20, verticalSpacing: 30) {
                         GridRow(alignment: .center) {
                             Image(systemName: "photo.badge.plus")

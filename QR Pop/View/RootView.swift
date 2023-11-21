@@ -72,7 +72,7 @@ struct RootView: View {
         }
         
         // MARK: - What's New!
-        .whatsNewSheet()
+//        .whatsNewSheet()
         
         // MARK: - Listen for purchases
         

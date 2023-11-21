@@ -53,19 +53,32 @@ struct ArchiveWidgetView: View {
 ///     - The home screen itself across all devices (except watchOS)
 @available(watchOS 10.0, iOS 17.0, macOS 14.0, *)
 struct SquareArchiveWidgetView: View {
-    @Environment(\.showsWidgetContainerBackground) var showsWidgetContainerBackground
+    @Environment(\.widgetRenderingMode) var widgetRenderingMode
     let entry: ArchivedCodeEntry
     
     var body: some View {
         ZStack {
-            if showsWidgetContainerBackground {
+            switch widgetRenderingMode {
+            case .fullColor:
                 entry.model.transparentImage(for: 1024)?
                     .resizable()
                     .scaledToFit()
                     .padding(8)
                     .unredacted()
-            } else {
+            case .accented:
+                entry.model.transparentImage(for: 1024)?
+                    .resizable()
+                    .scaledToFit()
+                    .padding(8)
+                    .unredacted()
+            case .vibrant:
                 entry.model.monochromeImage(for: 1024, foregroundColor: .white, backgroundColor: .black.opacity(0))?
+                    .resizable()
+                    .scaledToFit()
+                    .padding(8)
+                    .unredacted()
+            default:
+                entry.model.transparentImage(for: 1024)?
                     .resizable()
                     .scaledToFit()
                     .padding(8)
@@ -174,12 +187,10 @@ struct XLArchiveWidgetView: View {
 //MARK: Inline Accessory Widget
 @available(watchOS 10.0, iOS 17.0, macOS 14.0, *)
 struct InlineArchiveWidgetView: View {
-    @Environment(\.showsWidgetContainerBackground) var showsWidgetContainerBackground
     let entry: ArchivedCodeEntry
     
     var body: some View {
         Text("\(entry.model.content.builder.icon) \(entry.model.title ?? "My QR Code")")
-            .padding(.all, showsWidgetContainerBackground ? 5 : 0)
     }
 }
 

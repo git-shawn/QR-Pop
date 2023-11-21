@@ -217,7 +217,7 @@ fileprivate struct GetWifiButton: View {
     }
 
     private func isSSIDAvailable() -> Bool {
-        guard let interface = CWWiFiClient.shared().interface() else {
+        guard CWWiFiClient.shared().interface() != nil else {
             return false
         }
         
