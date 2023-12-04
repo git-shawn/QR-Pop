@@ -38,5 +38,13 @@ struct QRPopShortcuts: AppShortcutsProvider {
             ],
             shortTitle: "Build with Template",
             systemImageName: "qrcode")
+        
+        AppShortcut(
+            intent: ScanCodeIntent(),
+            phrases: [
+                "Scan a QR Code with \(.applicationName)"
+            ],
+            shortTitle: "Scan QR Code",
+            systemImageName: "qrcode.viewfinder")
     }
 }

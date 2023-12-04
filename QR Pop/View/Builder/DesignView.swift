@@ -53,7 +53,7 @@ struct DesignView: View {
                 background
             }
             
-            Section("Photo Overlay") {
+            Section("Image Overlay") {
                 photoPicker
             }
         }

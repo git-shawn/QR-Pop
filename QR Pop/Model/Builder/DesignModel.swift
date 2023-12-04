@@ -167,7 +167,7 @@ extension DesignModel {
 extension DesignModel {
     
     enum EyeShape: String, CaseIterable, Codable, Equatable, AppEnum {
-        case square, circle, squircle, roundedOuter, shield, roundedPointingOut, roundedPointingIn, leaf, barsHorizontal, barsVertical
+        case square, circle, squircle, roundedOuter, shield, roundedPointingOut, roundedPointingIn, leaf, barsHorizontal, barsVertical, edges
         
         /// An SF Symbol visualizing the eye shape as an `Image`.
         var symbol: Image {
@@ -202,6 +202,8 @@ extension DesignModel {
                 return QRCode.EyeShape.BarsHorizontal()
             case .barsVertical:
                 return QRCode.EyeShape.BarsVertical()
+            case .edges:
+                return QRCode.EyeShape.Edges()
             }
         }
         
@@ -221,6 +223,7 @@ extension DesignModel {
             .leaf : "Leaf",
             .barsHorizontal : "Horizontal Bars",
             .barsVertical : "Vertical Bars",
+            .edges: "Edges",
         ]
     }
 }
@@ -230,7 +233,7 @@ extension DesignModel {
 extension DesignModel {
     
     enum PixelShape: String, CaseIterable, Codable, Equatable, AppEnum {
-        case square, circle, squircle, pixel, diamond, star, sparkle, flower, sharpPixel, horizontal, vertical, roundedPath, curvedPixel, sharp, insetRound
+        case square, circle, dots, squircle, pixel, diamond, star, sparkle, flower, sharpPixel, horizontal, vertical, roundedPath, smoothPath, curvedPixel, sharp, insetRound
         
         /// An SF Symbol visualizing the pixel shape as an `Image`.
         var symbol: Image {
@@ -242,6 +245,7 @@ extension DesignModel {
             switch self {
             case .square: return "Square Path"
             case .circle: return "Circles"
+            case .dots: return "Dots"
             case .squircle: return "Squircles"
             case .pixel: return "Pixels"
             case .diamond: return "Diamonds"
@@ -252,6 +256,7 @@ extension DesignModel {
             case .horizontal: return "Rows"
             case .vertical: return "Columns"
             case .roundedPath: return "Rounded Path"
+            case .smoothPath: return "Smooth Path"
             case .curvedPixel: return "Curved Pixel Path"
             case .sharp: return "Sharp Path"
             case .insetRound: return "Indented Path"
@@ -265,6 +270,8 @@ extension DesignModel {
                 return QRCode.PixelShape.Square()
             case .circle:
                 return QRCode.PixelShape.Circle(insetFraction: 0.15)
+            case .dots:
+                return QRCode.PixelShape.Circle(insetFraction: 0.45, useRandomInset: true)
             case .squircle:
                 return QRCode.PixelShape.Squircle(insetFraction: 0.15)
             case .pixel:
@@ -278,7 +285,9 @@ extension DesignModel {
             case .vertical:
                 return QRCode.PixelShape.Vertical(insetFraction: 0.35, cornerRadiusFraction: 1)
             case .roundedPath:
-                return QRCode.PixelShape.RoundedPath(cornerRadiusFraction: 1)
+                return QRCode.PixelShape.RoundedPath(cornerRadiusFraction: 0.5)
+            case .smoothPath:
+                return QRCode.PixelShape.RoundedPath(cornerRadiusFraction: 1, hasInnerCorners: true)
             case .curvedPixel:
                 return QRCode.PixelShape.CurvePixel()
             case .sharpPixel:
@@ -302,6 +311,7 @@ extension DesignModel {
         static var caseDisplayRepresentations: [Self : DisplayRepresentation] = [
             .square : "Square Path",
             .circle : "Circles",
+            .dots : "Dots",
             .squircle : "Squircles",
             .pixel : "Pixels",
             .diamond : "Diamonds",
@@ -312,6 +322,7 @@ extension DesignModel {
             .horizontal : "Rows",
             .vertical : "Columns",
             .roundedPath : "Rounded Path",
+            .smoothPath: "Smooth Path",
             .curvedPixel : "Curved Pixel Path",
             .sharp : "Sharp Path",
             .insetRound : "Indented Path"
