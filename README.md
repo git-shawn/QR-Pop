@@ -1,3 +1,7 @@
+> [!IMPORTANT]  
+> QR Pop is being rewritten to for iOS 18 as part of a massive "QR Pop 4" overhaul.
+> A beta sign-up sheet will be available soon as the project further progresses.
+
 ![HeroImage](GitHubResources/QRPopHero.png)
 
 # QR Pop 
